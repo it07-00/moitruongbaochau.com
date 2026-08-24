@@ -1,0 +1,6 @@
+@extends('frontend.layouts.app')
+@section('content')
+<section class="py-10 lg:py-16"><div class="container px-3 mx-auto max-w-5xl"><h1 class="text-4xl lg:text-6xl font-bold mb-8">Tìm kiếm</h1><form action="{{ route('search') }}" method="get" class="flex gap-3 mb-10"><label for="search-q" class="sr-only">Từ khóa</label><input id="search-q" type="search" name="q" value="{{ $query }}" placeholder="Nhập ít nhất 2 ký tự" class="flex-1 rounded-xl border border-gray-300 px-4 py-3"><button class="bg-primary text-white rounded-full px-6 font-bold">Tìm kiếm</button></form>
+@if(mb_strlen($query) >= 2)<p class="mb-6">Kết quả cho “<strong>{{ $query }}</strong>”</p><div class="space-y-8">@foreach([['label'=>'Dịch vụ','items'=>$services,'route'=>'services.show'],['label'=>'Tin tức','items'=>$posts,'route'=>'posts.show'],['label'=>'Dự án','items'=>$projects,'route'=>'projects.show']] as $group)<section><h2 class="text-2xl font-bold mb-4">{{ $group['label'] }}</h2><div class="space-y-3">@forelse($group['items'] as $item)<a href="{{ route($group['route'], $item->slug) }}" class="block bg-white rounded-xl border border-gray-200 p-4 font-semibold hover:text-primary">{{ $item->title ?? $item->name }}</a>@empty<p class="text-gray-500">Không có kết quả.</p>@endforelse</div></section>@endforeach</div>@endif
+</div></section>
+@endsection

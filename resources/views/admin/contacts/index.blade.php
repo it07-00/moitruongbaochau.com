@@ -1,0 +1,5 @@
+@extends('admin.layouts.app')
+@section('title', 'Liên hệ khách hàng')
+@section('content')
+<h1 class="text-3xl lg:text-4xl font-bold mb-8">Liên hệ khách hàng</h1><div class="bg-white rounded-2xl border border-gray-200 overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left"><thead class="bg-gray-50"><tr><th class="p-4">Khách hàng</th><th class="p-4">Điện thoại</th><th class="p-4">Chủ đề</th><th class="p-4">Trạng thái</th><th class="p-4"></th></tr></thead><tbody>@forelse($contacts as $contact)<tr class="border-t border-gray-100"><td class="p-4"><strong>{{ $contact->name }}</strong><br><small>{{ $contact->email }}</small></td><td class="p-4">{{ $contact->phone }}</td><td class="p-4">{{ $contact->topic }}</td><td class="p-4">{{ str($contact->status->value)->headline() }}</td><td class="p-4 text-right"><a href="{{ route('admin.contacts.show', $contact) }}" class="font-bold text-secondary">Xem</a></td></tr>@empty<tr><td colspan="5" class="p-8 text-center">Chưa có liên hệ.</td></tr>@endforelse</tbody></table></div></div><div class="mt-6">{{ $contacts->links() }}</div>
+@endsection

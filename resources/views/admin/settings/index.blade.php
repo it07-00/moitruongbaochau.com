@@ -1,0 +1,7 @@
+@extends('admin.layouts.app')
+@section('title', 'Thông tin website')
+@section('content')
+<h1 class="text-3xl lg:text-4xl font-bold mb-8">Thông tin website &amp; SEO mặc định</h1><form method="post" action="{{ route('admin.settings.update') }}" class="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">@csrf @method('put')
+@foreach(['company_name'=>'Tên công ty','logo'=>'Đường dẫn logo','favicon'=>'Đường dẫn favicon','phone'=>'Điện thoại','email'=>'Email','address'=>'Địa chỉ','facebook'=>'Facebook','youtube'=>'YouTube','zalo'=>'Zalo','google_map'=>'Google Maps','seo_default_title'=>'SEO title mặc định','seo_default_description'=>'SEO description mặc định','seo_default_image'=>'SEO image mặc định'] as $key=>$label)<div><label for="{{ $key }}" class="block font-bold mb-2">{{ $label }}</label>@if(in_array($key, ['address','google_map','seo_default_description'], true))<textarea id="{{ $key }}" name="settings[{{ $key }}]" rows="3" class="w-full rounded-xl border border-gray-300 px-4 py-3">{{ old("settings.$key", $settings[$key] ?? '') }}</textarea>@else<input id="{{ $key }}" name="settings[{{ $key }}]" value="{{ old("settings.$key", $settings[$key] ?? '') }}" class="w-full rounded-xl border border-gray-300 px-4 py-3">@endif @error("settings.$key")<p class="text-red-600 text-sm">{{ $message }}</p>@enderror</div>@endforeach
+<button class="bg-primary text-white rounded-full px-6 py-3 font-bold">Lưu cài đặt</button></form>
+@endsection

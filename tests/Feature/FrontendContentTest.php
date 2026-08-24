@@ -1,0 +1,64 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\ContentStatus;
+use App\Models\JobPosting;
+use App\Models\Post;
+use App\Models\Project;
+use App\Models\Service;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Tests\TestCase;
+
+class FrontendContentTest extends TestCase
+{
+    use LazilyRefreshDatabase;
+
+    public function test_homepage_loads_featured_database_content(): void
+    {
+        $service = Service::factory()->create([
+            'name' => 'Kiểm kê khí nhà kính doanh nghiệp',
+            'status' => ContentStatus::Published,
+            'is_featured' => true,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee($service->name);
+    }
+
+    public function test_published_content_details_are_public_and_drafts_are_not(): void
+    {
+        $publishedService = Service::factory()->create([
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+        $draftPost = Post::factory()->create(['status' => ContentStatus::Draft]);
+        $publishedProject = Project::factory()->create([
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+        $publishedJob = JobPosting::factory()->create([
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('services.show', $publishedService->slug))->assertOk();
+        $this->get(route('posts.show', $draftPost->slug))->assertNotFound();
+        $this->get(route('projects.show', $publishedProject->slug))->assertOk();
+        $this->get(route('recruitment.show', $publishedJob->slug))->assertOk();
+    }
+
+    public function test_public_listings_paginate_database_content(): void
+    {
+        Service::factory()->count(13)->create([
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('services.index'))
+            ->assertOk()
+            ->assertViewHas('services', fn ($services): bool => $services->perPage() === 12);
+    }
+}
