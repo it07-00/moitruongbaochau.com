@@ -30,6 +30,4 @@ Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/tim-kiem', SearchController::class)->name('search');
 
-require __DIR__.'/admin.php';
-
 Route::fallback(LegacyRedirectController::class);

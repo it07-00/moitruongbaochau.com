@@ -3,47 +3,45 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class AdminAuthenticationTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_admin_can_login_and_logout_with_session_regeneration(): void
+    public function test_admin_login_page_is_accessible(): void
+    {
+        $this->get(route('filament.admin.auth.login'))->assertOk();
+    }
+
+    public function test_admin_user_can_access_filament_panel(): void
     {
         $admin = User::factory()->create([
-            'email' => 'admin@example.com',
-            'password' => Hash::make('VerySecurePassword123!'),
+            'email' => 'admin@baochauenvir.com',
             'is_admin' => true,
         ]);
 
-        $this->get(route('admin.login'))->assertOk();
+        $panel = Filament::getPanel('admin');
+        $this->assertTrue($admin->canAccessPanel($panel));
 
-        $this->post(route('admin.login.store'), [
-            'email' => $admin->email,
-            'password' => 'VerySecurePassword123!',
-        ])->assertRedirect(route('admin.dashboard'));
-
-        $this->assertAuthenticatedAs($admin);
-
-        $this->post(route('admin.logout'))->assertRedirect(route('home'));
-        $this->assertGuest();
+        $this->actingAs($admin)
+            ->get(route('filament.admin.pages.dashboard'))
+            ->assertOk();
     }
 
-    public function test_non_admin_credentials_cannot_open_an_admin_session(): void
+    public function test_non_admin_cannot_access_filament_panel(): void
     {
         $user = User::factory()->create([
-            'password' => Hash::make('VerySecurePassword123!'),
             'is_admin' => false,
         ]);
 
-        $this->from(route('admin.login'))->post(route('admin.login.store'), [
-            'email' => $user->email,
-            'password' => 'VerySecurePassword123!',
-        ])->assertRedirect(route('admin.login'))->assertSessionHasErrors('email');
+        $panel = Filament::getPanel('admin');
+        $this->assertFalse($user->canAccessPanel($panel));
 
-        $this->assertGuest();
+        $this->actingAs($user)
+            ->get(route('filament.admin.pages.dashboard'))
+            ->assertForbidden();
     }
 }
