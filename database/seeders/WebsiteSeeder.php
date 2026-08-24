@@ -76,12 +76,46 @@ class WebsiteSeeder extends Seeder
             ['category' => 'ky-thuat-xu-ly', 'name' => 'Giải pháp xử lý khí thải công nghiệp', 'slug' => 'xu-ly-khi-thai-cong-nghiep', 'image' => 'Thiet-ke-chua-co-ten-2-768x429.png'],
         ];
 
+        $serviceContent = <<<'HTML'
+<h2><span id="dich-vu-tu-van-moi-truong-la-gi">Tổng quan về dịch vụ</span></h2>
+<p>Môi Trường Bảo Châu là đơn vị tư vấn hàng đầu trong lĩnh vực lập hồ sơ môi trường, quan trắc phân tích và chuyển giao công nghệ xử lý chất thải đạt chuẩn theo quy định của Luật Bảo vệ Môi trường 2020.</p>
+<p>Chúng tôi đồng hành cùng chủ đầu tư từ giai đoạn chuẩn bị dự án, hoàn thiện thủ tục cấp phép đến giám sát vận hành thực tế tại nhà máy.</p>
+
+<figure class="wp-caption aligncenter my-8 rounded-2xl overflow-hidden shadow-lg border border-black/5">
+  <img decoding="async" class="w-full h-auto object-cover" src="/assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png" alt="Dịch vụ Môi Trường Bảo Châu" width="1024" height="576" />
+  <figcaption class="wp-caption-text text-center text-xs text-black py-2 bg-gray-50 font-medium">Hồ sơ tư vấn kỹ thuật chuyên sâu tại Môi Trường Bảo Châu</figcaption>
+</figure>
+
+<h2><span id="loi-ich-khi-su-dung-dich-vu">Lợi ích khi doanh nghiệp lựa chọn Bảo Châu</span></h2>
+<ul class="space-y-2 list-disc pl-5 text-black">
+  <li>Cam kết 100% hồ sơ được Hội đồng thẩm định phê duyệt đúng hạn.</li>
+  <li>Đội ngũ Thạc sĩ, Kỹ sư môi trường hơn 10 năm kinh nghiệm trực tiếp bảo vệ trước cơ quan chức năng.</li>
+  <li>Tiết kiệm chi phí đầu tư và tối ưu hóa chi phí vận hành công trình BVMT.</li>
+  <li>Hỗ trợ pháp lý dài hạn và cập nhật các quy định luật mới nhất cho doanh nghiệp.</li>
+</ul>
+
+<h2><span id="quy-trinh-trien-khai-dich-vu">Quy trình triển khai trọn gói</span></h2>
+<div class="space-y-4 my-4 text-black">
+  <h3 class="font-bold text-base text-black">1. Khảo sát hiện trạng &amp; Thu thập dữ liệu</h3>
+  <p class="text-sm text-black">Đo đạc, lấy mẫu phân tích và rà soát hồ sơ pháp lý hiện có tại cơ sở sản xuất.</p>
+
+  <h3 class="font-bold text-base text-black">2. Xây dựng thuyết minh kỹ thuật</h3>
+  <p class="text-sm text-black">Lập báo cáo chuyên môn chi tiết theo đúng quy chuẩn và biểu mẫu hiện hành của Bộ TN&MT.</p>
+
+  <h3 class="font-bold text-base text-black">3. Nộp hồ sơ &amp; Bảo vệ thẩm định</h3>
+  <p class="text-sm text-black">Đại diện chủ dự án giải trình kỹ thuật trước Hội đồng thẩm định và chỉnh sửa hoàn thiện theo kết luận cuộc họp.</p>
+
+  <h3 class="font-bold text-base text-black">4. Bàn giao kết quả gốc &amp; Hướng dẫn vận hành</h3>
+  <p class="text-sm text-black">Bàn giao giấy phép/kết quả thẩm định chính thức và hướng dẫn doanh nghiệp thực hiện các cam kết bảo vệ môi trường.</p>
+</div>
+HTML;
+
         foreach ($services as $index => $service) {
             Service::query()->updateOrCreate(['slug' => $service['slug']], [
                 'service_category_id' => $serviceCategories[$service['category']]->getKey(),
                 'name' => $service['name'],
                 'short_description' => 'Khảo sát đúng nhu cầu, xây dựng hồ sơ và đồng hành giải trình theo quy định hiện hành.',
-                'content' => "Bảo Châu tiếp nhận thông tin dự án, rà soát nghĩa vụ pháp lý và đề xuất phạm vi công việc phù hợp.\n\nQuy trình triển khai gồm khảo sát, thu thập dữ liệu, lập hồ sơ, kiểm soát chất lượng và đồng hành với doanh nghiệp trong quá trình thẩm định hoặc vận hành.",
+                'content' => $serviceContent,
                 'thumbnail' => $service['image'],
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
@@ -105,27 +139,144 @@ class WebsiteSeeder extends Seeder
             return [$category['slug'] => $model];
         });
 
+        $gpmtContent = <<<'HTML'
+<h2><span id="giay-phep-moi-truong-la-gi">Giấy phép môi trường là gì?</span></h2>
+<p>Theo quy định tại <strong>Khoản 8 Điều 3 Luật Bảo vệ Môi trường 2020</strong>: Giấy phép môi trường là văn bản do cơ quan quản lý nhà nước có thẩm quyền cấp cho tổ chức, cá nhân có hoạt động sản xuất, kinh doanh, dịch vụ được phép xả chất thải ra môi trường, quản lý chất thải, nhập khẩu phế liệu từ nước ngoài làm nguyên liệu sản xuất kèm theo yêu cầu, điều kiện về bảo vệ môi trường theo quy định của pháp luật.</p>
+<p>Điểm mới đột phá của <strong>Luật BVMT 2020</strong> là tích hợp <strong>7 loại giấy phép môi trường thành phần</strong> trước đây (như Giấy phép xả nước thải, Giấy xác nhận hoàn thành công trình BVMT, Sổ chủ nguồn thải CTNH, Giấy phép xả khí thải,...) thành <strong>01 Giấy phép môi trường duy nhất</strong>.</p>
+
+<figure class="wp-caption aligncenter my-8 rounded-2xl overflow-hidden shadow-lg border border-black/5">
+  <img decoding="async" class="w-full h-auto object-cover" src="/assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png" alt="Giấy phép môi trường Luật 2020" width="1024" height="576" />
+  <figcaption class="wp-caption-text text-center text-xs text-black py-2 bg-gray-50 font-medium">Hồ sơ đề nghị cấp Giấy phép môi trường theo Nghị định 08/2022/NĐ-CP</figcaption>
+</figure>
+
+<h2><span id="vi-sao-doanh-nghiep-can-giay-phep-moi-truong">Vì sao doanh nghiệp cần hoàn thiện Giấy phép môi trường?</span></h2>
+<p>Giấy phép môi trường giúp doanh nghiệp xây dựng nền tảng pháp lý vững chắc, an tâm sản xuất kinh doanh và đáp ứng các tiêu chuẩn khắt khe từ chuỗi cung ứng toàn cầu.</p>
+<ul class="space-y-2 list-disc pl-5 text-black">
+  <li>Hợp thức hóa hồ sơ pháp lý để nghiệm thu xây dựng và đưa dự án vào vận hành chính thức.</li>
+  <li>Tránh bị xử phạt vi phạm hành chính (mức phạt có thể lên đến 1.000.000.000 VNĐ theo Nghị định 45/2022/NĐ-CP).</li>
+  <li>Đáp ứng tiêu chuẩn đánh giá nhà máy từ các đối tác FDI và khách hàng quốc tế.</li>
+  <li>Được chuyên gia tư vấn tối ưu hóa quy trình xử lý chất thải, tiết kiệm chi phí năng lượng và bảo vệ môi trường.</li>
+</ul>
+
+<h2><span id="doi-tuong-bat-buoc-phai-co-giay-phep-moi-truong">Đối tượng bắt buộc phải có Giấy phép môi trường</span></h2>
+<p>Căn cứ <strong>Điều 39 Luật BVMT 2020</strong>, các đối tượng sau bắt buộc phải có Giấy phép môi trường:</p>
+<div class="space-y-3 my-4 text-black">
+  <p><strong>1. Dự án đầu tư Nhóm I, Nhóm II và Nhóm III:</strong> Có phát sinh nước thải, bụi, khí thải xả ra môi trường phải được xử lý hoặc có phát sinh chất thải nguy hại phải được quản lý.</p>
+  <p><strong>2. Cơ sở sản xuất, kinh doanh, dịch vụ đang hoạt động:</strong> Có tiêu chí về môi trường tương đương dự án Nhóm I, Nhóm II và Nhóm III.</p>
+</div>
+
+<h2><span id="tham-quyen-tham-dinh-cap-giay-phep-moi-truong">Thẩm quyền thẩm định &amp; cấp Giấy phép môi trường</span></h2>
+<div class="overflow-x-auto my-4 rounded-xl border border-gray-200">
+  <table class="w-full text-left text-xs sm:text-sm border-collapse text-black">
+    <thead class="bg-gray-100 text-black font-bold">
+      <tr>
+        <th class="p-3 border border-gray-200">Cơ Quan Cấp Phép</th>
+        <th class="p-3 border border-gray-200">Nhóm Dự Án Phụ Trách</th>
+        <th class="p-3 border border-gray-200">Thời Gian Thẩm Định</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <tr>
+        <td class="p-3 font-bold text-primary border border-gray-200">Bộ TN&amp;MT</td>
+        <td class="p-3 border border-gray-200 text-black">Dự án Nhóm I nguy cơ cao, dự án liên tỉnh, dự án cấp Bộ phê duyệt ĐTM</td>
+        <td class="p-3 font-semibold border border-gray-200 text-black">45 ngày làm việc</td>
+      </tr>
+      <tr>
+        <td class="p-3 font-bold text-primary border border-gray-200">UBND Cấp Tỉnh / Sở TN&amp;MT</td>
+        <td class="p-3 border border-gray-200 text-black">Dự án Nhóm II và Nhóm III nằm trên địa bàn 2 huyện trở lên</td>
+        <td class="p-3 font-semibold border border-gray-200 text-black">30 ngày làm việc</td>
+      </tr>
+      <tr>
+        <td class="p-3 font-bold text-primary border border-gray-200">UBND Cấp Huyện</td>
+        <td class="p-3 border border-gray-200 text-black">Dự án Nhóm III còn lại nằm trên địa bàn 1 huyện</td>
+        <td class="p-3 font-semibold border border-gray-200 text-black">20 ngày làm việc</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2><span id="quy-trinh-tu-van-tron-goi-tai-bao-chau">Quy trình tư vấn trọn gói tại Môi Trường Bảo Châu</span></h2>
+<div class="space-y-4 my-4 text-black">
+  <h3 id="khao-sat-muc-tieu-va-yeu-cau" class="font-bold text-base text-black">1. Khảo sát mục tiêu &amp; Đo đạc hiện trạng</h3>
+  <p class="text-sm text-black">Đội ngũ kỹ sư khảo sát thực tế, lấy mẫu phân tích các nguồn thải nước thải, khí thải và kiểm tra hiện trạng công trình BVMT.</p>
+
+  <h3 id="xay-dung-bao-cao-ky-thuat" class="font-bold text-base text-black">2. Lập báo cáo kỹ thuật đề xuất cấp phép</h3>
+  <p class="text-sm text-black">Tính toán tải lượng phát thải, hoàn thiện thuyết minh báo cáo theo đúng mẫu chuẩn Phụ lục Nghị định 08/2022/NĐ-CP.</p>
+
+  <h3 id="tham-van-cong-dong-nop-ho-so" class="font-bold text-base text-black">3. Tham vấn cộng đồng &amp; Nộp hồ sơ</h3>
+  <p class="text-sm text-black">Đăng tải tham vấn trên cổng thông tin điện tử, nộp hồ sơ tại bộ phận một cửa của Cơ quan có thẩm quyền.</p>
+
+  <h3 id="bao-ve-hoi-dong-tham-dinh" class="font-bold text-base text-black">4. Bảo vệ trước Hội đồng thẩm định</h3>
+  <p class="text-sm text-black">Đại diện chủ đầu tư thuyết minh kỹ thuật, cùng đoàn kiểm tra thực tế nhà máy và giải trình bổ sung theo biên bản họp.</p>
+
+  <h3 id="ban-giao-giay-phep-huong-dan" class="font-bold text-base text-black">5. Bàn giao Giấy phép &amp; Hướng dẫn vận hành</h3>
+  <p class="text-sm text-black">Nhận Giấy phép môi trường gốc đóng dấu chính thức và bàn giao tận tay khách hàng.</p>
+</div>
+HTML;
+
         $posts = [
-            ['category' => 'phap-luat-moi-truong', 'title' => 'Hướng dẫn thủ tục cấp giấy phép môi trường mới nhất', 'slug' => 'huong-dan-thu-tuc-cap-giay-phep-moi-truong', 'image' => 'Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png'],
-            ['category' => 'phap-luat-moi-truong', 'title' => 'Những nội dung cần chuẩn bị cho báo cáo công tác bảo vệ môi trường', 'slug' => 'bao-cao-cong-tac-bao-ve-moi-truong', 'image' => 'Bai-Dang-Bao-Chau-768x429.png'],
-            ['category' => 'khi-nha-kinh-esg', 'title' => 'Doanh nghiệp nào phải thực hiện kiểm kê khí nhà kính?', 'slug' => 'doanh-nghiep-phai-kiem-ke-khi-nha-kinh', 'image' => 'Lich-thang-8-768x432.png'],
-            ['category' => 'khi-nha-kinh-esg', 'title' => 'CBAM và những dữ liệu doanh nghiệp xuất khẩu cần chuẩn bị', 'slug' => 'cbam-du-lieu-doanh-nghiep-can-chuan-bi', 'image' => '1-768x427.png'],
-            ['category' => 'ky-thuat-moi-truong', 'title' => 'Kiểm soát chất lượng quan trắc môi trường định kỳ', 'slug' => 'kiem-soat-chat-luong-quan-trac-moi-truong', 'image' => '3-768x427.png'],
-            ['category' => 'ky-thuat-moi-truong', 'title' => 'Các dấu hiệu hệ thống xử lý nước thải cần được tối ưu', 'slug' => 'toi-uu-he-thong-xu-ly-nuoc-thai', 'image' => '5-768x427.png'],
+            [
+                'category' => 'phap-luat-moi-truong',
+                'title' => 'Hướng Dẫn Thủ Tục Cấp Giấy Phép Môi Trường Mới Nhất Theo Luật BVMT 2020 & Nghị Định 08/2022/NĐ-CP',
+                'slug' => 'huong-dan-thu-tuc-cap-giay-phep-moi-truong',
+                'image' => 'Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png',
+                'excerpt' => 'Doanh nghiệp có thể tiếp cận nhiều kênh thông tin pháp lý môi trường, nhưng Giấy phép môi trường (GPMT) là văn bản pháp lý tối quan trọng bắt buộc phải hoàn thành trước khi cơ sở đi vào hoạt động chính thức.',
+                'content' => $gpmtContent,
+            ],
+            [
+                'category' => 'phap-luat-moi-truong',
+                'title' => 'Những nội dung cần chuẩn bị cho báo cáo công tác bảo vệ môi trường định kỳ',
+                'slug' => 'bao-cao-cong-tac-bao-ve-moi-truong',
+                'image' => 'Bai-Dang-Bao-Chau-768x429.png',
+                'excerpt' => 'Báo cáo công tác bảo vệ môi trường là nghĩa vụ hàng năm trước ngày 05/01 của mọi cơ sở sản xuất, kinh doanh dịch vụ theo Thông tư 02/2022/TT-BTNMT.',
+                'content' => $gpmtContent,
+            ],
+            [
+                'category' => 'khi-nha-kinh-esg',
+                'title' => 'Doanh nghiệp nào phải thực hiện kiểm kê khí nhà kính theo Quyết định 13/2024/QĐ-TTg?',
+                'slug' => 'doanh-nghiep-phai-kiem-ke-khi-nha-kinh',
+                'image' => 'Lich-thang-8-768x432.png',
+                'excerpt' => 'Danh mục cơ sở phát thải khí nhà kính phải thực hiện kiểm kê định kỳ cập nhật mới nhất theo Quyết định 13/2024/QĐ-TTg của Thủ tướng Chính phủ.',
+                'content' => $gpmtContent,
+            ],
+            [
+                'category' => 'khi-nha-kinh-esg',
+                'title' => 'CBAM và những dữ liệu doanh nghiệp xuất khẩu sang EU cần chuẩn bị ngay',
+                'slug' => 'cbam-du-lieu-doanh-nghiep-can-chuan-bi',
+                'image' => '1-768x427.png',
+                'excerpt' => 'Cơ chế điều chỉnh biên giới carbon (CBAM) của EU bắt đầu áp dụng giai đoạn chuyển tiếp, đặt ra yêu cầu báo cáo phát thải nghiêm ngặt cho hàng xuất khẩu.',
+                'content' => $gpmtContent,
+            ],
+            [
+                'category' => 'ky-thuat-moi-truong',
+                'title' => 'Kiểm soát chất lượng quan trắc môi trường định kỳ theo Thông tư 10/2021/TT-BTNMT',
+                'slug' => 'kiem-soat-chat-luong-quan-trac-moi-truong',
+                'image' => '3-768x427.png',
+                'excerpt' => 'Quy trình đảm bảo chất lượng QA/QC trong quan trắc môi trường nước thải, khí thải, không khí xung quanh đạt chuẩn VIMCERTS.',
+                'content' => $gpmtContent,
+            ],
+            [
+                'category' => 'ky-thuat-moi-truong',
+                'title' => 'Các dấu hiệu hệ thống xử lý nước thải công nghiệp cần được bảo dưỡng và tối ưu',
+                'slug' => 'toi-uu-he-thong-xu-ly-nuoc-thai',
+                'image' => '5-768x427.png',
+                'excerpt' => 'Nhận biết sớm các sự cố bùn vi sinh, mùi hôi và quá tải công suất để có biện pháp cải tạo, nâng cấp trạm xử lý nước thải kịp thời.',
+                'content' => $gpmtContent,
+            ],
         ];
 
         foreach ($posts as $post) {
             Post::query()->updateOrCreate(['slug' => $post['slug']], [
                 'post_category_id' => $postCategories[$post['category']]->getKey(),
                 'title' => $post['title'],
-                'excerpt' => 'Tóm tắt quy định và các bước triển khai thực tế dành cho doanh nghiệp.',
-                'content' => "Bài viết tổng hợp các yêu cầu quan trọng và cách chuẩn bị dữ liệu theo hướng dễ kiểm soát.\n\nDoanh nghiệp nên rà soát hồ sơ hiện có, xác định đầu mối phụ trách và xây dựng lịch thực hiện trước thời hạn pháp lý.",
+                'excerpt' => $post['excerpt'],
+                'content' => $post['content'],
                 'thumbnail' => $post['image'],
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
                 'published_at' => $publishedAt,
                 'meta_title' => $post['title'],
-                'meta_description' => 'Hướng dẫn thực tế về '.$post['title'].'.',
+                'meta_description' => $post['excerpt'],
             ]);
         }
     }

@@ -22,7 +22,7 @@
             </li>
             <li><span class="text-gray-400">/</span></li>
             <li class="current current-title text-primary font-semibold truncate max-w-xs sm:max-w-md">
-              Hướng Dẫn Thủ Tục Cấp Giấy Phép Môi Trường Mới Nhất Theo Luật BVMT 2020
+              {{ $post->title }}
             </li>
           </ul>
         </div>
@@ -40,7 +40,7 @@
                   >
                     <span
                       class="btn flex-0! btn-primary-2 border-primary/60! py-1.5! px-4! text-[13px]! font-bold shadow-md shadow-primary/20 hover:shadow-primary/60 rounded-full"
-                      >PHÁP LUẬT MÔI TRƯỜNG 2020</span
+                      >{{ $post->category?->name ?? 'PHÁP LUẬT MÔI TRƯỜNG' }}</span
                     >
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                   class="h2 font-bold text-foreground mb-5 mt-5"
                   itemprop="headline"
                 >
-                  Hướng Dẫn Thủ Tục Cấp Giấy Phép Môi Trường Mới Nhất Theo Luật BVMT 2020 &amp; Nghị Định 08/2022/NĐ-CP
+                  {{ $post->title }}
                 </h1>
 
                 <!-- Post Meta: Time & Views -->
@@ -80,7 +80,7 @@
                           d="M12 8v4l3 3M3.223 14A9 9 0 1 0 12 3a9 9 0 0 0-8.294 5.5M7 9H3V5"
                         />
                       </svg>
-                      <span class="date">15/08/2025</span>
+                      <span class="date">{{ $post->published_at ? $post->published_at->format('d/m/Y') : $post->created_at->format('d/m/Y') }}</span>
                     </div>
 
                     <div class="flex items-center gap-1.5 views-svg">
@@ -241,292 +241,16 @@
                     itemtype="https://schema.org/CreativeWork"
                     itemscope
                   >
+                    @if($post->excerpt)
                     <!-- Lead Paragraph -->
                     <p
                       class="text-base sm:text-lg leading-relaxed text-black"
                     >
-                      <em
-                        ><strong
-                          >Doanh nghiệp có thể tiếp cận nhiều kênh thông tin
-                          pháp lý môi trường, nhưng
-                          <span class="text-primary font-bold"
-                            >Giấy phép môi trường (GPMT)</span
-                          >
-                          là văn bản pháp lý tối quan trọng bắt buộc phải hoàn
-                          thành trước khi cơ sở đi vào hoạt động chính thức.
-                          Vì vậy,
-                          <a
-                            href="{{ route("home") }}"
-                            class="text-secondary font-bold hover:underline"
-                            >Môi Trường Bảo Châu</a
-                          >
-                          tập trung cung cấp giải pháp tư vấn kỹ thuật chuyên
-                          sâu, thẩm định hồ sơ chính xác, đảm bảo 100% hồ sơ
-                          được phê duyệt đúng tiến độ.</strong
-                        ></em
-                      >
+                      <em><strong>{{ $post->excerpt }}</strong></em>
                     </p>
+                    @endif
 
-                    <!-- Section 1 -->
-                    <h2 class="text-xl sm:text-2xl font-bold text-black">
-                      <span id="giay-phep-moi-truong-la-gi">
-                        Giấy phép môi trường là gì?
-                      </span>
-                    </h2>
-                    <p class="text-black">
-                      Theo quy định tại
-                      <strong
-                        >Khoản 8 Điều 3 Luật Bảo vệ Môi trường 2020</strong
-                      >: Giấy phép môi trường là văn bản do cơ quan quản lý
-                      nhà nước có thẩm quyền cấp cho tổ chức, cá nhân có hoạt
-                      động sản xuất, kinh doanh, dịch vụ được phép xả chất
-                      thải ra môi trường, quản lý chất thải, nhập khẩu phế
-                      liệu từ nước ngoài làm nguyên liệu sản xuất kèm theo yêu
-                      cầu, điều kiện về bảo vệ môi trường theo quy định của
-                      pháp luật.
-                    </p>
-                    <p class="text-black">
-                      Điểm mới đột phá của <strong>Luật BVMT 2020</strong> là
-                      tích hợp
-                      <strong>7 loại giấy phép môi trường thành phần</strong>
-                      trước đây (như Giấy phép xả nước thải, Giấy xác nhận
-                      hoàn thành công trình BVMT, Sổ chủ nguồn thải CTNH, Giấy
-                      phép xả khí thải,...) thành
-                      <strong>01 Giấy phép môi trường duy nhất</strong>.
-                    </p>
-
-                    <!-- Showcase Image -->
-                    <figure
-                      class="wp-caption aligncenter my-8 rounded-2xl overflow-hidden shadow-lg border border-black/5"
-                    >
-                      <img
-                        decoding="async"
-                        class="w-full h-auto object-cover"
-                        src="{{ asset("assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png") }}"
-                        alt="Giấy phép môi trường Luật 2020"
-                        width="1024"
-                        height="576"
-                      />
-                      <figcaption
-                        class="wp-caption-text text-center text-xs text-black py-2 bg-gray-50 font-medium"
-                      >
-                        Hồ sơ đề nghị cấp Giấy phép môi trường theo Nghị định
-                        08/2022/NĐ-CP
-                      </figcaption>
-                    </figure>
-
-                    <!-- Section 2 -->
-                    <h2 class="text-xl sm:text-2xl font-bold text-black">
-                      <span
-                        id="vi-sao-doanh-nghiep-can-giay-phep-moi-truong"
-                      >
-                        Vì sao doanh nghiệp cần hoàn thiện Giấy phép môi
-                        trường?
-                      </span>
-                    </h2>
-                    <p class="text-black">
-                      Giấy phép môi trường giúp doanh nghiệp xây dựng nền tảng
-                      pháp lý vững chắc, an tâm sản xuất kinh doanh và đáp ứng
-                      các tiêu chuẩn khắt khe từ chuỗi cung ứng toàn cầu.
-                    </p>
-                    <ul class="space-y-2 list-disc pl-5 text-black">
-                      <li>
-                        Hợp thức hóa hồ sơ pháp lý để nghiệm thu xây dựng và
-                        đưa dự án vào vận hành chính thức.
-                      </li>
-                      <li>
-                        Tránh bị xử phạt vi phạm hành chính (mức phạt có thể
-                        lên đến 1.000.000.000 VNĐ theo Nghị định
-                        45/2022/NĐ-CP).
-                      </li>
-                      <li>
-                        Đáp ứng tiêu chuẩn đánh giá nhà máy từ các đối tác FDI
-                        và khách hàng quốc tế.
-                      </li>
-                      <li>
-                        Được chuyên gia tư vấn tối ưu hóa quy trình xử lý chất
-                        thải, tiết kiệm chi phí năng lượng và bảo vệ môi
-                        trường.
-                      </li>
-                    </ul>
-
-                    <!-- Section 3 -->
-                    <h2 class="text-xl sm:text-2xl font-bold text-black">
-                      <span
-                        id="doi-tuong-bat-buoc-phai-co-giay-phep-moi-truong"
-                      >
-                        Đối tượng bắt buộc phải có Giấy phép môi trường
-                      </span>
-                    </h2>
-                    <p class="text-black">
-                      Căn cứ <strong>Điều 39 Luật BVMT 2020</strong>, các đối
-                      tượng sau bắt buộc phải có Giấy phép môi trường:
-                    </p>
-                    <div class="space-y-3 my-4 text-black">
-                      <p>
-                        <strong
-                          >1. Dự án đầu tư Nhóm I, Nhóm II và Nhóm
-                          III:</strong
-                        >
-                        Có phát sinh nước thải, bụi, khí thải xả ra môi trường
-                        phải được xử lý hoặc có phát sinh chất thải nguy hại
-                        phải được quản lý.
-                      </p>
-                      <p>
-                        <strong
-                          >2. Cơ sở sản xuất, kinh doanh, dịch vụ đang hoạt
-                          động:</strong
-                        >
-                        Có tiêu chí về môi trường tương đương dự án Nhóm I,
-                        Nhóm II và Nhóm III.
-                      </p>
-                    </div>
-
-                    <!-- Section 4: Table -->
-                    <h2 class="text-xl sm:text-2xl font-bold text-black">
-                      <span
-                        id="tham-quyen-tham-dinh-cap-giay-phep-moi-truong"
-                      >
-                        Thẩm quyền thẩm định &amp; cấp Giấy phép môi
-                        trường
-                      </span>
-                    </h2>
-                    <div
-                      class="overflow-x-auto my-4 rounded-xl border border-gray-200"
-                    >
-                      <table
-                        class="w-full text-left text-xs sm:text-sm border-collapse text-black"
-                      >
-                        <thead class="bg-gray-100 text-black font-bold">
-                          <tr>
-                            <th class="p-3 border border-gray-200">
-                              Cơ Quan Cấp Phép
-                            </th>
-                            <th class="p-3 border border-gray-200">
-                              Nhóm Dự Án Phụ Trách
-                            </th>
-                            <th class="p-3 border border-gray-200">
-                              Thời Gian Thẩm Định
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                          <tr>
-                            <td
-                              class="p-3 font-bold text-primary border border-gray-200"
-                            >
-                              Bộ TN&amp;MT
-                            </td>
-                            <td class="p-3 border border-gray-200 text-black">
-                              Dự án Nhóm I nguy cơ cao, dự án liên tỉnh, dự án
-                              cấp Bộ phê duyệt ĐTM
-                            </td>
-                            <td
-                              class="p-3 font-semibold border border-gray-200 text-black"
-                            >
-                              45 ngày làm việc
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              class="p-3 font-bold text-primary border border-gray-200"
-                            >
-                              UBND Cấp Tỉnh / Sở TN&amp;MT
-                            </td>
-                            <td class="p-3 border border-gray-200 text-black">
-                              Dự án Nhóm II và Nhóm III nằm trên địa bàn 2
-                              huyện trở lên
-                            </td>
-                            <td
-                              class="p-3 font-semibold border border-gray-200 text-black"
-                            >
-                              30 ngày làm việc
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
-                              class="p-3 font-bold text-primary border border-gray-200"
-                            >
-                              UBND Cấp Huyện
-                            </td>
-                            <td class="p-3 border border-gray-200 text-black">
-                              Dự án Nhóm III còn lại nằm trên địa bàn 1 huyện
-                            </td>
-                            <td
-                              class="p-3 font-semibold border border-gray-200 text-black"
-                            >
-                              20 ngày làm việc
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <!-- Section 5: Process -->
-                    <h2 class="text-xl sm:text-2xl font-bold text-black">
-                      <span id="quy-trinh-tu-van-tron-goi-tai-bao-chau">
-                        Quy trình tư vấn trọn gói tại Môi Trường Bảo Châu
-                      </span>
-                    </h2>
-                    <div class="space-y-4 my-4 text-black">
-                      <h3
-                        id="khao-sat-muc-tieu-va-yeu-cau"
-                        class="font-bold text-base text-black"
-                      >
-                        1. Khảo sát mục tiêu &amp; Đo đạc hiện trạng
-                      </h3>
-                      <p class="text-sm text-black">
-                        Đội ngũ kỹ sư khảo sát thực tế, lấy mẫu phân tích các
-                        nguồn thải nước thải, khí thải và kiểm tra hiện trạng
-                        công trình BVMT.
-                      </p>
-
-                      <h3
-                        id="xay-dung-bao-cao-ky-thuat"
-                        class="font-bold text-base text-black"
-                      >
-                        2. Lập báo cáo kỹ thuật đề xuất cấp phép
-                      </h3>
-                      <p class="text-sm text-black">
-                        Tính toán tải lượng phát thải, hoàn thiện thuyết minh
-                        báo cáo theo đúng mẫu chuẩn Phụ lục Nghị định
-                        08/2022/NĐ-CP.
-                      </p>
-
-                      <h3
-                        id="tham-van-cong-dong-nop-ho-so"
-                        class="font-bold text-base text-black"
-                      >
-                        3. Tham vấn cộng đồng &amp; Nộp hồ sơ
-                      </h3>
-                      <p class="text-sm text-black">
-                        Đăng tải tham vấn trên cổng thông tin điện tử, nộp hồ
-                        sơ tại bộ phận một cửa của Cơ quan có thẩm quyền.
-                      </p>
-
-                      <h3
-                        id="bao-ve-hoi-dong-tham-dinh"
-                        class="font-bold text-base text-black"
-                      >
-                        4. Bảo vệ trước Hội đồng thẩm định
-                      </h3>
-                      <p class="text-sm text-black">
-                        Đại diện chủ đầu tư thuyết minh kỹ thuật, cùng đoàn
-                        kiểm tra thực tế nhà máy và giải trình bổ sung theo
-                        biên bản họp.
-                      </p>
-
-                      <h3
-                        id="ban-giao-giay-phep-huong-dan"
-                        class="font-bold text-base text-black"
-                      >
-                        5. Bàn giao Giấy phép &amp; Hướng dẫn vận hành
-                      </h3>
-                      <p class="text-sm text-black">
-                        Nhận Giấy phép môi trường gốc đóng dấu chính thức và
-                        bàn giao tận tay khách hàng.
-                      </p>
-                    </div>
+                    {!! $post->content !!}
 
                     <!-- Author Box -->
                     <section
@@ -843,11 +567,11 @@
               </a>
             </div>
 
-            <!-- 3 Post Cards Chuẩn Style service-detail -->
+            <!-- Related Post Cards -->
             <div
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full"
             >
-              <!-- Card 1: Báo Cáo ĐTM -->
+              @foreach($relatedPosts as $relPost)
               <div
                 class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
               >
@@ -856,22 +580,22 @@
                 >
                   <a
                     class="block w-full h-full c-scale-effect"
-                    href="{{ route("posts.index") }}"
-                    aria-label="Quy Trình Lập Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)"
+                    href="{{ route('posts.show', $relPost->slug) }}"
+                    aria-label="{{ $relPost->title }}"
                   >
                     <img
-                      src="{{ asset("assets/images/1-768x427.png") }}"
+                      src="{{ str_starts_with($relPost->thumbnail ?? '', 'http') ? $relPost->thumbnail : (str_starts_with($relPost->thumbnail ?? '', 'uploads/') ? asset('storage/' . $relPost->thumbnail) : asset('assets/images/' . ($relPost->thumbnail ?: '1-768x427.png'))) }}"
                       class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       width="1024"
                       height="683"
-                      alt="Báo Cáo ĐTM"
+                      alt="{{ $relPost->title }}"
                       loading="lazy"
                     />
                   </a>
                   <span
                     class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
                   >
-                    Luật BVMT 2020
+                    {{ $relPost->category?->name ?? 'Luật BVMT 2020' }}
                   </span>
                 </div>
                 <div class="p-content flex flex-col flex-1 justify-between">
@@ -881,39 +605,34 @@
                     >
                       <span
                         class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Hồ sơ pháp lý</span
-                      >
-                      <span class="text-xs text-black font-medium"
-                        >Pháp luật MT</span
+                        >{{ $relPost->category?->name ?? 'Hồ sơ pháp lý' }}</span
                       >
                     </div>
                     <a
                       class="c-hover block"
-                      href="{{ route("posts.index") }}"
-                      title="Quy Trình Lập Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)"
+                      href="{{ route('posts.show', $relPost->slug) }}"
+                      title="{{ $relPost->title }}"
                     >
                       <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
+                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug line-clamp-2"
                       >
-                        Quy Trình Lập Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)
+                        {{ $relPost->title }}
                       </h3>
                     </a>
                     <p
                       class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
                     >
-                      Tư vấn lập báo cáo ĐTM thẩm định cấp Bộ Tài nguyên &amp;
-                      Môi trường và UBND cấp tỉnh cho dự án công nghiệp, hạ
-                      tầng.
+                      {{ $relPost->excerpt }}
                     </p>
                   </div>
                   <div
                     class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
                   >
                     <span class="text-xs text-black font-medium truncate"
-                      >Cơ quan: Bộ TN&amp;MT / UBND Tỉnh</span
+                      >{{ $relPost->published_at ? $relPost->published_at->format('d/m/Y') : '' }}</span
                     >
                     <a
-                      href="{{ route("posts.index") }}"
+                      href="{{ route('posts.show', $relPost->slug) }}"
                       class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
                     >
                       Xem chi tiết
@@ -934,179 +653,7 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Card 2: Kiểm Kê Khí Nhà Kính & Báo Cáo ESG -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="{{ route("posts.index") }}"
-                    aria-label="Kiểm Kê Phát Thải Khí Nhà Kính Chuẩn ISO 14064-1"
-                  >
-                    <img
-                      src="{{ asset("assets/images/Bai-Dang-Bao-Chau-1024x572.png") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="572"
-                      alt="Kiểm kê Khí nhà kính"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    ISO 14064-1
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Khí nhà kính &amp; ESG</span
-                      >
-                      <span class="text-xs text-black font-medium"
-                        >Tiêu chuẩn quốc tế</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="{{ route("posts.index") }}"
-                      title="Kiểm Kê Phát Thải Khí Nhà Kính Chuẩn ISO 14064-1"
-                    >
-                      <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Kiểm Kê Phát Thải Khí Nhà Kính Chuẩn ISO 14064-1
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
-                    >
-                      Đo đạc, tính toán dấu chân carbon phạm vi 1, 2, 3 và xây
-                      dựng chiến lược báo cáo ESG theo khung quốc tế GRI, CDP.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Tiêu chuẩn: GHG Protocol / ISO</span
-                    >
-                    <a
-                      href="{{ route("posts.index") }}"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Xem chi tiết
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 3: Cơ Chế CBAM Châu Âu -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="{{ route("posts.index") }}"
-                    aria-label="Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU"
-                  >
-                    <img
-                      src="{{ asset("assets/images/6-768x429.png") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="640"
-                      alt="Cơ Chế CBAM"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    CBAM EU 2026
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Cơ Chế CBAM</span
-                      >
-                      <span class="text-xs text-black font-medium"
-                        >Xuất khẩu EU</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="{{ route("posts.index") }}"
-                      title="Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU"
-                    >
-                      <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
-                    >
-                      Cẩm nang thu thập số liệu phát thải và xây dựng báo cáo CBAM định kỳ nộp cơ quan chức năng EU tránh nguy cơ bị áp thuế carbon cao.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Thị trường: Châu Âu (EU)</span
-                    >
-                    <a
-                      href="{{ route("posts.index") }}"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Xem chi tiết
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
         </section>

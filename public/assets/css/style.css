@@ -659,4 +659,149 @@
   flex-shrink: 0 !important;
 }
 
+/* ==========================================================================
+   Article & Service Rich Content Typography & Table Styling (Entry Content)
+   ========================================================================== */
+.entry-content {
+  color: #1f2937;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.entry-content h2 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.35 !important;
+}
+
+@media (min-width: 640px) {
+  .entry-content h2 {
+    font-size: 1.75rem !important;
+  }
+}
+
+.entry-content h3 {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.4 !important;
+}
+
+.entry-content h4 {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.entry-content p {
+  margin-bottom: 1.25rem !important;
+  line-height: 1.75 !important;
+  color: #1f2937 !important;
+}
+
+.entry-content strong {
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.entry-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.entry-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.entry-content li {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Rich Tables with standard borders, padding, headers & zebra striping */
+.entry-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+  font-size: 0.875rem !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+  display: table !important;
+}
+
+.entry-content th {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+  font-weight: 700 !important;
+  padding: 0.75rem 1rem !important;
+  border: 1px solid #e5e7eb !important;
+  text-align: left !important;
+}
+
+.entry-content td {
+  padding: 0.75rem 1rem !important;
+  border: 1px solid #e5e7eb !important;
+  color: #1f2937 !important;
+  vertical-align: middle !important;
+}
+
+.entry-content tbody tr:nth-child(even) {
+  background-color: #f9fafb !important;
+}
+
+.entry-content tbody tr:hover {
+  background-color: #f3f4f6 !important;
+}
+
+/* Figures, captions & images */
+.entry-content figure,
+.entry-content .wp-caption {
+  margin: 2rem auto !important;
+  border-radius: 1rem !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08) !important;
+  max-width: 100% !important;
+}
+
+.entry-content figure img,
+.entry-content .wp-caption img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: cover !important;
+}
+
+.entry-content figcaption,
+.entry-content .wp-caption-text {
+  text-align: center !important;
+  font-size: 0.8125rem !important;
+  padding: 0.5rem 1rem !important;
+  background-color: #f9fafb !important;
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+}
+
+.entry-content blockquote {
+  border-left: 4px solid #059669 !important;
+  background-color: #f0fdf4 !important;
+  padding: 1rem 1.25rem !important;
+  border-radius: 0.5rem !important;
+  margin: 1.5rem 0 !important;
+  font-style: italic !important;
+  color: #166534 !important;
+}
+
 
