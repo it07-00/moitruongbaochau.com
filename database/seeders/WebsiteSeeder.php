@@ -283,13 +283,105 @@ HTML;
 
     private function seedProjects(CarbonInterface $publishedAt): void
     {
+        $projectDetailContent = <<<'HTML'
+<h2><span id="tong-quan-du-an">Tổng quan dự án &amp; Phạm vi thực hiện</span></h2>
+<p>Dự án được triển khai nhằm đảm bảo tính tuân thủ pháp luật môi trường theo Luật BVMT 2020 và các quy chuẩn kỹ thuật quốc gia. Môi Trường Bảo Châu đã trực tiếp khảo sát thực địa, lập báo cáo chuyên sâu và bảo vệ thành công trước Hội đồng thẩm định.</p>
+<p>Công trình đi vào vận hành giúp doanh nghiệp kiểm soát 100% rủi ro phát tán ô nhiễm và tối ưu chi phí vận hành bảo dưỡng.</p>
+
+<figure class="wp-caption aligncenter my-8 rounded-2xl overflow-hidden shadow-lg border border-black/5">
+  <img decoding="async" class="w-full h-auto object-cover" src="/assets/images/Bai-Dang-Bao-Chau-1024x572.png" alt="Quy trình thực hiện dự án môi trường Bảo Châu" width="1024" height="572" />
+  <figcaption class="wp-caption-text text-center text-xs text-black py-2 bg-gray-50 font-medium">Hồ sơ và quy trình kỹ thuật nghiệm thu dự án</figcaption>
+</figure>
+
+<h2><span id="giai-phap-ky-thuat">Giải pháp kỹ thuật &amp; Điểm nổi bật</span></h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 text-black">
+  <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+    <p class="font-bold text-primary text-sm mb-1">1. Tối ưu xử lý phát thải</p>
+    <p class="text-xs text-gray-600">Ứng dụng công nghệ xử lý tuần hoàn, giảm tải lượng xả thải và tiết kiệm chi phí hóa chất.</p>
+  </div>
+  <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+    <p class="font-bold text-primary text-sm mb-1">2. Kiểm soát khí thải &amp; Mùi</p>
+    <p class="text-xs text-gray-600">Hệ thống chụp hút cục bộ kết hợp lọc than hoạt tính khử mùi và bụi triệt để.</p>
+  </div>
+  <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+    <p class="font-bold text-primary text-sm mb-1">3. Quản lý chất thải nguy hại</p>
+    <p class="text-xs text-gray-600">Quy hoạch kho lưu giữ CTNH đạt chuẩn Thông tư 02/2022/TT-BTNMT.</p>
+  </div>
+  <div class="p-4 rounded-xl bg-gray-50 border border-gray-100">
+    <p class="font-bold text-primary text-sm mb-1">4. Giám sát tự động</p>
+    <p class="text-xs text-gray-600">Thiết lập hệ thống quan trắc và cảnh báo tự động khi có biến động thông số.</p>
+  </div>
+</div>
+
+<h2><span id="ket-qua-dat-duoc">Kết quả đạt được &amp; Cam kết</span></h2>
+<ul class="space-y-2 list-disc pl-5 text-black">
+  <li>100% Hồ sơ được phê duyệt và nghiệm thu đúng tiến độ cam kết.</li>
+  <li>Đồng hành hỗ trợ kỹ thuật và giải trình thanh tra môi trường trọn đời dự án.</li>
+  <li>Cung cấp đầy đủ báo cáo giám sát định kỳ theo quy định pháp luật.</li>
+</ul>
+HTML;
+
         $projects = [
-            ['title' => 'Giấy phép môi trường Nhà máy BERICAP Việt Nam', 'slug' => 'giay-phep-moi-truong-bericap-viet-nam', 'category' => 'giay-phep', 'client' => 'BERICAP Việt Nam', 'image' => 'BERICAP.jpg'],
-            ['title' => 'Tư vấn môi trường cho PEPSICO', 'slug' => 'tu-van-moi-truong-pepsico', 'category' => 'quan-trac', 'client' => 'PEPSICO', 'image' => 'PEPSICO.jpg'],
-            ['title' => 'Hồ sơ môi trường Công ty Tân Tiến', 'slug' => 'ho-so-moi-truong-tan-tien', 'category' => 'giay-phep', 'client' => 'Công ty Tân Tiến', 'image' => 'CTY-TAN-TIEN-1024x640.png'],
-            ['title' => 'Quan trắc môi trường Công ty Bảo Bì Thành Tiến', 'slug' => 'quan-trac-moi-truong-bao-bi-thanh-tien', 'category' => 'quan-trac', 'client' => 'Bảo Bì Thành Tiến', 'image' => 'baobithanhtien.png'],
-            ['title' => 'Kiểm kê khí nhà kính Bidrico', 'slug' => 'kiem-ke-khi-nha-kinh-bidrico', 'category' => 'khi-nha-kinh', 'client' => 'Bidrico', 'image' => 'bidrico.png'],
-            ['title' => 'Giải pháp xử lý môi trường BreadTalk Việt Nam', 'slug' => 'giai-phap-moi-truong-breadtalk', 'category' => 'xu-ly-nuoc', 'client' => 'BreadTalk Việt Nam', 'image' => 'breadtalkvietnam.png'],
+            [
+                'title' => 'Giấy phép môi trường Nhà máy BERICAP Việt Nam',
+                'slug' => 'giay-phep-moi-truong-bericap-viet-nam',
+                'category' => 'giay-phep',
+                'client' => 'Tập đoàn BERICAP (Đức)',
+                'location' => 'KCN Long Thành, Đồng Nai',
+                'image' => 'BERICAP.jpg',
+                'summary' => 'Tư vấn hoàn thiện hồ sơ đề xuất cấp Giấy phép môi trường cấp Bộ Tài nguyên và Môi trường cho nhà máy sản xuất bao bì nhựa định hình 25.000 m².',
+                'content' => $projectDetailContent,
+            ],
+            [
+                'title' => 'Kiểm Kê Khí Nhà Kính Chuẩn ISO 14064-1 Cho PepsiCo',
+                'slug' => 'tu-van-moi-truong-pepsico',
+                'category' => 'quan-trac',
+                'client' => 'Suntory PepsiCo Việt Nam',
+                'location' => 'KCN VSIP 1, Bình Dương',
+                'image' => 'PEPSICO.jpg',
+                'summary' => 'Tư vấn thiết lập hệ thống kiểm kê phát thải khí nhà kính phạm vi 1 & 2 theo chuẩn quốc tế ISO 14064-1 cho các nhà máy nước giải khát.',
+                'content' => $projectDetailContent,
+            ],
+            [
+                'title' => 'Báo Cáo ĐTM Mở Rộng Nhà Máy Bao Bì Nhựa Tân Tiến',
+                'slug' => 'ho-so-moi-truong-tan-tien',
+                'category' => 'giay-phep',
+                'client' => 'Bao Bì Nhựa Tân Tiến',
+                'location' => 'KCN Tân Bình, TP. Hồ Chí Minh',
+                'image' => 'CTY-TAN-TIEN.png',
+                'summary' => 'Lập báo cáo đánh giá tác động môi trường mở rộng quy mô sản xuất bao bì phức hợp công suất 50.000 tấn/năm, bảo vệ thành công trước Sở TN&MT.',
+                'content' => $projectDetailContent,
+            ],
+            [
+                'title' => 'Quan trắc môi trường Nhà máy Bao Bì Thành Tiến',
+                'slug' => 'quan-trac-moi-truong-bao-bi-thanh-tien',
+                'category' => 'quan-trac',
+                'client' => 'Bao Bì Thành Tiến',
+                'location' => 'Tân Phú, TP. Hồ Chí Minh',
+                'image' => 'baobithanhtien.png',
+                'summary' => 'Thực hiện đo kiểm môi trường lao động và quan trắc khí thải, nước thải định kỳ 4 đợt/năm cho chuỗi xưởng in ấn sản xuất bao bì.',
+                'content' => $projectDetailContent,
+            ],
+            [
+                'title' => 'Kiểm kê khí nhà kính & Lộ trình giảm phát thải Bidrico',
+                'slug' => 'kiem-ke-khi-nha-kinh-bidrico',
+                'category' => 'khi-nha-kinh',
+                'client' => 'Tân Quang Minh (Bidrico)',
+                'location' => 'KCN Vĩnh Lộc, TP. Hồ Chí Minh',
+                'image' => 'bidrico.png',
+                'summary' => 'Tính toán lượng phát thải Scope 1, 2 và tư vấn lộ trình chuyển đổi năng lượng xanh, thu hồi nhiệt thải cho cụm nhà máy đồ uống.',
+                'content' => $projectDetailContent,
+            ],
+            [
+                'title' => 'Hệ thống xử lý nước thải sinh hoạt BreadTalk Việt Nam',
+                'slug' => 'giai-phap-moi-truong-breadtalk',
+                'category' => 'xu-ly-nuoc',
+                'client' => 'BreadTalk Việt Nam',
+                'location' => 'Bình Tân, TP. Hồ Chí Minh',
+                'image' => 'breadtalkvietnam.png',
+                'summary' => 'Thiết kế, thi công và chuyển giao công nghệ module tách dầu mỡ kết hợp xử lý vi sinh nước thải chế biến bánh kẹo đạt chuẩn QCVN.',
+                'content' => $projectDetailContent,
+            ],
         ];
 
         foreach ($projects as $project) {
@@ -297,16 +389,16 @@ HTML;
                 'title' => $project['title'],
                 'category' => $project['category'],
                 'client' => $project['client'],
-                'location' => 'Việt Nam',
-                'summary' => 'Dự án được triển khai theo phạm vi, tiến độ và yêu cầu tuân thủ đã thống nhất với khách hàng.',
-                'content' => "Bảo Châu thực hiện khảo sát, tổng hợp dữ liệu và kiểm soát chất lượng hồ sơ trước khi bàn giao.\n\nKết quả dự án giúp doanh nghiệp chủ động nghĩa vụ pháp lý và duy trì hoạt động ổn định.",
+                'location' => $project['location'] ?? 'Toàn Quốc',
+                'summary' => $project['summary'],
+                'content' => $project['content'],
                 'thumbnail' => $project['image'],
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
                 'published_at' => $publishedAt,
                 'completed_at' => today(),
-                'meta_title' => $project['title'],
-                'meta_description' => 'Dự án '.$project['title'].' do Môi Trường Bảo Châu thực hiện.',
+                'meta_title' => $project['title'].' - Môi Trường Bảo Châu',
+                'meta_description' => $project['summary'],
             ]);
         }
     }

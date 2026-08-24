@@ -60,29 +60,13 @@
   <div class="menu-outer flex-1 overflow-y-auto px-4 py-2">
     <ul id="menu-29035c419b" class="menu vertical vertical-menu mobile-menu flex flex-col gap-1 text-[14.5px]">
       <li>
-        <a href="{{ route('about') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Về chúng tôi</a>
+        <a href="{{ route('home') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Trang chủ</a>
+      </li>
+      <li>
+        <a href="{{ route('about') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Giới thiệu</a>
       </li>
 
-      <!-- Accordion 1: Hồ sơ & Giấy phép MT -->
-      <li class="has-submenu">
-        <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
-          <span>Hồ sơ & Giấy phép MT</span>
-          <svg class="submenu-chevron size-4 w-4 h-4 text-gray-400 transition-transform duration-200" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button>
-        <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Báo Cáo ĐTM (Luật 2020)</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Giấy Phép Môi Trường Cơ Sở</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Đăng Ký Môi Trường Cấp Xã/Huyện</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Báo Cáo BVMT Định Kỳ Hàng Năm</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Ứng Phó Sự Cố MT & Hóa Chất</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Quan Trắc Môi Trường Lao Động</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Lập Bản Đồ Tiếng Ồn (Noise Map)</a></li>
-        </ul>
-      </li>
-
-      <!-- Accordion 2: Dịch vụ môi trường -->
+      <!-- Accordion: Dịch vụ môi trường (Gộp Hồ sơ GP MT & Dịch vụ môi trường) -->
       <li class="has-submenu">
         <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
           <span>Dịch vụ môi trường</span>
@@ -91,14 +75,24 @@
           </svg>
         </button>
         <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Kiểm Kê Khí Nhà Kính (ISO 14064)</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Tư Vấn Cơ Chế CBAM Châu Âu</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Đánh Giá Vòng Đời Sản Phẩm (LCA)</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Tư Vấn Báo Cáo Bền Vững ESG</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Thiết Kế Trạm Xử Lý Nước Thải</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Hệ Thống Xử Lý Khí Thải & Bụi</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Thu Gom & Quản Lý Chất Thải</a></li>
-          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Cung Cấp Hóa Chất & Vi Sinh MT</a></li>
+          <li class="pt-1 pb-0.5"><span class="block px-2 text-[11.5px] font-bold uppercase tracking-wider text-primary">Hồ sơ pháp lý</span></li>
+          <li><a href="{{ route('services.show', 'bao-cao-danh-gia-tac-dong-moi-truong') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Báo Cáo ĐTM (Luật BVMT 2020)</a></li>
+          <li><a href="{{ route('services.show', 'giay-phep-moi-truong') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Giấy Phép Môi Trường Cơ Sở</a></li>
+          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Đăng Ký Môi Trường Cấp Xã/Huyện</a></li>
+          <li><a href="{{ route('services.show', 'quan-trac-moi-truong-dinh-ky') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Báo Cáo BVMT Định Kỳ Hàng Năm</a></li>
+          <li><a href="{{ route('services.show', 'quan-trac-moi-truong-lao-dong') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Quan Trắc Môi Trường Lao Động</a></li>
+
+          <li class="pt-2.5 pb-0.5"><span class="block px-2 text-[11.5px] font-bold uppercase tracking-wider text-primary">Khí hậu & ESG</span></li>
+          <li><a href="{{ route('services.show', 'kiem-ke-khi-nha-kinh') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Kiểm Kê Khí Nhà Kính (ISO 14064)</a></li>
+          <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Tư Vấn Cơ Chế CBAM Châu Âu</a></li>
+          <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Đánh Giá Vòng Đời Sản Phẩm (LCA)</a></li>
+          <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Tư Vấn Báo Cáo Bền Vững ESG</a></li>
+
+          <li class="pt-2.5 pb-0.5"><span class="block px-2 text-[11.5px] font-bold uppercase tracking-wider text-primary">Công nghệ & Xử lý</span></li>
+          <li><a href="{{ route('services.show', 'xu-ly-nuoc-thai') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Thiết Kế Trạm Xử Lý Nước Thải</a></li>
+          <li><a href="{{ route('services.show', 'xu-ly-khi-thai-cong-nghiep') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Hệ Thống Xử Lý Khí Thải & Bụi</a></li>
+          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Thu Gom & Quản Lý Chất Thải</a></li>
+          <li><a href="{{ route('services.index') }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Cung Cấp Hóa Chất & Vi Sinh MT</a></li>
         </ul>
       </li>
 
@@ -106,7 +100,7 @@
         <a href="{{ route('projects.index') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Dự án</a>
       </li>
 
-      <!-- Accordion 3: Tin tức & Pháp luật -->
+      <!-- Accordion 2: Tin tức & Pháp luật -->
       <li class="has-submenu">
         <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
           <span>Tin tức & Pháp luật</span>
@@ -115,11 +109,11 @@
           </svg>
         </button>
         <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
-          <li><a href="{{ route('posts.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Luật Bảo Vệ Môi Trường 2020</a></li>
-          <li><a href="{{ route('posts.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Nghị định 08/2022/NĐ-CP Hướng Dẫn</a></li>
-          <li><a href="{{ route('posts.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Cẩm Nang Kiểm Kê Khí Nhà Kính</a></li>
-          <li><a href="{{ route('posts.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Khai Báo CBAM Xuất Khẩu EU</a></li>
-          <li><a href="{{ route('posts.index') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Công Nghệ Xử Lý Nước Thải</a></li>
+          <li><a href="{{ route('posts.show', 'quy-dinh-moi-ve-giay-phep-moi-truong-theo-luat-bvmt-2020') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Luật Bảo Vệ Môi Trường 2020</a></li>
+          <li><a href="{{ route('posts.show', 'quy-dinh-moi-ve-giay-phep-moi-truong-theo-luat-bvmt-2020') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Nghị định 08/2022/NĐ-CP Hướng Dẫn</a></li>
+          <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Cẩm Nang Kiểm Kê Khí Nhà Kính</a></li>
+          <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Khai Báo CBAM Xuất Khẩu EU</a></li>
+          <li><a href="{{ route('posts.show', 'giai-phap-toi-uu-hoa-he-thong-xu-ly-nuoc-thai-cong-nghiep') }}" class="mobile-nav-link block py-2 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">Công Nghệ Xử Lý Nước Thải</a></li>
         </ul>
       </li>
 
@@ -181,30 +175,15 @@
               data-autohide="true"
             >
               <li>
-                <a href="{{ route('about') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Về chúng tôi</a>
+                <a href="{{ route('home') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Trang chủ</a>
               </li>
 
-              <li class="col-2 menu-mega">
-                <a href="{{ route('services.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 gap-1">
-                  Hồ sơ & GP MT
-                  <svg class="size-3.5 w-3.5 h-3.5 opacity-60" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </a>
-                <ul class="submenu vertical menu">
-                  <li>
-                    <a href="{{ route('services.index') }}" class="text-[14.5px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Hồ sơ pháp lý môi trường</a>
-                    <ul class="submenu vertical menu">
-                      <li><a href="{{ route('services.index') }}" title="Báo Cáo ĐTM">Báo Cáo ĐTM (Luật BVMT 2020)</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Giấy Phép Môi Trường">Giấy Phép Môi Trường Cơ Sở</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Đăng Ký Môi Trường">Đăng Ký Môi Trường Cấp Huyện/Xã</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Báo Cáo Công Tác BVMT Định Kỳ">Báo Cáo Công Tác BVMT Định Kỳ</a></li>
-                    </ul>
-                  </li>
-                </ul>
+              <li>
+                <a href="{{ route('about') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Giới thiệu</a>
               </li>
 
-              <li class="col-2 menu-mega">
+              <!-- Gộp Hồ sơ & GP MT + Dịch vụ môi trường thành 1 Mega Menu 3 Cột -->
+              <li class="col-3 menu-mega">
                 <a href="{{ route('services.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 gap-1">
                   Dịch vụ môi trường
                   <svg class="size-3.5 w-3.5 h-3.5 opacity-60" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -213,23 +192,33 @@
                 </a>
                 <ul class="submenu vertical menu">
                   <li>
+                    <a href="{{ route('services.index') }}" class="text-[14.5px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Hồ sơ pháp lý môi trường</a>
+                    <ul class="submenu vertical menu">
+                      <li><a href="{{ route('services.show', 'bao-cao-danh-gia-tac-dong-moi-truong') }}" title="Báo Cáo ĐTM">Báo Cáo ĐTM (Luật BVMT 2020)</a></li>
+                      <li><a href="{{ route('services.show', 'giay-phep-moi-truong') }}" title="Giấy Phép Môi Trường">Giấy Phép Môi Trường Cơ Sở</a></li>
+                      <li><a href="{{ route('services.index') }}" title="Đăng Ký Môi Trường">Đăng Ký Môi Trường Cấp Huyện/Xã</a></li>
+                      <li><a href="{{ route('services.show', 'quan-trac-moi-truong-dinh-ky') }}" title="Báo Cáo Công Tác BVMT Định Kỳ">Báo Cáo Công Tác BVMT Định Kỳ</a></li>
+                      <li><a href="{{ route('services.show', 'quan-trac-moi-truong-lao-dong') }}" title="Quan Trắc MT Lao Động">Quan Trắc Môi Trường Lao Động</a></li>
+                    </ul>
+                  </li>
+                  <li>
                     <a href="{{ route('services.index') }}" class="text-[14.5px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Khí hậu & Chuyển đổi xanh</a>
                     <ul class="submenu vertical menu">
-                      <li><a href="{{ route('services.index') }}" title="Kiểm Kê Khí Nhà Kính">Kiểm Kê Khí Nhà Kính (ISO 14064)</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Tư Vấn Cơ Chế CBAM EU">Tư Vấn Cơ Chế CBAM Xuất Khẩu EU</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Đánh Giá Vòng Đời LCA">Đánh Giá Vòng Đời Sản Phẩm (LCA)</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Chiến Lược ESG">Tư Vấn & Báo Cáo Phát Triển ESG</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Tín Chỉ Carbon">Tư Vấn Dự Án Tín Chỉ Carbon</a></li>
+                      <li><a href="{{ route('services.show', 'kiem-ke-khi-nha-kinh') }}" title="Kiểm Kê Khí Nhà Kính">Kiểm Kê Khí Nhà Kính (ISO 14064)</a></li>
+                      <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" title="Tư Vấn Cơ Chế CBAM EU">Tư Vấn Cơ Chế CBAM Xuất Khẩu EU</a></li>
+                      <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" title="Đánh Giá Vòng Đời LCA">Đánh Giá Vòng Đời Sản Phẩm (LCA)</a></li>
+                      <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" title="Chiến Lược ESG">Tư Vấn & Báo Cáo Phát Triển ESG</a></li>
+                      <li><a href="{{ route('services.show', 'kiem-ke-khi-nha-kinh') }}" title="Tín Chỉ Carbon">Tư Vấn Dự Án Tín Chỉ Carbon</a></li>
                     </ul>
                   </li>
                   <li>
                     <a href="{{ route('services.index') }}" class="text-[14.5px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Công nghệ & Xử lý MT</a>
                     <ul class="submenu vertical menu">
-                      <li><a href="{{ route('services.index') }}" title="Xử Lý Nước Thải">Hệ Thống Xử Lý Nước Thải</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Xử Lý Khí Thải & Bụi">Hệ Thống Xử Lý Khí Thải & Bụi</a></li>
+                      <li><a href="{{ route('services.show', 'xu-ly-nuoc-thai') }}" title="Xử Lý Nước Thải">Hệ Thống Xử Lý Nước Thải</a></li>
+                      <li><a href="{{ route('services.show', 'xu-ly-khi-thai-cong-nghiep') }}" title="Xử Lý Khí Thải & Bụi">Hệ Thống Xử Lý Khí Thải & Bụi</a></li>
                       <li><a href="{{ route('services.index') }}" title="Quản Lý Chất Thải">Thu Gom & Xử Lý Chất Thải Nguy Hại</a></li>
                       <li><a href="{{ route('services.index') }}" title="Men Vi Sinh & Hóa Chất MT">Cung Cấp Men Vi Sinh & Hóa Chất</a></li>
-                      <li><a href="{{ route('services.index') }}" title="Bảo Trì Vận Hành">Bảo Trì & Vận Hành Trạm XLNT</a></li>
+                      <li><a href="{{ route('services.show', 'xu-ly-nuoc-thai') }}" title="Bảo Trì Vận Hành">Bảo Trì & Vận Hành Trạm XLNT</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -260,28 +249,28 @@
                   <li>
                     <a href="{{ route('posts.index') }}" class="text-[14px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Pháp luật Môi trường</a>
                     <ul class="submenu vertical menu">
-                      <li><a href="{{ route('posts.index') }}">Luật Bảo Vệ Môi Trường 2020</a></li>
-                      <li><a href="{{ route('posts.index') }}">Nghị định 08/2022/NĐ-CP Chi Tiết</a></li>
-                      <li><a href="{{ route('posts.index') }}">Thông tư 02/2022/TT-BTNMT</a></li>
-                      <li><a href="{{ route('posts.index') }}">Xử Phạt Vi Phạm Hành Chính MT</a></li>
+                      <li><a href="{{ route('posts.show', 'quy-dinh-moi-ve-giay-phep-moi-truong-theo-luat-bvmt-2020') }}">Luật Bảo Vệ Môi Trường 2020</a></li>
+                      <li><a href="{{ route('posts.show', 'quy-dinh-moi-ve-giay-phep-moi-truong-theo-luat-bvmt-2020') }}">Nghị định 08/2022/NĐ-CP Chi Tiết</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-quy-trinh-lap-bao-cao-danh-gia-tac-dong-moi-truong-dtm') }}">Thông tư 02/2022/TT-BTNMT</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-quy-trinh-lap-bao-cao-danh-gia-tac-dong-moi-truong-dtm') }}">Xử Phạt Vi Phạm Hành Chính MT</a></li>
                     </ul>
                   </li>
                   <li>
                     <a href="{{ route('posts.index') }}" class="text-[14px] font-bold! text-primary uppercase pb-1 border-b border-white/10">ESG & Net Zero</a>
                     <ul class="submenu vertical menu">
-                      <li><a href="{{ route('posts.index') }}">Cẩm Nang Kiểm Kê Khí Nhà Kính</a></li>
-                      <li><a href="{{ route('posts.index') }}">Hướng Dẫn Khai Báo CBAM EU</a></li>
-                      <li><a href="{{ route('posts.index') }}">Lộ Trình Net Zero 2050 Việt Nam</a></li>
-                      <li><a href="{{ route('posts.index') }}">Thị Trường Tín Chỉ Carbon</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}">Cẩm Nang Kiểm Kê Khí Nhà Kính</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}">Hướng Dẫn Khai Báo CBAM EU</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}">Lộ Trình Net Zero 2050 Việt Nam</a></li>
+                      <li><a href="{{ route('posts.show', 'huong-dan-kiem-ke-khi-nha-kinh-cap-co-so-theo-iso-14064-1') }}">Thị Trường Tín Chỉ Carbon</a></li>
                     </ul>
                   </li>
                   <li>
                     <a href="{{ route('posts.index') }}" class="text-[14px] font-bold! text-primary uppercase pb-1 border-b border-white/10">Kỹ thuật & Công nghệ</a>
                     <ul class="submenu vertical menu">
-                      <li><a href="{{ route('posts.index') }}">Công Nghệ MBR / MBBR Nước Thải</a></li>
-                      <li><a href="{{ route('posts.index') }}">Xử Lý Khí Thải Tháp Hấp Thụ</a></li>
-                      <li><a href="{{ route('posts.index') }}">Khắc Phục Sự Cố Vi Sinh Bùn Nổi</a></li>
-                      <li><a href="{{ route('posts.index') }}">Quy Trình Đo Kiểm Môi Trường LĐ</a></li>
+                      <li><a href="{{ route('posts.show', 'giai-phap-toi-uu-hoa-he-thong-xu-ly-nuoc-thai-cong-nghiep') }}">Công Nghệ MBR / MBBR Nước Thải</a></li>
+                      <li><a href="{{ route('posts.show', 'giai-phap-toi-uu-hoa-he-thong-xu-ly-nuoc-thai-cong-nghiep') }}">Xử Lý Khí Thải Tháp Hấp Thụ</a></li>
+                      <li><a href="{{ route('posts.show', 'giai-phap-toi-uu-hoa-he-thong-xu-ly-nuoc-thai-cong-nghiep') }}">Khắc Phục Sự Cố Vi Sinh Bùn Nổi</a></li>
+                      <li><a href="{{ route('posts.show', 'giai-phap-toi-uu-hoa-he-thong-xu-ly-nuoc-thai-cong-nghiep') }}">Quy Trình Đo Kiểm Môi Trường LĐ</a></li>
                     </ul>
                   </li>
                 </ul>

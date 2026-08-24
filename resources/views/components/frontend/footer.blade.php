@@ -120,12 +120,12 @@
                 <div class="footer-col-3">
                     <p class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Dịch Vụ Môi Trường</p>
                     <ul class="menu menu-drop text-[16px] space-y-3.5">
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Báo Cáo Đánh Giá Tác Động MT (ĐTM)</a></li>
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Cấp Giấy Phép Môi Trường 2020</a></li>
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Kiểm Kê Khí Nhà Kính &amp; Báo Cáo ESG</a></li>
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Tư Vấn Cơ Chế CBAM &amp; Vòng Đời LCA</a></li>
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Quan Trắc Môi Trường Lao Động</a></li>
-                        <li><a href="{{ route('services.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Xử Lý Nước Thải &amp; Khí Thải Công Nghiệp</a></li>
+                        <li><a href="{{ route('services.show', 'bao-cao-danh-gia-tac-dong-moi-truong') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Báo Cáo Đánh Giá Tác Động MT (ĐTM)</a></li>
+                        <li><a href="{{ route('services.show', 'giay-phep-moi-truong') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Cấp Giấy Phép Môi Trường 2020</a></li>
+                        <li><a href="{{ route('services.show', 'kiem-ke-khi-nha-kinh') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Kiểm Kê Khí Nhà Kính &amp; Báo Cáo ESG</a></li>
+                        <li><a href="{{ route('services.show', 'tu-van-cbam-esg-lca') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Tư Vấn Cơ Chế CBAM &amp; Vòng Đời LCA</a></li>
+                        <li><a href="{{ route('services.show', 'quan-trac-moi-truong-lao-dong') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Quan Trắc Môi Trường Lao Động</a></li>
+                        <li><a href="{{ route('services.show', 'xu-ly-nuoc-thai') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Xử Lý Nước Thải &amp; Khí Thải Công Nghiệp</a></li>
                         <li><a href="{{ route('projects.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Dự Án Tiêu Biểu &amp; Năng Lực Thực Hiện</a></li>
                     </ul>
                 </div>

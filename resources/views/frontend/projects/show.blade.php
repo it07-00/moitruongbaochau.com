@@ -27,11 +27,11 @@
               >
             </li>
             <li><span class="text-gray-400">/</span></li>
-            <li class="current text-primary font-semibold">Dự án BERICAP</li>
+            <li class="current text-primary font-semibold truncate max-w-xs sm:max-w-md">{{ $project->title }}</li>
           </ul>
         </div>
 
-        <!-- PROJECT DETAIL HERO HEADER (CHUẨN CẤU TRÚC DỰ ÁN TRƯỚC GIỜ) -->
+        <!-- PROJECT DETAIL HERO HEADER -->
         <section
           class="section relative pt-8 pb-8 lg:pt-12 lg:pb-12 overflow-hidden"
         >
@@ -58,8 +58,7 @@
               <h1
                 class="entry-title p-fs-clamp-[28,46] font-extrabold tracking-tight text-gray-900 leading-[1.25] mb-5 lg:mb-6"
               >
-                Dự Án Cấp Giấy Phép Môi Trường Nhà Máy
-                <span class="text-primary">BERICAP Việt Nam</span>
+                {{ $project->title }}
               </h1>
 
               <div
@@ -68,7 +67,7 @@
                 <span
                   class="term btn btn-secondary-2 flex-0! py-1! px-3.5! text-[12px]! rounded-full font-bold"
                 >
-                  Giấy phép Môi trường
+                  {{ $project->category ?? 'Giấy phép Môi trường' }}
                 </span>
                 <span
                   class="inline-flex items-center gap-1.5 text-black font-medium"
@@ -92,7 +91,7 @@
                       d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                     />
                   </svg>
-                  KCN Long Thành, Tỉnh Đồng Nai
+                  {{ $project->location ?? 'KCN Toàn Quốc' }}
                 </span>
                 <span
                   class="inline-flex items-center gap-1.5 text-black font-medium"
@@ -111,12 +110,12 @@
                       d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 9v7.5"
                     />
                   </svg>
-                  Năm thực hiện: 2024
+                  Năm thực hiện: {{ $project->completed_at ? $project->completed_at->format('Y') : '2024' }}
                 </span>
               </div>
             </div>
 
-            <!-- FEATURED HERO IMAGE (CHUẨN NHƯ ABOUT.HTML) -->
+            <!-- FEATURED HERO IMAGE -->
             <div class="mb-10 lg:mb-16 flex justify-center relative">
               <div
                 class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-100"
@@ -124,9 +123,9 @@
                 <img
                   width="1200"
                   height="600"
-                  src="{{ asset("assets/images/BERICAP.jpg") }}"
+                  src="{{ str_starts_with($project->thumbnail ?? '', 'http') ? $project->thumbnail : (str_starts_with($project->thumbnail ?? '', 'uploads/') ? asset('storage/' . $project->thumbnail) : asset('assets/images/' . ($project->thumbnail ?: 'BERICAP.jpg'))) }}"
                   class="w-full h-auto block object-cover max-h-[580px]"
-                  alt="Dự án BERICAP Việt Nam"
+                  alt="{{ $project->title }}"
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
@@ -149,7 +148,7 @@
                   Chủ Đầu Tư
                 </p>
                 <p class="text-base sm:text-lg font-bold text-gray-900 mt-1">
-                  Tập đoàn BERICAP (Đức)
+                  {{ $project->client ?? 'Doanh nghiệp FDI' }}
                 </p>
               </div>
 
@@ -159,10 +158,10 @@
                 <p
                   class="text-xs text-black font-medium uppercase tracking-wider"
                 >
-                  Quy Mô Diện Tích
+                  Địa Điểm Thực Hiện
                 </p>
                 <p class="text-base sm:text-lg font-bold text-primary mt-1">
-                  25.000 m²
+                  {{ $project->location ?? 'Toàn Quốc' }}
                 </p>
               </div>
 
@@ -172,10 +171,10 @@
                 <p
                   class="text-xs text-black font-medium uppercase tracking-wider"
                 >
-                  Thẩm Quyền Cấp
+                  Hạng Mục
                 </p>
                 <p class="text-base sm:text-lg font-bold text-gray-900 mt-1">
-                  Bộ TN&amp;MT Phê Duyệt
+                  {{ $project->category ?? 'Giấy phép MT' }}
                 </p>
               </div>
 
@@ -188,7 +187,7 @@
                   Trạng Thái Dự Án
                 </p>
                 <p class="text-base sm:text-lg font-bold text-secondary mt-1">
-                  Đã Phê Duyệt 100%
+                  Đã Hoàn Thành 100%
                 </p>
               </div>
             </div>
@@ -204,145 +203,32 @@
               <!-- LEFT: ARTICLE CONTENT & SHOWCASE & SHARING (col-span-2) -->
               <div class="lg:col-span-2">
                 <article class="entry-content space-y-12" itemscope>
-                  <!-- 1. Tổng quan -->
-                  <div>
-                    <h2
-                      class="text-2xl sm:text-3xl font-bold text-primary mb-4 tracking-tight"
-                    >
-                      Tổng Quan Dự Án &amp; Khách Hàng BERICAP
-                    </h2>
-                    <div
-                      class="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4"
-                    >
-                      <p>
-                        <strong>Công ty TNHH BERICAP Việt Nam</strong> là thành
-                        viên của Tập đoàn BERICAP (Cộng hòa Liên bang Đức) – một
-                        trong những tập đoàn sản xuất nắp chai nhựa định hình
-                        chính xác hàng đầu thế giới với hệ thống hàng chục nhà
-                        máy tại Châu Âu, Châu Mỹ và Châu Á.
-                      </p>
-                      <p>
-                        Dự án xây dựng nhà máy sản xuất bao bì nhựa tại Khu công
-                        nghiệp Long Thành, tỉnh Đồng Nai có quy mô diện tích
-                        <strong>25.000 m²</strong>, trang bị hệ thống máy ép
-                        phun tự động công nghệ cao phục vụ các khách hàng toàn
-                        cầu trong ngành thực phẩm, đồ uống và hóa chất công
-                        nghiệp.
-                      </p>
-                      <p>
-                        Để đưa nhà máy đi vào hoạt động chính thức theo quy định
-                        của <strong>Luật Bảo vệ Môi trường 2020</strong> và Nghị
-                        định số 08/2022/NĐ-CP, BERICAP đã tín nhiệm lựa chọn
-                        <strong>Môi Trường Bảo Châu</strong> và sử dụng
-                        <a
-                          href="service.html"
-                          class="text-secondary font-bold hover:underline"
-                          >dịch vụ tư vấn cấp Giấy phép môi trường</a
-                        >
-                        để xây dựng hồ sơ kỹ thuật toàn diện cấp Bộ Tài nguyên
-                        và Môi trường.
-                      </p>
-                    </div>
+                  @if($project->summary)
+                  <p class="text-base sm:text-lg leading-relaxed text-black font-semibold italic text-gray-800 p-5 bg-emerald-50/60 rounded-2xl border-l-4 border-primary">
+                    {{ $project->summary }}
+                  </p>
+                  @endif
+
+                  <div class="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4">
+                    {!! str_contains($project->content, '<p>') || str_contains($project->content, '<h') || str_contains($project->content, '<div>') ? $project->content : nl2br(e($project->content)) !!}
                   </div>
 
                   <!-- Project Showcase Image (Khoảng cách rõ ràng giữa ảnh và text) -->
+                  @if($project->thumbnail)
                   <div
                     class="my-10 lg:my-14 rounded-3xl overflow-hidden shadow-xl border border-black/5"
                   >
                     <img
                       width="1024"
                       height="572"
-                      src="{{ asset("assets/images/Bai-Dang-Bao-Chau-1024x572.png") }}"
+                      src="{{ str_starts_with($project->thumbnail ?? '', 'http') ? $project->thumbnail : (str_starts_with($project->thumbnail ?? '', 'uploads/') ? asset('storage/' . $project->thumbnail) : asset('assets/images/' . ($project->thumbnail ?: 'BERICAP.jpg'))) }}"
                       class="w-full h-auto object-cover"
-                      alt="Hồ sơ và quy trình thực hiện dự án BERICAP"
+                      alt="{{ $project->title }}"
                       loading="lazy"
                       decoding="async"
                     />
                   </div>
-
-                  <!-- 2. Thách thức kỹ thuật -->
-                  <div>
-                    <h2
-                      class="text-2xl sm:text-3xl font-bold text-primary mb-4 tracking-tight"
-                    >
-                      Thách Thức Kỹ Thuật &amp; Phạm Vi Thực Hiện
-                    </h2>
-                    <div
-                      class="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4"
-                    >
-                      <p>
-                        Hồ sơ Giấy phép môi trường cấp Bộ Tài nguyên và Môi
-                        trường đòi hỏi mức độ chuẩn xác kỹ thuật rất cao với
-                        nhiều hạng mục đồng thời:
-                      </p>
-                      <ul class="space-y-3.5 my-4">
-                        <li class="flex items-start gap-3">
-                          <svg
-                            class="size-5 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span
-                            ><strong class="text-gray-900"
-                              >Tích hợp đa nguồn thải:</strong
-                            >
-                            Xác định chính xác tải lượng phát thải từ các dây
-                            chuyền ép nhựa tốc độ cao, máy làm lạnh chiller, hệ
-                            thống lọc bụi và nước thải sinh hoạt.</span
-                          >
-                        </li>
-                        <li class="flex items-start gap-3">
-                          <svg
-                            class="size-5 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span
-                            ><strong class="text-gray-900"
-                              >Đáp ứng tiêu chuẩn kép:</strong
-                            >
-                            Vừa tuân thủ chặt chẽ các QCVN quốc gia (QCVN
-                            40:2011/BTNMT, QCVN 19:2009/BTNMT), vừa thỏa mãn các
-                            tiêu chuẩn phát triển bền vững khắt khe từ BERICAP
-                            Global.</span
-                          >
-                        </li>
-                        <li class="flex items-start gap-3">
-                          <svg
-                            class="size-5 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span
-                            ><strong class="text-gray-900"
-                              >Tiến độ gấp rút:</strong
-                            >
-                            Hoàn thành nghiệm thu công trình BVMT và cấp phép
-                            trước thời điểm khánh thành chính thức của dự
-                            án.</span
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  @endif
 
                   <!-- 3. Giải pháp kỹ thuật -->
                   <div>
@@ -908,7 +794,7 @@
             <div
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full"
             >
-              <!-- Card 1: PEPSICO -->
+              @foreach($relatedProjects as $relProj)
               <div
                 class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
               >
@@ -917,22 +803,22 @@
                 >
                   <a
                     class="block w-full h-full c-scale-effect"
-                    href="{{ route("projects.index") }}"
-                    aria-label="Kiểm Kê Khí Nhà Kính Chuẩn ISO 14064-1 Cho PepsiCo"
+                    href="{{ route('projects.show', $relProj->slug) }}"
+                    aria-label="{{ $relProj->title }}"
                   >
                     <img
-                      src="{{ asset("assets/images/PEPSICO.jpg") }}"
+                      src="{{ str_starts_with($relProj->thumbnail ?? '', 'http') ? $relProj->thumbnail : (str_starts_with($relProj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $relProj->thumbnail) : asset('assets/images/' . ($relProj->thumbnail ?: 'BERICAP.jpg'))) }}"
                       class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       width="1024"
                       height="683"
-                      alt="PepsiCo Việt Nam"
+                      alt="{{ $relProj->title }}"
                       loading="lazy"
                     />
                   </a>
                   <span
                     class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
                   >
-                    Bình Dương
+                    {{ $relProj->client ?? 'Dự án tiêu biểu' }}
                   </span>
                 </div>
                 <div class="p-content flex flex-col flex-1 justify-between">
@@ -942,39 +828,34 @@
                     >
                       <span
                         class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Khí nhà kính &amp; ESG</span
-                      >
-                      <span class="text-xs text-gray-400 font-medium"
-                        >Hoàn thành 2024</span
+                        >{{ $relProj->category ?? 'Hồ sơ pháp lý' }}</span
                       >
                     </div>
                     <a
                       class="c-hover block"
-                      href="{{ route("projects.index") }}"
-                      title="Kiểm Kê Khí Nhà Kính Cho PepsiCo"
+                      href="{{ route('projects.show', $relProj->slug) }}"
+                      title="{{ $relProj->title }}"
                     >
                       <h3
-                        class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
+                        class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug line-clamp-2"
                       >
-                        Kiểm Kê Khí Nhà Kính Chuẩn ISO 14064-1 Cho PepsiCo
+                        {{ $relProj->title }}
                       </h3>
                     </a>
                     <p
                       class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
                     >
-                      Tư vấn thiết lập hệ thống kiểm kê phát thải khí nhà kính
-                      phạm vi 1 &amp; 2 theo chuẩn quốc tế cho tập đoàn Suntory
-                      PepsiCo.
+                      {{ $relProj->summary }}
                     </p>
                   </div>
                   <div
                     class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
                   >
                     <span class="text-xs text-black font-medium truncate"
-                      >Chuẩn: ISO 14064-1</span
+                      >{{ $relProj->client ?? 'Đối tác' }}</span
                     >
                     <a
-                      href="{{ route("projects.index") }}"
+                      href="{{ route('projects.show', $relProj->slug) }}"
                       class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
                     >
                       Chi tiết dự án
@@ -995,180 +876,7 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Card 2: TAN TIEN -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="{{ route("projects.index") }}"
-                    aria-label="Báo Cáo ĐTM Nhà Máy Sản Xuất Bao Bì Tân Tiến"
-                  >
-                    <img
-                      src="{{ asset("assets/images/CTY-TAN-TIEN.png") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="640"
-                      alt="Nhựa Tân Tiến"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    TP. Hồ Chí Minh
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Báo cáo ĐTM</span
-                      >
-                      <span class="text-xs text-gray-400 font-medium"
-                        >Hoàn thành 2023</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="{{ route("projects.index") }}"
-                      title="Báo Cáo ĐTM Nhà Máy Sản Xuất Bao Bì Tân Tiến"
-                    >
-                      <h3
-                        class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Báo Cáo ĐTM Nhà Máy Sản Xuất Bao Bì Tân Tiến
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                    >
-                      Lập báo cáo đánh giá tác động môi trường mở rộng quy mô
-                      sản xuất bao bì phức hợp công suất 50.000 tấn/năm.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Công suất: 50.000T/năm</span
-                    >
-                    <a
-                      href="{{ route("projects.index") }}"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Chi tiết dự án
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 3: CERAGEM -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="{{ route("projects.index") }}"
-                    aria-label="Hệ Thống Xử Lý Nước Thải & Khí Thải Ceragem Vina"
-                  >
-                    <img
-                      src="{{ asset("assets/images/Hinh-1-1024x683.jpg") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="683"
-                      alt="Hệ thống xử lý môi trường Ceragem"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    KCN VSIP II - Bình Dương
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Xử lý Nước &amp; Khí</span
-                      >
-                      <span class="text-xs text-gray-400 font-medium"
-                        >Hoàn thành 2024</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="{{ route("projects.index") }}"
-                      title="Hệ Thống Xử Lý Nước Thải & Khí Thải Ceragem Vina"
-                    >
-                      <h3
-                        class="font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Hệ Thống Xử Lý Nước Thải &amp; Khí Thải Ceragem Vina
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                    >
-                      Thiết kế, thi công và lắp đặt trạm xử lý nước thải sản
-                      xuất kết hợp lọc khí bụi đạt chuẩn xả thải loại A.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Công suất: 350 m³/ngày</span
-                    >
-                    <a
-                      href="{{ route("projects.index") }}"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Chi tiết dự án
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
         </section>

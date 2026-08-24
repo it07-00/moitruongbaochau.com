@@ -239,30 +239,30 @@
               </ul>
             </div>
 
-            <!-- PROJECTS GRID 3 X 3 (9 DỰ ÁN TIÊU BIỂU) -->
+            <!-- PROJECTS GRID (DỰ ÁN TIÊU BIỂU) -->
             <div class="filter-content w-full">
               <div
                 class="filter-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8"
               >
-                <!-- Project 1: BERICAP -->
+                @forelse($projects as $proj)
                 <div
                   class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="giay-phep"
+                  data-category="{{ $proj->category ?? 'giay-phep' }}"
                 >
                   <div
                     class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
                   >
                     <a
                       class="block w-full h-full c-scale-effect"
-                      href="{{ route("projects.index") }}"
-                      aria-label="DỰ ÁN GIẤY PHÉP MÔI TRƯỜNG NHÀ MÁY BERICAP"
+                      href="{{ route('projects.show', $proj->slug) }}"
+                      aria-label="{{ $proj->title }}"
                     >
                       <img
-                        src="{{ asset("assets/images/BERICAP.jpg") }}"
+                        src="{{ str_starts_with($proj->thumbnail ?? '', 'http') ? $proj->thumbnail : (str_starts_with($proj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $proj->thumbnail) : asset('assets/images/' . ($proj->thumbnail ?: 'BERICAP.jpg'))) }}"
                         class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         width="1024"
                         height="683"
-                        alt="DỰ ÁN GIẤY PHÉP MÔI TRƯỜNG NHÀ MÁY BERICAP"
+                        alt="{{ $proj->title }}"
                         decoding="async"
                         loading="lazy"
                       />
@@ -270,7 +270,7 @@
                     <span
                       class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
                     >
-                      KCN Long Thành - Đồng Nai
+                      {{ $proj->location ?? 'Toàn Quốc' }}
                     </span>
                   </div>
                   <div class="p-content flex flex-col flex-1 justify-between">
@@ -280,42 +280,40 @@
                       >
                         <span
                           class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Giấy phép Môi trường</span
+                          >{{ $proj->client ?? 'Dự án tiêu biểu' }}</span
                         >
                         <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
+                          >{{ $proj->completed_at ? 'Hoàn thành ' . $proj->completed_at->format('Y') : '' }}</span
                         >
                       </div>
                       <a
                         class="c-hover block"
-                        href="{{ route("projects.index") }}"
-                        title="DỰ ÁN GIẤY PHÉP MÔI TRƯỜNG NHÀ MÁY BERICAP"
+                        href="{{ route('projects.show', $proj->slug) }}"
+                        title="{{ $proj->title }}"
                       >
                         <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
+                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug line-clamp-2"
                         >
-                          Dự Án Giấy Phép Môi Trường Nhà Máy BERICAP Việt Nam
+                          {{ $proj->title }}
                         </h3>
                       </a>
                       <p
                         class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
                       >
-                        Tư vấn lập hồ sơ đề nghị cấp Giấy phép môi trường cấp Bộ
-                        Tài nguyên và Môi trường cho nhà máy sản xuất bao bì
-                        nhựa chính xác quy mô lớn.
+                        {{ $proj->summary }}
                       </p>
                     </div>
                     <div
                       class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
                     >
                       <span class="text-xs text-black font-medium truncate"
-                        >Quy mô: 25.000 m²</span
+                        >Khách hàng: {{ $proj->client ?? 'Đối tác' }}</span
                       >
                       <a
-                        href="{{ route("contact.index") }}"
+                        href="{{ route('projects.show', $proj->slug) }}"
                         class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
                       >
-                        Tư vấn tương tự
+                        Xem chi tiết
                         <svg
                           class="size-3.5"
                           fill="none"
@@ -333,731 +331,18 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Project 2: PEPSICO -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="khi-nha-kinh"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="DỰ ÁN KIỂM KÊ KHÍ NHÀ KÍNH CÔNG TY PEPSICO"
-                    >
-                      <img
-                        src="{{ asset("assets/images/PEPSICO.jpg") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="683"
-                        alt="DỰ ÁN KIỂM KÊ KHÍ NHÀ KÍNH CÔNG TY PEPSICO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN Sóng Thần - Bình Dương
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Khí nhà kính &amp; ESG</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="DỰ ÁN KIỂM KÊ KHÍ NHÀ KÍNH CÔNG TY PEPSICO"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Kiểm Kê Khí Nhà Kính Chuẩn ISO 14064-1 Cho PepsiCo
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Xác định phạm vi phát thải Scope 1, 2, 3, xây dựng báo
-                        cáo kiểm kê khí nhà kính và lộ trình giảm phát thải Net
-                        Zero theo chuẩn quốc tế.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Chuẩn: ISO 14064-1:2018</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
+                @empty
+                <div class="col-span-3 text-center py-12">
+                  <p class="text-gray-500">Đang cập nhật danh sách dự án...</p>
                 </div>
-
-                <!-- Project 3: CÔNG TY TÂN TIẾN -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="dtm"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="BÁO CÁO ĐTM NHÀ MÁY BAO BÌ NHỰA TÂN TIẾN"
-                    >
-                      <img
-                        src="{{ asset("assets/images/CTY-TAN-TIEN.png") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="640"
-                        alt="BÁO CÁO ĐTM NHÀ MÁY BAO BÌ NHỰA TÂN TIẾN"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN Tân Bình - TP.HCM
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Báo cáo ĐTM</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2023</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="BÁO CÁO ĐTM NHÀ MÁY BAO BÌ NHỰA TÂN TIẾN"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Báo Cáo Đánh Giá Tác Động Môi Trường ĐTM Nhựa Tân Tiến
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Lập báo cáo ĐTM dự án mở rộng nhà xưởng sản xuất màng
-                        ghép phức hợp, bảo vệ thành công trước Hội đồng thẩm
-                        định Sở TN&amp;MT TP.HCM.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Công suất: 50.000 tấn/năm</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 4: CERAGEM -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="xu-ly-nuoc"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="XỬ LÝ NƯỚC THẢI & KHÍ THẢI CERAGEM VIỆT NAM"
-                    >
-                      <img
-                        src="{{ asset("assets/images/5.-ceragem-1024x683.jpg") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="683"
-                        alt="XỬ LÝ NƯỚC THẢI & KHÍ THẢI CERAGEM VIỆT NAM"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN VSIP II - Bình Dương
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Xử lý Nước &amp; Khí thải</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="XỬ LÝ NƯỚC THẢI & KHÍ THẢI CERAGEM VIỆT NAM"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Hệ Thống Xử Lý Nước Thải &amp; Khí Thải Ceragem Vina
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Thiết kế, thi công và chuyển giao công nghệ trạm xử lý
-                        nước thải sinh hoạt - sản xuất đạt chuẩn Cột A QCVN
-                        40:2011/BTNMT kết hợp lọc bụi khí thải.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Công suất: 350 m³/ngày đêm</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 5: MITSUBISHI -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="quan-trac"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="QUAN TRẮC MÔI TRƯỜNG LAO ĐỘNG MITSUBISHI"
-                    >
-                      <img
-                        src="{{ asset("assets/images/Hinh-1-1024x683.jpg") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="683"
-                        alt="QUAN TRẮC MÔI TRƯỜNG LAO ĐỘNG MITSUBISHI"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      Bình Dương - TP.HCM
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Quan trắc Môi trường</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Định kỳ 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="QUAN TRẮC MÔI TRƯỜNG LAO ĐỘNG MITSUBISHI"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Quan Trắc Môi Trường Lao Động &amp; Khí Thải Định Kỳ
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Thực hiện đo đạc các yếu tố vi khí hậu, tiếng ồn, ánh
-                        sáng, bụi và phân tích mẫu nước thải định kỳ 4 đợt/năm
-                        cho hệ thống chuỗi nhà máy.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Hơn 120 vị trí đo đạc</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 6: BIDRICO -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="giay-phep"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="GIẤY PHÉP MÔI TRƯỜNG NƯỚC GIẢI KHÁT BIDRICO"
-                    >
-                      <img
-                        src="{{ asset("assets/images/Bai-Dang-Bao-Chau-1024x572.png") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="572"
-                        alt="GIẤY PHÉP MÔI TRƯỜNG NƯỚC GIẢI KHÁT BIDRICO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN Vĩnh Lộc - TP.HCM
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Giấy phép Môi trường</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="GIẤY PHÉP MÔI TRƯỜNG NƯỚC GIẢI KHÁT BIDRICO"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Cấp Giấy Phép Môi Trường Nhà Máy Nước Giải Khát
-                          Bidrico
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Tư vấn chuyển đổi hồ sơ ĐTM cũ sang Giấy phép môi trường
-                        theo Luật BVMT 2020, hoàn thiện tích hợp xả nước thải và
-                        khí thải lò hơi.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Cơ quan cấp: UBND TP.HCM</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 7: CJ FOODS -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="giay-phep"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="GIẤY PHÉP MÔI TRƯỜNG TỔ HỢP CJ FOODS"
-                    >
-                      <img
-                        src="{{ asset("assets/images/moi-truong-bao-chau-1024x603.jpg") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="603"
-                        alt="GIẤY PHÉP MÔI TRƯỜNG TỔ HỢP CJ FOODS"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN Hiệp Phước - TP.HCM
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Giấy phép Môi trường</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="GIẤY PHÉP MÔI TRƯỜNG TỔ HỢP CJ FOODS"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Giấy Phép Môi Trường Tổ Hợp Sản Xuất Thực Phẩm CJ
-                          Foods
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Tư vấn hoàn thiện hồ sơ nghiệm thu công trình bảo vệ môi
-                        trường và cấp Giấy phép môi trường tích hợp xả thải công
-                        suất lớn.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Quy mô: 40.000 m²</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 8: LOCK&LOCK -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="dtm"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="BÁO CÁO ĐTM NHÀ MÁY LOCK&LOCK"
-                    >
-                      <img
-                        src="{{ asset("assets/images/Thiet-ke-chua-co-ten-2-768x429.png") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="768"
-                        height="429"
-                        alt="BÁO CÁO ĐTM NHÀ MÁY LOCK&LOCK"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      KCN Mỹ Xuân A2 - BR-VT
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Báo cáo ĐTM</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="BÁO CÁO ĐTM NHÀ MÁY LOCK&LOCK"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Báo Cáo ĐTM Mở Rộng Nhà Máy Sản Xuất Gia Dụng
-                          Lock&amp;Lock
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Lập báo cáo đánh giá tác động môi trường giai đoạn 2
-                        nâng công suất dây chuyền ép nhựa và sơn tĩnh điện, phê
-                        duyệt đúng tiến độ.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Công suất: 15.000 tấn/năm</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Project 9: VINAMILK -->
-                <div
-                  class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-                  data-category="khi-nha-kinh"
-                >
-                  <div
-                    class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                  >
-                    <a
-                      class="block w-full h-full c-scale-effect"
-                      href="{{ route("contact.index") }}"
-                      aria-label="KIỂM KÊ KHÍ NHÀ KÍNH & ESG VINAMILK"
-                    >
-                      <img
-                        src="{{ asset("assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png") }}"
-                        class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        width="1024"
-                        height="576"
-                        alt="KIỂM KÊ KHÍ NHÀ KÍNH & ESG VINAMILK"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                    <span
-                      class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                    >
-                      Bình Dương &amp; Cần Thơ
-                    </span>
-                  </div>
-                  <div class="p-content flex flex-col flex-1 justify-between">
-                    <div>
-                      <div
-                        class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                      >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >Khí nhà kính &amp; ESG</span
-                        >
-                        <span class="text-xs text-gray-400 font-medium"
-                          >Hoàn thành 2024</span
-                        >
-                      </div>
-                      <a
-                        class="c-hover block"
-                        href="{{ route("contact.index") }}"
-                        title="KIỂM KÊ KHÍ NHÀ KÍNH & ESG VINAMILK"
-                      >
-                        <h3
-                          class="filter-title font-bold text-lg text-gray-900 group-hover:text-primary transition-colors leading-snug"
-                        >
-                          Tư Vấn Khí Nhà Kính &amp; Lộ Trình ESG Cho Chuỗi
-                          Vinamilk
-                        </h3>
-                      </a>
-                      <p
-                        class="mt-2 text-sm text-gray-600 line-clamp-2 leading-relaxed"
-                      >
-                        Kiểm kê phát thải KNK chuỗi nhà máy chế biến sữa, xây
-                        dựng chỉ số carbon footprint trên từng đơn vị sản phẩm
-                        và lộ trình Net Zero.
-                      </p>
-                    </div>
-                    <div
-                      class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                    >
-                      <span class="text-xs text-black font-medium truncate"
-                        >Chuẩn: ISO 14064 &amp; GHG</span
-                      >
-                      <a
-                        href="{{ route("contact.index") }}"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                      >
-                        Tư vấn tương tự
-                        <svg
-                          class="size-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                @endforelse
               </div>
+
+              @if($projects->hasPages())
+              <div class="mt-10 flex justify-center">
+                {{ $projects->links() }}
+              </div>
+              @endif
             </div>
           </div>
         </section>
