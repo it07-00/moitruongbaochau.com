@@ -473,26 +473,40 @@
                     Để lại thông tin và CV, HR sẽ liên hệ bạn trong vòng 24h.
                   </p>
 
+                  @if(session('success'))
+                  <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium leading-relaxed">
+                    <div class="flex items-start gap-2.5">
+                      <svg class="size-5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                      </svg>
+                      <span>{{ session('success') }}</span>
+                    </div>
+                  </div>
+                  @endif
+
+                  @if($errors->any())
+                  <div class="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-sm font-medium">
+                    <ul class="space-y-1 list-disc list-inside">
+                      @foreach($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  @endif
+
                   <form
+                    action="{{ route('recruitment.apply', $job->slug) }}"
+                    method="POST"
+                    enctype="multipart/form-data"
                     class="space-y-4"
-                    onsubmit="
-                      event.preventDefault();
-                      alert(
-                        'Cảm ơn bạn đã nộp hồ sơ ứng tuyển vị trí Kỹ Sư ĐTM & GPMT! Phòng Nhân sự Bảo Châu sẽ liên hệ bạn sớm nhất.',
-                      );
-                      this.reset();
-                      document.getElementById(
-                        'sidebar-file-chosen',
-                      ).textContent = 'Định dạng: PDF, DOC, DOCX (Dưới 10MB)';
-                      document.getElementById('sidebar-file-chosen').className =
-                        'text-xs sm:text-sm text-gray-500 mt-1';
-                    "
                   >
+                    @csrf
                     <div>
                       <input
                         required
                         name="fullname"
-                        class="font-normal w-full border border-gray-300 rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                        value="{{ old('fullname') }}"
+                        class="font-normal w-full border @error('fullname') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Họ và tên ứng viên *"
                         type="text"
                       />
@@ -501,7 +515,8 @@
                       <input
                         required
                         name="contact_phone"
-                        class="font-normal w-full border border-gray-300 rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                        value="{{ old('contact_phone') }}"
+                        class="font-normal w-full border @error('contact_phone') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Số điện thoại liên hệ *"
                         type="tel"
                       />
@@ -510,7 +525,8 @@
                       <input
                         required
                         name="contact_email"
-                        class="font-normal w-full border border-gray-300 rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                        value="{{ old('contact_email') }}"
+                        class="font-normal w-full border @error('contact_email') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Email *"
                         type="email"
                       />
@@ -520,7 +536,7 @@
                     <div>
                       <label
                         for="sidebar_cv_file"
-                        class="flex flex-col items-center justify-center w-full p-3 border-2 border-dashed border-gray-300 hover:border-primary rounded-xl cursor-pointer bg-gray-50/60 hover:bg-emerald-50/30 transition-all text-center group"
+                        class="flex flex-col items-center justify-center w-full p-3 border-2 border-dashed @error('cv_file') border-red-500 bg-red-50/40 @else border-gray-300 bg-gray-50/60 @enderror hover:border-primary rounded-xl cursor-pointer hover:bg-emerald-50/30 transition-all text-center group"
                       >
                         <svg
                           class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors mb-1"
@@ -570,9 +586,9 @@
                       <textarea
                         rows="3"
                         name="message"
-                        class="font-normal w-full border border-gray-300 rounded-xl p-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
-                        placeholder="Giới thiệu ngắn gọn kinh nghiệm lập ĐTM/GPMT..."
-                      ></textarea>
+                        class="font-normal w-full border @error('message') border-red-500 @else border-gray-300 @enderror rounded-xl p-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                        placeholder="Giới thiệu ngắn gọn kinh nghiệm hoặc lời nhắn..."
+                      >{{ old('message') }}</textarea>
                     </div>
 
                     <button

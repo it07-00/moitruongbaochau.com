@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreJobApplicationRequest;
+use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class RecruitmentController extends Controller
 {
@@ -28,5 +31,29 @@ class RecruitmentController extends Controller
         $seo = SeoData::forContent($job, route('recruitment.show', $job->slug), 'JobPosting');
 
         return view('frontend.recruitment.show', compact('job', 'relatedJobs', 'seo'));
+    }
+
+    public function apply(StoreJobApplicationRequest $request, string $slug): RedirectResponse
+    {
+        $job = JobPosting::query()->published()->open()->where('slug', $slug)->firstOrFail();
+
+        $cvPath = $request->file('cv_file')->store('resumes', 'public');
+
+        JobApplication::query()->create([
+            'job_posting_id' => $job->id,
+            'job_title' => $job->title,
+            'fullname' => $request->validated('fullname'),
+            'phone' => $request->validated('contact_phone'),
+            'email' => $request->validated('contact_email'),
+            'message' => $request->validated('message'),
+            'cv_path' => $cvPath,
+            'status' => 'new',
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        return redirect()
+            ->to(route('recruitment.show', $job->slug).'#form-ung-tuyen')
+            ->with('success', 'Cảm ơn bạn đã nộp hồ sơ ứng tuyển vị trí '.$job->title.'! Bộ phận tuyển dụng Môi Trường Bảo Châu sẽ xem xét và phản hồi trong thời gian sớm nhất.');
     }
 }

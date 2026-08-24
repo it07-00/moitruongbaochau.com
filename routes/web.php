@@ -24,6 +24,7 @@ Route::get('/du-an', [ProjectController::class, 'index'])->name('projects.index'
 Route::get('/du-an/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('/tuyen-dung', [RecruitmentController::class, 'index'])->name('recruitment.index');
 Route::get('/tuyen-dung/{slug}', [RecruitmentController::class, 'show'])->name('recruitment.show');
+Route::post('/tuyen-dung/{slug}/ung-tuyen', [RecruitmentController::class, 'apply'])->middleware('throttle:contact-form')->name('recruitment.apply');
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/lien-he', [ContactController::class, 'store'])->middleware('throttle:contact-form')->name('contact.store');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
