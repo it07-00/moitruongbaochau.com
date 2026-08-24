@@ -1,65 +1,1614 @@
-@extends('frontend.layouts.app', ['bodyClass' => 'page-about'])
+@extends('frontend.layouts.app', ['bodyClass' => 'page-template-default page'])
 
 @section('content')
-<div class="container px-3 mx-auto pt-5 lg:pt-8">
-    <x-breadcrumb :items="[['label' => 'Trang chủ', 'url' => route('home')], ['label' => 'Giới thiệu']]" />
-</div>
-
-<section class="section section-hero py-8 lg:py-16 relative overflow-hidden">
-    <div class="container px-3 mx-auto grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-        <div>
-            <x-theme.badge text="Về chúng tôi" />
-            <h1 class="text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl lg:text-6xl">{{ $page->title }}</h1>
-            <p class="mt-6 text-lg leading-relaxed text-gray-700">{{ $page->excerpt }}</p>
-            <div class="mt-8 flex flex-wrap gap-3"><a href="{{ route('contact.index') }}" class="rounded-full bg-primary px-6 py-3 font-bold text-white">Nhận tư vấn</a><a href="{{ route('projects.index') }}" class="glass-effect rounded-full border border-black/10 px-6 py-3 font-bold">Xem năng lực</a></div>
+<!-- BREADCRUMBS -->
+        <div class="container px-3 mx-auto pt-6">
+          <ul
+            id="breadcrumbs"
+            class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-sm text-black"
+            aria-label="Breadcrumbs"
+          >
+            <li>
+              <a
+                class="home hover:text-primary transition-colors"
+                href="{{ route("home") }}"
+                >Trang chủ</a
+              >
+            </li>
+            <li><span class="text-gray-400">/</span></li>
+            <li class="current text-primary font-semibold">Về chúng tôi</li>
+          </ul>
         </div>
-        <img src="{{ asset('assets/images/optimized/doi-ngu-moi-truong-bao-chau.webp') }}" width="1024" height="603" fetchpriority="high" decoding="async" alt="Đội ngũ Môi Trường Bảo Châu" class="w-full rounded-[2rem] object-cover shadow-xl">
-    </div>
-</section>
 
-<section class="section section-statistics pb-10 lg:pb-20 overflow-hidden">
-    <div class="container px-3 mx-auto">
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            @foreach ([['10+', 'Năm kinh nghiệm'], ['500+', 'Khách hàng đồng hành'], ['1.000+', 'Hồ sơ & dự án'], ['20+', 'Chuyên gia kỹ thuật']] as [$number, $label])
-                <div class="rounded-3xl border border-black/8 bg-white p-6 text-center shadow-sm"><strong class="block text-4xl font-extrabold text-primary lg:text-5xl">{{ $number }}</strong><span class="mt-2 block font-semibold text-gray-600">{{ $label }}</span></div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section class="section section-vision-mission relative overflow-hidden bg-gray-50/70 py-12 lg:py-20">
-    <div class="container px-3 mx-auto">
-        <div class="mx-auto mb-10 max-w-4xl text-center"><x-theme.badge text="Tầm nhìn & sứ mệnh" class="justify-center" /><h2 class="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">MÔI TRƯỜNG BẢO CHÂU Kiến tạo biểu tượng phát triển bền vững</h2><p class="mt-5 whitespace-pre-line text-lg leading-relaxed text-gray-700">{{ $page->content }}</p></div>
-        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            @foreach ([['Khách hàng', 'Cung cấp giải pháp đúng nhu cầu và đồng hành trong suốt quá trình vận hành.'], ['Đối tác', 'Xây dựng quan hệ minh bạch, chuyên nghiệp và cùng tạo giá trị bền vững.'], ['Nhân viên', 'Tạo môi trường phát triển chuyên môn, trách nhiệm và tinh thần sáng tạo.'], ['Cộng đồng', 'Góp phần bảo vệ môi trường và lan tỏa thực hành kinh doanh có trách nhiệm.']] as [$title, $description])
-                <article class="rounded-3xl border border-black/8 bg-white p-6 shadow-sm"><span class="mb-5 flex size-12 items-center justify-center rounded-2xl bg-emerald-100 text-2xl text-primary">✓</span><h3 class="text-xl font-bold">{{ $title }}</h3><p class="mt-3 leading-relaxed text-gray-600">{{ $description }}</p></article>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section class="section section-organization relative overflow-hidden py-12 lg:py-20">
-    <div class="container px-3 mx-auto">
-        <div class="mb-10 text-center"><x-theme.badge text="Bộ máy vận hành" class="justify-center" /><h2 class="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl">CƠ CẤU TỔ CHỨC</h2></div>
-        <div class="mx-auto max-w-5xl">
-            <div class="mx-auto max-w-sm rounded-3xl bg-secondary p-6 text-center text-white shadow-lg"><strong class="text-xl">GIÁM ĐỐC</strong><span class="mt-1 block text-sm text-white/80">Điều hành & chiến lược</span></div>
-            <div class="mx-auto h-10 w-px bg-primary/40"></div>
-            <div class="grid gap-5 lg:grid-cols-3">
-                @foreach ([['PHÒNG KỸ THUẬT', ['Bộ phận Quan trắc', 'Bộ phận Tư vấn']], ['PHÒNG KINH DOANH', ['Bộ phận Kinh doanh', 'Chăm sóc khách hàng']], ['PHÒNG TỔNG HỢP', ['Hành chính – Nhân sự', 'Tài chính – Kế toán']]] as [$department, $units])
-                    <article class="rounded-3xl border border-emerald-200 bg-white p-6 text-center shadow-sm"><h3 class="font-bold text-secondary">{{ $department }}</h3><ul class="mt-5 grid gap-3">@foreach ($units as $unit)<li class="rounded-2xl bg-emerald-50 px-4 py-3 font-semibold text-gray-700">{{ $unit }}</li>@endforeach</ul></article>
-                @endforeach
+        <!-- HERO SECTION -->
+        <section class="section-hero py-8 lg:py-16 relative overflow-hidden">
+          <div class="container px-3 mx-auto relative">
+            <div class="mb-10 lg:mb-16 flex justify-center relative">
+              <div
+                class="max-w-6xl w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-100"
+              >
+                <img
+                  width="1200"
+                  height="650"
+                  src="{{ asset("assets/images/moi-truong-bao-chau-1024x603.jpg") }}"
+                  class="w-full h-auto block object-cover max-h-[480px]"
+                  alt="Đội ngũ Chuyên gia Môi Trường Bảo Châu"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </div>
             </div>
-        </div>
-        <div class="mt-16 border-t border-black/10 pt-12">
-            <div class="mb-8 text-center"><x-theme.badge text="Dấu mốc phát triển" class="justify-center" /><h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Lịch sử hình thành & phát triển</h2></div>
-            <ol class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-                @foreach ([['2019', 'Thành lập doanh nghiệp và xây dựng đội ngũ tư vấn nền tảng.'], ['2021', 'Mở rộng dịch vụ quan trắc và kỹ thuật xử lý môi trường.'], ['2023', 'Phát triển năng lực kiểm kê khí nhà kính, ESG và CBAM.'], ['Hiện nay', 'Đồng hành cùng doanh nghiệp trên nhiều tỉnh thành trong cả nước.']] as [$year, $description])
-                    <li class="rounded-3xl bg-gray-50 p-6"><strong class="text-2xl text-primary">{{ $year }}</strong><p class="mt-3 leading-relaxed text-gray-600">{{ $description }}</p></li>
-                @endforeach
-            </ol>
-        </div>
-    </div>
-</section>
 
-<x-theme.partners title="Đối tác tin cậy đồng hành cùng Bảo Châu" />
+            <div
+              class="flex flex-col gap-8 lg:gap-16 lg:flex-row flex-nowrap items-center justify-between"
+            >
+              <div class="lg:w-1/2">
+                <div
+                  class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
+                >
+                  <span class="icon-list-icon">
+                    <img
+                      src="{{ asset("assets/images/asterisk.png") }}"
+                      class="size-5"
+                      width="24"
+                      height="24"
+                      alt="Giới thiệu năng lực"
+                    />
+                  </span>
+                  <span
+                    class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
+                  >
+                    Giới thiệu năng lực
+                  </span>
+                </div>
+                <h1
+                  class="leading-[1.25] font-bold my-2 text-center lg:text-start text-3xl md:text-4xl lg:text-5xl text-gray-900"
+                >
+                  <span class="text-primary">Môi Trường Bảo Châu</span>
+                  <span
+                    class="block h3 mt-3 lg:mt-5 font-normal text-xl md:text-2xl text-gray-700"
+                  >
+                    Đối tác chiến lược về Pháp lý Môi trường & Chuyển đổi Xanh
+                  </span>
+                </h1>
+                <div
+                  class="flex flex-col sm:flex-row gap-3 lg:gap-4 mt-6 lg:mt-8"
+                >
+                  <a
+                    href="tel:0915549148"
+                    class="btn btn-primary-1 inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full font-semibold shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 transition-all text-white bg-primary"
+                    title="Liên hệ tư vấn"
+                  >
+                    Tư vấn miễn phí
+                    <svg
+                      class="size-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                      ></path>
+                    </svg>
+                  </a>
+                  <a
+                    href="index.html#section-2e070d0c2f"
+                    class="inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+                  >
+                    Xem dự án tiêu biểu
+                  </a>
+                </div>
+              </div>
+              <div
+                class="lg:w-1/2 text-center lg:text-start p-fs-clamp-[15,17] text-gray-600 space-y-4"
+              >
+                <p class="leading-relaxed lg:leading-[1.8]">
+                  <strong
+                    >Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo
+                    Châu</strong
+                  >
+                  là một đơn vị hàng đầu trong lĩnh vực tư vấn và giải pháp môi
+                  trường. Với nhiều năm kinh nghiệm, chúng tôi tự hào là đối tác
+                  tin cậy của các doanh nghiệp, khu công nghiệp trong việc đảm
+                  bảo tuân thủ các quy định về bảo vệ môi trường.
+                </p>
+                <p class="leading-relaxed lg:leading-[1.8]">
+                  Dịch vụ của chúng tôi bao gồm tư vấn môi trường, kiểm toán
+                  năng lượng, đánh giá tác động môi trường (ĐTM), xử lý nước
+                  thải, khí thải và chất thải nguy hại.
+                </p>
+                <p class="leading-relaxed lg:leading-[1.8]">
+                  Bảo Châu cam kết mang đến những giải pháp toàn diện, hiệu quả
+                  và bền vững, góp phần bảo vệ môi trường và phát triển bền
+                  vững.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STATISTICS SECTION -->
+        <section class="section-statistics pb-10 lg:pb-20 overflow-hidden">
+          <div class="container px-3 mx-auto">
+            <div class="w-full relative">
+              <div
+                class="cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8"
+                data-fx-counter=""
+                data-once="false"
+                data-duration="1500"
+              >
+                <div
+                  tabindex="0"
+                  class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all"
+                >
+                  <span
+                    class="relative flex p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
+                  >
+                    <span
+                      class="counter text-left w-fit inline-block tracking-tight"
+                      data-counter="10"
+                      >10</span
+                    >+
+                  </span>
+                  <p class="mt-2 mb-3 h6 font-semibold text-gray-900">
+                    Năm kinh nghiệm
+                  </p>
+                  <p class="leading-relaxed text-sm text-gray-600">
+                    Bề dày thực chiến trong công tác tư vấn hồ sơ pháp lý, giám
+                    sát và kỹ thuật môi trường cho các tập đoàn FDI & KCN.
+                  </p>
+                </div>
+
+                <div
+                  tabindex="0"
+                  class="card-item lg:translate-y-6 relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all"
+                >
+                  <span
+                    class="relative flex p-fs-clamp-[56,40] font-bold text-secondary leading-[1.3]"
+                  >
+                    <span
+                      class="counter text-left w-fit inline-block tracking-tight"
+                      data-counter="1000"
+                      >1000</span
+                    >+
+                  </span>
+                  <p class="mt-2 mb-3 h6 font-semibold text-gray-900">
+                    Dự án hoàn thành
+                  </p>
+                  <p class="leading-relaxed text-sm text-gray-600">
+                    100% hồ sơ ĐTM, Giấy phép môi trường và công trình xử lý
+                    nước thải được nghiệm thu đạt chuẩn đúng tiến độ.
+                  </p>
+                </div>
+
+                <div
+                  tabindex="0"
+                  class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all"
+                >
+                  <span
+                    class="relative flex p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
+                  >
+                    <span
+                      class="counter text-left w-fit inline-block tracking-tight"
+                      data-counter="50"
+                      >50</span
+                    >+
+                  </span>
+                  <p class="mt-2 mb-3 h6 font-semibold text-gray-900">
+                    Kỹ sư & Chuyên gia
+                  </p>
+                  <p class="leading-relaxed text-sm text-gray-600">
+                    Đội ngũ thạc sĩ, kỹ sư công nghệ môi trường am hiểu sâu sắc
+                    quy chuẩn pháp lý và kỹ thuật công nghệ xanh.
+                  </p>
+                </div>
+
+                <div
+                  tabindex="0"
+                  class="card-item lg:translate-y-6 relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all"
+                >
+                  <span
+                    class="relative flex p-fs-clamp-[56,40] font-bold text-secondary leading-[1.3]"
+                  >
+                    <span
+                      class="counter text-left w-fit inline-block tracking-tight"
+                      data-counter="800"
+                      >800</span
+                    >+
+                  </span>
+                  <p class="mt-2 mb-3 h6 font-semibold text-gray-900">
+                    Doanh nghiệp tin chọn
+                  </p>
+                  <p class="leading-relaxed text-sm text-gray-600">
+                    Hơn 800 nhà máy, doanh nghiệp và chủ đầu tư trên toàn quốc
+                    tin tưởng hợp tác và duy trì đồng hành bền vững.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISION & MISSION SECTION -->
+        <section
+          class="section section-base py-12 lg:py-20 bg-gray-50/70 border-y border-gray-100 overflow-hidden"
+        >
+          <div class="container px-3 mx-auto">
+            <div
+              class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14 items-start"
+            >
+              <div class="lg:col-span-2">
+                <div
+                  class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
+                >
+                  <span class="icon-list-icon">
+                    <img
+                      src="{{ asset("assets/images/asterisk.png") }}"
+                      class="size-5"
+                      width="24"
+                      height="24"
+                      alt="Tầm nhìn &amp; Sứ mệnh"
+                    />
+                  </span>
+                  <span
+                    class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
+                  >
+                    Tầm nhìn &amp; Sứ mệnh
+                  </span>
+                </div>
+                <h2
+                  class="font-bold text-3xl md:text-4xl text-gray-900 leading-tight"
+                >
+                  <span class="text-primary block">MÔI TRƯỜNG BẢO CHÂU</span>
+                  Kiến tạo biểu tượng phát triển bền vững
+                </h2>
+                <div
+                  class="mt-5 space-y-4 text-gray-600 leading-relaxed text-[15px]"
+                >
+                  <p>
+                    Với tầm nhìn trở thành
+                    <strong
+                      >đơn vị tiên phong trong lĩnh vực môi trường tại Việt
+                      Nam</strong
+                    >, được khách hàng tin tưởng lựa chọn hàng đầu và là biểu
+                    tượng của sự phát triển bền vững, Môi trường Bảo Châu luôn
+                    nhận được sự tín nhiệm của khách hàng.
+                  </p>
+                  <p>
+                    Để có thể phát triển song hành cùng với khách hàng, Môi
+                    trường Bảo Châu luôn đặt sứ mệnh của bản thân lên đầu tiên:
+                  </p>
+                </div>
+              </div>
+
+              <div class="lg:col-span-3">
+                <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+                  <!-- Mission 1: Khách hàng -->
+                  <div
+                    class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-start gap-4"
+                  >
+                    <div
+                      class="flex items-center justify-center bg-primary/10 text-primary rounded-xl shrink-0"
+                      style="
+                        width: 52px;
+                        height: 52px;
+                        min-width: 52px;
+                        min-height: 52px;
+                      "
+                    >
+                      <svg
+                        width="26"
+                        height="26"
+                        style="width: 26px; height: 26px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-[17px] font-bold text-gray-900 mb-2">
+                        Đối với khách hàng
+                      </h3>
+                      <p class="text-gray-600 text-[14px] leading-relaxed">
+                        Cung cấp các giải pháp môi trường tối ưu, giúp doanh
+                        nghiệp nâng cao hiệu quả sản xuất, giảm thiểu tác động
+                        đến môi trường và đảm bảo tuân thủ các quy định pháp
+                        luật.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Mission 2: Đối tác -->
+                  <div
+                    class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-start gap-4"
+                  >
+                    <div
+                      class="flex items-center justify-center bg-secondary/10 text-secondary rounded-xl shrink-0"
+                      style="
+                        width: 52px;
+                        height: 52px;
+                        min-width: 52px;
+                        min-height: 52px;
+                      "
+                    >
+                      <svg
+                        width="26"
+                        height="26"
+                        style="width: 26px; height: 26px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-[17px] font-bold text-gray-900 mb-2">
+                        Đối với đối tác
+                      </h3>
+                      <p class="text-gray-600 text-[14px] leading-relaxed">
+                        Xây dựng mối quan hệ hợp tác bền vững, cùng nhau phát
+                        triển và chia sẻ thành công trên chặng đường chuyển đổi
+                        xanh.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Mission 3: Nhân viên -->
+                  <div
+                    class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-start gap-4"
+                  >
+                    <div
+                      class="flex items-center justify-center bg-primary/10 text-primary rounded-xl shrink-0"
+                      style="
+                        width: 52px;
+                        height: 52px;
+                        min-width: 52px;
+                        min-height: 52px;
+                      "
+                    >
+                      <svg
+                        width="26"
+                        height="26"
+                        style="width: 26px; height: 26px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.62 48.62 0 0112 20.904a48.62 48.62 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.636 50.636 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-[17px] font-bold text-gray-900 mb-2">
+                        Đối với nhân viên
+                      </h3>
+                      <p class="text-gray-600 text-[14px] leading-relaxed">
+                        Tạo môi trường làm việc chuyên nghiệp, năng động, khuyến
+                        khích sáng tạo và tạo mọi điều kiện để phát triển bản
+                        thân toàn diện.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Mission 4: Cộng đồng -->
+                  <div
+                    class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col items-start gap-4"
+                  >
+                    <div
+                      class="flex items-center justify-center bg-secondary/10 text-secondary rounded-xl shrink-0"
+                      style="
+                        width: 52px;
+                        height: 52px;
+                        min-width: 52px;
+                        min-height: 52px;
+                      "
+                    >
+                      <svg
+                        width="26"
+                        height="26"
+                        style="width: 26px; height: 26px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-[17px] font-bold text-gray-900 mb-2">
+                        Đối với cộng đồng
+                      </h3>
+                      <p class="text-gray-600 text-[14px] leading-relaxed">
+                        Góp phần xây dựng một cộng đồng sống xanh, sạch, đẹp,
+                        bảo vệ tài nguyên thiên nhiên và nâng cao chất lượng
+                        cuộc sống cho thế hệ tương lai.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ORGANIZATIONAL STRUCTURE SECTION (SƠ ĐỒ TỔ CHỨC) -->
+        <section
+          id="section-org-chart"
+          class="section section-org py-12 lg:py-20 bg-white/60 overflow-hidden"
+        >
+          <div class="container px-3 mx-auto">
+            <!-- Header Section -->
+            <div class="flex flex-col items-center mb-10 lg:mb-14 text-center">
+              <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                <span class="icon-list-icon">
+                  <img
+                    src="{{ asset("assets/images/asterisk.png") }}"
+                    class="size-5"
+                    width="24"
+                    height="24"
+                    alt="Sơ đồ bộ máy"
+                  />
+                </span>
+                <span
+                  class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
+                >
+                  SƠ ĐỒ BỘ MÁY
+                </span>
+              </div>
+              <h2
+                class="font-bold text-3xl md:text-4xl lg:text-5xl text-gray-900 leading-tight uppercase tracking-tight"
+              >
+                CƠ CẤU <span class="text-primary">TỔ CHỨC</span>
+              </h2>
+            </div>
+
+            <!-- Org Tree Layout (Styled with standard utilities) -->
+            <div class="w-full max-w-7xl mx-auto flex flex-col items-center">
+              <!-- LEVEL 1: GIÁM ĐỐC (Card trung tâm trên cùng) -->
+              <div
+                class="py-2.5 px-4 rounded-xl border-2 border-primary bg-[#e6f4ea] hover:bg-[#d1fae5] shadow-xs transition-all text-center flex items-center justify-center gap-2"
+                style="width: 100%; max-width: 200px"
+              >
+                <!-- User Icon -->
+                <svg
+                  width="18"
+                  height="18"
+                  class="w-[18px] h-[18px] min-w-[18px] max-w-[18px] text-primary shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  />
+                </svg>
+                <span
+                  class="text-primary font-bold text-sm md:text-[15px] uppercase tracking-wide"
+                  style="white-space: nowrap"
+                >
+                  GIÁM ĐỐC
+                </span>
+              </div>
+
+              <!-- DESKTOP CONNECTOR LINES -->
+              <div class="hidden md:flex flex-col items-center w-full my-0">
+                <!-- Vertical drop from Giám Đốc -->
+                <div
+                  style="width: 2px; height: 28px; background-color: #9ca3af"
+                ></div>
+                <!-- Horizontal bar connecting 3 columns -->
+                <div
+                  class="relative"
+                  style="
+                    width: 68%;
+                    height: 2px;
+                    background-color: #9ca3af;
+                    margin-bottom: 28px;
+                  "
+                >
+                  <!-- Drop line to Column 1 (Left) -->
+                  <div
+                    class="absolute left-0 top-0"
+                    style="width: 2px; height: 28px; background-color: #9ca3af"
+                  ></div>
+                  <!-- Drop line to Column 2 (Center) -->
+                  <div
+                    class="absolute left-1/2 -translate-x-1/2 top-0"
+                    style="width: 2px; height: 28px; background-color: #9ca3af"
+                  ></div>
+                  <!-- Drop line to Column 3 (Right) -->
+                  <div
+                    class="absolute right-0 top-0"
+                    style="width: 2px; height: 28px; background-color: #9ca3af"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Mobile Spacer Line -->
+              <div
+                class="md:hidden my-3"
+                style="width: 2px; height: 24px; background-color: #9ca3af"
+              ></div>
+
+              <!-- LEVEL 2 & 3: 3 PHÒNG BAN & CÁC BỘ PHẬN TRỰC THUỘC -->
+              <div
+                class="w-full items-start"
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+                  gap: 28px;
+                "
+              >
+                <!-- CỘT 1: PHÒNG KỸ THUẬT -->
+                <div class="flex flex-col items-center w-full">
+                  <!-- Node cấp 2: PHÒNG KỸ THUẬT -->
+                  <div
+                    class="w-full py-3 px-4 rounded-xl border-2 border-primary bg-[#e6f4ea] hover:bg-[#d1fae5] shadow-xs text-center flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      class="w-[18px] h-[18px] min-w-[18px] max-w-[18px] text-primary shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                    <span
+                      class="text-primary font-bold text-sm md:text-[15px] uppercase tracking-wide"
+                      style="white-space: nowrap"
+                    >
+                      PHÒNG KỸ THUẬT
+                    </span>
+                  </div>
+
+                  <!-- Sub-branch lines to 2 peer units -->
+                  <div class="flex flex-col items-center w-full">
+                    <div
+                      style="
+                        width: 2px;
+                        height: 16px;
+                        background-color: #9ca3af;
+                      "
+                    ></div>
+                    <div
+                      class="relative"
+                      style="
+                        width: 50%;
+                        height: 2px;
+                        background-color: #9ca3af;
+                        margin-bottom: 16px;
+                      "
+                    >
+                      <div
+                        class="absolute left-0 top-0"
+                        style="
+                          width: 2px;
+                          height: 16px;
+                          background-color: #9ca3af;
+                        "
+                      ></div>
+                      <div
+                        class="absolute right-0 top-0"
+                        style="
+                          width: 2px;
+                          height: 16px;
+                          background-color: #9ca3af;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+
+                  <!-- 2 Subordinate Units (Ngang cấp) -->
+                  <div
+                    class="w-full"
+                    style="display: flex; gap: 10px; width: 100%"
+                  >
+                    <!-- Node cấp 3.1: Bộ phận Quan trắc -->
+                    <div
+                      class="py-2.5 px-2 rounded-xl border border-gray-300 bg-white hover:border-primary hover:bg-[#f0fdf4] text-gray-800 hover:text-primary font-semibold text-[12.5px] sm:text-[13px] text-center flex items-center justify-center gap-1.5 shadow-xs transition-all group"
+                      style="flex: 1 1 0%; min-width: 0; white-space: nowrap"
+                    >
+                      <!-- Flask / Test Tube Icon -->
+                      <svg
+                        width="15"
+                        height="15"
+                        class="w-[15px] h-[15px] min-w-[15px] max-w-[15px] text-primary shrink-0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693l-1.57-.393m15.6 0l1.196 5.981A1.5 1.5 0 0119.528 22.5H4.472a1.5 1.5 0 01-1.468-1.794L4.2 15.3"
+                        />
+                      </svg>
+                      <span style="white-space: nowrap">Bộ phận Quan trắc</span>
+                    </div>
+
+                    <!-- Node cấp 3.2: Bộ phận Tư vấn -->
+                    <div
+                      class="py-2.5 px-2 rounded-xl border border-gray-300 bg-white hover:border-primary hover:bg-[#f0fdf4] text-gray-800 hover:text-primary font-semibold text-[12.5px] sm:text-[13px] text-center flex items-center justify-center gap-1.5 shadow-xs transition-all group"
+                      style="flex: 1 1 0%; min-width: 0; white-space: nowrap"
+                    >
+                      <!-- Document / Consultation Icon -->
+                      <svg
+                        width="15"
+                        height="15"
+                        class="w-[15px] h-[15px] min-w-[15px] max-w-[15px] text-primary shrink-0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                        />
+                      </svg>
+                      <span style="white-space: nowrap">Bộ phận Tư vấn</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CỘT 2: PHÒNG KINH DOANH -->
+                <div class="flex flex-col items-center w-full">
+                  <!-- Node cấp 2: PHÒNG KINH DOANH -->
+                  <div
+                    class="w-full py-3 px-4 rounded-xl border-2 border-primary bg-[#e6f4ea] hover:bg-[#d1fae5] shadow-xs text-center flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      class="w-[18px] h-[18px] min-w-[18px] max-w-[18px] text-primary shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                    <span
+                      class="text-primary font-bold text-sm md:text-[15px] uppercase tracking-wide"
+                      style="white-space: nowrap"
+                    >
+                      PHÒNG KINH DOANH
+                    </span>
+                  </div>
+
+                  <!-- Connector line down -->
+                  <div
+                    style="width: 2px; height: 34px; background-color: #9ca3af"
+                  ></div>
+
+                  <!-- Node cấp 3.1: Bộ phận Kinh doanh -->
+                  <div
+                    class="py-2.5 px-3 rounded-xl border border-gray-300 bg-white hover:border-primary hover:bg-[#f0fdf4] text-gray-800 hover:text-primary font-semibold text-[12.5px] sm:text-[13px] text-center flex items-center justify-center gap-1.5 shadow-xs transition-all group"
+                    style="width: 100%; max-width: 200px; white-space: nowrap"
+                  >
+                    <!-- Handshake / Business Icon -->
+                    <svg
+                      width="15"
+                      height="15"
+                      class="w-[15px] h-[15px] min-w-[15px] max-w-[15px] text-primary shrink-0"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.8"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3.6-3.091c-.555-.02-1.107-.05-1.65-.09a2.21 2.21 0 01-1.572-.733L7.75 11.25M3.75 4.5h16.5A2.25 2.25 0 0122.5 6.75v6a2.25 2.25 0 01-2.25 2.25H16.5l-4.5 3.75V15.25H3.75A2.25 2.25 0 011.5 13V6.75A2.25 2.25 0 013.75 4.5z"
+                      />
+                    </svg>
+                    <span style="white-space: nowrap">Bộ phận Kinh doanh</span>
+                  </div>
+                </div>
+
+                <!-- CỘT 3: PHÒNG TỔNG HỢP -->
+                <div class="flex flex-col items-center w-full">
+                  <!-- Node cấp 2: PHÒNG TỔNG HỢP -->
+                  <div
+                    class="w-full py-3 px-4 rounded-xl border-2 border-primary bg-[#e6f4ea] hover:bg-[#d1fae5] shadow-xs text-center flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      class="w-[18px] h-[18px] min-w-[18px] max-w-[18px] text-primary shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                      />
+                    </svg>
+                    <span
+                      class="text-primary font-bold text-sm md:text-[15px] uppercase tracking-wide"
+                      style="white-space: nowrap"
+                    >
+                      PHÒNG TỔNG HỢP
+                    </span>
+                  </div>
+
+                  <!-- Sub-branch lines to 2 peer units -->
+                  <div class="flex flex-col items-center w-full">
+                    <div
+                      style="
+                        width: 2px;
+                        height: 16px;
+                        background-color: #9ca3af;
+                      "
+                    ></div>
+                    <div
+                      class="relative"
+                      style="
+                        width: 50%;
+                        height: 2px;
+                        background-color: #9ca3af;
+                        margin-bottom: 16px;
+                      "
+                    >
+                      <div
+                        class="absolute left-0 top-0"
+                        style="
+                          width: 2px;
+                          height: 16px;
+                          background-color: #9ca3af;
+                        "
+                      ></div>
+                      <div
+                        class="absolute right-0 top-0"
+                        style="
+                          width: 2px;
+                          height: 16px;
+                          background-color: #9ca3af;
+                        "
+                      ></div>
+                    </div>
+                  </div>
+
+                  <!-- 2 Subordinate Units (Ngang cấp) -->
+                  <div
+                    class="w-full"
+                    style="display: flex; gap: 10px; width: 100%"
+                  >
+                    <!-- Node cấp 3.1: Bộ phận Hành chính - Nhân sự -->
+                    <div
+                      class="py-2.5 px-2 rounded-xl border border-gray-300 bg-white hover:border-primary hover:bg-[#f0fdf4] text-gray-800 hover:text-primary font-semibold text-[12.5px] sm:text-[13px] text-center flex items-center justify-center gap-1.5 shadow-xs transition-all group"
+                      style="flex: 1 1 0%; min-width: 0; white-space: nowrap"
+                    >
+                      <!-- Users / HR Icon -->
+                      <svg
+                        width="15"
+                        height="15"
+                        class="w-[15px] h-[15px] min-w-[15px] max-w-[15px] text-primary shrink-0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                        />
+                      </svg>
+                      <span style="white-space: nowrap">BP HC – Nhân sự</span>
+                    </div>
+
+                    <!-- Node cấp 3.2: Bộ phận Tài chính - Kế toán -->
+                    <div
+                      class="py-2.5 px-2 rounded-xl border border-gray-300 bg-white hover:border-primary hover:bg-[#f0fdf4] text-gray-800 hover:text-primary font-semibold text-[12.5px] sm:text-[13px] text-center flex items-center justify-center gap-1.5 shadow-xs transition-all group"
+                      style="flex: 1 1 0%; min-width: 0; white-space: nowrap"
+                    >
+                      <!-- Finance / Coins Icon -->
+                      <svg
+                        width="15"
+                        height="15"
+                        class="w-[15px] h-[15px] min-w-[15px] max-w-[15px] text-primary shrink-0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm6 0a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span style="white-space: nowrap">BP TC – Kế toán</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="section-history py-12 lg:py-20 overflow-hidden">
+          <div class="container px-3 mx-auto">
+            <div class="flex flex-col items-center mb-8 lg:mb-12">
+              <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                <span class="icon-list-icon">
+                  <img
+                    src="{{ asset("assets/images/asterisk.png") }}"
+                    class="size-5"
+                    width="24"
+                    height="24"
+                    alt="Hành trình phát triển"
+                  />
+                </span>
+                <span
+                  class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
+                >
+                  Hành trình phát triển
+                </span>
+              </div>
+              <h2
+                class="font-bold text-3xl md:text-4xl text-center text-gray-900"
+              >
+                Lịch sử
+                <span class="text-primary">hình thành &amp; phát triển</span>
+              </h2>
+              <p
+                class="mt-3 text-center text-gray-600 max-w-3xl text-[15px] leading-relaxed"
+              >
+                Hành trình hơn 8 năm xây dựng uy tín và khẳng định vị thế đơn vị
+                tư vấn môi trường đáng tin cậy của Môi Trường Bảo Châu.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <!-- Item 1 -->
+              <div
+                class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <p class="text-3xl font-extrabold text-primary mb-2">2018</p>
+                  <h3 class="text-[16px] font-bold text-gray-900 mb-2">
+                    Thành lập công ty
+                  </h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">
+                    Môi Trường Bảo Châu chính thức thành lập, quy tụ các kỹ sư
+                    môi trường tâm huyết với định hướng cung cấp dịch vụ hồ sơ
+                    pháp lý chuẩn mực.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div
+                class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <p class="text-3xl font-extrabold text-secondary mb-2">
+                    2020
+                  </p>
+                  <h3 class="text-[16px] font-bold text-gray-900 mb-2">
+                    Chuẩn hóa Luật BVMT 2020
+                  </h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">
+                    Tiên phong nghiên cứu và chuẩn hóa quy trình cấp Giấy phép
+                    môi trường (GPMT) và Báo cáo ĐTM theo khung quy định mới của
+                    Luật BVMT 2020.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div
+                class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <p class="text-3xl font-extrabold text-primary mb-2">2022</p>
+                  <h3 class="text-[16px] font-bold text-gray-900 mb-2">
+                    Mở rộng Kỹ thuật & Xử lý nước
+                  </h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">
+                    Mở rộng quy mô thiết kế, thi công và vận hành trạm xử lý
+                    nước thải - khí thải công nghiệp cho các nhà máy quy mô lớn
+                    tại các KCN trọng điểm.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Item 4 -->
+              <div
+                class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <p class="text-3xl font-extrabold text-secondary mb-2">
+                    2024 - 2026
+                  </p>
+                  <h3 class="text-[16px] font-bold text-gray-900 mb-2">
+                    Khí nhà kính & Chiến lược ESG
+                  </h3>
+                  <p class="text-sm text-gray-600 leading-relaxed">
+                    Triển khai tư vấn Kiểm kê Khí nhà kính (ISO 14064), báo cáo
+                    CBAM, LCA và chiến lược ESG, khẳng định vị thế đối tác môi
+                    trường toàn diện.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PARTNERS & CLIENTS MARQUEE SLIDER SECTION -->
+        <section
+          id="section-partners"
+          class="section section-partners partners py-10 lg:py-20 bg-gray-50/70 border-t border-gray-100 overflow-hidden"
+        >
+          <div class="container px-3 mx-auto">
+            <div class="flex flex-col items-center text-center mb-8 lg:mb-12">
+              <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                <span class="icon-list-icon">
+                  <img
+                    src="{{ asset("assets/images/asterisk.png") }}"
+                    class="size-5"
+                    width="24"
+                    height="24"
+                    alt="Khách hàng tiêu biểu"
+                  />
+                </span>
+                <span
+                  class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
+                >
+                  Khách hàng tiêu biểu
+                </span>
+              </div>
+              <h2
+                class="font-bold text-2xl md:text-3xl lg:text-4xl text-gray-900 leading-tight"
+              >
+                Đối tác tin cậy đồng hành cùng
+                <span class="text-primary">Bảo Châu</span>
+              </h2>
+            </div>
+
+            <!-- ROW 1 (RTL) -->
+            <div class="swiper-container">
+              <div class="swiper" data-fx-slider="">
+                <div
+                  class="swiper-marquee swiper-wrapper"
+                  data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"rtl":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
+                >
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="Mon Ngon Moi Ngay Logo"
+                        decoding="async"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/2-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="HAKUHODO LOGO"
+                        decoding="async"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/mitsubishi-768x768.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="768"
+                        alt="mitsubishi logo"
+                        decoding="async"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/3-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="UOB LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/4-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="CBAS LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-em-biet-doc-1-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="I CAN READ Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/5-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="KAMINAIL LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/6-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="TRIBECO LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-bidridco-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="bidrico logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-breaktalk-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="logo breaktalk"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/7-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="FOODS FOR YOU LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logodaidongtien-768x448-71611-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Dai Dong Tien Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/8-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="NASPHARMA LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/9-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="TALENT GATE LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-v-holding-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="v-holdings logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/10-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="ABBANK LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-me-since-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Me Since Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/11-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="THE TUTORX VIET NAM LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/12-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="VIETNAM ECO LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROW 2 (LTR) -->
+            <div class="swiper-container mt-3">
+              <div class="swiper" data-fx-slider="">
+                <div
+                  class="swiper-marquee swiper-wrapper"
+                  data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
+                >
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-Rart-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt=""
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-gocons-768x344.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Gocons Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-hucons-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Hucons Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-thanh-tam-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Nha Khoa Thanh Tam Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-nu-cuoi-duyen-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="Nu Cuoi Duyen Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/logo-dochi-office-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="DOCHI OFFICE LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/1-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="DOCHI HOME LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/2-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="METALIX INTERIOR Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/3-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="BBRACING Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/4-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="TMA FARMS LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/5-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="Trung Thanh Print Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/6-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="Thebabyshopvn Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/7-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="Tra Hoa Viet Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/cropped-logo-inthanhtien-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="In Thanh Tien Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/cropped-logo-inminhkhang-1-768x344.webp") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="344"
+                        alt="In Minh Khang Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/8-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="Nha Khoa Anna Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/9-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="TOPLAND LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/10-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="DH LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/11-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="THE BOOKKEEPING PEOPLE LOGO"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                    <span
+                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                    >
+                      <img
+                        src="{{ asset("assets/images/12-1-768x427.png") }}"
+                        class="block h-[50px] md:h-[68px] w-auto"
+                        width="768"
+                        height="427"
+                        alt="TQQ Logo"
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 @endsection

@@ -22,9 +22,6 @@
     </main>
     <x-frontend.footer />
     <x-frontend.floating-contact />
-    <a title="Về đầu trang" aria-label="Về đầu trang" rel="nofollow" href="#" class="c-back-to-top size-10 lg:size-12 right-3 bottom-20 lg:bottom-8 rounded-full" data-fx-scroll-top data-show="false" data-scroll-start="300">
-        <span aria-hidden="true">↑</span>
-    </a>
     <script src="{{ asset('assets/js/swiper.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}" defer></script>
 </body>
