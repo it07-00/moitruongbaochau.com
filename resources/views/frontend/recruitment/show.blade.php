@@ -25,12 +25,12 @@
             <li
               class="current font-bold text-primary truncate max-w-[280px] sm:max-w-none"
             >
-              Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép Môi Trường
+              {{ $job->title }}
             </li>
           </ul>
         </div>
 
-        <!-- HERO SECTION: JOB HEADER & FEATURED IMAGE (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
+        <!-- HERO SECTION: JOB HEADER & FEATURED IMAGE -->
         <section class="section section-hero pt-4 pb-8 lg:pb-12 relative z-10">
           <div class="container px-3 mx-auto">
             <div class="max-w-4xl mx-auto text-center mb-8 lg:mb-12">
@@ -55,7 +55,7 @@
               <h1
                 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.25] mb-5"
               >
-                Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép Môi Trường
+                {{ $job->title }}
               </h1>
 
               <div
@@ -64,7 +64,7 @@
                 <span
                   class="term btn btn-secondary-2 flex-0! py-1.5! px-4! text-sm! sm:text-base! rounded-full font-bold shadow-xs"
                 >
-                  Khối Tư Vấn &amp; Dự Án MT
+                  {{ $job->employment_type ?? 'Toàn thời gian' }}
                 </span>
                 <span
                   class="inline-flex items-center gap-2 text-black font-semibold text-sm sm:text-base lg:text-lg"
@@ -88,7 +88,7 @@
                       d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                     />
                   </svg>
-                  Địa điểm: TP. Hồ Chí Minh
+                  Địa điểm: {{ $job->location ?? 'TP. Hồ Chí Minh' }}
                 </span>
                 <span
                   class="inline-flex items-center gap-2 text-black font-semibold text-sm sm:text-base lg:text-lg"
@@ -107,14 +107,14 @@
                       d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
                     />
                   </svg>
-                  Hạn nộp hồ sơ: 30/09/2026
+                  Hạn nộp: {{ $job->expires_at ? $job->expires_at->format('d/m/Y') : 'Đang nhận hồ sơ' }}
                 </span>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- STATISTICS / JOB SPECS SECTION (4 CARDS CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
+        <!-- STATISTICS / JOB SPECS SECTION -->
         <section class="section relative pb-12 lg:pb-16">
           <div class="container px-3 mx-auto">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 w-full">
@@ -124,10 +124,10 @@
                 <p
                   class="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider"
                 >
-                  Mức Lương Khởi Điểm
+                  Hình Thức
                 </p>
                 <p class="text-lg sm:text-xl lg:text-2xl font-extrabold text-gray-900 mt-2">
-                  15 - 25 Triệu + Thưởng
+                  {{ $job->employment_type ?? 'Toàn thời gian' }}
                 </p>
               </div>
 
@@ -137,10 +137,10 @@
                 <p
                   class="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider"
                 >
-                  Kinh Nghiệm Yêu Cầu
+                  Địa Điểm
                 </p>
                 <p class="text-lg sm:text-xl lg:text-2xl font-extrabold text-primary mt-2">
-                  01 - 03 Năm
+                  {{ $job->location ?? 'TP. Hồ Chí Minh' }}
                 </p>
               </div>
 
@@ -150,10 +150,10 @@
                 <p
                   class="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider"
                 >
-                  Số Lượng Tuyển Dụng
+                  Hạn Nộp Hồ Sơ
                 </p>
                 <p class="text-lg sm:text-xl lg:text-2xl font-extrabold text-gray-900 mt-2">
-                  02 Kỹ Sư Môi Trường
+                  {{ $job->expires_at ? $job->expires_at->format('d/m/Y') : 'Đang nhận' }}
                 </p>
               </div>
 
@@ -163,17 +163,17 @@
                 <p
                   class="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider"
                 >
-                  Trạng Thái Vị Trí
+                  Trạng Thái
                 </p>
                 <p class="text-lg sm:text-xl lg:text-2xl font-extrabold text-secondary mt-2">
-                  Đang Nhận Hồ Sơ
+                  {{ $job->expires_at && $job->expires_at->isPast() ? 'Đã hết hạn' : 'Đang Nhận Hồ Sơ' }}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- MAIN ARTICLE CONTENT & SIDEBAR SECTION (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
+        <!-- MAIN ARTICLE CONTENT & SIDEBAR SECTION -->
         <section class="section relative pb-16 lg:pb-24">
           <div class="container px-3 mx-auto">
             <div
@@ -183,49 +183,24 @@
               <div class="lg:col-span-2">
                 <article class="entry-content space-y-12" itemscope>
                   <!-- 1. Tổng quan vị trí -->
+                  @if($job->summary)
                   <div>
                     <h2
                       class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary mb-5 tracking-tight"
                     >
-                      Tổng Quan Vị Trí Tuyển Dụng Tại Bảo Châu
+                      Tổng Quan Vị Trí Tuyển Dụng
                     </h2>
                     <div
                       class="text-gray-700 text-base sm:text-lg lg:text-xl leading-relaxed space-y-5"
                     >
                       <p>
-                        <strong class="text-gray-900"
-                          >Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo
-                          Châu</strong
-                        >
-                        là đơn vị tư vấn kỹ thuật môi trường uy tín hàng đầu tại
-                        khu vực phía Nam, đối tác chiến lược của hơn 500+ doanh
-                        nghiệp, nhà máy FDI tại các KCN trọng điểm (VSIP, Long
-                        Thành, Amata, Sóng Thần,...).
-                      </p>
-                      <p>
-                        Nhằm đáp ứng tốc độ phát triển mạnh mẽ của khối dự án,
-                        Bảo Châu đang tìm kiếm
-                        <strong class="text-gray-900"
-                          >02 Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép Môi
-                          Trường</strong
-                        >
-                        có năng lực, tâm huyết và tinh thần trách nhiệm cao để
-                        đồng hành lâu dài.
-                      </p>
-                      <p>
-                        Tại Bảo Châu, bạn sẽ được trực tiếp chủ trì các dự án
-                        lớn, làm việc với các cơ quan thẩm định cấp Bộ và Sở
-                        TN&amp;MT, đồng thời được đào tạo nâng cao về các lĩnh
-                        vực xu hướng toàn cầu:
-                        <strong class="text-primary"
-                          >Kiểm kê Khí nhà kính, Báo cáo ESG &amp; Cơ chế
-                          CBAM</strong
-                        >.
+                        {!! nl2br(e($job->summary)) !!}
                       </p>
                     </div>
                   </div>
+                  @endif
 
-                  <!-- Job Showcase Image (Khoảng cách rõ ràng giữa ảnh và text) -->
+                  <!-- Job Showcase Image -->
                   <div
                     class="my-10 lg:my-14 rounded-3xl overflow-hidden shadow-xl border border-black/5"
                   >
@@ -250,100 +225,12 @@
                     <div
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
-                      <p class="font-medium text-gray-800">
-                        Vị trí Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép Môi Trường
-                        chịu trách nhiệm thực hiện các hạng mục công việc chính
-                        sau:
-                      </p>
-                      <ul class="space-y-4 my-4">
-                        <li class="flex items-start gap-3.5">
-                          <svg
-                            class="size-6 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span>
-                            <strong class="text-gray-900"
-                              >Khảo sát &amp; Thu thập số liệu:</strong
-                            >
-                            Trực tiếp khảo sát thực địa tại nhà máy dự án, thu
-                            thập thông tin dây chuyền công nghệ sản xuất, nguồn
-                            phát thải và lấy mẫu quan trắc hiện trạng.
-                          </span>
-                        </li>
-                        <li class="flex items-start gap-3.5">
-                          <svg
-                            class="size-6 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span>
-                            <strong class="text-gray-900"
-                              >Chủ trì lập hồ sơ pháp lý:</strong
-                            >
-                            Biên soạn Báo cáo Đánh giá tác động môi trường
-                            (ĐTM), Báo cáo đề xuất cấp Giấy phép môi trường
-                            (GPMT), Đăng ký môi trường theo Luật BVMT 2020.
-                          </span>
-                        </li>
-                        <li class="flex items-start gap-3.5">
-                          <svg
-                            class="size-6 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span>
-                            <strong class="text-gray-900"
-                              >Thuyết minh &amp; Thẩm định:</strong
-                            >
-                            Đại diện bảo vệ phương án kỹ thuật trước Hội đồng
-                            thẩm định Sở TN&amp;MT, Bộ TN&amp;MT và Ban quản lý
-                            các KCN.
-                          </span>
-                        </li>
-                        <li class="flex items-start gap-3.5">
-                          <svg
-                            class="size-6 text-secondary shrink-0 mt-0.5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                          <span>
-                            <strong class="text-gray-900"
-                              >Hoàn thiện cấp phép:</strong
-                            >
-                            Chỉnh sửa, hoàn thiện hồ sơ theo kết luận của Hội
-                            đồng cho đến khi được cấp Giấy phép chính thức.
-                          </span>
-                        </li>
-                      </ul>
+                      {!! $job->content !!}
                     </div>
                   </div>
 
-                  <!-- 3. Yêu cầu năng lực ứng viên (4 CARDS CHUẨN NHƯ PHẦN GIẢI PHÁP KỸ THUẬT CỦA PROJECT-DETAIL) -->
+                  <!-- 3. Yêu cầu năng lực ứng viên -->
+                  @if($job->requirements)
                   <div>
                     <h2
                       class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary mb-5 tracking-tight"
@@ -353,65 +240,13 @@
                     <div
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
-                      <p class="font-medium text-gray-800">
-                        Chúng tôi tìm kiếm ứng viên có nền tảng chuyên môn vững
-                        vàng, khả năng nghiên cứu văn bản pháp luật và tinh thần
-                        chủ động cao:
-                      </p>
-                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 my-5">
-                        <div
-                          class="p-6 rounded-2xl bg-white/80 border border-gray-200/80 shadow-xs"
-                        >
-                          <p class="font-bold text-primary text-base sm:text-lg mb-2">
-                            1. Trình độ học vấn &amp; Bằng cấp
-                          </p>
-                          <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-                            Tốt nghiệp Đại học trở lên chuyên ngành Kỹ thuật Môi
-                            trường, Quản lý Môi trường, Công nghệ Môi trường
-                            hoặc liên quan.
-                          </p>
-                        </div>
-                        <div
-                          class="p-6 rounded-2xl bg-white/80 border border-gray-200/80 shadow-xs"
-                        >
-                          <p class="font-bold text-primary text-base sm:text-lg mb-2">
-                            2. Kinh nghiệm thực tế
-                          </p>
-                          <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-                            Tối thiểu từ 01 - 03 năm kinh nghiệm thực tế trong
-                            việc lập Báo cáo ĐTM, Giấy phép môi trường theo Luật
-                            BVMT 2020.
-                          </p>
-                        </div>
-                        <div
-                          class="p-6 rounded-2xl bg-white/80 border border-gray-200/80 shadow-xs"
-                        >
-                          <p class="font-bold text-primary text-base sm:text-lg mb-2">
-                            3. Am hiểu quy chuẩn &amp; Pháp luật
-                          </p>
-                          <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-                            Nắm vững Nghị định 08/2022/NĐ-CP, Thông tư
-                            02/2022/TT-BTNMT và hệ thống quy chuẩn kỹ thuật quốc
-                            gia QCVN hiện hành.
-                          </p>
-                        </div>
-                        <div
-                          class="p-6 rounded-2xl bg-white/80 border border-gray-200/80 shadow-xs"
-                        >
-                          <p class="font-bold text-primary text-base sm:text-lg mb-2">
-                            4. Kỹ năng giao tiếp &amp; Phần mềm
-                          </p>
-                          <p class="text-sm sm:text-base text-gray-600 leading-relaxed">
-                            Thành thạo AutoCAD, Office; tự tin trình bày và giải
-                            trình thuyết phục trước Hội đồng thẩm định cơ quan
-                            chức năng.
-                          </p>
-                        </div>
-                      </div>
+                      {!! $job->requirements !!}
                     </div>
                   </div>
+                  @endif
 
-                  <!-- 4. Quyền lợi & Chế độ đãi ngộ (CHUẨN NHƯ PHẦN KẾT QUẢ ĐẠT ĐƯỢC CỦA PROJECT-DETAIL) -->
+                  <!-- 4. Quyền lợi & Chế độ đãi ngộ -->
+                  @if($job->benefits)
                   <div>
                     <h2
                       class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-primary mb-5 tracking-tight"
@@ -421,101 +256,12 @@
                     <div
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
-                      <p class="font-medium text-gray-800">
-                        Gia nhập Môi Trường Bảo Châu, bạn được làm việc trong
-                        môi trường năng động, tôn trọng năng lực cá nhân và
-                        hưởng các chế độ phúc lợi toàn diện:
-                      </p>
-                      <div
-                        class="p-6 rounded-3xl bg-emerald-50/60 my-5"
-                      >
-                        <ul
-                          class="space-y-4 text-base sm:text-lg text-gray-800"
-                        >
-                          <li class="flex items-start gap-3">
-                            <svg
-                              class="size-6 text-secondary shrink-0 mt-0.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                            <span>
-                              <strong class="text-gray-900"
-                                >Thu nhập hấp dẫn:</strong
-                              >
-                              Lương cứng 15 - 25 Triệu + Thưởng % dự án hoàn
-                              thành + Thưởng năng suất cuối năm.
-                            </span>
-                          </li>
-                          <li class="flex items-start gap-3">
-                            <svg
-                              class="size-6 text-secondary shrink-0 mt-0.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                            <span>
-                              <strong class="text-gray-900"
-                                >Đào tạo nâng cao:</strong
-                              >
-                              Tài trợ 100% chi phí các khóa đào tạo chuyên gia
-                              Kiểm kê Khí nhà kính, Báo cáo ESG &amp; CBAM.
-                            </span>
-                          </li>
-                          <li class="flex items-start gap-3">
-                            <svg
-                              class="size-6 text-secondary shrink-0 mt-0.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                            <span>
-                              <strong class="text-gray-900"
-                                >Bảo hiểm &amp; Chăm sóc sức khỏe:</strong
-                              >
-                              Đóng đầy đủ BHXH, BHYT, BHTN; khám sức khỏe tổng
-                              quát định kỳ hàng năm.
-                            </span>
-                          </li>
-                          <li class="flex items-start gap-3">
-                            <svg
-                              class="size-6 text-secondary shrink-0 mt-0.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                                clip-rule="evenodd"
-                              />
-                            </svg>
-                            <span>
-                              <strong class="text-gray-900"
-                                >Nghỉ dưỡng &amp; Hoạt động ngoại khóa:</strong
-                              >
-                              Du lịch Resort 5 sao hàng năm, Team building, sinh
-                              nhật và Year-End Party hoành tráng.
-                            </span>
-                          </li>
-                        </ul>
+                      <div class="p-6 rounded-3xl bg-emerald-50/60 my-5">
+                        {!! $job->benefits !!}
                       </div>
                     </div>
                   </div>
+                  @endif
 
                   <!-- Job Hashtags (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
                   <div
@@ -898,6 +644,7 @@
                 </div>
 
                 <!-- Related Job List Card -->
+                @if(isset($relatedJobs) && $relatedJobs->isNotEmpty())
                 <div
                   class="card-item relative glass-effect border border-black/8 bg-white/95 rounded-3xl p-6 sm:p-7 shadow-sm space-y-4"
                 >
@@ -907,47 +654,24 @@
                     Vị Trí Đang Tuyển Dụng Khác
                   </p>
                   <div class="divide-y divide-gray-100 text-base">
+                    @foreach($relatedJobs as $rJob)
                     <a
-                      href="{{ route("recruitment.index") }}"
+                      href="{{ route('recruitment.show', $rJob->slug) }}"
                       class="py-3 block group"
                     >
                       <p
                         class="font-bold text-gray-900 group-hover:text-primary transition-colors text-base"
                       >
-                        Tuyển Dụng Kế Toán Nội Bộ
+                        {{ $rJob->title }}
                       </p>
                       <p class="text-xs sm:text-sm text-gray-500 mt-1">
-                        Chính thức • TP. Hồ Chí Minh
+                        {{ $rJob->employment_type ?? 'Toàn thời gian' }} • {{ $rJob->location ?? 'TP. Hồ Chí Minh' }}
                       </p>
                     </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="py-3 block group"
-                    >
-                      <p
-                        class="font-bold text-gray-900 group-hover:text-primary transition-colors text-base"
-                      >
-                        Tuyển Dụng Chuyên Viên SEO
-                      </p>
-                      <p class="text-xs sm:text-sm text-gray-500 mt-1">
-                        Chính thức • TP. Hồ Chí Minh
-                      </p>
-                    </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="py-3 block group"
-                    >
-                      <p
-                        class="font-bold text-gray-900 group-hover:text-primary transition-colors text-base"
-                      >
-                        Chuyên Viên Khí Nhà Kính &amp; ESG
-                      </p>
-                      <p class="text-xs sm:text-sm text-gray-500 mt-1">
-                        Chính thức • TP. Hồ Chí Minh
-                      </p>
-                    </a>
+                    @endforeach
                   </div>
                 </div>
+                @endif
               </aside>
             </div>
           </div>

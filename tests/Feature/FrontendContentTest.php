@@ -61,4 +61,21 @@ class FrontendContentTest extends TestCase
             ->assertOk()
             ->assertViewHas('services', fn ($services): bool => $services->perPage() === 12);
     }
+
+    public function test_recruitment_page_renders_database_jobs(): void
+    {
+        $job = JobPosting::factory()->create([
+            'title' => 'Kỹ sư Lập ĐTM và Giấy phép môi trường',
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('recruitment.index'))
+            ->assertOk()
+            ->assertSee($job->title);
+
+        $this->get(route('recruitment.show', $job->slug))
+            ->assertOk()
+            ->assertSee($job->title);
+    }
 }

@@ -405,24 +405,73 @@ HTML;
 
     private function seedJobs(CarbonInterface $publishedAt): void
     {
-        foreach ([
-            ['title' => 'Kỹ sư ĐTM & Giấy phép môi trường', 'slug' => 'ky-su-dtm-giay-phep-moi-truong'],
-            ['title' => 'Chuyên viên kiểm kê khí nhà kính', 'slug' => 'chuyen-vien-kiem-ke-khi-nha-kinh'],
-            ['title' => 'Nhân viên kinh doanh dịch vụ môi trường', 'slug' => 'nhan-vien-kinh-doanh-dich-vu-moi-truong'],
-        ] as $job) {
-            JobPosting::query()->updateOrCreate(['slug' => $job['slug']], [
-                'title' => $job['title'],
+        $jobs = [
+            [
+                'title' => 'Kỹ Sư Lập Báo Cáo ĐTM & Giấy Phép Môi Trường',
+                'slug' => 'ky-su-dtm-giay-phep-moi-truong',
                 'location' => 'TP. Hồ Chí Minh',
                 'employment_type' => 'Toàn thời gian',
-                'summary' => 'Cơ hội làm việc trong môi trường chuyên nghiệp, chú trọng năng lực và sự phát triển lâu dài.',
-                'content' => 'Phối hợp với đội ngũ chuyên môn để triển khai công việc đúng phạm vi, tiến độ và tiêu chuẩn chất lượng.',
-                'requirements' => 'Tốt nghiệp chuyên ngành phù hợp, giao tiếp rõ ràng, chủ động học hỏi và có tinh thần trách nhiệm.',
-                'benefits' => 'Thu nhập theo năng lực, đào tạo chuyên môn, đầy đủ chế độ và lộ trình phát triển rõ ràng.',
+                'summary' => 'Chủ trì lập báo cáo ĐTM, Giấy phép môi trường và bảo vệ phương án kỹ thuật trước Hội đồng thẩm định Sở/Bộ TN&MT.',
+                'content' => '<p><strong>Trách nhiệm chính:</strong></p><ul><li>Khảo sát hiện trạng nhà máy, thu thập số liệu quy trình sản xuất và lấy mẫu quan trắc phân tích.</li><li>Biên soạn Báo cáo ĐTM, Báo cáo đề xuất cấp Giấy phép môi trường theo Luật BVMT 2020.</li><li>Đại diện chủ dự án giải trình và bảo vệ phương án kỹ thuật trước Hội đồng thẩm định Sở TN&MT, Bộ TN&MT.</li><li>Chỉnh sửa hoàn thiện hồ sơ và bàn giao Giấy phép môi trường chính thức cho khách hàng.</li></ul>',
+                'requirements' => '<ul><li>Tốt nghiệp Đại học chuyên ngành Quản lý Môi trường, Kỹ thuật Môi trường hoặc Khoa học Môi trường.</li><li>Tối thiểu 1 - 3 năm kinh nghiệm lập báo cáo ĐTM hoặc Giấy phép môi trường.</li><li>Nắm vững Luật Bảo vệ Môi trường 2020, Nghị định 08/2022/NĐ-CP và Thông tư 02/2022/TT-BTNMT.</li><li>Kỹ năng giao tiếp, thuyết trình và bảo vệ phương án trước hội đồng tốt.</li></ul>',
+                'benefits' => '<ul><li>Thu nhập 15 - 25 Triệu + Thưởng % hoa hồng dự án theo KPI.</li><li>Lương tháng 13, 14 và thưởng nóng dự án hoàn thành xuất sắc.</li><li>Đài thọ 100% chi phí các khóa đào tạo nâng cao chứng chỉ kiểm kê KNK, CBAM, ESG quốc tế.</li><li>Đầy đủ chế độ BHXH, BHYT, du lịch nghỉ dưỡng 1-2 lần/năm.</li></ul>',
+            ],
+            [
+                'title' => 'Chuyên Viên Tư Vấn Kiểm Kê Khí Nhà Kính & Báo Cáo ESG',
+                'slug' => 'chuyen-vien-kiem-ke-khi-nha-kinh',
+                'location' => 'TP. Hồ Chí Minh',
+                'employment_type' => 'Toàn thời gian',
+                'summary' => 'Tư vấn kiểm kê phát thải khí nhà kính theo ISO 14064, cơ chế CBAM EU, đánh giá vòng đời LCA và lập báo cáo phát triển bền vững ESG.',
+                'content' => '<p><strong>Trách nhiệm chính:</strong></p><ul><li>Thu thập số liệu tiêu thụ năng lượng, nhiên liệu, nguyên vật liệu tại cơ sở sản xuất của khách hàng.</li><li>Áp dụng hệ số phát thải theo IPCC/GHG Protocol để tính toán lượng phát thải Phạm vi 1, 2, 3.</li><li>Xây dựng báo cáo kiểm kê KNK cấp cơ sở (ISO 14064-1) và kế hoạch giảm nhẹ phát thải.</li><li>Hỗ trợ doanh nghiệp xuất khẩu lập tờ khai phát thải theo cơ chế điều chỉnh biên giới carbon CBAM của EU.</li></ul>',
+                'requirements' => '<ul><li>Tốt nghiệp Đại học ngành Môi trường, Biến đổi khí hậu, Năng lượng hoặc Kỹ thuật Hóa học.</li><li>Am hiểu tiêu chuẩn ISO 14064-1, GHG Protocol, IPCC Guidelines và quy định CBAM EU.</li><li>Tiếng Anh đọc hiểu tài liệu chuyên ngành tốt (tương đương TOEIC 650+ / IELTS 6.0+).</li><li>Kỹ năng phân tích số liệu Excel / công cụ mô hình hóa tốt.</li></ul>',
+                'benefits' => '<ul><li>Thu nhập 18 - 30 Triệu + Thưởng dự án ESG cao cấp.</li><li>Cơ hội làm việc trực tiếp với các tập đoàn FDI đa quốc gia và tổ chức quốc tế.</li><li>Được cử đi học và cấp chứng chỉ Lead Auditor ISO 14064 quốc tế.</li><li>Môi trường năng động, lộ trình thăng tiến lên Trưởng nhóm/Chuyên gia tư vấn cấp cao.</li></ul>',
+            ],
+            [
+                'title' => 'Kỹ Sư Thiết Kế & Vận Hành Hệ Thống Xử Lý Nước Thải',
+                'slug' => 'ky-su-thiet-ke-xu-ly-nuoc-thai',
+                'location' => 'TP. Hồ Chí Minh & Công trình',
+                'employment_type' => 'Toàn thời gian',
+                'summary' => 'Thiết kế công nghệ, lập bản vẽ thi công và chỉ đạo vận hành chạy thử hệ thống xử lý nước thải công nghiệp & sinh hoạt.',
+                'content' => '<p><strong>Trách nhiệm chính:</strong></p><ul><li>Tính toán công nghệ, lập sơ đồ dây chuyền xử lý và bảng cân bằng vật chất cho trạm xử lý nước thải.</li><li>Triển khai bản vẽ thiết kế cơ sở, bản vẽ thi công (AutoCAD/Revit) chi tiết bể xử lý, thiết bị và đường ống.</li><li>Giám sát lắp đặt thiết bị công nghệ, nuôi cấy vi sinh và vận hành chạy thử đạt chuẩn xả thải.</li><li>Lập quy trình vận hành chuẩn (SOP) và hướng dẫn bàn giao kỹ thuật cho chủ đầu tư.</li></ul>',
+                'requirements' => '<ul><li>Tốt nghiệp Đại học chuyên ngành Kỹ thuật Môi trường, Công nghệ Môi trường hoặc Cấp thoát nước.</li><li>Kinh nghiệm 2+ năm thiết kế hoặc thi công trạm xử lý nước thải công nghiệp.</li><li>Thành thạo phần mềm AutoCAD, MS Office; biết Revit MEP là lợi thế lớn.</li><li>Sẵn sàng đi công tác giám sát tại công trình nhà máy khi cần thiết.</li></ul>',
+                'benefits' => '<ul><li>Thu nhập 16 - 26 Triệu + Phụ cấp công tác + Thưởng tiến độ công trình.</li><li>Đầy đủ bảo hộ lao động cao cấp, bảo hiểm tai nạn 24/7 và chế độ đãi ngộ vượt trội.</li><li>Được làm chủ công nghệ xử lý tiên tiến: MBR, MBBR, AO/AAO, Fenton...</li></ul>',
+            ],
+            [
+                'title' => 'Chuyên Viên Kinh Doanh Dịch Vụ Môi Trường (B2B Sales)',
+                'slug' => 'nhan-vien-kinh-doanh-dich-vu-moi-truong',
+                'location' => 'TP. Hồ Chí Minh',
+                'employment_type' => 'Toàn thời gian',
+                'summary' => 'Tìm kiếm, kết nối và tư vấn giải pháp môi trường cho các doanh nghiệp, nhà máy FDI trong các khu công nghiệp.',
+                'content' => '<p><strong>Trách nhiệm chính:</strong></p><ul><li>Tìm kiếm và tiếp cận khách hàng doanh nghiệp sản xuất tại các KCN TP.HCM, Bình Dương, Đồng Nai, Long An.</li><li>Phối hợp bộ phận kỹ thuật tư vấn gói dịch vụ phù hợp (ĐTM, Giấy phép MT, Khí nhà kính, Xử lý nước thải).</li><li>Soạn thảo báo giá, thương thảo điều khoản và ký kết hợp đồng dịch vụ.</li><li>Chăm sóc khách hàng hiện hữu và mở rộng mạng lưới đối tác chiến lược.</li></ul>',
+                'requirements' => '<ul><li>Tốt nghiệp Cao đẳng/Đại học các ngành Kinh tế, Quản trị, Môi trường hoặc liên quan.</li><li>Có kỹ năng giao tiếp tốt, tác phong chuyên nghiệp, đam mê kinh doanh B2B.</li><li>Có kinh nghiệm sales dịch vụ B2B hoặc am hiểu ngành môi trường là lợi thế lớn.</li><li>Chủ động, có tinh thần cầu tiến và chịu được áp lực doanh số.</li></ul>',
+                'benefits' => '<ul><li>Lương cứng 10 - 15 Triệu + Hoa hồng % hợp đồng lũy tiến (Tổng thu nhập 25 - 40+ Triệu/tháng).</li><li>Nguồn khách hàng tiềm năng được công ty hỗ trợ liên tục qua Marketing.</li><li>Thưởng nóng xuất sắc theo từng hợp đồng ký mới.</li></ul>',
+            ],
+            [
+                'title' => 'Tuyển Dụng Kế Toán Nội Bộ & Quản Lý Dự Án',
+                'slug' => 'ke-toan-noi-bo',
+                'location' => 'TP. Hồ Chí Minh',
+                'employment_type' => 'Toàn thời gian',
+                'summary' => 'Quản lý thu chi nội bộ, theo dõi tiến độ thanh toán hợp đồng dự án môi trường và phối hợp kế toán thuế.',
+                'content' => '<p><strong>Trách nhiệm chính:</strong></p><ul><li>Kiểm tra, đối chiếu chứng từ thu chi, tạm ứng công tác phí và thanh toán nhà cung cấp.</li><li>Theo dõi các mốc nghiệm thu và thanh toán hợp đồng tư vấn, thi công công trình.</li><li>Lập báo cáo dòng tiền nội bộ định kỳ hàng tuần, hàng tháng cho Ban Giám Đốc.</li><li>Lưu trữ hồ sơ hợp đồng, hóa đơn chứng từ gọn gàng, khoa học.</li></ul>',
+                'requirements' => '<ul><li>Tốt nghiệp Cao đẳng/Đại học chuyên ngành Kế toán, Kiểm toán, Tài chính.</li><li>Tối thiểu 1 năm kinh nghiệm kế toán nội bộ hoặc kế toán tổng hợp.</li><li>Cẩn thận, trung thực, tỉ mỉ và có tinh thần trách nhiệm cao.</li><li>Sử dụng thành thạo phần mềm MISA và Excel văn phòng.</li></ul>',
+                'benefits' => '<ul><li>Thu nhập 10 - 14 Triệu + Lương tháng 13, 14.</li><li>Môi trường văn phòng thân thiện, giờ làm việc hành chính chuẩn mực.</li><li>Đầy đủ chế độ BHXH, BHYT, nghỉ mát hàng năm cùng công ty.</li></ul>',
+            ],
+        ];
+
+        foreach ($jobs as $job) {
+            JobPosting::query()->updateOrCreate(['slug' => $job['slug']], [
+                'title' => $job['title'],
+                'location' => $job['location'],
+                'employment_type' => $job['employment_type'],
+                'summary' => $job['summary'],
+                'content' => $job['content'],
+                'requirements' => $job['requirements'],
+                'benefits' => $job['benefits'],
                 'status' => ContentStatus::Published,
                 'published_at' => $publishedAt,
-                'expires_at' => now()->addMonths(3),
-                'meta_title' => 'Tuyển dụng '.$job['title'].' - Môi Trường Bảo Châu',
-                'meta_description' => 'Thông tin tuyển dụng vị trí '.$job['title'].' tại Môi Trường Bảo Châu.',
+                'expires_at' => now()->addMonths(6),
+                'meta_title' => $job['title'].' - Môi Trường Bảo Châu',
+                'meta_description' => $job['summary'],
             ]);
         }
     }

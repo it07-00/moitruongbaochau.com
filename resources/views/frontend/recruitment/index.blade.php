@@ -333,15 +333,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Row 1: Kế toán -->
+                  @forelse($jobs as $job)
                   <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
                     <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Tuyển Dụng Kế Toán Nội Bộ
+                      <a href="{{ route('recruitment.show', $job->slug) }}" class="hover:text-primary transition-colors inline-block">
+                        {{ $job->title }}
                       </a>
                     </td>
                     <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
+                      {{ $job->employment_type ?? 'Toàn thời gian' }}
                     </td>
                     <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
                       <div class="inline-flex items-center gap-2 justify-center">
@@ -349,215 +349,36 @@
                           <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                         </svg>
-                        <span class="font-medium">TP. HCM</span>
+                        <span class="font-medium">{{ $job->location ?? 'TP. HCM' }}</span>
                       </div>
                     </td>
                     <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
+                      {{ $job->expires_at ? $job->expires_at->format('d/m/Y') : 'Đang nhận hồ sơ' }}
                     </td>
                     <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
                       <a
-                        href="{{ route("recruitment.index") }}"
+                        href="{{ route('recruitment.show', $job->slug) }}"
                         class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
                       >
                         Ứng tuyển
                       </a>
                     </td>
                   </tr>
-
-                  <!-- Row 2: Chuyên Viên SEO -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Tuyển Dụng Chuyên Viên SEO
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
+                  @empty
+                  <tr>
+                    <td colspan="5" class="py-12 text-center text-gray-500 font-medium bg-white rounded-2xl border border-black/10">
+                      Hiện tại đang cập nhật các vị trí tuyển dụng mới. Quý ứng viên vui lòng quay lại sau!
                     </td>
                   </tr>
-
-                  <!-- Row 3: ĐTM & Giấy phép -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép Môi Trường
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
-                    </td>
-                  </tr>
-
-                  <!-- Row 4: Khí nhà kính & ESG -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Chuyên Viên Tư Vấn Kiểm Kê Khí Nhà Kính &amp; Báo Cáo ESG
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
-                    </td>
-                  </tr>
-
-                  <!-- Row 5: Thiết kế & Xử lý nước thải -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Kỹ Sư Thiết Kế &amp; Vận Hành Hệ Thống Xử Lý Nước Thải
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
-                    </td>
-                  </tr>
-
-                  <!-- Row 6: B2B Sales -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Chuyên Viên Kinh Doanh Dịch Vụ Môi Trường (B2B Sales)
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Chính thức
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/09/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
-                    </td>
-                  </tr>
-
-                  <!-- Row 7: Thực tập sinh -->
-                  <tr class="card-row bg-white hover:bg-emerald-50/40 transition-all shadow-xs hover:shadow-md">
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 font-bold text-lg sm:text-xl text-black rounded-l-2xl border-y border-l border-black/10">
-                      <a href="{{ route("recruitment.index") }}" class="hover:text-primary transition-colors inline-block">
-                        Thực Tập Sinh Kỹ Thuật Môi Trường
-                      </a>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      Thực tập
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg text-black border-y border-black/10">
-                      <div class="inline-flex items-center gap-2 justify-center">
-                        <svg width="18" height="18" style="width: 18px; height: 18px; min-width: 18px; min-height: 18px;" class="text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                        </svg>
-                        <span class="font-medium">TP. HCM</span>
-                      </div>
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 text-center text-base sm:text-lg font-medium text-black border-y border-black/10">
-                      30/10/2026
-                    </td>
-                    <td class="py-5 sm:py-6 px-6 sm:px-8 text-right rounded-r-2xl border-y border-r border-black/10">
-                      <a
-                        href="{{ route("recruitment.index") }}"
-                        class="inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-2xl px-6 sm:px-8 py-2 sm:py-2.5 text-sm sm:text-base font-bold transition-all whitespace-nowrap shadow-xs hover:shadow-md"
-                      >
-                        Ứng tuyển
-                      </a>
-                    </td>
-                  </tr>
+                  @endforelse
                 </tbody>
               </table>
+
+              @if($jobs->hasPages())
+              <div class="mt-8 flex justify-center">
+                {{ $jobs->links() }}
+              </div>
+              @endif
             </div>
           </div>
         </section>

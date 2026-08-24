@@ -24,8 +24,9 @@ class RecruitmentController extends Controller
     public function show(string $slug): View
     {
         $job = JobPosting::query()->published()->open()->where('slug', $slug)->firstOrFail();
+        $relatedJobs = JobPosting::query()->published()->open()->where('id', '!=', $job->id)->latest('published_at')->take(4)->get();
         $seo = SeoData::forContent($job, route('recruitment.show', $job->slug), 'JobPosting');
 
-        return view('frontend.recruitment.show', compact('job', 'seo'));
+        return view('frontend.recruitment.show', compact('job', 'relatedJobs', 'seo'));
     }
 }
