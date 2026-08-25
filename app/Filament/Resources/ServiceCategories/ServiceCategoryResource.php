@@ -10,6 +10,7 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -17,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -58,6 +60,19 @@ class ServiceCategoryResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->unique(ServiceCategory::class, 'slug', ignoreRecord: true),
+                FileUpload::make('image')
+                    ->label('Hình ảnh đại diện / Banner Tab')
+                    ->image()
+                    ->disk('public')
+                    ->directory('uploads/service-categories')
+                    ->visibility('public')
+                    ->imageEditor(),
+                FileUpload::make('icon')
+                    ->label('Biểu tượng (Icon SVG / PNG)')
+                    ->image()
+                    ->disk('public')
+                    ->directory('uploads/service-categories')
+                    ->visibility('public'),
                 Textarea::make('description')
                     ->label('Mô tả ngắn')
                     ->rows(3)
@@ -76,6 +91,11 @@ class ServiceCategoryResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('image')
+                    ->label('Hình ảnh')
+                    ->disk('public')
+                    ->circular()
+                    ->defaultImageUrl(fn ($record) => $record->image ? (str_starts_with($record->image, 'http') ? $record->image : (str_starts_with($record->image, 'uploads/') ? asset('storage/'.$record->image) : asset('assets/images/'.$record->image))) : null),
                 TextColumn::make('name')
                     ->label('Tên danh mục')
                     ->searchable()

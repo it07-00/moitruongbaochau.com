@@ -59,6 +59,8 @@ class SettingResource extends Resource
                             ->label('Nhóm cài đặt')
                             ->options([
                                 'general' => 'Thông tin chung (General)',
+                                'homepage' => 'Trang chủ (Sứ mệnh & Thống kê)',
+                                'about' => 'Trang Giới thiệu (Lịch sử, Tổ chức, Sứ mệnh)',
                                 'seo' => 'Cấu hình SEO & Mạng xã hội',
                                 'contact' => 'Thông tin liên hệ & Hotline',
                             ])
@@ -100,6 +102,8 @@ class SettingResource extends Resource
                     ->label('Lọc theo nhóm')
                     ->options([
                         'general' => 'Thông tin chung',
+                        'homepage' => 'Trang chủ (Sứ mệnh & Thống kê)',
+                        'about' => 'Trang Giới thiệu (Lịch sử, Tổ chức, Sứ mệnh)',
                         'seo' => 'Cấu hình SEO',
                         'contact' => 'Thông tin liên hệ',
                     ]),

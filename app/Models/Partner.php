@@ -2,22 +2,19 @@
 
 namespace App\Models;
 
-use Database\Factories\SliderFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Slider extends Model
+class Partner extends Model
 {
-    /** @use HasFactory<SliderFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'caption',
-        'image',
+        'name',
+        'logo',
         'link',
-        'open_in_new_tab',
+        'type',
         'sort_order',
         'is_active',
     ];
@@ -25,9 +22,8 @@ class Slider extends Model
     protected function casts(): array
     {
         return [
-            'open_in_new_tab' => 'boolean',
-            'is_active' => 'boolean',
             'sort_order' => 'integer',
+            'is_active' => 'boolean',
         ];
     }
 

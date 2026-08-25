@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             WebsiteSeeder::class,
             SliderSeeder::class,
+            TestimonialSeeder::class,
+            PartnerSeeder::class,
         ]);
     }
 }

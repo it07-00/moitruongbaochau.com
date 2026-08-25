@@ -146,7 +146,9 @@ class ServiceResource extends Resource
             ->columns([
                 ImageColumn::make('thumbnail')
                     ->label('Ảnh')
-                    ->circular(),
+                    ->disk('public')
+                    ->circular()
+                    ->defaultImageUrl(fn ($record) => $record->thumbnail ? (str_starts_with($record->thumbnail, 'http') ? $record->thumbnail : (str_starts_with($record->thumbnail, 'uploads/') ? asset('storage/'.$record->thumbnail) : asset('assets/images/'.$record->thumbnail))) : null),
                 TextColumn::make('name')
                     ->label('Tên dịch vụ')
                     ->searchable()

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Partner;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Slider;
+use App\Models\Testimonial;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
 
@@ -17,6 +20,13 @@ class HomeController extends Controller
     {
         $sliders = Slider::query()
             ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+        $serviceCategories = ServiceCategory::query()
+            ->where('is_active', true)
+            ->with(['services' => function ($query) {
+                $query->published()->orderBy('sort_order');
+            }])
             ->orderBy('sort_order')
             ->get();
         $services = Service::query()
@@ -48,6 +58,20 @@ class HomeController extends Controller
             ->latest('published_at')
             ->limit(6)
             ->get();
+        $testimonials = Testimonial::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+        $partners = Partner::query()
+            ->where('is_active', true)
+            ->where('type', 'partner')
+            ->orderBy('sort_order')
+            ->get();
+        $presses = Partner::query()
+            ->where('is_active', true)
+            ->where('type', 'press')
+            ->orderBy('sort_order')
+            ->get();
         $seo = SeoData::forPage(
             'Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu',
             'Tư vấn môi trường, giấy phép môi trường, quan trắc, kiểm kê khí nhà kính và giải pháp xử lý môi trường cho doanh nghiệp.',
@@ -68,6 +92,6 @@ class HomeController extends Controller
             ]],
         );
 
-        return view('frontend.home', compact('sliders', 'services', 'projects', 'posts', 'postCategories', 'seo'));
+        return view('frontend.home', compact('sliders', 'serviceCategories', 'services', 'projects', 'posts', 'postCategories', 'testimonials', 'partners', 'presses', 'seo'));
     }
 }

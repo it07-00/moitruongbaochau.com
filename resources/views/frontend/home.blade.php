@@ -108,7 +108,7 @@
                   class="absolute w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
                 ></div>
                 <img
-                  src="{{ asset("assets/images/logo-leave-png-min.png") }}"
+                  src="{{ asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
                   class="relative bottom-0 lg:-bottom-6 max-w-[400px] w-full h-auto opacity-80 hover:opacity-100 drop-shadow-xl hover:scale-105 transition-all duration-500"
                   width="1024"
                   height="1024"
@@ -127,51 +127,57 @@
                       class="size-5"
                       width="24"
                       height="24"
-                      alt="Về chúng tôi"
+                      alt="{{ $websiteSettings['about_badge'] ?? 'Về chúng tôi' }}"
                     />
                   </span>
                   <span
                     class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent"
                   >
-                    Về chúng tôi
+                    {{ $websiteSettings['about_badge'] ?? 'Về chúng tôi' }}
                   </span>
                 </div>
                 <h2 class="font-bold leading-tight mb-6 lg:mb-8">
-                  <span class="text-primary">MÔI TRƯỜNG BẢO CHÂU</span>
-                  với sứ mệnh
+                  {!! $websiteSettings['about_title'] ?? '<span class="text-primary">MÔI TRƯỜNG BẢO CHÂU</span> với sứ mệnh' !!}
                 </h2>
                 <div>
                   <div class="mt-6 lg:mt-8 p-fs-clamp-[15,17]">
-                    <p>
-                      Giải quyết bài toán tồn tại, phát triển và
-                      <span class="font-medium"
-                        >tăng trưởng doanh nghiệp bền vững</span
-                      >
-                      cho tất cả các khách hàng tin tưởng và đồng hành cùng MÔI
-                      TRƯỜNG BẢO CHÂU.
-                    </p>
-                    <p>
-                      Luôn lấy chữ <span class="font-medium">Tâm</span> để nâng
-                      chữ <span class="font-medium">Tầm</span>. Chúng tôi không
-                      ngại tốn thời gian để lắng nghe khách hàng chia sẻ và cũng
-                      không ngại đưa ra phương án giải quyết phù hợp cho khách
-                      hàng.
-                    </p>
-                    <p>
-                      Đồng hành cùng
-                      <span class="text-primary font-medium"
-                        >MÔI TRƯỜNG BẢO CHÂU</span
-                      >
-                      chắc chắn bạn sẽ nhận được sự phục vụ
-                      <span class="font-medium">nhiệt tình và tận tâm</span> của
-                      toàn đội ngũ được đào tạo trong một môi trường phù hợp văn
-                      hóa doanh nghiệp của chúng tôi.
-                    </p>
+                    @if(!empty($websiteSettings['about_desc_1']))
+                      <p>{!! $websiteSettings['about_desc_1'] !!}</p>
+                    @else
+                      <p>
+                        Giải quyết bài toán tồn tại, phát triển và
+                        <span class="font-medium">tăng trưởng doanh nghiệp bền vững</span>
+                        cho tất cả các khách hàng tin tưởng và đồng hành cùng MÔI TRƯỜNG BẢO CHÂU.
+                      </p>
+                    @endif
+
+                    @if(!empty($websiteSettings['about_desc_2']))
+                      <p>{!! $websiteSettings['about_desc_2'] !!}</p>
+                    @else
+                      <p>
+                        Luôn lấy chữ <span class="font-medium">Tâm</span> để nâng
+                        chữ <span class="font-medium">Tầm</span>. Chúng tôi không
+                        ngại tốn thời gian để lắng nghe khách hàng chia sẻ và cũng
+                        không ngại đưa ra phương án giải quyết phù hợp cho khách hàng.
+                      </p>
+                    @endif
+
+                    @if(!empty($websiteSettings['about_desc_3']))
+                      <p>{!! $websiteSettings['about_desc_3'] !!}</p>
+                    @else
+                      <p>
+                        Đồng hành cùng
+                        <span class="text-primary font-medium">MÔI TRƯỜNG BẢO CHÂU</span>
+                        chắc chắn bạn sẽ nhận được sự phục vụ
+                        <span class="font-medium">nhiệt tình và tận tâm</span> của
+                        toàn đội ngũ được đào tạo trong một môi trường phù hợp văn hóa doanh nghiệp của chúng tôi.
+                      </p>
+                    @endif
                   </div>
                 </div>
                 <a
                   class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                  href="#"
+                  href="{{ $websiteSettings['about_link'] ?? route('about') }}"
                   title="Xem thêm"
                   >Xem thêm<svg
                     class="size-4"
@@ -204,24 +210,21 @@
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="7"
+                      data-counter="{{ $websiteSettings['stat_1_number'] ?? '7' }}"
                     >
-                      7
+                      {{ $websiteSettings['stat_1_number'] ?? '7' }}
                     </span>
-                    +
+                    {{ $websiteSettings['stat_1_suffix'] ?? '+' }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    Năm kinh nghiệm
+                    {{ $websiteSettings['stat_1_title'] ?? 'Năm kinh nghiệm' }}
                   </p>
                   <p
                     class="leading-relaxed group-hover:text-black group-focus:text-black"
                   >
-                    Chúng tôi luôn tự tin để tư vấn và đưa ra giải pháp phù hợp
-                    nhằm giải quyết tất cả các vấn đề khó khăn của doanh nghiệp
-                    về Giấy phép Môi trường, Báo cáo ĐTM, Khí nhà kính ESG và Xử
-                    lý Nước thải.
+                    {!! $websiteSettings['stat_1_desc'] ?? 'Chúng tôi luôn tự tin để tư vấn và đưa ra giải pháp phù hợp nhằm giải quyết tất cả các vấn đề khó khăn của doanh nghiệp về Giấy phép Môi trường, Báo cáo ĐTM, Khí nhà kính ESG và Xử lý Nước thải.' !!}
                   </p>
                 </div>
                 <div
@@ -232,23 +235,21 @@
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="500"
+                      data-counter="{{ $websiteSettings['stat_2_number'] ?? '500' }}"
                     >
-                      500
+                      {{ $websiteSettings['stat_2_number'] ?? '500' }}
                     </span>
-                    +
+                    {{ $websiteSettings['stat_2_suffix'] ?? '+' }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    Dự án đã hoàn thành
+                    {{ $websiteSettings['stat_2_title'] ?? 'Dự án đã hoàn thành' }}
                   </p>
                   <p
                     class="leading-relaxed group-hover:text-black group-focus:text-black"
                   >
-                    Hơn 500+ hồ sơ pháp lý, đề án và công trình xử lý môi trường
-                    được nghiệm thu đúng hạn, đảm bảo 100% tuân thủ quy định
-                    pháp luật BVMT hiện hành.
+                    {!! $websiteSettings['stat_2_desc'] ?? 'Hơn 500+ hồ sơ pháp lý, đề án và công trình xử lý môi trường được nghiệm thu đúng hạn, đảm bảo 100% tuân thủ quy định pháp luật BVMT hiện hành.' !!}
                   </p>
                 </div>
                 <div
@@ -259,23 +260,21 @@
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="30"
+                      data-counter="{{ $websiteSettings['stat_3_number'] ?? '30' }}"
                     >
-                      30
+                      {{ $websiteSettings['stat_3_number'] ?? '30' }}
                     </span>
-                    +
+                    {{ $websiteSettings['stat_3_suffix'] ?? '+' }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    Chuyên gia &amp; Kỹ sư
+                    {{ $websiteSettings['stat_3_title'] ?? 'Chuyên gia & Kỹ sư' }}
                   </p>
                   <p
                     class="leading-relaxed group-hover:text-black group-focus:text-black"
                   >
-                    Đội ngũ chuyên gia, kỹ sư công nghệ môi trường giàu kinh
-                    nghiệm, <i>tận tâm</i>, <i>nhiệt huyết</i> và luôn đặt uy
-                    tín, trách nhiệm lên hàng đầu.
+                    {!! $websiteSettings['stat_3_desc'] ?? 'Đội ngũ chuyên gia, kỹ sư công nghệ môi trường giàu kinh nghiệm, <i>tận tâm</i>, <i>nhiệt huyết</i> và luôn đặt uy tín, trách nhiệm lên hàng đầu.' !!}
                   </p>
                 </div>
               </div>
@@ -328,153 +327,125 @@
                   data-fx-tabs=""
                   id="services-extra-tabs-4bdc829f17"
                 >
-                  <li class="tabs-title is-active">
-                    <a
-                      href="#hoso"
-                      class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7"
-                      aria-selected="true"
-                      title="Hồ sơ & Giấy phép Môi trường"
-                    >
-                      <span class="shrink-0 flex items-center justify-center">
-                        <svg
-                          class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.8"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M14 2v6h6"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 13h6"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 17h4"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="tab-text font-bold text-[16px] sm:text-[17.5px] lg:text-[19px] leading-snug text-[#1e293b] transition-colors"
+                  @foreach($serviceCategories as $index => $category)
+                    <li class="tabs-title {{ $index === 0 ? 'is-active active' : '' }}">
+                      <a
+                        href="#cat-tab-{{ $category->id }}"
+                        class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7 {{ $index === 0 ? 'is-active active' : '' }}"
+                        aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
+                        title="{{ $category->name }}"
                       >
-                        Hồ sơ &amp; Giấy phép Môi trường
-                      </span>
-                    </a>
-                  </li>
-                  <li class="tabs-title">
-                    <a
-                      href="#khi-nha-kinh"
-                      class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7"
-                      aria-selected="false"
-                      title="Kiểm kê Khí nhà kính & ESG"
-                    >
-                      <span class="shrink-0 flex items-center justify-center">
-                        <svg
-                          class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.8"
-                          stroke="currentColor"
+                        <span class="shrink-0 flex items-center justify-center">
+                          @if($category->icon)
+                            @if(str_starts_with($category->icon, '<svg'))
+                              {!! $category->icon !!}
+                            @else
+                              <img src="{{ str_starts_with($category->icon, 'uploads/') ? asset('storage/' . $category->icon) : asset($category->icon) }}" class="size-8 sm:size-9 lg:size-10 object-contain" alt="{{ $category->name }}" />
+                            @endif
+                          @elseif($category->slug === 'phap-ly-moi-truong')
+                            <!-- Scale / Legal Icon -->
+                            <svg
+                              class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.8"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-16.5-.52a48.423 48.423 0 00-3 .52m19.5 0l-2.25 6.75a3 3 0 01-2.848 2.05h-.004a3 3 0 01-2.848-2.05L15 5.49m-6 0L6.75 12.24a3 3 0 01-2.848 2.05h-.004a3 3 0 01-2.848-2.05L3 5.49"
+                              />
+                            </svg>
+                          @elseif($category->slug === 'khi-nha-kinh-esg')
+                            <!-- Globe & Climate ESG Icon -->
+                            <svg
+                              class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.8"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m-6.364 8.418a6 6 0 0110.607 0"
+                              />
+                            </svg>
+                          @elseif($category->slug === 'quan-trac-moi-truong')
+                            <!-- Flask / Monitoring Icon -->
+                            <svg
+                              class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.8"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693l-1.57-.393m15.6 0l1.196 5.981A1.5 1.5 0 0119.528 22.5H4.472a1.5 1.5 0 01-1.468-1.794L4.2 15.3"
+                              />
+                            </svg>
+                          @elseif($category->slug === 'ky-thuat-xu-ly')
+                            <!-- Treatment & Engineering Tool/Wrench Icon -->
+                            <svg
+                              class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.8"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.07a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091.455.084.937-.024 1.388"
+                              />
+                            </svg>
+                          @else
+                            <svg
+                              class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.8"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
+                              />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M14 2v6h6"
+                              />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 13h6"
+                              />
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 17h4"
+                              />
+                            </svg>
+                          @endif
+                        </span>
+                        <span
+                          class="tab-text font-bold text-[16px] sm:text-[17.5px] lg:text-[19px] leading-snug text-[#1e293b] transition-colors"
                         >
-                          <circle cx="12" cy="12" r="10" />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M2 12h20"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="tab-text font-bold text-[16px] sm:text-[17.5px] lg:text-[19px] leading-snug text-[#1e293b] transition-colors"
-                      >
-                        Kiểm kê Khí nhà kính &amp; ESG
-                      </span>
-                    </a>
-                  </li>
-                  <li class="tabs-title">
-                    <a
-                      href="#quan-trac"
-                      class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7"
-                      aria-selected="false"
-                      title="Quan trắc Môi trường Lao động"
-                    >
-                      <span class="shrink-0 flex items-center justify-center">
-                        <svg
-                          class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.8"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m9 12 2 2 4-4"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="tab-text font-bold text-[16px] sm:text-[17.5px] lg:text-[19px] leading-snug text-[#1e293b] transition-colors"
-                      >
-                        Quan trắc Môi trường Lao động
-                      </span>
-                    </a>
-                  </li>
-                  <li class="tabs-title">
-                    <a
-                      href="#xu-ly-nuoc"
-                      class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7"
-                      aria-selected="false"
-                      title="Xử lý Nước thải & Khí thải"
-                    >
-                      <span class="shrink-0 flex items-center justify-center">
-                        <svg
-                          class="size-8 sm:size-9 lg:size-10 text-[#334155] transition-colors"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.8"
-                          stroke="currentColor"
-                        >
-                          <circle cx="12" cy="12" r="4" />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41m14.14-14.14l-1.41 1.41"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="tab-text font-bold text-[16px] sm:text-[17.5px] lg:text-[19px] leading-snug text-[#1e293b] transition-colors"
-                      >
-                        Xử lý Nước thải &amp; Khí thải
-                      </span>
-                    </a>
-                  </li>
+                          {{ $category->name }}
+                        </span>
+                      </a>
+                    </li>
+                  @endforeach
                 </ul>
               </div>
               <div class="w-full flex-1">
@@ -482,274 +453,78 @@
                   class="tabs-content mt-6 lg:mt-8"
                   data-fx-tabs-content="services-extra-tabs-4bdc829f17"
                 >
-                  <div class="tabs-panel is-active" id="hoso">
-                    <div
-                      class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
-                    >
-                      <div class="w-full lg:w-7/12">
-                        <div
-                          class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
-                        >
-                          <img
-                            src="{{ asset("assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png") }}"
-                            class="block object-cover w-full h-full rounded-2xl"
-                            width="1024"
-                            height="576"
-                            alt="Tư vấn Hồ sơ & Giấy phép Môi trường"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-5/12">
-                        <div
-                          class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
-                        >
-                          Tư vấn
-                          <span class="text-primary"
-                            >Hồ sơ &amp; Giấy phép</span
+                  @foreach($serviceCategories as $index => $category)
+                    <div class="tabs-panel {{ $index === 0 ? 'is-active' : '' }}" id="cat-tab-{{ $category->id }}">
+                      <div
+                        class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
+                      >
+                        <div class="w-full lg:w-7/12">
+                          <div
+                            class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
                           >
-                          Môi trường
+                            @php
+                              $firstService = $category->services->first();
+                              $thumbImg = $category->image ?: ($firstService?->thumbnail ?: 'assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png');
+                            @endphp
+                            <img
+                              src="{{ str_starts_with($thumbImg, 'http') ? $thumbImg : (str_starts_with($thumbImg, 'uploads/') ? asset('storage/' . $thumbImg) : asset($thumbImg)) }}"
+                              class="block object-cover w-full h-full rounded-2xl aspect-16/9"
+                              alt="{{ $category->name }}"
+                              decoding="async"
+                              loading="lazy"
+                            />
+                          </div>
                         </div>
-                        <div class="leading-[1.7] p-fs-clamp-[15,17]">
-                          <p class="mb-3">
-                            Các thủ tục pháp lý môi trường theo Luật BVMT 2020
-                            đòi hỏi quy trình lập hồ sơ khắt khe, chặt chẽ và
-                            chuẩn xác cao.
-                          </p>
-                          <p>
-                            Môi Trường Bảo Châu cung cấp giải pháp trọn gói: Lập
-                            Báo cáo đánh giá tác động môi trường (ĐTM), Giấy
-                            phép môi trường (GPMT), Đăng ký môi trường, Giấy
-                            phép khai thác nước dưới đất... Đội ngũ chuyên gia
-                            giàu kinh nghiệm hỗ trợ từ khảo sát, phân tích mẫu,
-                            lập hồ sơ đến bảo vệ hội đồng thẩm định và bàn giao
-                            giấy phép nhanh nhất.
-                          </p>
-                        </div>
-                        <a
-                          href="#"
-                          class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                          title="Liên hệ ngay"
-                        >
-                          <span>Xem thêm</span>
-                          <svg
-                            class="size-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
+                        <div class="w-full lg:w-5/12">
+                          <div
+                            class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
+                            {{ $category->name }}
+                          </div>
+                          <div class="leading-[1.7] p-fs-clamp-[15,17]">
+                            @if($category->description)
+                              <p class="mb-3">{{ $category->description }}</p>
+                            @else
+                              <p class="mb-3">
+                                Cung cấp giải pháp kỹ thuật và pháp lý môi trường chuyên nghiệp, cam kết tuân thủ quy chuẩn pháp luật và tiến độ nhanh chóng.
+                              </p>
+                            @endif
+                            @if($category->services->isNotEmpty())
+                              <div class="mt-4 flex flex-col gap-2">
+                                @foreach($category->services->take(4) as $s)
+                                  <a href="{{ route('services.show', $s->slug) }}" class="flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-primary transition-colors">
+                                    <svg class="size-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span>{{ $s->name }}</span>
+                                  </a>
+                                @endforeach
+                              </div>
+                            @endif
+                          </div>
+                          <a
+                            href="{{ route('services.index') }}"
+                            class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
+                            title="Xem tất cả dịch vụ"
+                          >
+                            <span>Xem tất cả</span>
+                            <svg
+                              class="size-4"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                              ></path>
+                            </svg>
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="tabs-panel" id="khi-nha-kinh">
-                    <div
-                      class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
-                    >
-                      <div class="w-full lg:w-7/12">
-                        <div
-                          class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
-                        >
-                          <img
-                            src="{{ asset("assets/images/Bai-Dang-Bao-Chau-1024x572.png") }}"
-                            class="block object-cover w-full h-full rounded-2xl"
-                            width="1024"
-                            height="572"
-                            alt="Kiểm kê Khí nhà kính & ESG"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-5/12">
-                        <div
-                          class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
-                        >
-                          Kiểm kê
-                          <span class="text-primary">Khí nhà kính</span> &amp;
-                          ESG
-                        </div>
-                        <div class="leading-[1.7] p-fs-clamp-[15,17]">
-                          <p class="mb-3">
-                            Xu hướng chuyển đổi xanh và các rào cản quốc tế
-                            (CBAM châu Âu, tiêu chuẩn ISO 14064, ISO 14067) đặt
-                            ra yêu cầu cấp thiết về báo cáo phát thải cho các
-                            doanh nghiệp sản xuất và xuất khẩu.
-                          </p>
-                          <p>
-                            Bảo Châu đồng hành kiểm kê khí nhà kính toàn diện
-                            (Phạm vi 1, 2, 3), tính toán dấu chân carbon (LCA),
-                            lập hồ sơ CBAM và báo cáo phát triển bền vững ESG,
-                            giúp doanh nghiệp tối ưu chi phí năng lượng và nâng
-                            cao năng lực cạnh tranh toàn cầu.
-                          </p>
-                        </div>
-                        <a
-                          href="#"
-                          class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                          title="Liên hệ ngay"
-                        >
-                          <span>Xem thêm</span>
-                          <svg
-                            class="size-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tabs-panel" id="quan-trac">
-                    <div
-                      class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
-                    >
-                      <div class="w-full lg:w-7/12">
-                        <div
-                          class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
-                        >
-                          <img
-                            src="{{ asset("assets/images/Hinh-1-1024x683.jpg") }}"
-                            class="block object-cover w-full h-full rounded-2xl"
-                            width="1024"
-                            height="683"
-                            alt="Quan trắc Môi trường Lao động"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-5/12">
-                        <div
-                          class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
-                        >
-                          Quan trắc
-                          <span class="text-primary">Môi trường</span> Lao động
-                        </div>
-                        <div class="leading-[1.7] p-fs-clamp-[15,17]">
-                          <p class="mb-3">
-                            Môi trường lao động an toàn, trong lành là nền tảng
-                            bảo vệ sức khỏe công nhân viên và đáp ứng đầy đủ quy
-                            chuẩn kỹ thuật an toàn vệ sinh lao động theo quy
-                            định pháp luật.
-                          </p>
-                          <p>
-                            Chúng tôi trang bị thiết bị đo kiểm hiện đại: đo vi
-                            khí hậu, bụi, tiếng ồn, ánh sáng, rung động, hơi khí
-                            độc hại tại vị trí làm việc, quan trắc định kỳ khí
-                            thải và nước thải nhà máy, lập hồ sơ vệ sinh lao
-                            động chuẩn chỉnh, hợp pháp.
-                          </p>
-                        </div>
-                        <a
-                          href="#"
-                          class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                          title="Liên hệ ngay"
-                        >
-                          <span>Xem thêm</span>
-                          <svg
-                            class="size-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tabs-panel" id="xu-ly-nuoc">
-                    <div
-                      class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
-                    >
-                      <div class="w-full lg:w-7/12">
-                        <div
-                          class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
-                        >
-                          <img
-                            src="{{ asset("assets/images/CTY-TAN-TIEN-1024x640.png") }}"
-                            class="block object-cover w-full h-full rounded-2xl"
-                            width="1024"
-                            height="640"
-                            alt="Xử lý Nước thải & Khí thải"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                      <div class="w-full lg:w-5/12">
-                        <div
-                          class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.4]"
-                        >
-                          Xử lý
-                          <span class="text-primary"
-                            >Nước thải &amp; Khí thải</span
-                          >
-                        </div>
-                        <div class="leading-[1.7] p-fs-clamp-[15,17]">
-                          <p class="mb-3">
-                            Hệ thống xử lý lỗi thời, không đạt chuẩn đầu ra gây
-                            nguy cơ bị xử phạt nặng và ảnh hưởng uy tín sản xuất
-                            kinh doanh của nhà máy.
-                          </p>
-                          <p>
-                            Môi Trường Bảo Châu chuyên thiết kế, thi công, cải
-                            tạo và chuyển giao công nghệ xử lý nước thải sinh
-                            hoạt, công nghiệp (dệt nhuộm, thực phẩm, xi mạ, bao
-                            bì...) và xử lý bụi, khí thải. Ứng dụng công nghệ
-                            màng MBR, vi sinh tiên tiến, đảm bảo nước đầu ra đạt
-                            chuẩn QCVN với chi phí đầu tư và vận hành tối ưu
-                            nhất.
-                          </p>
-                        </div>
-                        <a
-                          href="#"
-                          class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                          title="Liên hệ ngay"
-                        >
-                          <span>Xem thêm</span>
-                          <svg
-                            class="size-4"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
               </div>
             </div>
@@ -1879,1789 +1654,89 @@
                   class="swiper-marquee swiper-wrapper"
                   data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"pagination":"bullets","mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
                 >
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="In Minh Khang"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            In Minh Khang
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/innhanhminhkhang.webp") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="1918"
-                              height="392"
-                              alt="In Minh Khang"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Môi Trường Bảo Châu đã hỗ trợ nhà máy chúng tôi hoàn
-                          thành hồ sơ Giấy phép Môi trường rất nhanh chóng và
-                          chuyên nghiệp. Đội ngũ kỹ sư am hiểu luật, tận tâm và
-                          giải quyết vướng mắc rất hiệu quả.</span
-                        >
-                      </blockquote>
+                  @foreach($testimonials as $testimonial)
+                    <div class="swiper-slide">
                       <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
+                        class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
                       >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Đỗ Thị Chí Hậu</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/PwuyTg2VsWBEJtFHm"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
+                        <div class="flex-none icon">
+                          <div
+                            class="flex items-center justify-between flex-nowrap gap-2"
+                            title="{{ $testimonial->client_company ?: $testimonial->client_name }}"
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
+                            <span
+                              class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
+                            >
+                              {{ $testimonial->client_company ?: $testimonial->client_name }}
+                            </span>
+                            @if($testimonial->avatar)
+                              <span class="flex-none block">
+                                <img
+                                  src="{{ str_starts_with($testimonial->avatar, 'http') ? $testimonial->avatar : (str_starts_with($testimonial->avatar, 'uploads/') ? asset('storage/' . $testimonial->avatar) : asset('assets/images/' . $testimonial->avatar)) }}"
+                                  class="pointer-events-none block w-auto h-10 object-contain"
+                                  alt="{{ $testimonial->client_company ?: $testimonial->client_name }}"
+                                  loading="lazy"
+                                />
+                              </span>
+                            @endif
+                          </div>
+                        </div>
+                        <blockquote
+                          class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
+                        >
+                          <span class="line-clamp-6">{{ $testimonial->content }}</span>
+                        </blockquote>
+                        <div
+                          class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
+                        >
+                          <div>
+                            <p class="text-black mb-1">
+                              <span
+                                class="text-base leading-[1.4em] font-medium capitalize mb-0"
+                                >{{ $testimonial->client_name }}</span
+                              >
+                            </p>
+                            @if($testimonial->client_role)
+                              <p
+                                class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
+                              >{{ $testimonial->client_role }}</p>
+                            @endif
+                          </div>
+                          @if($testimonial->source_url)
+                            <a
+                              class="flex items-center gap-2"
+                              href="{{ $testimonial->source_url }}"
+                              target="_blank"
+                              rel="noopener noreferrer nofollow"
+                              title="Đánh giá trên {{ $testimonial->source }}"
+                            >
+                              <img
+                                src="{{ asset('assets/images/google-reviews.png') }}"
+                                class="w-14 xl:w-16 pointer-events-none"
+                                alt="{{ $testimonial->source }}"
+                                width="1000"
+                                height="414"
+                              />
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-4 h-4 text-1"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
+                                ></path>
+                              </svg>
+                            </a>
+                          @endif
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Bình Minh Toàn Cầu"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Bình Minh Toàn Cầu
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/breadtalkvietnam.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="648"
-                              height="156"
-                              alt="Bình Minh Toàn Cầu"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Dịch vụ kiểm kê khí nhà kính và tư vấn ESG của Bảo
-                          Châu rất chi tiết, chuẩn xác theo tiêu chuẩn quốc tế
-                          ISO 14064. Báo cáo rõ ràng, hỗ trợ đối chiếu số liệu
-                          tận tình.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Phúc Nguyễn</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/U5OCbXDUWuu8KiEGF"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="V-Holdings"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            V-Holdings
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/v-holdings.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="225"
-                              height="192"
-                              alt="V-Holdings"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Hệ thống xử lý nước thải 500m³/ngày do Bảo Châu thiết
-                          kế và thi công vận hành cực kỳ ổn định, nước đầu ra
-                          luôn đạt chuẩn QCVN 40 cột A, chi phí hóa chất tiết
-                          kiệm đáng kể.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Hà Thuận</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/YC065ETKlBCG2opUk"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Tân Quang Minh"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Tân Quang Minh
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/bidrico.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="522"
-                              height="264"
-                              alt="Tân Quang Minh"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Chi phí tư vấn hồ sơ ĐTM và Giấy phép môi trường tại
-                          Bảo Châu rất hợp lý, minh bạch và không phát sinh. Đội
-                          ngũ chuyên gia hỗ trợ giải trình với đoàn thẩm định
-                          rất xuất sắc.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Bùi Phương Loan</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/LspJ1c9ifp0DlagxM"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Thiết Bị Công Nghệ Năng Lực"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Thiết Bị Công Nghệ Năng Lực
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/nangluc.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="358"
-                              height="128"
-                              alt="Thiết Bị Công Nghệ Năng Lực"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Khi hợp tác với MÔI TRƯỜNG BẢO CHÂU trong dự án quan
-                          trắc môi trường lao động và lập bản đồ tiếng ồn, chúng
-                          tôi hoàn toàn yên tâm về sự chính xác, quy trình đo
-                          đạc bài bản và nhanh chóng.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Trần Chí Hiếu</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/BUjKxg1ooqeAVHFhA"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Kiến Trúc Xây Dựng AHD"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Kiến Trúc Xây Dựng AHD
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/2-1-768x427.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="768"
-                              height="427"
-                              alt="Kiến Trúc Xây Dựng AHD"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Tôi rất hài lòng với dịch vụ tư vấn cơ chế CBAM và
-                          đánh giá vòng đời sản phẩm LCA của Môi Trường Bảo
-                          Châu. Nhờ đó lô hàng xuất khẩu sang EU của chúng tôi
-                          đã thông quan thuận lợi.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Bùi Thị Quỳnh Nhi</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/Xl0iQs3xqZSJJHsqW"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Sạch Store"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Sạch Store
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/sachstore.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="500"
-                              height="497"
-                              alt="Sạch Store"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Doanh nghiệp chúng tôi ban đầu rất lo lắng về các quy
-                          định mới của Luật Bảo vệ Môi trường 2020. Nhờ Bảo Châu
-                          tư vấn tận tình, toàn bộ hồ sơ cấp phép đã được phê
-                          duyệt suôn sẻ.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Nguyễn Nhất Sinh</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/BSsiI53iMgG7P5Iex"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Trung Tâm Giáo Dục Nghề Nghiệp Mỹ Nghệ Kim Hoàn"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Trung Tâm Giáo Dục Nghề Nghiệp Mỹ Nghệ Kim Hoàn
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/daynghekimhoan.jpg") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="741"
-                              height="693"
-                              alt="Trung Tâm Giáo Dục Nghề Nghiệp Mỹ Nghệ Kim Hoàn"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Chúng tôi và Môi Trường Bảo Châu đã hợp tác hơn 5 năm
-                          nay trong các đợt quan trắc môi trường định kỳ. Rất
-                          tin tưởng năng lực, uy tín và sự nhiệt tình của đội
-                          ngũ kỹ sư.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Trung Tâm Dạy nghề Kim Hoàn</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/v5Wx34UJeESzs6ZZE"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Kami Nail Academy"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Kami Nail Academy
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/kaminail.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="945"
-                              height="918"
-                              alt="Kami Nail Academy"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Đã hợp tác nhiều dự án xử lý nước thải và khí thải
-                          với Bảo Châu. Rất hài lòng về chất lượng công trình,
-                          tiến độ thi công chuẩn xác và dịch vụ hậu mãi, bảo trì
-                          cực kỳ chu đáo.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Bella</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/VulCXrccTwnV1OrSQ"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Kỹ Thuận Lạnh Quảng Long"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Kỹ Thuận Lạnh Quảng Long
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/thosuachuaviet.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="232"
-                              height="126"
-                              alt="Kỹ Thuận Lạnh Quảng Long"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Chân thành cảm ơn đội ngũ MÔI TRƯỜNG BẢO CHÂU đã hỗ
-                          trợ hết sức nhiệt tình trong đợt thanh kiểm tra môi
-                          trường vừa qua. Tác phong làm việc nhanh nhẹn và
-                          chuyên môn rất vững vàng.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Long - Điện lạnh Quảng Long</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/sxHVPSTIwn4VtN4Ne"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Laptop TÈO EM"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Laptop TÈO EM
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/laptopgaming.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="2239"
-                              height="1952"
-                              alt="Laptop TÈO EM"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Nhà máy chúng tôi nằm trong diện phải kiểm kê khí nhà
-                          kính bắt buộc. Nhờ Bảo Châu hướng dẫn thu thập dữ liệu
-                          và tính toán phát thải, báo cáo đã hoàn thành đúng hạn
-                          quy định.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Dương Minh Tâm</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/GT1DEqTVvjHeIgC27"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Nha Khoa Thanh Tâm"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Nha Khoa Thanh Tâm
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/nhakhoathanhtam.webp") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="1920"
-                              height="557"
-                              alt="Nha Khoa Thanh Tâm"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Dịch vụ tư vấn môi trường hỗ trợ nhiệt tình, giải
-                          pháp kỹ thuật tối ưu và chi phí rất cạnh tranh.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Thị Lệ Hường Dương</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/D0EHbPAZVOd2J7Bu7"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Nha Khoa Anna"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Nha Khoa Anna
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/nhakhoaanna.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="284"
-                              height="69"
-                              alt="Nha Khoa Anna"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Đơn vị môi trường chuyên nghiệp, uy tín! Bên mình đã
-                          thực hiện nhiều gói hồ sơ ĐTM và Giấy phép môi trường
-                          ở đây, dịch vụ tận tâm và đáng tin cậy.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Chị Võ Thị Thu Thùy</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/Rmdp4mY8UKRt650xk"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="BBRACING"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            BBRACING
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/bbracing.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="2501"
-                              height="701"
-                              alt="BBRACING"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Kỹ thuật môi trường chuyên nghiệp. Dịch vụ rất tốt.
-                          Tư vấn chu đáo, pháp lý vững vàng và luôn đồng hành
-                          cùng khách hàng.</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Phú Minh</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/SOAgpl3N2lddSnwxk"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Nước Hoa Chính Hãng – MISS LUXURY"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Nước Hoa Chính Hãng – MISS LUXURY
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/missluxury.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="240"
-                              height="168"
-                              alt="Nước Hoa Chính Hãng – MISS LUXURY"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Hỗ trợ tận tình, xử lý hồ sơ nhanh gọn, đo đạc quan
-                          trắc chính xác và nghiệm thu đúng hạn!</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Lê Khoa</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/hdsigoQr0dqrZnSPy"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="TRUNG THÁI"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            TRUNG THÁI
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/nongnghieptrungthai.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="180"
-                              height="178"
-                              alt="TRUNG THÁI"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Đội ngũ rất chuyên nghiệp - làm việc rất có tâm và
-                          trách nhiệm. Cám ơn MÔI TRƯỜNG BẢO CHÂU đã đồng hành
-                          cùng nhà máy chúng tôi suốt thời gian qua!</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Thái - Nông nghiệp Trung Thái</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/gqu6U4uDlvVnHrGA7"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Bencat USA"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Bencat USA
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/bencatusa.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="300"
-                              height="60"
-                              alt="Bencat USA"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Các bạn rất nhiệt tình &amp; tận tâm trong công
-                          việc... Thank you!</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Bến Cát USA</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/Fey3kprloQ8FFdXOl"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Kế toán Sao Kim"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Kế toán Sao Kim
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/ketoansaokim.webp") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="413"
-                              height="100"
-                              alt="Kế toán Sao Kim"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Các bạn rất nhiệt tình &amp; tận tâm trong công
-                          việc... Thank you!</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Mạnh Sầm</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/inHHPmLZDlOkLpJSu"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="DOCHI HOME"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            DOCHI HOME
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/dochihome.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="1920"
-                              height="444"
-                              alt="DOCHI HOME"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >làm rất chuyên nghiệp và giá hợp lý</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Lê Văn Đô</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/xXX8JE1bFnmbxvBX5"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Recolor"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Recolor
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/vuabaobigiay.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="1920"
-                              height="708"
-                              alt="Recolor"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >Hỗ trợ rất nhiệt tình nha ^^</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Anh Văn Tây</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/1FcImvDBuWCribbqC"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Bao Bì Thành Tiến"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Bao Bì Thành Tiến
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/baobithanhtien.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="800"
-                              height="187"
-                              alt="Bao Bì Thành Tiến"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >MÔI TRƯỜNG BẢO CHÂU làm việc rất uy tín - Chuyên
-                          nghiệp</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Xưởng in bao bì Thành Tiến</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/daDAvcCfbY8npulqf"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div
-                      class="relative flex flex-col flex-nowrap glass-effect h-full pt-6 pb-5 px-5 lg:pt-12 lg:pb-8 lg:px-8 rounded-xl md:rounded-2xl border border-black/15 bg-white/90 hover:bg-white shadow-md shadow-black/5 hover:shadow-xl hover:border-primary/90 hover:shadow-primary/15 c-hover"
-                    >
-                      <div class="flex-none icon">
-                        <div
-                          class="flex items-center justify-between flex-nowrap gap-2"
-                          title="Thiết bị chữa cháy Miền Nam"
-                        >
-                          <span
-                            class="flex flex-1 c-hover items-center justify-start group hover:text-primary font-bold h6 tracking-tight"
-                          >
-                            Thiết bị chữa cháy Miền Nam
-                          </span>
-                          <span class="flex-none block">
-                            <img
-                              src="{{ asset("assets/images/thietbichuachaymiennam.png") }}"
-                              class="pointer-events-none block w-auto h-10 object-contain"
-                              width="306"
-                              height="345"
-                              alt="Thiết bị chữa cháy Miền Nam"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                      </div>
-                      <blockquote
-                        class="flex-1 mb-8 relative z-10 p-fs-clamp-[14,16] text-black font-light leading-[1.6] tracking-[-0.03em] pt-5 px-0 mt-5 border-t border-black/10"
-                      >
-                        <span class="line-clamp-6"
-                          >MÔI TRƯỜNG BẢO CHÂU làm việc rất Uy tín - Chuyên
-                          nghiệp</span
-                        >
-                      </blockquote>
-                      <div
-                        class="flex-none flex items-center justify-between text-left gap-5 relative z-10 pt-7.5 border-t border-black/10"
-                      >
-                        <div>
-                          <p class="text-black mb-1">
-                            <span
-                              class="text-base leading-[1.4em] font-medium capitalize mb-0"
-                              >Thiết bị chữa cháy Miền Nam</span
-                            >
-                          </p>
-                          <p
-                            class="text-sm leading-[1.4] font-medium tracking-[-0.02em] text-[#889188] capitalize"
-                          ></p>
-                        </div>
-                        <a
-                          class="flex items-center gap-2"
-                          href="https://share.google/sGXhpyMd09pnkT8l7"
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          title="Đánh giá trên Google"
-                        >
-                          <img
-                            src="{{ asset("assets/images/google-reviews.png") }}"
-                            class="w-14 xl:w-16 pointer-events-none"
-                            alt="Đánh giá trên Google"
-                            width="1000"
-                            height="414"
-                          />
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-4 h-4 text-1"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
               </div>
             </div>
@@ -3698,789 +1773,81 @@
                   class="swiper-marquee swiper-wrapper"
                   data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"rtl":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
                 >
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="Mon Ngon Moi Ngay Logo"
-                        decoding="async"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/2-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="HAKUHODO LOGO"
-                        decoding="async"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/mitsubishi-768x768.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="768"
-                        alt="mitsubishi logo"
-                        decoding="async"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/3-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="UOB LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/4-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="CBAS LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-em-biet-doc-1-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="I CAN READ Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/5-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="KAMINAIL LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/6-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="TRIBECO LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-bidridco-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="bidrico logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-breaktalk-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="logo breaktalk"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/7-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="FOODS FOR YOU LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logodaidongtien-768x448-71611-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Dai Dong Tien Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/8-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="NASPHARMA LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/9-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="TALENT GATE LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-v-holding-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="v-holdings logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/10-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="ABBANK LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-me-since-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Me Since Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/11-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="THE TUTORX VIET NAM LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/12-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="VIETNAM ECO LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
+                  @foreach($partners as $partner)
+                    <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                      @if($partner->link)
+                        <a href="{{ $partner->link }}" target="_blank" rel="noopener noreferrer" class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300" title="{{ $partner->name }}">
+                          <img
+                            src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
+                            class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
+                            alt="{{ $partner->name }}"
+                            loading="lazy"
+                          />
+                        </a>
+                      @else
+                        <span
+                          class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
+                          title="{{ $partner->name }}"
+                        >
+                          <img
+                            src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
+                            class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
+                            alt="{{ $partner->name }}"
+                            loading="lazy"
+                          />
+                        </span>
+                      @endif
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </div>
-            <div class="swiper-container mt-3">
-              <div class="swiper" data-fx-slider="">
-                <div
-                  class="swiper-marquee swiper-wrapper"
-                  data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
+
+            <!-- BÁO CHÍ SECTION -->
+            <div class="mt-14 lg:mt-20">
+              <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
+                <span class="icon-list-icon">
+                  <img
+                    src="{{ asset("assets/images/asterisk.png") }}"
+                    class="size-5"
+                    width="24"
+                    height="24"
+                    alt="Báo chí"
+                  />
+                </span>
+                <span
+                  class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                 >
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-Rart-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt=""
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-gocons-768x344.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Gocons Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-hucons-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Hucons Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-thanh-tam-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Nha Khoa Thanh Tam Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-nu-cuoi-duyen-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="Nu Cuoi Duyen Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/logo-dochi-office-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="DOCHI OFFICE LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/1-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="DOCHI HOME LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/2-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="METALIX INTERIOR Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/3-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="BBRACING Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/4-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="TMA FARMS LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/5-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="Trung Thanh Print Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/6-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="Thebabyshopvn Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/7-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="Tra Hoa Viet Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/cropped-logo-inthanhtien-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="In Thanh Tien Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/cropped-logo-inminhkhang-1-768x344.webp") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="344"
-                        alt="In Minh Khang Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/8-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="Nha Khoa Anna Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/9-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="TOPLAND LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/10-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="DH LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/11-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="THE BOOKKEEPING PEOPLE LOGO"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <span
-                      class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
-                    >
-                      <img
-                        src="{{ asset("assets/images/12-1-768x427.png") }}"
-                        class="block h-[50px] md:h-[68px] w-auto"
-                        width="768"
-                        height="427"
-                        alt="TQQ Logo"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </span>
-                  </div>
-                </div>
+                  Báo chí
+                </span>
               </div>
-            </div>
-          </div>
-        </section>
-        <section
-          id="section-aceb87eef9"
-          class="section section-press py-10 lg:py-20"
-        >
-          <div class="container px-3 mx-auto">
-            <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
-              <span class="icon-list-icon">
-                <img
-                  src="{{ asset("assets/images/asterisk.png") }}"
-                  class="size-5"
-                  width="24"
-                  height="24"
-                  alt="Báo chí"
-                />
-              </span>
-              <span
-                class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
-              >
-                Báo chí
-              </span>
-            </div>
-            <h2 class="font-bold leading-tight mb-6 lg:mb-8">
-              Báo chí nói gì về <span class="text-1">MÔI TRƯỜNG BẢO CHÂU</span>
-            </h2>
-            <div class="swiper-container">
-              <div class="swiper" data-fx-slider="">
-                <div
-                  class="swiper-marquee swiper-wrapper"
-                  data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"rtl":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
-                >
-                  <!-- 1. Báo Gia Lai -->
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baogialai.com.vn/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-post564776.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Gia Lai – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-gia-lai.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Gia Lai"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <!-- 2. Kinh Tế Xanh -->
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://kinhtexanh.vn/chuyen-dich-sang-kinh-te-tuan-hoan-tu-ly-thuyet-den-thuc-thi-16811.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Kinh Tế Xanh – Chuyển dịch sang Kinh tế tuần hoàn từ lý thuyết đến thực thi"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-kinh-te-xanh.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Kinh Tế Xanh"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <!-- 3. Báo Mới -->
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baomoi.com/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-c53088786.epi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Mới – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-moi.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Mới"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <!-- Set 2 for smooth marquee flow -->
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baogialai.com.vn/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-post564776.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Gia Lai – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-gia-lai.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Gia Lai"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://kinhtexanh.vn/chuyen-dich-sang-kinh-te-tuan-hoan-tu-ly-thuyet-den-thuc-thi-16811.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Kinh Tế Xanh – Chuyển dịch sang Kinh tế tuần hoàn từ lý thuyết đến thực thi"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-kinh-te-xanh.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Kinh Tế Xanh"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baomoi.com/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-c53088786.epi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Mới – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-moi.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Mới"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <!-- Set 3 for smooth marquee flow -->
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baogialai.com.vn/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-post564776.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Gia Lai – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-gia-lai.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Gia Lai"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://kinhtexanh.vn/chuyen-dich-sang-kinh-te-tuan-hoan-tu-ly-thuyet-den-thuc-thi-16811.html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Kinh Tế Xanh – Chuyển dịch sang Kinh tế tuần hoàn từ lý thuyết đến thực thi"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-kinh-te-xanh.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Kinh Tế Xanh"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                  <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
-                    <a
-                      class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
-                      href="https://baomoi.com/huong-dan-su-dung-nang-luong-tiet-kiem-giam-phat-thai-khi-nha-kinh-c53088786.epi"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="Báo Mới – Hướng dẫn sử dụng năng lượng tiết kiệm, giảm phát thải khí nhà kính"
-                    >
-                      <img
-                        src="{{ asset("assets/images/bao-moi.png") }}"
-                        class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
-                        alt="Báo Mới"
-                        decoding="async"
-                        loading="lazy"
-                      />
-                    </a>
+              <h2 class="font-bold leading-tight mb-6 lg:mb-8">
+                Báo chí nói gì về <span class="text-1">MÔI TRƯỜNG BẢO CHÂU</span>
+              </h2>
+              <div class="swiper-container">
+                <div class="swiper" data-fx-slider="">
+                  <div
+                    class="swiper-marquee swiper-wrapper"
+                    data-swiper-options='{"marquee":true,"pauseonmouseenter":true,"allowtouchmove":true,"slidesperview":"auto","spacebetween":12,"speed":6000,"mousewheel":true,"freemode":true,"sm":{"spacebetween":24}}'
+                  >
+                    @foreach($presses as $press)
+                      <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
+                        <a
+                          class="u-flex-center h-full py-5 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300"
+                          href="{{ $press->link ?? '#' }}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="{{ $press->name }}"
+                        >
+                          <img
+                            src="{{ str_starts_with($press->logo, 'http') ? $press->logo : (str_starts_with($press->logo, 'uploads/') ? asset('storage/' . $press->logo) : asset('assets/images/' . $press->logo)) }}"
+                            class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
+                            alt="{{ $press->name }}"
+                            loading="lazy"
+                          />
+                        </a>
+                      </div>
+                    @endforeach
                   </div>
                 </div>
               </div>

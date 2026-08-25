@@ -804,4 +804,42 @@
   color: #166534 !important;
 }
 
+/* ==========================================================================
+   Core Services Tabs & Active States
+   ========================================================================== */
+.tabs-panel {
+  display: none !important;
+}
+
+.tabs-panel.is-active,
+.tabs-panel.active {
+  display: block !important;
+}
+
+.tabs-title.is-active > a,
+.tabs-title.active > a,
+.tabs-title > a.is-active,
+.tabs-title > a.active {
+  border-color: #15803d !important;
+  border-width: 2px !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.18), 0 8px 10px -6px rgba(21, 128, 61, 0.12) !important;
+}
+
+.tabs-title.is-active > a .tab-text,
+.tabs-title.active > a .tab-text,
+.tabs-title > a.is-active .tab-text,
+.tabs-title > a.active .tab-text {
+  color: #15803d !important;
+  font-weight: 700 !important;
+}
+
+.tabs-title.is-active > a svg,
+.tabs-title.active > a svg,
+.tabs-title > a.is-active svg,
+.tabs-title > a.active svg {
+  color: #15803d !important;
+}
+
+
 

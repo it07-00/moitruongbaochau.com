@@ -55,10 +55,34 @@ class WebsiteSeeder extends Seeder
     private function seedServices(CarbonInterface $publishedAt): void
     {
         $serviceCategories = collect([
-            ['name' => 'Pháp lý môi trường', 'slug' => 'phap-ly-moi-truong'],
-            ['name' => 'Khí nhà kính & ESG', 'slug' => 'khi-nha-kinh-esg'],
-            ['name' => 'Quan trắc môi trường', 'slug' => 'quan-trac-moi-truong'],
-            ['name' => 'Kỹ thuật xử lý', 'slug' => 'ky-thuat-xu-ly'],
+            [
+                'name' => 'Pháp lý môi trường',
+                'slug' => 'phap-ly-moi-truong',
+                'image' => 'uploads/service-categories/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png',
+                'description' => 'Tư vấn trọn gói Giấy phép môi trường (GPMT), Báo cáo đánh giá tác động môi trường (ĐTM), Đăng ký môi trường theo Luật BVMT 2020.',
+                'sort_order' => 1,
+            ],
+            [
+                'name' => 'Khí nhà kính & ESG',
+                'slug' => 'khi-nha-kinh-esg',
+                'image' => 'uploads/service-categories/Bai-Dang-Bao-Chau-1024x572.png',
+                'description' => 'Kiểm kê khí nhà kính toàn diện (Scope 1, 2, 3), tính toán dấu chân carbon LCA, lập hồ sơ CBAM và báo cáo phát triển bền vững ESG.',
+                'sort_order' => 2,
+            ],
+            [
+                'name' => 'Quan trắc môi trường',
+                'slug' => 'quan-trac-moi-truong',
+                'image' => 'uploads/service-categories/Hinh-1-1024x683.jpg',
+                'description' => 'Đo đạc môi trường lao động, vi khí hậu, tiếng ồn, ánh sáng, bụi; Lập báo cáo quan trắc môi trường định kỳ hàng năm.',
+                'sort_order' => 3,
+            ],
+            [
+                'name' => 'Kỹ thuật xử lý',
+                'slug' => 'ky-thuat-xu-ly',
+                'image' => 'uploads/service-categories/CTY-TAN-TIEN-1024x640.png',
+                'description' => 'Thiết kế, thi công, cải tạo và chuyển giao công nghệ xử lý nước thải sinh hoạt, công nghiệp và xử lý bụi, khí thải công nghiệp.',
+                'sort_order' => 4,
+            ],
         ])->mapWithKeys(function (array $category): array {
             $model = ServiceCategory::query()->updateOrCreate(['slug' => $category['slug']], [...$category, 'is_active' => true]);
 
@@ -587,11 +611,83 @@ HTML;
             'seo_default_title' => 'Môi Trường Bảo Châu',
             'seo_default_description' => 'Giải pháp tư vấn và kỹ thuật môi trường cho doanh nghiệp.',
             'seo_default_image' => 'assets/images/optimized/og-moi-truong-bao-chau.webp',
+            'about_badge' => 'Về chúng tôi',
+            'about_title' => 'MÔI TRƯỜNG BẢO CHÂU với sứ mệnh',
+            'about_desc_1' => 'Giải quyết bài toán tồn tại, phát triển và <span class="font-medium">tăng trưởng doanh nghiệp bền vững</span> cho tất cả các khách hàng tin tưởng và đồng hành cùng MÔI TRƯỜNG BẢO CHÂU.',
+            'about_desc_2' => 'Luôn lấy chữ <span class="font-medium">Tâm</span> để nâng chữ <span class="font-medium">Tầm</span>. Chúng tôi không ngại tốn thời gian để lắng nghe khách hàng chia sẻ và cũng không ngại đưa ra phương án giải quyết phù hợp cho khách hàng.',
+            'about_desc_3' => 'Đồng hành cùng <span class="text-primary font-medium">MÔI TRƯỜNG BẢO CHÂU</span> chắc chắn bạn sẽ nhận được sự phục vụ <span class="font-medium">nhiệt tình và tận tâm</span> của toàn đội ngũ được đào tạo trong một môi trường phù hợp văn hóa doanh nghiệp của chúng tôi.',
+            'about_image' => 'assets/images/logo-leave-png-min.png',
+            'about_link' => '/gioi-thieu',
+            'stat_1_number' => '7',
+            'stat_1_suffix' => '+',
+            'stat_1_title' => 'Năm kinh nghiệm',
+            'stat_1_desc' => 'Chúng tôi luôn tự tin để tư vấn và đưa ra giải pháp phù hợp nhằm giải quyết tất cả các vấn đề khó khăn của doanh nghiệp về Giấy phép Môi trường, Báo cáo ĐTM, Khí nhà kính ESG và Xử lý Nước thải.',
+            'stat_2_number' => '500',
+            'stat_2_suffix' => '+',
+            'stat_2_title' => 'Dự án đã hoàn thành',
+            'stat_2_desc' => 'Hơn 500+ hồ sơ pháp lý, đề án và công trình xử lý môi trường được nghiệm thu đúng hạn, đảm bảo 100% tuân thủ quy định pháp luật BVMT hiện hành.',
+            'stat_3_number' => '30',
+            'stat_3_suffix' => '+',
+            'stat_3_title' => 'Chuyên gia & Kỹ sư',
+            'stat_3_desc' => 'Đội ngũ chuyên gia, kỹ sư công nghệ môi trường giàu kinh nghiệm, tận tâm, nhiệt huyết và luôn đặt uy tín, trách nhiệm lên hàng đầu.',
+
+            // About Page - Timeline
+            'timeline_badge' => 'HÀNH TRÌNH PHÁT TRIỂN',
+            'timeline_title' => 'Lịch sử <span class="text-primary">hình thành & phát triển</span>',
+            'timeline_desc' => 'Hành trình hơn 8 năm xây dựng uy tín và khẳng định vị thế đơn vị tư vấn môi trường đáng tin cậy của Môi Trường Bảo Châu.',
+            'timeline_1_year' => '2018',
+            'timeline_1_title' => 'Thành lập công ty',
+            'timeline_1_desc' => 'Môi Trường Bảo Châu chính thức thành lập, quy tụ các kỹ sư môi trường tâm huyết với định hướng cung cấp dịch vụ hồ sơ pháp lý chuẩn mực.',
+            'timeline_2_year' => '2020',
+            'timeline_2_title' => 'Chuẩn hóa Luật BVMT 2020',
+            'timeline_2_desc' => 'Tiên phong nghiên cứu và chuẩn hóa quy trình cấp Giấy phép môi trường (GPMT) và Báo cáo ĐTM theo khung quy định mới của Luật BVMT 2020.',
+            'timeline_3_year' => '2022',
+            'timeline_3_title' => 'Mở rộng Kỹ thuật & Xử lý nước',
+            'timeline_3_desc' => 'Mở rộng quy mô thiết kế, thi công và vận hành trạm xử lý nước thải - khí thải công nghiệp cho các nhà máy quy mô lớn tại các KCN trọng điểm.',
+            'timeline_4_year' => '2024 – 2026',
+            'timeline_4_title' => 'Khí nhà kính & Chiến lược ESG',
+            'timeline_4_desc' => 'Triển khai tư vấn Kiểm kê Khí nhà kính (ISO 14064), báo cáo CBAM, LCA và chiến lược ESG, khẳng định vị thế đối tác môi trường toàn diện.',
+
+            // About Page - Org Chart
+            'org_badge' => 'SƠ ĐỒ BỘ MÁY',
+            'org_title' => 'CƠ CẤU <span class="text-primary">TỔ CHỨC</span>',
+            'org_director' => 'GIÁM ĐỐC',
+            'org_dept_1' => 'PHÒNG KỸ THUẬT',
+            'org_dept_1_sub1' => 'Bộ phận Quan trắc',
+            'org_dept_1_sub2' => 'Bộ phận Tư vấn',
+            'org_dept_2' => 'PHÒNG KINH DOANH',
+            'org_dept_2_sub1' => 'Bộ phận Kinh doanh',
+            'org_dept_3' => 'PHÒNG TỔNG HỢP',
+            'org_dept_3_sub1' => 'BP HC – Nhân sự',
+            'org_dept_3_sub2' => 'BP TC – Kế toán',
+
+            // About Page - Vision & Mission
+            'vision_badge' => 'TẦM NHÌN & SỨ MỆNH',
+            'vision_title' => '<span class="text-primary block">MÔI TRƯỜNG BẢO CHÂU</span> Kiến tạo biểu tượng phát triển bền vững',
+            'vision_desc_1' => 'Với tầm nhìn trở thành <strong>đơn vị tiên phong trong lĩnh vực môi trường tại Việt Nam</strong>, được khách hàng tin tưởng lựa chọn hàng đầu và là biểu tượng của sự phát triển bền vững, Môi trường Bảo Châu luôn nhận được sự tín nhiệm của khách hàng.',
+            'vision_desc_2' => 'Để có thể phát triển song hành cùng với khách hàng, Môi trường Bảo Châu luôn đặt sứ mệnh của bản thân lên đầu tiên:',
+            'mission_1_title' => 'Đối với khách hàng',
+            'mission_1_desc' => 'Cung cấp các giải pháp môi trường tối ưu, giúp doanh nghiệp nâng cao hiệu quả sản xuất, giảm thiểu tác động đến môi trường và đảm bảo tuân thủ các quy định pháp luật.',
+            'mission_2_title' => 'Đối với đối tác',
+            'mission_2_desc' => 'Xây dựng mối quan hệ hợp tác bền vững, cùng nhau phát triển và chia sẻ thành công trên chặng đường chuyển đổi xanh.',
+            'mission_3_title' => 'Đối với nhân viên',
+            'mission_3_desc' => 'Tạo môi trường làm việc chuyên nghiệp, năng động, khuyến khích sáng tạo và tạo mọi điều kiện để phát triển bản thân toàn diện.',
+            'mission_4_title' => 'Đối với cộng đồng',
+            'mission_4_desc' => 'Góp phần xây dựng một cộng đồng sống xanh, sạch, đẹp, bảo vệ tài nguyên thiên nhiên và nâng cao chất lượng cuộc sống cho thế hệ tương lai.',
         ] as $key => $value) {
+            $group = 'general';
+            if (str_starts_with($key, 'seo_')) {
+                $group = 'seo';
+            } elseif (str_starts_with($key, 'about_') || str_starts_with($key, 'stat_')) {
+                $group = 'homepage';
+            } elseif (str_starts_with($key, 'timeline_') || str_starts_with($key, 'org_') || str_starts_with($key, 'vision_') || str_starts_with($key, 'mission_')) {
+                $group = 'about';
+            }
+
             Setting::query()->updateOrCreate(['key' => $key], [
                 'value' => $value,
                 'type' => 'string',
-                'group' => str_starts_with($key, 'seo_') ? 'seo' : 'general',
+                'group' => $group,
             ]);
         }
     }
