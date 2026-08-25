@@ -58,11 +58,11 @@ class SettingResource extends Resource
                         Select::make('group')
                             ->label('Nhóm cài đặt')
                             ->options([
-                                'general' => 'Thông tin chung (General)',
-                                'homepage' => 'Trang chủ (Sứ mệnh & Thống kê)',
-                                'about' => 'Trang Giới thiệu (Lịch sử, Tổ chức, Sứ mệnh)',
-                                'seo' => 'Cấu hình SEO & Mạng xã hội',
-                                'contact' => 'Thông tin liên hệ & Hotline',
+                                'general' => '1. Thông tin doanh nghiệp (Tên cty, MST, Logo)',
+                                'contact' => '2. Liên hệ & Trụ sở (Hotline, Email, Địa chỉ, Map)',
+                                'social' => '3. Kênh truyền thông & MXH (Zalo, Facebook, Youtube)',
+                                'seo' => '4. Cấu hình SEO mặc định toàn trang',
+                                'homepage' => '5. Khối giới thiệu Trang chủ',
                             ])
                             ->default('general')
                             ->required(),

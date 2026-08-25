@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Service;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -11,6 +12,8 @@ class ServiceController extends Controller
 {
     public function index(): View
     {
+        $page = Page::query()->where('slug', 'dich-vu')->orWhere('template', 'services')->first();
+
         $services = Service::query()
             ->published()
             ->with('category:id,name,slug')
@@ -18,13 +21,19 @@ class ServiceController extends Controller
             ->latest('published_at')
             ->paginate(12)
             ->withQueryString();
+
+        $seoTitle = $page?->meta_title ?: 'Dịch vụ môi trường doanh nghiệp';
+        $seoDescription = $page?->meta_description ?: 'Dịch vụ tư vấn giấy phép, quan trắc, kiểm kê khí nhà kính và xử lý môi trường.';
+
         $seo = SeoData::forPage(
-            'Dịch vụ môi trường doanh nghiệp',
-            'Dịch vụ tư vấn giấy phép, quan trắc, kiểm kê khí nhà kính và xử lý môi trường.',
+            $seoTitle,
+            $seoDescription,
             route('services.index'),
+            [],
+            $page?->og_image ? asset($page->og_image) : null,
         );
 
-        return view('frontend.services.index', compact('services', 'seo'));
+        return view('frontend.services.index', compact('page', 'services', 'seo'));
     }
 
     public function show(string $slug): View

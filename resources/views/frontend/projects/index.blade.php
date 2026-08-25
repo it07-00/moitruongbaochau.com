@@ -18,29 +18,26 @@
                     class="size-5"
                     width="24"
                     height="24"
-                    alt="Môi Trường Bảo Châu"
+                    alt="{{ $page?->metadata['projects_badge'] ?? 'DỰ ÁN TIÊU BIỂU & HỒ SƠ NĂNG LỰC' }}"
                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                 >
-                  DỰ ÁN TIÊU BIỂU &amp; HỒ SƠ NĂNG LỰC
+                  {{ $page?->metadata['projects_badge'] ?? 'DỰ ÁN TIÊU BIỂU & HỒ SƠ NĂNG LỰC' }}
                 </span>
               </div>
 
               <h1
                 class="entry-title p-fs-clamp-[32,56] font-bold tracking-tight text-gray-900 leading-[1.2] mb-4 lg:mb-6"
               >
-                Dự Án Môi Trường <span class="text-primary">Tiêu Biểu</span>
+                {!! $page?->title ? Str::replace(['Tiêu Biểu', 'tiêu biểu'], ['<span class="text-primary">Tiêu Biểu</span>', '<span class="text-primary">tiêu biểu</span>'], $page->title) : 'Dự Án Môi Trường <span class="text-primary">Tiêu Biểu</span>' !!}
               </h1>
 
               <p
                 class="text-gray-600 p-fs-clamp-[15,18] leading-relaxed max-w-3xl mx-auto mb-0"
               >
-                Tổng hợp các công trình tư vấn hồ sơ pháp lý môi trường, cấp
-                Giấy phép môi trường, kiểm kê khí nhà kính ESG, thiết kế thi
-                công hệ thống xử lý nước thải và quan trắc môi trường do Bảo
-                Châu thực hiện trên toàn quốc.
+                {{ $page?->excerpt ?? 'Tổng hợp các công trình tư vấn hồ sơ pháp lý môi trường, cấp Giấy phép môi trường, kiểm kê khí nhà kính ESG, thiết kế thi công hệ thống xử lý nước thải và quan trắc môi trường do Bảo Châu thực hiện trên toàn quốc.' }}
               </p>
             </div>
           </div>

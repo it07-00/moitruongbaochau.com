@@ -15,19 +15,19 @@
                     class="size-5"
                     width="24"
                     height="24"
-                    alt="BẠN ĐANG CẦN GIẢI PHÁP PHÙ HỢP?"
+                    alt="{{ $page?->metadata['contact_badge'] ?? 'BẠN ĐANG CẦN GIẢI PHÁP PHÙ HỢP?' }}"
                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                 >
-                  BẠN ĐANG CẦN GIẢI PHÁP PHÙ HỢP?
+                  {{ $page?->metadata['contact_badge'] ?? 'BẠN ĐANG CẦN GIẢI PHÁP PHÙ HỢP?' }}
                 </span>
               </div>
               <h1
                 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight leading-tight"
               >
-                Liên hệ tư vấn ngay
+                {{ $page?->title ?? 'Liên hệ tư vấn ngay' }}
               </h1>
             </div>
 
@@ -78,18 +78,14 @@
                   <h2
                     class="text-2xl font-bold text-gray-900 mb-3.5 group-hover:text-primary transition-colors"
                   >
-                    Tư vấn hồ sơ &amp; Giấy phép MT
+                    {{ $page?->metadata['card_1_title'] ?? 'Tư vấn hồ sơ & Giấy phép MT' }}
                   </h2>
 
                   <p class="text-[16px] text-gray-700 leading-relaxed mb-4">
-                    Bạn cần lập hồ sơ môi trường chuẩn Luật BVMT 2020: Báo cáo
-                    ĐTM, Giấy phép môi trường (GPMT), Đăng ký môi trường và tối
-                    ưu hồ sơ pháp lý?
+                    {!! $page?->metadata['card_1_desc_1'] ?? 'Bạn cần lập hồ sơ môi trường chuẩn Luật BVMT 2020: Báo cáo ĐTM, Giấy phép môi trường (GPMT), Đăng ký môi trường và tối ưu hồ sơ pháp lý?' !!}
                   </p>
                   <p class="text-[16px] text-gray-700 leading-relaxed">
-                    Môi Trường Bảo Châu tư vấn giải pháp phù hợp với từng quy mô
-                    dự án, giúp doanh nghiệp hoàn thiện pháp lý nhanh chóng, an
-                    tâm vận hành dài lâu.
+                    {!! $page?->metadata['card_1_desc_2'] ?? 'Môi Trường Bảo Châu tư vấn giải pháp phù hợp với từng quy mô dự án, giúp doanh nghiệp hoàn thiện pháp lý nhanh chóng, an tâm vận hành dài lâu.' !!}
                   </p>
                 </div>
               </div>
@@ -134,18 +130,14 @@
                   <h2
                     class="text-2xl font-bold text-gray-900 mb-3.5 group-hover:text-primary transition-colors"
                   >
-                    Kiểm kê KNK – ESG – CBAM
+                    {{ $page?->metadata['card_2_title'] ?? 'Kiểm kê KNK – ESG – CBAM' }}
                   </h2>
 
                   <p class="text-[16px] text-gray-700 leading-relaxed mb-4">
-                    Bạn muốn đo lường dấu chân carbon, xuất khẩu hàng sang EU
-                    theo cơ chế CBAM hay lập Báo cáo phát triển bền vững ESG
-                    chuẩn quốc tế?
+                    {!! $page?->metadata['card_2_desc_1'] ?? 'Bạn muốn đo lường dấu chân carbon, xuất khẩu hàng sang EU theo cơ chế CBAM hay lập Báo cáo phát triển bền vững ESG chuẩn quốc tế?' !!}
                   </p>
                   <p class="text-[16px] text-gray-700 leading-relaxed">
-                    Chúng tôi cung cấp giải pháp kiểm kê khí nhà kính trọn gói
-                    (ISO 14064), báo cáo CBAM và lộ trình giảm phát thải giúp
-                    thương hiệu nâng cao vị thế và mở rộng thị trường.
+                    {!! $page?->metadata['card_2_desc_2'] ?? 'Chúng tôi cung cấp giải pháp kiểm kê khí nhà kính trọn gói (ISO 14064), báo cáo CBAM và lộ trình giảm phát thải giúp thương hiệu nâng cao vị thế và mở rộng thị trường.' !!}
                   </p>
                 </div>
               </div>
@@ -190,18 +182,14 @@
                   <h2
                     class="text-2xl font-bold text-gray-900 mb-3.5 group-hover:text-primary transition-colors"
                   >
-                    Hỗ trợ kỹ thuật &amp; Xử lý NT
+                    {{ $page?->metadata['card_3_title'] ?? 'Hỗ trợ kỹ thuật & Xử lý NT' }}
                   </h2>
 
                   <p class="text-[16px] text-gray-700 leading-relaxed mb-4">
-                    Hệ thống xử lý nước thải, khí thải gặp sự cố, chất lượng
-                    nước sau xử lý chưa đạt QCVN hoặc cần bảo trì, cải tạo nâng
-                    công suất?
+                    {!! $page?->metadata['card_3_desc_1'] ?? 'Hệ thống xử lý nước thải, khí thải gặp sự cố, chất lượng nước sau xử lý chưa đạt QCVN hoặc cần bảo trì, cải tạo nâng công suất?' !!}
                   </p>
                   <p class="text-[16px] text-gray-700 leading-relaxed">
-                    Đội ngũ kỹ sư môi trường Bảo Châu luôn sẵn sàng hỗ trợ nhanh
-                    chóng, cung cấp vi sinh hóa chất, đảm bảo hệ thống vận hành
-                    ổn định, an toàn và tối ưu hiệu suất.
+                    {!! $page?->metadata['card_3_desc_2'] ?? 'Cung cấp giải pháp công nghệ sinh học và hóa lý tối ưu, tiết kiệm chi phí đầu tư và hóa chất vận hành hàng tháng cho nhà máy.' !!}
                   </p>
                 </div>
               </div>

@@ -13,20 +13,20 @@
                     class="size-5"
                     width="24"
                     height="24"
-                    alt="Cơ hội nghề nghiệp"
+                    alt="{{ $page?->metadata['recruitment_badge'] ?? 'Cơ hội nghề nghiệp' }}"
                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                 >
-                  CƠ HỘI NGHỀ NGHIỆP TẠI BẢO CHÂU
+                  {{ $page?->metadata['recruitment_badge'] ?? 'CƠ HỘI NGHỀ NGHIỆP TẠI BẢO CHÂU' }}
                 </span>
               </div>
               <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black leading-tight mb-4 sm:mb-6">
-                Gia Nhập Đội Ngũ Chuyên Gia <span class="text-primary">Môi Trường Bảo Châu</span>
+                {{ $page?->title ?? 'Gia Nhập Đội Ngũ Chuyên Gia Môi Trường Bảo Châu' }}
               </h1>
               <p class="text-base sm:text-lg text-black leading-relaxed mb-8 max-w-3xl mx-auto">
-                Đồng hành cùng Bảo Châu kiến tạo các giải pháp bảo vệ môi trường và phát triển bền vững (ESG - Net Zero). Chúng tôi chào đón những nhân sự tài năng, nhiệt huyết và có đam mê cống hiến cho môi trường Việt Nam.
+                {{ $page?->excerpt ?? 'Đồng hành cùng Bảo Châu kiến tạo các giải pháp bảo vệ môi trường và phát triển bền vững (ESG - Net Zero). Chúng tôi chào đón những nhân sự tài năng, nhiệt huyết và có đam mê cống hiến cho môi trường Việt Nam.' }}
               </p>
               <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <a
@@ -71,10 +71,10 @@
                 </span>
               </div>
               <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black leading-tight">
-                Vì Sao Bạn Nên Chọn Đồng Hành Cùng Bảo Châu?
+                {{ $page?->metadata['benefits_title'] ?? 'Vì Sao Bạn Nên Chọn Đồng Hành Cùng Bảo Châu?' }}
               </h2>
               <p class="text-sm sm:text-base text-black mt-3">
-                Chúng tôi tin rằng con người là tài sản quý giá nhất. Tại Bảo Châu, bạn được trao quyền tự chủ, ghi nhận xứng đáng và tạo mọi điều kiện để bứt phá giới hạn bản thân.
+                {{ $page?->metadata['benefits_desc'] ?? 'Chúng tôi tin rằng con người là tài sản quý giá nhất. Tại Bảo Châu, bạn được trao quyền tự chủ, ghi nhận xứng đáng và tạo mọi điều kiện để bứt phá giới hạn bản thân.' }}
               </p>
             </div>
 
@@ -99,9 +99,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                   </div>
-                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">Thu Nhập &amp; Thưởng Hấp Dẫn</h3>
+                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">{{ $page?->metadata['benefit_1_title'] ?? 'Thu Nhập &amp; Thưởng Hấp Dẫn' }}</h3>
                   <p class="text-sm text-black leading-relaxed">
-                    Lương cứng cạnh tranh theo năng lực + Thưởng % hoa hồng dự án theo KPI + Lương tháng 13, 14 và các khoản thưởng nóng khi hoàn thành xuất sắc.
+                    {!! $page?->metadata['benefit_1_desc'] ?? 'Lương cứng cạnh tranh theo năng lực + Thưởng % hoa hồng dự án theo KPI + Lương tháng 13, 14 và các khoản thưởng nóng khi hoàn thành xuất sắc.' !!}
                   </p>
                 </div>
               </div>
@@ -125,9 +125,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
                     </svg>
                   </div>
-                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">Lộ Trình Thăng Tiến Rõ Ràng</h3>
+                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">{{ $page?->metadata['benefit_2_title'] ?? 'Lộ Trình Thăng Tiến Rõ Ràng' }}</h3>
                   <p class="text-sm text-black leading-relaxed">
-                    Đánh giá hiệu suất định kỳ 6 tháng/lần. Được đài thọ 100% chi phí các khóa đào tạo nâng cao chứng chỉ kiểm kê KNK, CBAM, ESG quốc tế.
+                    {!! $page?->metadata['benefit_2_desc'] ?? 'Đánh giá hiệu suất định kỳ 6 tháng/lần. Được đài thọ 100% chi phí các khóa đào tạo nâng cao chứng chỉ kiểm kê KNK, CBAM, ESG quốc tế.' !!}
                   </p>
                 </div>
               </div>
@@ -151,9 +151,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                     </svg>
                   </div>
-                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">Môi Trường Chuyên Nghiệp</h3>
+                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">{{ $page?->metadata['benefit_3_title'] ?? 'Môi Trường Chuyên Nghiệp' }}</h3>
                   <p class="text-sm text-black leading-relaxed">
-                    Văn phòng tiện nghi, không gian mở năng động, đồng nghiệp thân thiện, tôn trọng sự khác biệt và luôn hỗ trợ nhau giải quyết vấn đề kỹ thuật.
+                    {!! $page?->metadata['benefit_3_desc'] ?? 'Văn phòng tiện nghi, không gian mở năng động, đồng nghiệp thân thiện, tôn trọng sự khác biệt và luôn hỗ trợ nhau giải quyết vấn đề kỹ thuật.' !!}
                   </p>
                 </div>
               </div>
@@ -177,9 +177,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H4.5a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                     </svg>
                   </div>
-                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">Phúc Lợi Toàn Diện</h3>
+                  <h3 class="text-lg sm:text-xl font-bold text-black mb-2">{{ $page?->metadata['benefit_4_title'] ?? 'Phúc Lợi Toàn Diện' }}</h3>
                   <p class="text-sm text-black leading-relaxed">
-                    Đầy đủ chế độ BHXH, BHYT, BHTN; khám sức khỏe tổng quát định kỳ hàng năm; du lịch nghỉ dưỡng 1-2 lần/năm; quà tặng sinh nhật và lễ tết chu đáo.
+                    {!! $page?->metadata['benefit_4_desc'] ?? 'Đầy đủ BHXH, BHYT, BHTN theo luật lao động + Bảo hiểm sức khỏe cao cấp Bảo Việt + Du lịch nghỉ dưỡng 5 sao thường niên 1-2 lần/năm.' !!}
                   </p>
                 </div>
               </div>

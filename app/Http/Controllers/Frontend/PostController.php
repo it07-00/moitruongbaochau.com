@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Support\SeoData;
@@ -31,14 +32,23 @@ class PostController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        $title = $currentCategory ? $currentCategory->name.' - Tin tức Môi Trường Bảo Châu' : 'Tin tức môi trường, pháp luật và ESG';
+        $page = Page::query()->where('slug', 'tin-tuc')->orWhere('template', 'posts')->first();
+
+        $title = $currentCategory
+            ? $currentCategory->name.' - Tin tức Môi Trường Bảo Châu'
+            : ($page?->meta_title ?: 'Tin tức môi trường, pháp luật và ESG');
+
+        $seoDescription = $page?->meta_description ?: 'Cập nhật pháp luật bảo vệ môi trường, giấy phép môi trường, kiểm kê khí nhà kính và ESG.';
+
         $seo = SeoData::forPage(
             $title,
-            'Cập nhật pháp luật bảo vệ môi trường, giấy phép môi trường, kiểm kê khí nhà kính và ESG.',
+            $seoDescription,
             route('posts.index'),
+            [],
+            $page?->og_image ? asset($page->og_image) : null,
         );
 
-        return view('frontend.posts.index', compact('posts', 'postCategories', 'currentCategory', 'seo'));
+        return view('frontend.posts.index', compact('page', 'posts', 'postCategories', 'currentCategory', 'seo'));
     }
 
     public function show(string $slug): View

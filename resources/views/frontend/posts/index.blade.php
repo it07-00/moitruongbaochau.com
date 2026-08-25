@@ -14,11 +14,11 @@
                     <img src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24" alt="Tin tức" />
                   </span>
                   <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
-                    BẢN TIN BẢO CHÂU
+                    {{ $page?->metadata['posts_badge'] ?? 'BẢN TIN BẢO CHÂU' }}
                   </span>
                 </div>
                 <h1 class="font-bold leading-tight text-3xl sm:text-4xl lg:text-5xl text-gray-900">
-                  <span class="text-1">Kiến thức &amp; Tin tức</span> mới cập nhật
+                  {!! $page?->title ? Str::replace(['Kiến thức & Tin tức', 'Tin tức & Kiến thức'], ['<span class="text-1">Kiến thức & Tin tức</span>', '<span class="text-1">Tin tức & Kiến thức</span>'], $page->title) : '<span class="text-1">Kiến thức &amp; Tin tức</span> mới cập nhật' !!}
                 </h1>
               </div>
 

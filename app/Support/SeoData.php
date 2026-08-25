@@ -57,8 +57,10 @@ class SeoData
      * @param  array<int, array<string, mixed>>  $schema
      * @return array<string, mixed>
      */
-    public static function forPage(string $title, string $description, string $canonical, array $schema = []): array
+    public static function forPage(string $title, string $description, string $canonical, array $schema = [], ?string $ogImage = null): array
     {
+        $image = $ogImage ?: asset('assets/images/optimized/og-moi-truong-bao-chau.webp');
+
         return [
             'title' => $title,
             'description' => Str::limit(strip_tags($description), 300, ''),
@@ -66,10 +68,10 @@ class SeoData
             'robots' => 'index,follow',
             'og_title' => $title,
             'og_description' => $description,
-            'og_image' => asset('assets/images/optimized/og-moi-truong-bao-chau.webp'),
+            'og_image' => $image,
             'twitter_title' => $title,
             'twitter_description' => $description,
-            'twitter_image' => asset('assets/images/optimized/og-moi-truong-bao-chau.webp'),
+            'twitter_image' => $image,
             'schema' => $schema,
         ];
     }

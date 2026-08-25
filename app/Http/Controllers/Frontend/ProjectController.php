@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Project;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -39,17 +40,23 @@ class ProjectController extends Controller
 
         $totalProjects = Project::query()->published()->count();
 
+        $page = Page::query()->where('slug', 'du-an')->orWhere('template', 'projects')->first();
+
         $categoryTitle = $categoryFilter && isset($categories[$categoryFilter])
             ? 'Dự án '.$categories[$categoryFilter]
-            : 'Dự án môi trường tiêu biểu';
+            : ($page?->meta_title ?: 'Dự án môi trường tiêu biểu');
+
+        $seoDescription = $page?->meta_description ?: 'Năng lực triển khai giấy phép môi trường, ĐTM, quan trắc và kiểm kê khí nhà kính của Môi Trường Bảo Châu.';
 
         $seo = SeoData::forPage(
             $categoryTitle,
-            'Năng lực triển khai giấy phép môi trường, ĐTM, quan trắc và kiểm kê khí nhà kính của Môi Trường Bảo Châu.',
+            $seoDescription,
             route('projects.index', $categoryFilter ? ['category' => $categoryFilter] : []),
+            [],
+            $page?->og_image ? asset($page->og_image) : null,
         );
 
-        return view('frontend.projects.index', compact('projects', 'categories', 'categoryCounts', 'totalProjects', 'categoryFilter', 'seo'));
+        return view('frontend.projects.index', compact('page', 'projects', 'categories', 'categoryCounts', 'totalProjects', 'categoryFilter', 'seo'));
     }
 
     public function show(string $slug): View

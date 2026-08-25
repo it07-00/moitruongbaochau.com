@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJobApplicationRequest;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\Page;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -14,14 +15,21 @@ class RecruitmentController extends Controller
 {
     public function index(): View
     {
+        $page = Page::query()->where('slug', 'tuyen-dung')->orWhere('template', 'recruitment')->first();
         $jobs = JobPosting::query()->published()->open()->latest('published_at')->paginate(12);
+
+        $seoTitle = $page?->meta_title ?: 'Tuyển dụng Môi Trường Bảo Châu';
+        $seoDescription = $page?->meta_description ?: 'Cơ hội nghề nghiệp trong lĩnh vực tư vấn, quan trắc và kỹ thuật môi trường.';
+
         $seo = SeoData::forPage(
-            'Tuyển dụng Môi Trường Bảo Châu',
-            'Cơ hội nghề nghiệp trong lĩnh vực tư vấn, quan trắc và kỹ thuật môi trường.',
+            $seoTitle,
+            $seoDescription,
             route('recruitment.index'),
+            [],
+            $page?->og_image ? asset($page->og_image) : null,
         );
 
-        return view('frontend.recruitment.index', compact('jobs', 'seo'));
+        return view('frontend.recruitment.index', compact('page', 'jobs', 'seo'));
     }
 
     public function show(string $slug): View

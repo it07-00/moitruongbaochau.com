@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Models\Partner;
 use App\Models\Post;
 use App\Models\PostCategory;
@@ -72,9 +73,14 @@ class HomeController extends Controller
             ->where('type', 'press')
             ->orderBy('sort_order')
             ->get();
+        $page = Page::query()->where('slug', 'trang-chu')->orWhere('template', 'home')->first();
+
+        $seoTitle = $page?->meta_title ?: 'Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu';
+        $seoDescription = $page?->meta_description ?: 'Tư vấn môi trường, giấy phép môi trường, quan trắc, kiểm kê khí nhà kính và giải pháp xử lý môi trường cho doanh nghiệp.';
+
         $seo = SeoData::forPage(
-            'Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu',
-            'Tư vấn môi trường, giấy phép môi trường, quan trắc, kiểm kê khí nhà kính và giải pháp xử lý môi trường cho doanh nghiệp.',
+            $seoTitle,
+            $seoDescription,
             route('home'),
             [[
                 '@context' => 'https://schema.org',
@@ -90,8 +96,9 @@ class HomeController extends Controller
                 'name' => 'Môi Trường Bảo Châu',
                 'url' => route('home'),
             ]],
+            $page?->og_image ? asset($page->og_image) : null,
         );
 
-        return view('frontend.home', compact('sliders', 'serviceCategories', 'services', 'projects', 'posts', 'postCategories', 'testimonials', 'partners', 'presses', 'seo'));
+        return view('frontend.home', compact('page', 'sliders', 'serviceCategories', 'services', 'projects', 'posts', 'postCategories', 'testimonials', 'partners', 'presses', 'seo'));
     }
 }

@@ -108,7 +108,7 @@
                   class="absolute w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
                 ></div>
                 <img
-                  src="{{ asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
+                  src="{{ $page?->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
                   class="relative bottom-0 lg:-bottom-6 max-w-[400px] w-full h-auto opacity-80 hover:opacity-100 drop-shadow-xl hover:scale-105 transition-all duration-500"
                   width="1024"
                   height="1024"
@@ -127,57 +127,34 @@
                       class="size-5"
                       width="24"
                       height="24"
-                      alt="{{ $websiteSettings['about_badge'] ?? 'Về chúng tôi' }}"
+                      alt="{{ $page?->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}"
                     />
                   </span>
                   <span
-                    class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent"
+                    class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                   >
-                    {{ $websiteSettings['about_badge'] ?? 'Về chúng tôi' }}
+                    {{ $page?->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}
                   </span>
                 </div>
-                <h2 class="font-bold leading-tight mb-6 lg:mb-8">
-                  {!! $websiteSettings['about_title'] ?? '<span class="text-primary">MÔI TRƯỜNG BẢO CHÂU</span> với sứ mệnh' !!}
+                <h2 class="font-bold leading-tight mb-6 lg:mb-8 text-3xl md:text-4xl lg:text-5xl text-gray-900">
+                  {!! $page?->title ? Str::replace(['Môi Trường Bảo Châu', 'MÔI TRƯỜNG BẢO CHÂU'], ['<span class="text-primary">Môi Trường Bảo Châu</span>', '<span class="text-primary">MÔI TRƯỜNG BẢO CHÂU</span>'], $page->title) : ($websiteSettings['about_title'] ?? '<span class="text-primary">MÔI TRƯỜNG BẢO CHÂU</span> với sứ mệnh') !!}
                 </h2>
                 <div>
-                  <div class="mt-6 lg:mt-8 p-fs-clamp-[15,17]">
-                    @if(!empty($websiteSettings['about_desc_1']))
-                      <p>{!! $websiteSettings['about_desc_1'] !!}</p>
-                    @else
-                      <p>
-                        Giải quyết bài toán tồn tại, phát triển và
-                        <span class="font-medium">tăng trưởng doanh nghiệp bền vững</span>
-                        cho tất cả các khách hàng tin tưởng và đồng hành cùng MÔI TRƯỜNG BẢO CHÂU.
-                      </p>
-                    @endif
-
-                    @if(!empty($websiteSettings['about_desc_2']))
-                      <p>{!! $websiteSettings['about_desc_2'] !!}</p>
-                    @else
-                      <p>
-                        Luôn lấy chữ <span class="font-medium">Tâm</span> để nâng
-                        chữ <span class="font-medium">Tầm</span>. Chúng tôi không
-                        ngại tốn thời gian để lắng nghe khách hàng chia sẻ và cũng
-                        không ngại đưa ra phương án giải quyết phù hợp cho khách hàng.
-                      </p>
-                    @endif
-
-                    @if(!empty($websiteSettings['about_desc_3']))
-                      <p>{!! $websiteSettings['about_desc_3'] !!}</p>
-                    @else
-                      <p>
-                        Đồng hành cùng
-                        <span class="text-primary font-medium">MÔI TRƯỜNG BẢO CHÂU</span>
-                        chắc chắn bạn sẽ nhận được sự phục vụ
-                        <span class="font-medium">nhiệt tình và tận tâm</span> của
-                        toàn đội ngũ được đào tạo trong một môi trường phù hợp văn hóa doanh nghiệp của chúng tôi.
-                      </p>
-                    @endif
+                  <div class="mt-6 lg:mt-8 p-fs-clamp-[15,17] space-y-4 text-gray-600 leading-relaxed">
+                    <p>
+                      {!! $page?->metadata['about_desc_1'] ?? ($websiteSettings['about_desc_1'] ?? 'Giải quyết bài toán tồn tại, phát triển và <span class="font-medium">tăng trưởng doanh nghiệp bền vững</span> cho tất cả các khách hàng tin tưởng và đồng hành cùng MÔI TRƯỜNG BẢO CHÂU.') !!}
+                    </p>
+                    <p>
+                      {!! $page?->metadata['about_desc_2'] ?? ($websiteSettings['about_desc_2'] ?? 'Luôn lấy chữ <span class="font-medium">Tâm</span> để nâng chữ <span class="font-medium">Tầm</span>. Chúng tôi không ngại tốn thời gian để lắng nghe khách hàng chia sẻ và cũng không ngại đưa ra phương án giải quyết phù hợp cho khách hàng.') !!}
+                    </p>
+                    <p>
+                      {!! $page?->metadata['about_desc_3'] ?? ($websiteSettings['about_desc_3'] ?? 'Đồng hành cùng <span class="text-primary font-medium">MÔI TRƯỜNG BẢO CHÂU</span> chắc chắn bạn sẽ nhận được sự phục vụ <span class="font-medium">nhiệt tình và tận tâm</span> của toàn đội ngũ được đào tạo trong một môi trường phù hợp văn hóa doanh nghiệp của chúng tôi.') !!}
+                    </p>
                   </div>
                 </div>
                 <a
                   class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 mt-6 lg:mt-10"
-                  href="{{ $websiteSettings['about_link'] ?? route('about') }}"
+                  href="{{ $page?->metadata['about_link'] ?? ($websiteSettings['about_link'] ?? route('about')) }}"
                   title="Xem thêm"
                   >Xem thêm<svg
                     class="size-4"
@@ -203,78 +180,78 @@
                 data-duration="1500"
               >
                 <div
-                  class="card-item relative flex flex-col glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-20"
+                  class="card-item relative flex flex-col glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-20 shadow-sm hover:shadow-lg transition-all"
                 >
                   <span
                     class="relative flex p-fs-clamp-[52,72] font-bold text-primary/90 leading-[1.3] group-hover:text-primary group-focus:text-primary"
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="{{ $websiteSettings['stat_1_number'] ?? '7' }}"
+                      data-counter="{{ $page?->metadata['stat_1_number'] ?? ($websiteSettings['stat_1_number'] ?? '7') }}"
                     >
-                      {{ $websiteSettings['stat_1_number'] ?? '7' }}
+                      {{ $page?->metadata['stat_1_number'] ?? ($websiteSettings['stat_1_number'] ?? '7') }}
                     </span>
-                    {{ $websiteSettings['stat_1_suffix'] ?? '+' }}
+                    {{ $page?->metadata['stat_1_suffix'] ?? ($websiteSettings['stat_1_suffix'] ?? '+') }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    {{ $websiteSettings['stat_1_title'] ?? 'Năm kinh nghiệm' }}
+                    {{ $page?->metadata['stat_1_title'] ?? ($websiteSettings['stat_1_title'] ?? 'Năm kinh nghiệm') }}
                   </p>
                   <p
-                    class="leading-relaxed group-hover:text-black group-focus:text-black"
+                    class="leading-relaxed text-sm text-gray-600 group-hover:text-black group-focus:text-black"
                   >
-                    {!! $websiteSettings['stat_1_desc'] ?? 'Chúng tôi luôn tự tin để tư vấn và đưa ra giải pháp phù hợp nhằm giải quyết tất cả các vấn đề khó khăn của doanh nghiệp về Giấy phép Môi trường, Báo cáo ĐTM, Khí nhà kính ESG và Xử lý Nước thải.' !!}
+                    {!! $page?->metadata['stat_1_desc'] ?? ($websiteSettings['stat_1_desc'] ?? 'Chúng tôi luôn tự tin để tư vấn và đưa ra giải pháp phù hợp nhằm giải quyết tất cả các vấn đề khó khăn của doanh nghiệp về Giấy phép Môi trường, Báo cáo ĐTM, Khí nhà kính ESG và Xử lý Nước thải.') !!}
                   </p>
                 </div>
                 <div
-                  class="card-item relative glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-10"
+                  class="card-item relative glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-10 shadow-sm hover:shadow-lg transition-all"
                 >
                   <span
                     class="relative flex p-fs-clamp-[52,72] font-bold text-primary/90 leading-[1.3] group-hover:text-primary group-focus:text-primary"
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="{{ $websiteSettings['stat_2_number'] ?? '500' }}"
+                      data-counter="{{ $page?->metadata['stat_2_number'] ?? ($websiteSettings['stat_2_number'] ?? '500') }}"
                     >
-                      {{ $websiteSettings['stat_2_number'] ?? '500' }}
+                      {{ $page?->metadata['stat_2_number'] ?? ($websiteSettings['stat_2_number'] ?? '500') }}
                     </span>
-                    {{ $websiteSettings['stat_2_suffix'] ?? '+' }}
+                    {{ $page?->metadata['stat_2_suffix'] ?? ($websiteSettings['stat_2_suffix'] ?? '+') }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    {{ $websiteSettings['stat_2_title'] ?? 'Dự án đã hoàn thành' }}
+                    {{ $page?->metadata['stat_2_title'] ?? ($websiteSettings['stat_2_title'] ?? 'Dự án đã hoàn thành') }}
                   </p>
                   <p
-                    class="leading-relaxed group-hover:text-black group-focus:text-black"
+                    class="leading-relaxed text-sm text-gray-600 group-hover:text-black group-focus:text-black"
                   >
-                    {!! $websiteSettings['stat_2_desc'] ?? 'Hơn 500+ hồ sơ pháp lý, đề án và công trình xử lý môi trường được nghiệm thu đúng hạn, đảm bảo 100% tuân thủ quy định pháp luật BVMT hiện hành.' !!}
+                    {!! $page?->metadata['stat_2_desc'] ?? ($websiteSettings['stat_2_desc'] ?? 'Hơn 500+ hồ sơ pháp lý, đề án và công trình xử lý môi trường được nghiệm thu đúng hạn, đảm bảo 100% tuân thủ quy định pháp luật BVMT hiện hành.') !!}
                   </p>
                 </div>
                 <div
-                  class="card-item relative glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-0"
+                  class="card-item relative glass-effect group focus:outline-none border border-black/14 bg-white/90 hover:bg-white focus:bg-white rounded-3xl p-6 lg:p-8 lg:translate-y-0 shadow-sm hover:shadow-lg transition-all"
                 >
                   <span
                     class="relative flex p-fs-clamp-[52,72] font-bold text-primary/90 leading-[1.3] group-hover:text-primary group-focus:text-primary"
                   >
                     <span
                       class="counter text-left w-fit inline-block tracking-tight"
-                      data-counter="{{ $websiteSettings['stat_3_number'] ?? '30' }}"
+                      data-counter="{{ $page?->metadata['stat_3_number'] ?? ($websiteSettings['stat_3_number'] ?? '30') }}"
                     >
-                      {{ $websiteSettings['stat_3_number'] ?? '30' }}
+                      {{ $page?->metadata['stat_3_number'] ?? ($websiteSettings['stat_3_number'] ?? '30') }}
                     </span>
-                    {{ $websiteSettings['stat_3_suffix'] ?? '+' }}
+                    {{ $page?->metadata['stat_3_suffix'] ?? ($websiteSettings['stat_3_suffix'] ?? '+') }}
                   </span>
                   <p
                     class="mt-2 mb-3 h6 font-semibold text-black/90 c-hover group-hover:text-black group-focus:text-black"
                   >
-                    {{ $websiteSettings['stat_3_title'] ?? 'Chuyên gia & Kỹ sư' }}
+                    {{ $page?->metadata['stat_3_title'] ?? ($websiteSettings['stat_3_title'] ?? 'Chuyên gia & Kỹ sư') }}
                   </p>
                   <p
-                    class="leading-relaxed group-hover:text-black group-focus:text-black"
+                    class="leading-relaxed text-sm text-gray-600 group-hover:text-black group-focus:text-black"
                   >
-                    {!! $websiteSettings['stat_3_desc'] ?? 'Đội ngũ chuyên gia, kỹ sư công nghệ môi trường giàu kinh nghiệm, <i>tận tâm</i>, <i>nhiệt huyết</i> và luôn đặt uy tín, trách nhiệm lên hàng đầu.' !!}
+                    {!! $page?->metadata['stat_3_desc'] ?? ($websiteSettings['stat_3_desc'] ?? 'Đội ngũ chuyên gia, kỹ sư công nghệ môi trường giàu kinh nghiệm, tận tâm, nhiệt huyết và luôn đặt uy tín, trách nhiệm lên hàng đầu.') !!}
                   </p>
                 </div>
               </div>
