@@ -474,19 +474,19 @@
                   </p>
 
                   @if(session('success'))
-                  <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium leading-relaxed">
+                  <div class="contact-alert-success mb-6 p-4 rounded-2xl text-sm font-medium leading-relaxed">
                     <div class="flex items-start gap-2.5">
                       <svg class="size-5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
                       </svg>
-                      <span>{{ session('success') }}</span>
+                      <span class="font-bold text-[#064e3b]">{{ session('success') }}</span>
                     </div>
                   </div>
                   @endif
 
                   @if($errors->any())
-                  <div class="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-sm font-medium">
-                    <ul class="space-y-1 list-disc list-inside">
+                  <div class="contact-alert-danger mb-6 p-4 rounded-2xl text-sm font-medium">
+                    <ul class="space-y-1 list-disc list-inside text-[#7f1d1d] font-bold">
                       @foreach($errors->all() as $error)
                       <li>{{ $error }}</li>
                       @endforeach
@@ -652,10 +652,9 @@
                       Hotline Tuyển Dụng (Ms. San San)
                     </p>
                     <a
-                      href="tel:0915549148"
+                      href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['phone'] ?? ($websiteSettings['company_phone'] ?? '0915549148')) }}"
                       class="text-lg sm:text-xl font-extrabold text-gray-900 hover:text-primary transition-colors"
-                      >0915 549 148</a
-                    >
+                    >{{ $websiteSettings['phone'] ?? ($websiteSettings['company_phone'] ?? '0915 549 148') }}</a>
                   </div>
                 </div>
 

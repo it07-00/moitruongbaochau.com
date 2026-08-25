@@ -238,22 +238,6 @@
                     tâm vận hành dài lâu.
                   </p>
                 </div>
-
-                <div
-                  class="pt-5 mt-6 border-t border-gray-100/90 flex items-center justify-between flex-wrap gap-2"
-                >
-                  <p
-                    class="text-[13.5px] font-bold text-gray-600 uppercase tracking-wide"
-                  >
-                    HOTLINE:
-                  </p>
-                  <a
-                    href="tel:0915549148"
-                    class="text-[19px] font-black text-black hover:text-primary hover:underline transition-colors"
-                    style="color: #000000; font-weight: 800; font-size: 19px"
-                    >0915 549 148</a
-                  >
-                </div>
               </div>
 
               <!-- Card 2: Kiểm kê Khí nhà kính – ESG – CBAM -->
@@ -309,22 +293,6 @@
                     (ISO 14064), báo cáo CBAM và lộ trình giảm phát thải giúp
                     thương hiệu nâng cao vị thế và mở rộng thị trường.
                   </p>
-                </div>
-
-                <div
-                  class="pt-5 mt-6 border-t border-gray-100/90 flex items-center justify-between flex-wrap gap-2"
-                >
-                  <p
-                    class="text-[13.5px] font-bold text-gray-600 uppercase tracking-wide"
-                  >
-                    HOTLINE:
-                  </p>
-                  <a
-                    href="tel:0915219148"
-                    class="text-[19px] font-black text-black hover:text-primary hover:underline transition-colors"
-                    style="color: #000000; font-weight: 800; font-size: 19px"
-                    >0915 219 148</a
-                  >
                 </div>
               </div>
 
@@ -382,22 +350,6 @@
                     ổn định, an toàn và tối ưu hiệu suất.
                   </p>
                 </div>
-
-                <div
-                  class="pt-5 mt-6 border-t border-gray-100/90 flex items-center justify-between flex-wrap gap-2"
-                >
-                  <p
-                    class="text-[13.5px] font-bold text-gray-600 uppercase tracking-wide"
-                  >
-                    HOTLINE:
-                  </p>
-                  <a
-                    href="tel:0942241148"
-                    class="text-[19px] font-black text-black hover:text-primary hover:underline transition-colors"
-                    style="color: #000000; font-weight: 800; font-size: 19px"
-                    >094 224 1148</a
-                  >
-                </div>
               </div>
             </div>
           </div>
@@ -417,19 +369,19 @@
                     class="size-5"
                     width="24"
                     height="24"
-                    alt="TRỤ SỞ & VĂN PHÒNG"
+                    alt="{{ $websiteSettings['office_badge'] ?? 'TRỤ SỞ & VĂN PHÒNG' }}"
                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
                 >
-                  TRỤ SỞ &amp; VĂN PHÒNG
+                  {{ $websiteSettings['office_badge'] ?? 'TRỤ SỞ & VĂN PHÒNG' }}
                 </span>
               </div>
               <h2
                 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight"
               >
-                Hệ thống văn phòng &amp; Bản đồ chỉ đường
+                {{ $websiteSettings['office_title'] ?? 'Hệ thống văn phòng & Bản đồ chỉ đường' }}
               </h2>
             </div>
 
@@ -448,7 +400,7 @@
                     >
                       <img
                         src="{{ asset("assets/images/logo-leave-png-min.png") }}"
-                        alt="Môi Trường Bảo Châu"
+                        alt="{{ $websiteSettings['company_name'] ?? 'Môi Trường Bảo Châu' }}"
                         width="64"
                         height="64"
                         class="size-14 sm:size-16 object-contain shrink-0"
@@ -461,11 +413,9 @@
                         <h3
                           class="text-base sm:text-lg font-bold text-[#064e3b] uppercase leading-tight tracking-tight mt-0.5"
                         >
-                          Môi Trường Bảo Châu
+                          {{ $websiteSettings['company_short_name'] ?? ($websiteSettings['company_name'] ?? 'Môi Trường Bảo Châu') }}
                         </h3>
-                        <span class="text-xs text-gray-500 font-medium mt-0.5"
-                          >GPĐKKD / MST: 0317615845</span
-                        >
+                        <span class="text-xs text-gray-500 font-medium mt-0.5">GPĐKKD / MST: {{ $websiteSettings['tax_id'] ?? ($websiteSettings['company_tax_id'] ?? '0317615845') }}</span>
                       </div>
                     </div>
 
@@ -508,8 +458,7 @@
                           <p
                             class="text-[15px] sm:text-[16px] font-medium text-gray-800 leading-relaxed"
                           >
-                            180/40 Nguyễn Hữu Cảnh, Phường Thạnh Mỹ Tây, TP. Hồ
-                            Chí Minh
+                            {{ $websiteSettings['address'] ?? ($websiteSettings['company_address'] ?? '180/40 Nguyễn Hữu Cảnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh') }}
                           </p>
                         </div>
                       </div>
@@ -545,16 +494,14 @@
                             class="text-xl sm:text-2xl font-extrabold text-gray-900 flex flex-wrap gap-2 items-center"
                           >
                             <a
-                              href="tel:0915549148"
+                              href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['phone'] ?? ($websiteSettings['company_phone'] ?? '0915549148')) }}"
                               class="text-primary hover:underline"
-                              >0915 549 148</a
-                            >
+                            >{{ $websiteSettings['phone'] ?? ($websiteSettings['company_phone'] ?? '0915 549 148') }}</a>
                             <span class="text-gray-300 font-normal">|</span>
                             <a
-                              href="tel:0915219148"
+                              href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['phone_2'] ?? ($websiteSettings['company_phone_2'] ?? '0915219148')) }}"
                               class="text-primary hover:underline"
-                              >0915 219 148</a
-                            >
+                            >{{ $websiteSettings['phone_2'] ?? ($websiteSettings['company_phone_2'] ?? '0915 219 148') }}</a>
                           </p>
                         </div>
                       </div>
@@ -590,10 +537,9 @@
                             class="text-[15px] sm:text-[16px] font-bold text-gray-800"
                           >
                             <a
-                              href="mailto:info@baochauenvir.com"
+                              href="mailto:{{ $websiteSettings['email'] ?? ($websiteSettings['company_email'] ?? 'info@baochauenvir.com') }}"
                               class="hover:text-primary transition-colors"
-                              >info@baochauenvir.com</a
-                            >
+                            >{{ $websiteSettings['email'] ?? ($websiteSettings['company_email'] ?? 'info@baochauenvir.com') }}</a>
                           </p>
                         </div>
                       </div>
@@ -628,8 +574,7 @@
                           <p
                             class="text-[15px] sm:text-[16px] font-medium text-gray-800 leading-relaxed"
                           >
-                            Thứ 2 - Thứ 7: 08:00 - 17:00 (Hỗ trợ tư vấn kỹ thuật
-                            24/7)
+                            {{ $websiteSettings['working_hours'] ?? ($websiteSettings['company_working_hours'] ?? 'Thứ 2 - Thứ 7: 08:00 - 17:00 (Hỗ trợ tư vấn kỹ thuật 24/7)') }}
                           </p>
                         </div>
                       </div>
@@ -641,7 +586,7 @@
                     class="pt-6 mt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3"
                   >
                     <a
-                      href="https://www.google.com/maps/dir/?api=1&destination=10.7940334,106.7188971"
+                      href="{{ $websiteSettings['google_maps_url'] ?? ($websiteSettings['company_google_maps_url'] ?? 'https://www.google.com/maps/dir/?api=1&destination=10.7940334,106.7188971') }}"
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       class="flex-1 btn btn-secondary-2 py-3 px-4 rounded-2xl text-center text-sm font-bold flex items-center justify-center gap-2 shadow-sm"
@@ -662,7 +607,7 @@
                       <span>Chỉ đường trên Google Maps</span>
                     </a>
                     <a
-                      href="https://zalo.me/0915549148"
+                      href="{{ filled($websiteSettings['zalo'] ?? ($websiteSettings['company_zalo'] ?? null)) ? (str_starts_with($websiteSettings['zalo'] ?? $websiteSettings['company_zalo'], 'http') ? ($websiteSettings['zalo'] ?? $websiteSettings['company_zalo']) : 'https://zalo.me/' . preg_replace('/[^0-9]/', '', $websiteSettings['zalo'] ?? $websiteSettings['company_zalo'])) : 'https://zalo.me/0915549148' }}"
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       class="flex-1 btn btn-primary-1 py-3 px-4 rounded-2xl text-center text-sm font-bold text-white flex items-center justify-center gap-2 shadow-md shadow-primary/25"
@@ -679,8 +624,8 @@
                   class="rounded-3xl overflow-hidden shadow-xl border border-gray-200 bg-white relative w-full h-[550px] min-h-[550px] flex-1"
                 >
                   <iframe
-                    title="Bản đồ vị trí CÔNG TY TNHH DỊCH VỤ VÀ KỸ THUẬT MÔI TRƯỜNG BẢO CHÂU"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.6196925392598!2d106.71760829835205!3d10.794033399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175298e1a0f4393%3A0x55592287d981db47!2zQ8OUTkcgVFkgVE5ISCBE4buKQ0ggVuG7pCBWw4AgS-G7uCBUSFXhuqxUIE3DlEkgVFLGr-G7nE5HIELhuqJPIENIw4JV!5e0!3m2!1svi!2s!4v1714000000000!5m2!1svi!2s"
+                    title="Bản đồ vị trí {{ $websiteSettings['company_name'] ?? 'CÔNG TY TNHH DỊCH VỤ VÀ KỸ THUẬT MÔI TRƯỜNG BẢO CHÂU' }}"
+                    src="{{ $websiteSettings['google_maps_iframe'] ?? ($websiteSettings['company_google_maps_iframe'] ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.6196925392598!2d106.71760829835205!3d10.794033399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175298e1a0f4393%3A0x55592287d981db47!2zQ8OUTkcgVFkgVE5ISCBE4buKQ0ggVuG7pCBWw4AgS-G7uCBUSFXhuqxUIE3DlEkgVFLGr-G7nE5HIELhuqJPIENIw4JV!5e0!3m2!1svi!2s!4v1714000000000!5m2!1svi!2s') }}"
                     width="100%"
                     height="550"
                     style="
