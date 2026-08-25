@@ -23,6 +23,7 @@ Route::get('/tin-tuc/{slug}', [PostController::class, 'show'])->name('posts.show
 Route::get('/du-an', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/du-an/{slug}', [ProjectController::class, 'show'])->name('projects.show');
 Route::get('/tuyen-dung', [RecruitmentController::class, 'index'])->name('recruitment.index');
+Route::post('/tuyen-dung/ung-tuyen', [RecruitmentController::class, 'applyGeneral'])->middleware('throttle:contact-form')->name('recruitment.apply.general');
 Route::get('/tuyen-dung/{slug}', [RecruitmentController::class, 'show'])->name('recruitment.show');
 Route::post('/tuyen-dung/{slug}/ung-tuyen', [RecruitmentController::class, 'apply'])->middleware('throttle:contact-form')->name('recruitment.apply');
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact.index');

@@ -56,4 +56,37 @@ class RecruitmentController extends Controller
             ->to(route('recruitment.show', $job->slug).'#form-ung-tuyen')
             ->with('success', 'Cảm ơn bạn đã nộp hồ sơ ứng tuyển vị trí '.$job->title.'! Bộ phận tuyển dụng Môi Trường Bảo Châu sẽ xem xét và phản hồi trong thời gian sớm nhất.');
     }
+
+    public function applyGeneral(StoreJobApplicationRequest $request): RedirectResponse
+    {
+        $jobIdentifier = $request->validated('job_posting_id');
+        $job = null;
+
+        if ($jobIdentifier && $jobIdentifier !== 'other' && $jobIdentifier !== 'khac') {
+            $job = is_numeric($jobIdentifier)
+                ? JobPosting::query()->find($jobIdentifier)
+                : JobPosting::query()->where('slug', $jobIdentifier)->first();
+        }
+
+        $jobTitle = $job?->title ?? ($request->validated('custom_position') ?? 'Ứng tuyển tự do / Vị trí khác');
+
+        $cvPath = $request->file('cv_file')->store('resumes', 'public');
+
+        JobApplication::query()->create([
+            'job_posting_id' => $job?->id,
+            'job_title' => $jobTitle,
+            'fullname' => $request->validated('fullname'),
+            'phone' => $request->validated('contact_phone'),
+            'email' => $request->validated('contact_email'),
+            'message' => $request->validated('message'),
+            'cv_path' => $cvPath,
+            'status' => 'new',
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
+        return redirect()
+            ->to(route('recruitment.index').'#form-ung-tuyen')
+            ->with('success', 'Cảm ơn bạn đã nộp hồ sơ ứng tuyển vị trí '.$jobTitle.'! Bộ phận tuyển dụng Môi Trường Bảo Châu sẽ xem xét và phản hồi trong thời gian sớm nhất.');
+    }
 }

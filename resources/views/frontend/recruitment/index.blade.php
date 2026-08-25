@@ -587,16 +587,45 @@
                     Điền thông tin bên dưới, chuyên viên nhân sự Bảo Châu sẽ phản hồi bạn trong vòng 24 giờ.
                   </p>
 
-                  <form id="recruitment-apply-form" class="space-y-4" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã ứng tuyển! Phòng Nhân sự Môi Trường Bảo Châu sẽ liên hệ bạn sớm nhất.'); this.reset();">
+                  @if(session('success'))
+                  <div class="contact-alert-success mb-6 p-4 rounded-2xl text-sm font-medium leading-relaxed">
+                    <div class="flex items-start gap-2.5">
+                      <svg class="size-5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                      </svg>
+                      <span class="font-bold text-[#064e3b]">{{ session('success') }}</span>
+                    </div>
+                  </div>
+                  @endif
+
+                  @if($errors->any())
+                  <div class="contact-alert-danger mb-6 p-4 rounded-2xl text-sm font-medium">
+                    <ul class="space-y-1 list-disc list-inside text-[#7f1d1d] font-bold">
+                      @foreach($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  @endif
+
+                  <form
+                    id="recruitment-apply-form"
+                    action="{{ route('recruitment.apply.general') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="space-y-4"
+                  >
+                    @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Họ và tên *</label>
                         <input
                           required
                           name="fullname"
+                          value="{{ old('fullname') }}"
                           type="text"
                           placeholder="Nguyễn Văn A"
-                          class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+                          class="w-full bg-gray-50/80 border @error('fullname') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                         />
                       </div>
                       <div>
@@ -604,9 +633,10 @@
                         <input
                           required
                           name="phone"
+                          value="{{ old('phone') }}"
                           type="tel"
                           placeholder="0915 549 148"
-                          class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+                          class="w-full bg-gray-50/80 border @error('contact_phone') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                         />
                       </div>
                     </div>
@@ -617,25 +647,24 @@
                         <input
                           required
                           name="email"
+                          value="{{ old('email') }}"
                           type="email"
                           placeholder="email@example.com"
-                          class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
+                          class="w-full bg-gray-50/80 border @error('contact_email') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                         />
                       </div>
                       <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Vị trí ứng tuyển *</label>
                         <select
                           required
-                          name="position"
+                          name="job_posting_id"
                           class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
                         >
-                          <option value="">-- Chọn vị trí --</option>
-                          <option value="dtm-gpmt">Kỹ Sư Lập Báo Cáo ĐTM &amp; Giấy Phép MT</option>
-                          <option value="esg-khi-nha-kinh">Chuyên Viên Kiểm Kê Khí Nhà Kính &amp; ESG</option>
-                          <option value="ky-su-thiet-ke-van-hanh">Kỹ Sư Thiết Kế &amp; Vận Hành Nước Thải</option>
-                          <option value="kinh-doanh-b2b">Chuyên Viên Kinh Doanh Dịch Vụ Môi Trường</option>
-                          <option value="thuc-tap-sinh">Thực Tập Sinh Kỹ Thuật Môi Trường</option>
-                          <option value="khac">Vị trí khác / Ứng tuyển tự do</option>
+                          <option value="">-- Chọn vị trí ứng tuyển --</option>
+                          @foreach($jobs as $openJob)
+                            <option value="{{ $openJob->id }}" @selected(old('job_posting_id') == $openJob->id)>{{ $openJob->title }}</option>
+                          @endforeach
+                          <option value="other" @selected(old('job_posting_id') === 'other')>Vị trí khác / Ứng tuyển tự do</option>
                         </select>
                       </div>
                     </div>
@@ -645,7 +674,7 @@
                       <div class="relative flex items-center justify-center w-full">
                         <label
                           for="cv_file"
-                          class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 hover:border-primary rounded-2xl cursor-pointer bg-gray-50/60 hover:bg-emerald-50/30 transition-all group"
+                          class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed @error('cv_file') border-red-400 @else border-gray-300 @enderror hover:border-primary rounded-2xl cursor-pointer bg-gray-50/60 hover:bg-emerald-50/30 transition-all group"
                         >
                           <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
                             <svg
@@ -687,7 +716,7 @@
                         name="message"
                         placeholder="Tóm tắt kinh nghiệm làm việc, kỹ năng chuyên môn hoặc lời nhắn gửi đến nhà tuyển dụng..."
                         class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl p-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      ></textarea>
+                      >{{ old('message') }}</textarea>
                     </div>
 
                     <button

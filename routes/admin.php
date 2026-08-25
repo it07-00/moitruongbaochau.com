@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContentResourceController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\JobApplicationController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\RedirectController;
@@ -48,6 +49,11 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
         Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
         Route::patch('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
+
+        Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
+        Route::get('/job-applications/{jobApplication}', [JobApplicationController::class, 'show'])->name('job-applications.show');
+        Route::patch('/job-applications/{jobApplication}', [JobApplicationController::class, 'update'])->name('job-applications.update');
+        Route::delete('/job-applications/{jobApplication}', [JobApplicationController::class, 'destroy'])->name('job-applications.destroy');
 
         Route::get('/categories/{type}', [CategoryController::class, 'index'])
             ->where('type', 'services|posts')->name('categories.index');
