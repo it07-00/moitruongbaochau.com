@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\Slider;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
 
@@ -14,6 +15,10 @@ class HomeController extends Controller
 {
     public function index(): View
     {
+        $sliders = Slider::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
         $services = Service::query()
             ->published()
             ->where('is_featured', true)
@@ -63,6 +68,6 @@ class HomeController extends Controller
             ]],
         );
 
-        return view('frontend.home', compact('services', 'projects', 'posts', 'postCategories', 'seo'));
+        return view('frontend.home', compact('sliders', 'services', 'projects', 'posts', 'postCategories', 'seo'));
     }
 }

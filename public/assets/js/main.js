@@ -738,16 +738,20 @@ function initSmoothScroll() {
    12. HERO BANNER SLIDER (Swiper.js)
    ========================================================================== */
 function initHeroSlider() {
-  if (!document.getElementById('hero-swiper')) return;
+  const heroEl = document.getElementById('hero-swiper');
+  if (!heroEl) return;
   new Swiper('#hero-swiper', {
     loop: true,
     speed: 800,
-    autoplay: { delay: 4000, disableOnInteraction: false },
+    autoplay: { delay: 4500, disableOnInteraction: false },
     effect: 'fade',
     fadeEffect: { crossFade: true },
-    navigation: true,
+    navigation: {
+      nextEl: '#hero-swiper .swiper-button-next',
+      prevEl: '#hero-swiper .swiper-button-prev',
+    },
     pagination: {
-      el: '.swiper-hero-banner .swiper-pagination',
+      el: '#hero-swiper .swiper-pagination',
       clickable: true,
     },
   });

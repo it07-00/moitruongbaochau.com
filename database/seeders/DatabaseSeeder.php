@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call(WebsiteSeeder::class);
+        $this->call([
+            WebsiteSeeder::class,
+            SliderSeeder::class,
+        ]);
     }
 }

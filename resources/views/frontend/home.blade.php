@@ -29,10 +29,48 @@
           class="section section-hero relative overflow-hidden"
           style="height: clamp(380px, 55vw, 700px);"
         >
-          <!-- Swiper Hero Slider -->
+          <!-- Swiper Hero Slider (Load động từ Database) -->
           <div class="swiper swiper-hero-banner w-full h-full" id="hero-swiper">
             <div class="swiper-wrapper">
-              <!-- Slide 1 -->
+              @forelse ($sliders as $index => $slide)
+              @php
+                $imgSrc = str_starts_with($slide->image, 'http')
+                    ? $slide->image
+                    : (str_starts_with($slide->image, 'uploads/')
+                        ? asset('storage/' . $slide->image)
+                        : (str_starts_with($slide->image, 'assets/')
+                            ? asset($slide->image)
+                            : asset('assets/images/' . $slide->image)));
+                $slideTitle = $slide->title ?: 'Môi Trường Bảo Châu';
+              @endphp
+              <div class="swiper-slide">
+                @if ($slide->link)
+                <a href="{{ $slide->link }}" {!! $slide->open_in_new_tab ? 'target="_blank" rel="noopener noreferrer"' : '' !!} class="block w-full h-full" title="{{ $slideTitle }}">
+                  <img
+                    src="{{ $imgSrc }}"
+                    class="w-full h-full object-cover object-center"
+                    width="1536"
+                    height="568"
+                    alt="{{ $slideTitle }}"
+                    loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                    {!! $index === 0 ? 'fetchpriority="high"' : '' !!}
+                    decoding="async"
+                  />
+                </a>
+                @else
+                <img
+                  src="{{ $imgSrc }}"
+                  class="w-full h-full object-cover object-center"
+                  width="1536"
+                  height="568"
+                  alt="{{ $slideTitle }}"
+                  loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
+                  {!! $index === 0 ? 'fetchpriority="high"' : '' !!}
+                  decoding="async"
+                />
+                @endif
+              </div>
+              @empty
               <div class="swiper-slide">
                 <img
                   src="{{ asset("assets/images/slide-1.png") }}"
@@ -45,42 +83,7 @@
                   decoding="async"
                 />
               </div>
-              <!-- Slide 2 -->
-              <div class="swiper-slide">
-                <img
-                  src="{{ asset("assets/images/slide-2.jpg") }}"
-                  class="w-full h-full object-cover object-center"
-                  width="1024"
-                  height="379"
-                  alt="Môi Trường Bảo Châu - Tư vấn hồ sơ môi trường"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <!-- Slide 3 -->
-              <div class="swiper-slide">
-                <img
-                  src="{{ asset("assets/images/slide-3.png") }}"
-                  class="w-full h-full object-cover object-center"
-                  width="1536"
-                  height="568"
-                  alt="Thông báo nghỉ Tết - Môi Trường Bảo Châu"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <!-- Slide 4 -->
-              <div class="swiper-slide">
-                <img
-                  src="{{ asset("assets/images/slide-4.png") }}"
-                  class="w-full h-full object-cover object-center"
-                  width="1024"
-                  height="379"
-                  alt="Dịch vụ Kiểm kê Khí nhà kính - Môi Trường Bảo Châu"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+              @endforelse
             </div>
 
             <!-- Prev / Next arrows (Swiper standard classes) -->
