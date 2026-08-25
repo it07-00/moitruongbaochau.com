@@ -32,6 +32,20 @@ class StoreContactRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Vui lòng nhập họ và tên của bạn.',
+            'name.max' => 'Họ và tên không được vượt quá 120 ký tự.',
+            'email.email' => 'Địa chỉ email không đúng định dạng.',
+            'phone.required' => 'Vui lòng nhập số điện thoại liên hệ.',
+            'phone.regex' => 'Số điện thoại không hợp lệ (ví dụ: 0915 549 148).',
+            'message.required' => 'Vui lòng nhập nội dung cần tư vấn.',
+            'message.min' => 'Nội dung yêu cầu tư vấn tối thiểu 10 ký tự.',
+            'website.max' => 'Yêu cầu không hợp lệ (Spam detected).',
+        ];
+    }
+
     protected function prepareForValidation(): void
     {
         $this->merge([

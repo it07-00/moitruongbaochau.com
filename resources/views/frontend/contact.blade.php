@@ -50,38 +50,72 @@
               </h1>
             </div>
 
-            <!-- FORM GỬI THÔNG TIN LIÊN HỆ TƯ VẤN (Theo đúng mẫu thiết kế) -->
+            <!-- FLASH SUCCESS & ERROR MESSAGES -->
+            @if (session('success'))
+              <div class="max-w-5xl mx-auto mb-6 p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 shadow-xs">
+                <svg class="size-6 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <p class="font-medium text-emerald-900">{{ session('success') }}</p>
+              </div>
+            @endif
+
+            @if ($errors->any())
+              <div class="max-w-5xl mx-auto mb-6 p-5 rounded-2xl bg-red-50 border border-red-200 text-red-800 shadow-xs">
+                <p class="font-bold text-red-900 mb-2">Vui lòng kiểm tra lại thông tin:</p>
+                <ul class="list-disc pl-5 text-sm space-y-1 text-red-700">
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+              </div>
+            @endif
+
+            <!-- FORM GỬI THÔNG TIN LIÊN HỆ TƯ VẤN -->
             <div class="max-w-5xl mx-auto mb-12 lg:mb-16">
               <form
                 id="contact-consult-form"
+                action="{{ route('contact.store') }}"
+                method="POST"
                 class="space-y-4 sm:space-y-5"
-                onsubmit="handleContactSubmit(event)"
               >
+                @csrf
+
+                <!-- HONEYPOT ANTI-SPAM FIELD (Ẩn đối với người dùng thật) -->
+                <div class="hidden" aria-hidden="true" style="display:none !important;">
+                  <label for="contact-website-trap">Website</label>
+                  <input
+                    type="text"
+                    id="contact-website-trap"
+                    name="website"
+                    tabindex="-1"
+                    autocomplete="off"
+                    value=""
+                  />
+                </div>
+
                 <!-- Row 1: Họ và tên & Email -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                   <div>
-                    <label for="contact-fullname" class="sr-only"
-                      >Họ và tên</label
-                    >
+                    <label for="contact-fullname" class="sr-only">Họ và tên</label>
                     <input
                       type="text"
                       id="contact-fullname"
-                      name="fullname"
-                      required=""
+                      name="name"
+                      required
+                      value="{{ old('name') }}"
                       placeholder="Họ và tên *"
                       class="w-full bg-white border border-gray-300/80 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/15 rounded-2xl px-5 py-4 text-[16px] text-gray-800 placeholder-gray-400 transition-all shadow-xs outline-none"
                     />
                   </div>
                   <div>
-                    <label for="contact-email-field" class="sr-only"
-                      >Email</label
-                    >
+                    <label for="contact-email-field" class="sr-only">Email</label>
                     <input
                       type="email"
                       id="contact-email-field"
                       name="email"
-                      required=""
-                      placeholder="Email *"
+                      value="{{ old('email') }}"
+                      placeholder="Email (không bắt buộc)"
                       class="w-full bg-white border border-gray-300/80 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/15 rounded-2xl px-5 py-4 text-[16px] text-gray-800 placeholder-gray-400 transition-all shadow-xs outline-none"
                     />
                   </div>
@@ -90,26 +124,24 @@
                 <!-- Row 2: Số điện thoại & Chủ đề / Dịch vụ -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                   <div>
-                    <label for="contact-phone-field" class="sr-only"
-                      >Số điện thoại</label
-                    >
+                    <label for="contact-phone-field" class="sr-only">Số điện thoại</label>
                     <input
                       type="tel"
                       id="contact-phone-field"
                       name="phone"
-                      required=""
+                      required
+                      value="{{ old('phone') }}"
                       placeholder="Số điện thoại *"
                       class="w-full bg-white border border-gray-300/80 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/15 rounded-2xl px-5 py-4 text-[16px] text-gray-800 placeholder-gray-400 transition-all shadow-xs outline-none"
                     />
                   </div>
                   <div>
-                    <label for="contact-topic-field" class="sr-only"
-                      >Chủ đề</label
-                    >
+                    <label for="contact-topic-field" class="sr-only">Chủ đề</label>
                     <input
                       type="text"
                       id="contact-topic-field"
                       name="topic"
+                      value="{{ old('topic') }}"
                       placeholder="Chủ đề / Dịch vụ cần tư vấn"
                       class="w-full bg-white border border-gray-300/80 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/15 rounded-2xl px-5 py-4 text-[16px] text-gray-800 placeholder-gray-400 transition-all shadow-xs outline-none"
                     />
@@ -118,90 +150,34 @@
 
                 <!-- Row 3: Nội dung chi tiết -->
                 <div>
-                  <label for="contact-message-field" class="sr-only"
-                    >Nội dung</label
-                  >
+                  <label for="contact-message-field" class="sr-only">Nội dung</label>
                   <textarea
                     id="contact-message-field"
                     name="message"
                     rows="4"
-                    placeholder="Nội dung chi tiết yêu cầu tư vấn..."
+                    required
+                    placeholder="Nội dung chi tiết yêu cầu tư vấn (tối thiểu 10 ký tự)..."
                     class="w-full bg-white border border-gray-300/80 hover:border-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/15 rounded-2xl px-5 py-4 text-[16px] text-gray-800 placeholder-gray-400 transition-all shadow-xs outline-none resize-y"
-                  ></textarea>
+                  >{{ old('message') }}</textarea>
                 </div>
 
                 <!-- Row 4: Nút Gửi thông tin -->
-                <div
-                  class="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-                >
+                <div class="pt-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <button
                     type="submit"
                     id="btn-submit-contact"
-                    class="inline-flex items-center justify-center gap-3 font-bold text-white bg-primary hover:bg-[#e03e2f] rounded-2xl shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/50 transition-all duration-200 cursor-pointer active:scale-95 text-[17px] whitespace-nowrap shrink-0"
-                    style="
-                      white-space: nowrap;
-                      width: auto;
-                      min-width: fit-content;
-                      padding: 15px 40px;
-                      border-radius: 16px;
-                    "
+                    class="inline-flex items-center justify-center gap-3 font-bold text-white bg-primary hover:bg-[#e03e2f] rounded-2xl shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/50 transition-all duration-200 cursor-pointer active:scale-95 text-[17px] whitespace-nowrap shrink-0 px-10 py-3.5"
                   >
-                    <span style="white-space: nowrap; line-height: 1"
-                      >Gửi thông tin</span
-                    >
-                    <svg
-                      width="20"
-                      height="20"
-                      style="
-                        width: 20px;
-                        height: 20px;
-                        min-width: 20px;
-                        min-height: 20px;
-                      "
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="2.5"
-                      stroke="currentColor"
-                      class="shrink-0"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                      />
+                    <span>Gửi thông tin</span>
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="shrink-0">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                     </svg>
                   </button>
                   <p class="text-[13.5px] text-gray-500 italic">
-                    * Thông tin của bạn được bảo mật tuyệt đối theo chính sách
-                    quyền riêng tư của Bảo Châu.
+                    * Thông tin của bạn được bảo mật tuyệt đối theo chính sách quyền riêng tư của Bảo Châu.
                   </p>
                 </div>
               </form>
-
-              <!-- Form Success Message Toast (Ẩn mặc định) -->
-              <div
-                id="form-success-alert"
-                class="hidden mt-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 transition-all"
-              >
-                <svg
-                  class="size-6 text-emerald-600 flex-shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                <div class="text-[15px] font-medium">
-                  Cảm ơn bạn đã gửi yêu cầu! Chuyên viên Môi Trường Bảo Châu sẽ
-                  liên hệ phản hồi lại bạn trong vòng 15 phút.
-                </div>
-              </div>
             </div>
 
             <!-- 3 CONSULTATION CARDS -->
