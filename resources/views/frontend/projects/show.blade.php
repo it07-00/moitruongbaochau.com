@@ -4,36 +4,9 @@
 <!-- BACKGROUND SHAPES CHUẨN QUY CHUẨN AGENTS.md 1.2 -->
         
 
-        <!-- BREADCRUMBS -->
-        <div class="container px-3 mx-auto pt-6">
-          <ul
-            id="breadcrumbs"
-            class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-sm text-black"
-            aria-label="Breadcrumbs"
-          >
-            <li>
-              <a
-                class="home hover:text-primary transition-colors"
-                href="{{ route("home") }}"
-                >Trang chủ</a
-              >
-            </li>
-            <li><span class="text-gray-400">/</span></li>
-            <li>
-              <a
-                class="hover:text-primary transition-colors"
-                href="{{ route("projects.index") }}"
-                >Dự án tiêu biểu</a
-              >
-            </li>
-            <li><span class="text-gray-400">/</span></li>
-            <li class="current text-primary font-semibold truncate max-w-xs sm:max-w-md">{{ $project->title }}</li>
-          </ul>
-        </div>
-
         <!-- PROJECT DETAIL HERO HEADER -->
         <section
-          class="section relative pt-8 pb-8 lg:pt-12 lg:pb-12 overflow-hidden"
+          class="section relative pt-12 pb-8 lg:pt-16 lg:pb-12 overflow-hidden"
         >
           <div class="container px-3 mx-auto">
             <div class="max-w-4xl mx-auto text-center">

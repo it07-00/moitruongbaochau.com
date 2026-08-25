@@ -1,23 +1,6 @@
 @extends('frontend.layouts.app', ['bodyClass' => 'archive post-type-archive post-type-archive-recruitment'])
 
 @section('content')
-<!-- BREADCRUMBS -->
-        <div class="container px-3 mx-auto pt-6">
-          <ul
-            id="breadcrumbs"
-            class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-sm text-black"
-            aria-label="Breadcrumbs"
-          >
-            <li>
-              <a href="{{ route("home") }}" class="hover:text-primary transition-colors"
-                >Trang chủ</a
-              >
-            </li>
-            <li class="separator">/</li>
-            <li class="current font-bold text-primary">Tuyển dụng</li>
-          </ul>
-        </div>
-
         <!-- HERO SECTION: CƠ HỘI NGHỀ NGHIỆP -->
         <section class="section section-recruitment-hero py-8 sm:py-12 relative overflow-hidden">
           <div class="container px-3 sm:px-4 mx-auto relative z-10">
@@ -61,96 +44,6 @@
                 >
                   <span>Nộp hồ sơ ngay</span>
                 </a>
-              </div>
-            </div>
-
-            <!-- Fast Highlight Numbers -->
-            <div class="w-full relative mt-12 sm:mt-16">
-              <div
-                class="cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8"
-                data-fx-counter=""
-                data-once="false"
-                data-duration="1500"
-              >
-                <div
-                  tabindex="0"
-                  class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all text-center"
-                >
-                  <span
-                    class="relative flex justify-center p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
-                  >
-                    <span
-                      class="counter text-center w-fit inline-block tracking-tight"
-                      data-counter="10"
-                      >10</span
-                    >+
-                  </span>
-                  <p class="mt-2 mb-1 h6 font-bold text-gray-900 uppercase text-sm tracking-wider">
-                    Năm Phát Triển
-                  </p>
-                  <p class="leading-relaxed text-xs sm:text-sm text-black">
-                    Bề dày hoạt động vững chắc trong ngành tư vấn môi trường.
-                  </p>
-                </div>
-
-                <div
-                  tabindex="0"
-                  class="card-item lg:translate-y-4 relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all text-center"
-                >
-                  <span
-                    class="relative flex justify-center p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
-                  >
-                    <span
-                      class="counter text-center w-fit inline-block tracking-tight"
-                      data-counter="50"
-                      >50</span
-                    >+
-                  </span>
-                  <p class="mt-2 mb-1 h6 font-bold text-gray-900 uppercase text-sm tracking-wider">
-                    Kỹ Sư &amp; Thạc Sĩ
-                  </p>
-                  <p class="leading-relaxed text-xs sm:text-sm text-black">
-                    Đội ngũ chuyên môn cao, hỗ trợ kèm cặp tận tình.
-                  </p>
-                </div>
-
-                <div
-                  tabindex="0"
-                  class="card-item relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all text-center"
-                >
-                  <span
-                    class="relative flex justify-center p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
-                  >
-                    <span
-                      class="counter text-center w-fit inline-block tracking-tight"
-                      data-counter="500"
-                      >500</span
-                    >+
-                  </span>
-                  <p class="mt-2 mb-1 h6 font-bold text-gray-900 uppercase text-sm tracking-wider">
-                    Dự Án Doanh Nghiệp
-                  </p>
-                  <p class="leading-relaxed text-xs sm:text-sm text-black">
-                    Môi trường cọ xát thực chiến với các tập đoàn lớn.
-                  </p>
-                </div>
-
-                <div
-                  tabindex="0"
-                  class="card-item lg:translate-y-4 relative glass-effect group focus:outline-none border border-black/8 bg-white/95 hover:bg-white rounded-3xl p-6 xl:p-8 shadow-sm hover:shadow-lg transition-all text-center"
-                >
-                  <span
-                    class="relative flex justify-center p-fs-clamp-[56,40] font-bold text-primary leading-[1.3]"
-                  >
-                    Top&nbsp;<span class="counter text-center w-fit inline-block tracking-tight" data-counter="1">1</span>
-                  </span>
-                  <p class="mt-2 mb-1 h6 font-bold text-gray-900 uppercase text-sm tracking-wider">
-                    Chế Độ Đãi Ngộ
-                  </p>
-                  <p class="leading-relaxed text-xs sm:text-sm text-black">
-                    Thu nhập hấp dẫn, lộ trình thăng tiến rõ ràng.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -577,7 +470,7 @@
                 </div>
               </div>
 
-              <!-- Right Apply Form Column -->
+              <!-- Right Apply Form Column (Livewire Real-time Validation & File Upload) -->
               <div class="w-full lg:w-7/12 flex-1">
                 <div class="card-item relative glass-effect border border-black/8 bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg">
                   <h3 class="text-xl sm:text-2xl font-bold text-black mb-1">
@@ -587,151 +480,7 @@
                     Điền thông tin bên dưới, chuyên viên nhân sự Bảo Châu sẽ phản hồi bạn trong vòng 24 giờ.
                   </p>
 
-                  @if(session('success'))
-                  <div class="contact-alert-success mb-6 p-4 rounded-2xl text-sm font-medium leading-relaxed">
-                    <div class="flex items-start gap-2.5">
-                      <svg class="size-5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                      </svg>
-                      <span class="font-bold text-[#064e3b]">{{ session('success') }}</span>
-                    </div>
-                  </div>
-                  @endif
-
-                  @if($errors->any())
-                  <div class="contact-alert-danger mb-6 p-4 rounded-2xl text-sm font-medium">
-                    <ul class="space-y-1 list-disc list-inside text-[#7f1d1d] font-bold">
-                      @foreach($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
-                  @endif
-
-                  <form
-                    id="recruitment-apply-form"
-                    action="{{ route('recruitment.apply.general') }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                    class="space-y-4"
-                  >
-                    @csrf
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Họ và tên *</label>
-                        <input
-                          required
-                          name="fullname"
-                          value="{{ old('fullname') }}"
-                          type="text"
-                          placeholder="Nguyễn Văn A"
-                          class="w-full bg-gray-50/80 border @error('fullname') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Số điện thoại *</label>
-                        <input
-                          required
-                          name="phone"
-                          value="{{ old('phone') }}"
-                          type="tel"
-                          placeholder="0915 549 148"
-                          class="w-full bg-gray-50/80 border @error('contact_phone') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Email liên hệ *</label>
-                        <input
-                          required
-                          name="email"
-                          value="{{ old('email') }}"
-                          type="email"
-                          placeholder="email@example.com"
-                          class="w-full bg-gray-50/80 border @error('contact_email') border-red-500 @else border-gray-200 @enderror rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
-                        />
-                      </div>
-                      <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Vị trí ứng tuyển *</label>
-                        <select
-                          required
-                          name="job_posting_id"
-                          class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl h-12 px-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all"
-                        >
-                          <option value="">-- Chọn vị trí ứng tuyển --</option>
-                          @foreach($jobs as $openJob)
-                            <option value="{{ $openJob->id }}" @selected(old('job_posting_id') == $openJob->id)>{{ $openJob->title }}</option>
-                          @endforeach
-                          <option value="other" @selected(old('job_posting_id') === 'other')>Vị trí khác / Ứng tuyển tự do</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Tải lên file CV (PDF, DOC, DOCX - Tối đa 10MB) *</label>
-                      <div class="relative flex items-center justify-center w-full">
-                        <label
-                          for="cv_file"
-                          class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed @error('cv_file') border-red-400 @else border-gray-300 @enderror hover:border-primary rounded-2xl cursor-pointer bg-gray-50/60 hover:bg-emerald-50/30 transition-all group"
-                        >
-                          <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
-                            <svg
-                              class="w-8 h-8 mb-2 text-gray-400 group-hover:text-primary transition-colors"
-                              style="width: 32px; height: 32px; min-width: 32px; min-height: 32px;"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              stroke-width="1.8"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.5V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                              />
-                            </svg>
-                            <p class="text-sm text-gray-700 group-hover:text-black">
-                              <span class="font-bold text-primary">Nhấp để chọn file</span> hoặc kéo thả CV vào đây
-                            </p>
-                            <p id="file-chosen-text" class="text-xs text-gray-500 mt-1">Định dạng: PDF, DOC, DOCX (Dưới 10MB)</p>
-                          </div>
-                          <input
-                            id="cv_file"
-                            name="cv_file"
-                            type="file"
-                            required
-                            accept=".pdf,.doc,.docx"
-                            class="hidden"
-                            onchange="if(this.files[0]) { document.getElementById('file-chosen-text').textContent = '✓ Đã chọn file: ' + this.files[0].name; document.getElementById('file-chosen-text').className = 'text-xs text-primary font-bold mt-1'; }"
-                          />
-                        </label>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label class="block text-xs font-bold uppercase tracking-wider text-black mb-1.5">Giới thiệu ngắn / Kinh nghiệm nổi bật</label>
-                      <textarea
-                        rows="3"
-                        name="message"
-                        placeholder="Tóm tắt kinh nghiệm làm việc, kỹ năng chuyên môn hoặc lời nhắn gửi đến nhà tuyển dụng..."
-                        class="w-full bg-gray-50/80 border border-gray-200 rounded-2xl p-4 text-sm text-black focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      >{{ old('message') }}</textarea>
-                    </div>
-
-                    <button
-                      type="submit"
-                      class="btn btn-primary-1 w-full py-4 rounded-2xl font-bold text-base text-white shadow-lg shadow-primary/25 hover:shadow-primary/80 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                      </svg>
-                      <span>Nộp Hồ Sơ Ứng Tuyển Ngay</span>
-                    </button>
-                    <p class="text-[11px] text-center text-black/70">
-                      Bảo Châu cam kết bảo mật 100% thông tin cá nhân của ứng viên.
-                    </p>
-                  </form>
+                  <livewire:frontend.job-application-form />
                 </div>
               </div>
             </div>
@@ -1269,11 +1018,11 @@
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
                       <img
-                        src="{{ asset("assets/images/cropped-logo-tra-hoa-viet-1-768x427.webp") }}"
+                        src="{{ asset("assets/images/cropped-logo-inminhkhang-1-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
-                        height="427"
-                        alt="Tra Hoa Viet Logo"
+                        height="344"
+                        alt="In Minh Khang Logo"
                         decoding="async"
                         loading="lazy"
                       />

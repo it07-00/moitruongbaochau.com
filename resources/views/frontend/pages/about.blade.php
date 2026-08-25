@@ -3,29 +3,6 @@
 @section("content")
     <div id="content" class="site-content">
       <div id="primary" class="content-area">
-        <!-- BREADCRUMB & HERO -->
-        <section class="section-breadcrumb py-6 bg-gray-50/50 border-b border-gray-100">
-          <div class="container px-3 mx-auto">
-            <nav class="flex text-xs md:text-sm text-gray-500" aria-label="Breadcrumb">
-              <ol class="inline-flex items-center space-x-1 md:space-x-2">
-                <li class="inline-flex items-center">
-                  <a href="{{ route('home') }}" class="text-gray-600 hover:text-primary transition-colors">
-                    Trang chủ
-                  </a>
-                </li>
-                <li>
-                  <div class="flex items-center">
-                    <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <span class="text-primary font-medium">Giới thiệu</span>
-                  </div>
-                </li>
-              </ol>
-            </nav>
-          </div>
-        </section>
-
         <!-- ABOUT HERO SECTION -->
         <section class="section section-about py-12 lg:py-20 overflow-hidden">
           <div class="container px-3 mx-auto">

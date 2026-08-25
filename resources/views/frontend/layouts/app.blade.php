@@ -8,6 +8,7 @@
     <link rel="icon" href="{{ asset('assets/images/cropped-chuan-192x192.png') }}" sizes="192x192">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ file_exists(public_path('assets/css/style.css')) ? filemtime(public_path('assets/css/style.css')) : time() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
+    @livewireStyles
 </head>
 <body class="{{ $bodyClass ?? '' }}" itemscope itemtype="https://schema.org/WebPage">
     <x-frontend.header />
@@ -22,7 +23,39 @@
     </main>
     <x-frontend.footer />
     <x-frontend.floating-contact />
+    <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('assets/js/swiper.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}?v={{ file_exists(public_path('assets/js/main.js')) ? filemtime(public_path('assets/js/main.js')) : time() }}" defer></script>
+    @livewireScripts
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: {!! json_encode(session('success')) !!},
+                    confirmButtonColor: '#ff4d38',
+                    confirmButtonText: 'Đồng ý'
+                });
+            }
+        });
+    </script>
+    @endif
+    @if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Thông báo',
+                    text: {!! json_encode(session('error')) !!},
+                    confirmButtonColor: '#ff4d38',
+                    confirmButtonText: 'Đóng'
+                });
+            }
+        });
+    </script>
+    @endif
 </body>
 </html>

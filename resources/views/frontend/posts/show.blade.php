@@ -4,31 +4,8 @@
 <!-- 2 Background shapes chuẩn AGENTS.md 1.2 -->
         
 
-        <!-- BREADCRUMBS -->
-        <div class="container px-3 mx-auto pt-6 pb-2">
-          <ul
-            id="breadcrumbs"
-            class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-xs sm:text-sm text-black"
-            aria-label="Breadcrumbs"
-          >
-            <li>
-              <a class="home hover:text-primary font-medium text-gray-700" href="{{ route("home") }}">Trang chủ</a>
-            </li>
-            <li><span class="text-gray-400">/</span></li>
-            <li>
-              <a href="{{ route("posts.index") }}" class="hover:text-primary font-medium text-gray-700"
-                >Kiến Thức &amp; Tin Tức</a
-              >
-            </li>
-            <li><span class="text-gray-400">/</span></li>
-            <li class="current current-title text-primary font-semibold truncate max-w-xs sm:max-w-md">
-              {{ $post->title }}
-            </li>
-          </ul>
-        </div>
-
         <!-- MAIN POST CONTENT SECTION (CHÍNH XÁC 100% THEO SERVICE-DETAIL.HTML) -->
-        <section class="section singular section-post py-6 lg:py-12">
+        <section class="section singular section-post pt-10 pb-6 lg:pt-14 lg:pb-12">
           <div class="container px-3 mx-auto">
             <div class="content-all w-full min-w-0">
               <!-- Post Title & Meta Header Block -->

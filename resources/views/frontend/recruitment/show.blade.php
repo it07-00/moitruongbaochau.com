@@ -1,37 +1,8 @@
 @extends('frontend.layouts.app', ['bodyClass' => 'recruitment-template-default single single-recruitment'])
 
 @section('content')
-<!-- BREADCRUMBS -->
-        <div class="container px-3 mx-auto pt-24 sm:pt-28 pb-4 relative z-10">
-          <ul
-            id="breadcrumbs"
-            class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-sm text-black"
-            aria-label="Breadcrumbs"
-          >
-            <li>
-              <a href="{{ route("home") }}" class="hover:text-primary transition-colors"
-                >Trang chủ</a
-              >
-            </li>
-            <li class="separator">/</li>
-            <li>
-              <a
-                href="{{ route("recruitment.index") }}"
-                class="hover:text-primary transition-colors"
-                >Tuyển dụng</a
-              >
-            </li>
-            <li class="separator">/</li>
-            <li
-              class="current font-bold text-primary truncate max-w-[280px] sm:max-w-none"
-            >
-              {{ $job->title }}
-            </li>
-          </ul>
-        </div>
-
         <!-- HERO SECTION: JOB HEADER & FEATURED IMAGE -->
-        <section class="section section-hero pt-4 pb-8 lg:pb-12 relative z-10">
+        <section class="section section-hero pt-24 sm:pt-28 pb-8 lg:pb-12 relative z-10">
           <div class="container px-3 mx-auto">
             <div class="max-w-4xl mx-auto text-center mb-8 lg:mb-12">
               <!-- Subtitle Badge Chuẩn AGENTS.md -->
@@ -462,6 +433,7 @@
                 "
               >
                 <!-- Application Form Card -->
+                <!-- Application Form Card (Livewire Real-time Validation & File Upload) -->
                 <div
                   id="form-ung-tuyen"
                   class="card-item relative glass-effect border border-red-200/80 bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl"
@@ -473,145 +445,7 @@
                     Để lại thông tin và CV, HR sẽ liên hệ bạn trong vòng 24h.
                   </p>
 
-                  @if(session('success'))
-                  <div class="contact-alert-success mb-6 p-4 rounded-2xl text-sm font-medium leading-relaxed">
-                    <div class="flex items-start gap-2.5">
-                      <svg class="size-5 text-emerald-600 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
-                      </svg>
-                      <span class="font-bold text-[#064e3b]">{{ session('success') }}</span>
-                    </div>
-                  </div>
-                  @endif
-
-                  @if($errors->any())
-                  <div class="contact-alert-danger mb-6 p-4 rounded-2xl text-sm font-medium">
-                    <ul class="space-y-1 list-disc list-inside text-[#7f1d1d] font-bold">
-                      @foreach($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
-                  @endif
-
-                  <form
-                    action="{{ route('recruitment.apply', $job->slug) }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                    class="space-y-4"
-                  >
-                    @csrf
-                    <div>
-                      <input
-                        required
-                        name="fullname"
-                        value="{{ old('fullname') }}"
-                        class="font-normal w-full border @error('fullname') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                        placeholder="Họ và tên ứng viên *"
-                        type="text"
-                      />
-                    </div>
-                    <div>
-                      <input
-                        required
-                        name="contact_phone"
-                        value="{{ old('contact_phone') }}"
-                        class="font-normal w-full border @error('contact_phone') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                        placeholder="Số điện thoại liên hệ *"
-                        type="tel"
-                      />
-                    </div>
-                    <div>
-                      <input
-                        required
-                        name="contact_email"
-                        value="{{ old('contact_email') }}"
-                        class="font-normal w-full border @error('contact_email') border-red-500 @else border-gray-300 @enderror rounded-xl h-13 px-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                        placeholder="Email *"
-                        type="email"
-                      />
-                    </div>
-
-                    <!-- Upload File CV Dropzone -->
-                    <div>
-                      <label
-                        for="sidebar_cv_file"
-                        class="flex flex-col items-center justify-center w-full p-3 border-2 border-dashed @error('cv_file') border-red-500 bg-red-50/40 @else border-gray-300 bg-gray-50/60 @enderror hover:border-primary rounded-xl cursor-pointer hover:bg-emerald-50/30 transition-all text-center group"
-                      >
-                        <svg
-                          class="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors mb-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.5V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                          />
-                        </svg>
-                        <span class="text-sm sm:text-base font-bold text-primary"
-                          >Tải lên file CV của bạn *</span
-                        >
-                        <span
-                          id="sidebar-file-chosen"
-                          class="text-xs sm:text-sm text-gray-500 mt-1"
-                          >PDF, DOC, DOCX (&lt;10MB)</span
-                        >
-                        <input
-                          id="sidebar_cv_file"
-                          name="cv_file"
-                          type="file"
-                          required
-                          accept=".pdf,.doc,.docx"
-                          class="hidden"
-                          onchange="
-                            if (this.files[0]) {
-                              document.getElementById(
-                                'sidebar-file-chosen',
-                              ).textContent =
-                                '✓ Đã chọn: ' + this.files[0].name;
-                              document.getElementById(
-                                'sidebar-file-chosen',
-                              ).className =
-                                'text-xs sm:text-sm text-primary font-bold mt-1';
-                            }
-                          "
-                        />
-                      </label>
-                    </div>
-
-                    <div>
-                      <textarea
-                        rows="3"
-                        name="message"
-                        class="font-normal w-full border @error('message') border-red-500 @else border-gray-300 @enderror rounded-xl p-4 text-base focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
-                        placeholder="Giới thiệu ngắn gọn kinh nghiệm hoặc lời nhắn..."
-                      >{{ old('message') }}</textarea>
-                    </div>
-
-                    <button
-                      type="submit"
-                      class="btn btn-primary-1 w-full py-4 font-bold text-base sm:text-lg rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/80 inline-flex items-center justify-center gap-2 text-white transition-all cursor-pointer"
-                    >
-                      <span>Nộp hồ sơ ứng tuyển ngay</span>
-                      <svg
-                        class="size-5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2.2"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
-                        />
-                      </svg>
-                    </button>
-                  </form>
+                  <livewire:frontend.job-application-form :preselected-job-id="$job->id" />
                 </div>
 
                 <!-- Hotline HR Fast Support Card (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->

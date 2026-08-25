@@ -4,25 +4,8 @@
 <!-- 2 BACKGROUND SHAPES BẮT BUỘC THEO AGENTS.md -->
         
 
-        <!-- BREADCRUMBS CHUẨN GIAO DIỆN MẪU -->
-        <ul
-          id="breadcrumbs"
-          class="breadcrumbs flex flex-row flex-wrap space-x-4 container px-3 mx-auto pt-24 md:pt-28 text-xs sm:text-sm text-black"
-          aria-label="Breadcrumbs"
-        >
-          <li>
-            <a class="home hover:text-primary" href="{{ route("home") }}">Trang chủ</a>
-          </li>
-          <li>
-            <a href="{{ route("services.index") }}" class="hover:text-primary"
-              >Hồ Sơ Môi Trường</a
-            >
-          </li>
-          <li class="current current-title text-primary font-medium">{{ $service->name ?? "Dịch Vụ Tư Vấn Lập Giấy Phép Môi Trường Chuẩn Luật 2020 Trọn Gói" }}</li>
-        </ul>
-
         <!-- MAIN POST CONTENT SECTION (CHÍNH XÁC THEO CẤU TRÚC ẢNH MẪU USER) -->
-        <section class="section singular section-post py-8 lg:py-16">
+        <section class="section singular section-post pt-24 md:pt-28 pb-8 lg:pb-16">
           <div class="container px-3 mx-auto">
             <div class="content-all w-full min-w-0">
                 <!-- Post Title & Meta Header Block -->

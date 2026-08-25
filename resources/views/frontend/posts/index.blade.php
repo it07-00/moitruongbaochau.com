@@ -4,17 +4,8 @@
 <!-- 2 Background shapes chuẩn AGENTS.md 1.2 -->
         
 
-        <!-- BREADCRUMBS -->
-        <div class="container px-3 mx-auto pt-6 pb-2">
-          <ul id="breadcrumbs" class="breadcrumbs flex flex-row flex-wrap items-center space-x-2 text-sm text-black" aria-label="Breadcrumbs">
-            <li><a class="home hover:text-primary transition-colors font-medium text-gray-700" href="{{ route("home") }}">Trang chủ</a></li>
-            <li><span class="text-gray-400">/</span></li>
-            <li class="current text-primary font-semibold"><a href="{{ route("posts.index") }}">Kiến thức &amp; Tin tức môi trường</a></li>
-          </ul>
-        </div>
-
         <!-- BLOG SECTION (CHUẨN 100% BỐ CỤC TRANG CHỦ INDEX.HTML) -->
-        <section class="section section-home section-blog recent_post py-8 lg:py-16">
+        <section class="section section-home section-blog recent_post pt-10 pb-8 lg:pt-14 lg:pb-16">
           <div class="container px-3 mx-auto">
             <div class="all_title_recent_post flex flex-row flex-wrap items-center justify-between gap-6 mb-8 lg:mb-12">
               <div class="title_top">

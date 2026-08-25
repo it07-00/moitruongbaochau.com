@@ -739,3 +739,28 @@ function initHeroSlider() {
   });
 }
 
+/* ==========================================================================
+   13. SWEETALERT2 NOTIFICATION BRIDGE
+   ========================================================================== */
+// Global SweetAlert2 helper
+window.showSwal = (options) => {
+  if (typeof Swal !== 'undefined') {
+    return Swal.fire({
+      confirmButtonColor: '#ff4d38',
+      ...options
+    });
+  }
+};
+
+// Livewire Event Listeners for Alert (SweetAlert2)
+document.addEventListener('livewire:init', () => {
+  if (typeof Livewire !== 'undefined') {
+    Livewire.on('swal', (data) => {
+      const payload = Array.isArray(data) ? data[0] : data;
+      window.showSwal(payload);
+    });
+  }
+});
+
+
+
