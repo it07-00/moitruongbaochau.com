@@ -52,18 +52,18 @@
 
             <!-- FLASH SUCCESS & ERROR MESSAGES -->
             @if (session('success'))
-              <div class="max-w-5xl mx-auto mb-6 p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 shadow-xs">
-                <svg class="size-6 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <div class="contact-alert-success max-w-5xl mx-auto mb-6 p-5 rounded-2xl flex items-center gap-3.5">
+                <svg class="size-6 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
-                <p class="font-medium text-emerald-900">{{ session('success') }}</p>
+                <p class="font-bold text-emerald-900 text-[15px] sm:text-base">{{ session('success') }}</p>
               </div>
             @endif
 
             @if ($errors->any())
-              <div class="max-w-5xl mx-auto mb-6 p-5 rounded-2xl bg-red-50 border border-red-200 text-red-800 shadow-xs">
+              <div class="contact-alert-danger max-w-5xl mx-auto mb-6 p-5 rounded-2xl">
                 <p class="font-bold text-red-900 mb-2">Vui lòng kiểm tra lại thông tin:</p>
-                <ul class="list-disc pl-5 text-sm space-y-1 text-red-700">
+                <ul class="list-disc pl-5 text-sm space-y-1 text-red-800">
                   @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                   @endforeach
