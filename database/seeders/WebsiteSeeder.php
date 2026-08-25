@@ -154,14 +154,17 @@ HTML;
     private function seedPosts(CarbonInterface $publishedAt): void
     {
         $postCategories = collect([
-            ['name' => 'Pháp luật môi trường', 'slug' => 'phap-luat-moi-truong'],
-            ['name' => 'Khí nhà kính & ESG', 'slug' => 'khi-nha-kinh-esg'],
-            ['name' => 'Kỹ thuật môi trường', 'slug' => 'ky-thuat-moi-truong'],
+            ['name' => 'Tin quốc tế', 'slug' => 'tin-quoc-te', 'sort_order' => 1],
+            ['name' => 'Tin trong nước', 'slug' => 'tin-trong-nuoc', 'sort_order' => 2],
+            ['name' => 'Tin nội bộ', 'slug' => 'tin-noi-bo', 'sort_order' => 3],
         ])->mapWithKeys(function (array $category): array {
             $model = PostCategory::query()->updateOrCreate(['slug' => $category['slug']], [...$category, 'is_active' => true]);
 
             return [$category['slug'] => $model];
         });
+
+        // Xóa các danh mục cũ nếu có
+        PostCategory::query()->whereNotIn('slug', ['tin-quoc-te', 'tin-trong-nuoc', 'tin-noi-bo'])->delete();
 
         $gpmtContent = <<<'HTML'
 <h2><span id="giay-phep-moi-truong-la-gi">Giấy phép môi trường là gì?</span></h2>
@@ -240,7 +243,7 @@ HTML;
 
         $posts = [
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Hướng Dẫn Thủ Tục Cấp Giấy Phép Môi Trường Mới Nhất Theo Luật BVMT 2020 & Nghị Định 08/2022/NĐ-CP',
                 'slug' => 'huong-dan-thu-tuc-cap-giay-phep-moi-truong',
                 'image' => 'Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png',
@@ -248,7 +251,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Doanh nghiệp nào phải thực hiện kiểm kê khí nhà kính theo Quyết định 13/2024/QĐ-TTg?',
                 'slug' => 'doanh-nghiep-phai-kiem-ke-khi-nha-kinh',
                 'image' => 'Lich-thang-8-768x432.png',
@@ -256,7 +259,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-quoc-te',
                 'title' => 'Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU & Lời Khuyên Cho Doanh Nghiệp Xuất Khẩu',
                 'slug' => 'cbam-du-lieu-doanh-nghiep-can-chuan-bi',
                 'image' => '6-768x429.png',
@@ -264,7 +267,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Quy Trình Quan Trắc & Đo Kiểm Môi Trường Lao Động Định Kỳ Tại Nhà Máy Sản Xuất',
                 'slug' => 'quy-trinh-quan-trac-moi-truong-lao-dong',
                 'image' => 'Hinh-1-768x512.jpg',
@@ -272,7 +275,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Các Công Nghệ Xử Lý Nước Thải Tiên Tiến Giúp Tiết Kiệm Chi Phí Vận Hành',
                 'slug' => 'cac-cong-nghe-xu-ly-nuoc-thai-tien-tien',
                 'image' => 'Thiet-ke-chua-co-ten-2-768x429.png',
@@ -280,7 +283,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ Môi Trường Mới Nhất',
                 'slug' => 'tong-hop-muc-phat-vi-pham-moi-truong',
                 'image' => '118-1-768x429.png',
@@ -288,7 +291,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-quoc-te',
                 'title' => 'Kiểm Kê Khí Nhà Kính Chuẩn ISO 14064-1 Cho Doanh Nghiệp Xuất Khẩu',
                 'slug' => 'kiem-ke-khi-nha-kinh-iso-14064-1',
                 'image' => 'Bai-Dang-Bao-Chau-1024x572.png',
@@ -296,7 +299,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Quy Trình Lập Báo Cáo ĐTM Dự Án Nhóm I & II Theo Luật BVMT 2020',
                 'slug' => 'quy-trinh-lap-bao-cao-dtm',
                 'image' => '1-768x427.png',
@@ -304,7 +307,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-quoc-te',
                 'title' => 'Đánh Giá Vòng Đời Sản Phẩm (LCA): Chìa Khóa Đạt Chứng Chỉ Xanh Xuất Khẩu EU & Mỹ',
                 'slug' => 'danh-gia-vong-doi-san-pham-lca',
                 'image' => '5.-ceragem-1024x683.jpg',
@@ -312,7 +315,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-quoc-te',
                 'title' => 'Lộ Trình Chuyển Đổi Năng Lượng & Kiểm Toán Năng Lượng Cho Nhà Máy Net Zero 2050',
                 'slug' => 'lo-trinh-chuyen-doi-nang-luong-net-zero',
                 'image' => 'moi-truong-bao-chau-1024x603.jpg',
@@ -320,7 +323,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'khi-nha-kinh-esg',
+                'category' => 'tin-quoc-te',
                 'title' => 'Tư Vấn Tín Chỉ Carbon & Chiến Lược Trung Hòa Carbon (Carbon Neutral) Cho Doanh Nghiệp',
                 'slug' => 'tu-van-tin-chi-carbon-trung-hoa-carbon',
                 'image' => 'Lich-thang-8-768x432.png',
@@ -328,7 +331,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Báo Cáo Công Tác Bảo Vệ Môi Trường Định Kỳ Hằng Năm: Thời Hạn & Biểu Mẫu Chuẩn',
                 'slug' => 'bao-cao-cong-tac-bao-ve-moi-truong-dinh-ky',
                 'image' => 'Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png',
@@ -336,7 +339,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'phap-luat-moi-truong',
+                'category' => 'tin-trong-nuoc',
                 'title' => 'Đăng Ký Môi Trường Là Gì? Đối Tượng Phải Thực Hiện & Cơ Quan Tiếp Nhận Hồ Sơ',
                 'slug' => 'dang-ky-moi-truong-doi-tuong-thu-tuc',
                 'image' => '118-1-768x429.png',
@@ -344,7 +347,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Ứng Dụng Công Nghệ Màng MBR Trong Xử Lý Nước Thải Dệt Nhuộm Và Thu Hồi Nước',
                 'slug' => 'ung-dung-mang-mbr-xu-ly-nuoc-thai',
                 'image' => 'CTY-TAN-TIEN-1024x640.png',
@@ -352,7 +355,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Bảo Châu Nghiệm Thu Hệ Thống Xử Lý Nước Thải 1.200 m³/ngày Cho Nhà Máy Thực Phẩm',
                 'slug' => 'nghiem-thu-he-thong-xu-ly-nuoc-thai-1200m3',
                 'image' => '4-768x427.png',
@@ -360,7 +363,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Công Nghệ Xử Lý Khí Thải Lò Hơi & Bụi Công Nghiệp Đạt Chuẩn QCVN 19:2009/BTNMT',
                 'slug' => 'cong-nghe-xu-ly-khi-thai-lo-hoi',
                 'image' => 'moi-truong-bao-chau-1024x603.jpg',
@@ -368,7 +371,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Xử Lý Nước Cấp Công Nghiệp & Hệ Thống Lọc Nước Tinh Khiết RO Cho Ngành Dược Phẩm',
                 'slug' => 'xu-ly-nuoc-cap-cong-nghiep-ro',
                 'image' => 'Thiet-ke-chua-co-ten-2-768x429.png',
@@ -376,7 +379,7 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'ky-thuat-moi-truong',
+                'category' => 'tin-noi-bo',
                 'title' => 'Quy Trình Vận Hành & Bảo Trì Trạm Xử Lý Nước Thải Tập Trung Khu Công Nghiệp',
                 'slug' => 'van-hanh-bao-tri-tram-xu-ly-nuoc-thai',
                 'image' => 'Hinh-1-768x512.jpg',

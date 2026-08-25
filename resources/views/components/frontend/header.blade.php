@@ -88,20 +88,21 @@
         <a href="{{ route('projects.index') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Dự án</a>
       </li>
 
-      <!-- Accordion: Tin tức & Pháp luật (Load động từ Database) -->
+      <!-- Accordion: Tin tức & Pháp luật (3 danh mục: Tin quốc tế, Tin trong nước, Tin nội bộ) -->
       <li class="has-submenu">
         <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
-          <span>Tin tức & Pháp luật</span>
+          <span>Tin tức &amp; Pháp luật</span>
           <svg class="submenu-chevron size-4 w-4 h-4 text-gray-400 transition-transform duration-200" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </button>
         <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
           @foreach($headerPostCategories as $postCat)
-            <li class="pt-2 pb-0.5"><span class="block px-2 text-[11.5px] font-bold uppercase tracking-wider text-primary">{{ $postCat->name }}</span></li>
-            @foreach($postCat->posts as $pst)
-              <li><a href="{{ route('posts.show', $pst->slug) }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">{{ $pst->title }}</a></li>
-            @endforeach
+            <li>
+              <a href="{{ route('posts.index', ['category' => $postCat->slug]) }}" class="mobile-nav-link block py-2 px-2.5 text-[14px] rounded-lg text-gray-700 hover:text-primary hover:bg-primary/5 transition-colors font-medium">
+                {{ $postCat->name }}
+              </a>
+            </li>
           @endforeach
         </ul>
       </li>
@@ -207,23 +208,20 @@
                 </ul>
               </li>
 
-              <!-- Tin tức & Pháp luật Mega Menu (Load động từ Database) -->
-              <li class="col-3 menu-mega nav-item-extended">
+              <!-- Tin tức & Pháp luật Dropdown Menu (3 mục: Tin quốc tế, Tin trong nước, Tin nội bộ) -->
+              <li class="relative nav-item-extended">
                 <a href="{{ route('posts.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 gap-1">
-                  Tin tức & Pháp luật
+                  Tin tức &amp; Pháp luật
                   <svg class="size-3.5 w-3.5 h-3.5 opacity-60" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                   </svg>
                 </a>
-                <ul class="submenu vertical menu">
+                <ul class="submenu vertical menu bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-black/8 py-2 px-1.5 min-w-[200px] text-[14px]">
                   @foreach($headerPostCategories as $postCat)
                   <li>
-                    <a href="{{ route('posts.index') }}" class="text-[14px] font-bold! text-primary uppercase pb-1 border-b border-white/10">{{ $postCat->name }}</a>
-                    <ul class="submenu vertical menu">
-                      @foreach($postCat->posts as $pst)
-                      <li><a href="{{ route('posts.show', $pst->slug) }}" title="{{ $pst->title }}">{{ $pst->title }}</a></li>
-                      @endforeach
-                    </ul>
+                    <a href="{{ route('posts.index', ['category' => $postCat->slug]) }}" class="flex items-center py-2 px-3 rounded-xl font-medium text-gray-800 hover:text-primary hover:bg-primary/5 transition-colors">
+                      {{ $postCat->name }}
+                    </a>
                   </li>
                   @endforeach
                 </ul>
