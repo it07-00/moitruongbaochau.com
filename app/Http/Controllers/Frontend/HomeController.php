@@ -39,9 +39,9 @@ class HomeController extends Controller
         $projects = Project::query()
             ->published()
             ->where('is_featured', true)
-            ->select(['id', 'title', 'slug', 'category', 'client', 'summary', 'thumbnail', 'completed_at'])
+            ->select(['id', 'title', 'slug', 'category', 'client', 'location', 'summary', 'thumbnail', 'completed_at'])
             ->latest('published_at')
-            ->limit(6)
+            ->limit(9)
             ->get();
         $postCategories = PostCategory::query()
             ->where('is_active', true)

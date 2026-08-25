@@ -206,36 +206,17 @@
               </style>
               <ul class="filter-ul">
                 <li>
-                  <a href="#" class="active" data-filter="-1">
-                    Tất cả <span class="filter-count">(9)</span>
+                  <a href="{{ route('projects.index') }}" class="{{ empty($categoryFilter) || $categoryFilter === '-1' || $categoryFilter === 'all' ? 'active' : '' }}" data-filter="-1">
+                    Tất cả <span class="filter-count">({{ $totalProjects }})</span>
                   </a>
                 </li>
-                <li>
-                  <a href="#" data-filter="giay-phep">
-                    Giấy phép Môi trường <span class="filter-count">(3)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter="dtm">
-                    Báo cáo ĐTM <span class="filter-count">(2)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter="khi-nha-kinh">
-                    Khí nhà kính &amp; ESG <span class="filter-count">(2)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter="xu-ly-nuoc">
-                    Xử lý Nước &amp; Khí thải
-                    <span class="filter-count">(1)</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#" data-filter="quan-trac">
-                    Quan trắc Môi trường <span class="filter-count">(1)</span>
-                  </a>
-                </li>
+                @foreach ($categories as $catKey => $catLabel)
+                  <li>
+                    <a href="{{ route('projects.index', ['category' => $catKey]) }}" class="{{ $categoryFilter === $catKey ? 'active' : '' }}" data-filter="{{ $catKey }}">
+                      {{ $catLabel }} <span class="filter-count">({{ $categoryCounts[$catKey] ?? 0 }})</span>
+                    </a>
+                  </li>
+                @endforeach
               </ul>
             </div>
 
@@ -244,6 +225,15 @@
               <div
                 class="filter-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8"
               >
+                @php
+                  $catNameMap = [
+                    'giay-phep' => 'Giấy phép Môi trường',
+                    'dtm' => 'Báo cáo ĐTM',
+                    'khi-nha-kinh' => 'Khí nhà kính & ESG',
+                    'xu-ly-nuoc' => 'Xử lý Nước & Khí thải',
+                    'quan-trac' => 'Quan trắc Môi trường',
+                  ];
+                @endphp
                 @forelse($projects as $proj)
                 <div
                   class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
@@ -256,6 +246,7 @@
                       class="block w-full h-full c-scale-effect"
                       href="{{ route('projects.show', $proj->slug) }}"
                       aria-label="{{ $proj->title }}"
+                      title="{{ $proj->title }}"
                     >
                       <img
                         src="{{ str_starts_with($proj->thumbnail ?? '', 'http') ? $proj->thumbnail : (str_starts_with($proj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $proj->thumbnail) : asset('assets/images/' . ($proj->thumbnail ?: 'BERICAP.jpg'))) }}"
@@ -267,24 +258,35 @@
                         loading="lazy"
                       />
                     </a>
+                    @if($proj->location)
                     <span
                       class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
                     >
-                      {{ $proj->location ?? 'Toàn Quốc' }}
+                      {{ $proj->location }}
                     </span>
+                    @endif
                   </div>
                   <div class="p-content flex flex-col flex-1 justify-between">
                     <div>
                       <div
                         class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
                       >
-                        <span
-                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                          >{{ $proj->client ?? 'Dự án tiêu biểu' }}</span
+                        <a
+                          href="{{ route('projects.index', ['category' => $proj->category]) }}"
+                          class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full hover:bg-primary hover:text-white transition-colors"
+                          title="Xem các dự án {{ $catNameMap[$proj->category] ?? ($proj->category ?: 'Dự án') }}"
                         >
+                          {{ $catNameMap[$proj->category] ?? ($proj->category ?: 'Dự án') }}
+                        </a>
+                        @if($proj->completed_at)
                         <span class="text-xs text-gray-400 font-medium"
-                          >{{ $proj->completed_at ? 'Hoàn thành ' . $proj->completed_at->format('Y') : '' }}</span
+                          >Hoàn thành {{ $proj->completed_at->format('Y') }}</span
                         >
+                        @elseif($proj->client)
+                        <span class="text-xs text-gray-400 font-medium truncate max-w-[140px]"
+                          >{{ $proj->client }}</span
+                        >
+                        @endif
                       </div>
                       <a
                         class="c-hover block"

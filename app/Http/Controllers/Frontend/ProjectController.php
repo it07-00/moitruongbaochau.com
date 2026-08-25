@@ -11,14 +11,45 @@ class ProjectController extends Controller
 {
     public function index(): View
     {
-        $projects = Project::query()->published()->latest('published_at')->paginate(12)->withQueryString();
+        $categoryFilter = request('category');
+
+        $categories = [
+            'giay-phep' => 'Giấy phép Môi trường',
+            'dtm' => 'Báo cáo ĐTM',
+            'khi-nha-kinh' => 'Khí nhà kính & ESG',
+            'xu-ly-nuoc' => 'Xử lý Nước & Khí thải',
+            'quan-trac' => 'Quan trắc Môi trường',
+        ];
+
+        $projects = Project::query()
+            ->published()
+            ->when($categoryFilter && $categoryFilter !== '-1' && $categoryFilter !== 'all', function ($query) use ($categoryFilter) {
+                $query->where('category', $categoryFilter);
+            })
+            ->latest('published_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        $categoryCounts = Project::query()
+            ->published()
+            ->selectRaw('category, count(*) as total')
+            ->groupBy('category')
+            ->pluck('total', 'category')
+            ->toArray();
+
+        $totalProjects = Project::query()->published()->count();
+
+        $categoryTitle = $categoryFilter && isset($categories[$categoryFilter])
+            ? 'Dự án '.$categories[$categoryFilter]
+            : 'Dự án môi trường tiêu biểu';
+
         $seo = SeoData::forPage(
-            'Dự án môi trường tiêu biểu',
-            'Năng lực triển khai giấy phép môi trường, ĐTM, quan trắc và kiểm kê khí nhà kính.',
-            route('projects.index'),
+            $categoryTitle,
+            'Năng lực triển khai giấy phép môi trường, ĐTM, quan trắc và kiểm kê khí nhà kính của Môi Trường Bảo Châu.',
+            route('projects.index', $categoryFilter ? ['category' => $categoryFilter] : []),
         );
 
-        return view('frontend.projects.index', compact('projects', 'seo'));
+        return view('frontend.projects.index', compact('projects', 'categories', 'categoryCounts', 'totalProjects', 'categoryFilter', 'seo'));
     }
 
     public function show(string $slug): View
