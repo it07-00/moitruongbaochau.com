@@ -27,7 +27,7 @@ class SliderForm
                             ->image()
                             ->disk('public')
                             ->directory('uploads/sliders')
-                            ->imageResizeMode('cover')
+                            ->automaticallyResizeImagesMode('cover')
                             ->required()
                             ->helperText('Khuyên dùng ảnh tỷ lệ 16:9 hoặc kích thước 1920x720px / 1536x570px.'),
                         TextInput::make('link')

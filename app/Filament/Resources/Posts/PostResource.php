@@ -128,8 +128,9 @@ class PostResource extends Resource
                             ->label('Ảnh đại diện bài viết')
                             ->image()
                             ->directory('uploads/posts')
-                            ->imageResizeMode('cover')
-                            ->imageCropAspectRatio('16:9'),
+                            ->automaticallyResizeImagesMode('cover')
+                            ->imageAspectRatio('16:9')
+                            ->automaticallyCropImagesToAspectRatio(),
                         Toggle::make('is_featured')
                             ->label('Đánh dấu là bài viết nổi bật')
                             ->default(false),

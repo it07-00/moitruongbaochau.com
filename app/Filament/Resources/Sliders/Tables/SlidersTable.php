@@ -21,8 +21,8 @@ class SlidersTable
                 ImageColumn::make('image')
                     ->label('Hình ảnh')
                     ->disk('public')
-                    ->width(120)
-                    ->height(60),
+                    ->imageWidth(120)
+                    ->imageHeight(60),
                 TextColumn::make('title')
                     ->label('Tiêu đề')
                     ->searchable()

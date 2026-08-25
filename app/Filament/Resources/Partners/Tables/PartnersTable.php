@@ -23,8 +23,8 @@ class PartnersTable
                     ->label('Logo')
                     ->disk('public')
                     ->defaultImageUrl(fn ($record) => $record->logo ? (str_starts_with($record->logo, 'http') ? $record->logo : (str_starts_with($record->logo, 'uploads/') ? asset('storage/'.$record->logo) : asset('assets/images/'.$record->logo))) : null)
-                    ->width(100)
-                    ->height(50),
+                    ->imageWidth(100)
+                    ->imageHeight(50),
                 TextColumn::make('name')
                     ->label('Tên đơn vị')
                     ->searchable()

@@ -132,8 +132,9 @@ class ProjectResource extends Resource
                             ->label('Ảnh dự án')
                             ->image()
                             ->directory('uploads/projects')
-                            ->imageResizeMode('cover')
-                            ->imageCropAspectRatio('16:9'),
+                            ->automaticallyResizeImagesMode('cover')
+                            ->imageAspectRatio('16:9')
+                            ->automaticallyCropImagesToAspectRatio(),
                         DatePicker::make('completed_at')
                             ->label('Ngày hoàn thành'),
                         Toggle::make('is_featured')

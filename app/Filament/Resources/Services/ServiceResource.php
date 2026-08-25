@@ -129,8 +129,9 @@ class ServiceResource extends Resource
                             ->label('Ảnh đại diện')
                             ->image()
                             ->directory('uploads/services')
-                            ->imageResizeMode('cover')
-                            ->imageCropAspectRatio('16:9'),
+                            ->automaticallyResizeImagesMode('cover')
+                            ->imageAspectRatio('16:9')
+                            ->automaticallyCropImagesToAspectRatio(),
                         TextInput::make('icon')
                             ->label('Tên Icon (nếu có)'),
                         Toggle::make('is_featured')

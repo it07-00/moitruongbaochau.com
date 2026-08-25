@@ -15,6 +15,7 @@ use App\Models\ServiceCategory;
 use App\Models\Setting;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class WebsiteSeeder extends Seeder
@@ -241,6 +242,7 @@ class WebsiteSeeder extends Seeder
 
     private function seedServices(CarbonInterface $publishedAt): void
     {
+        /** @var Collection<string, ServiceCategory> $serviceCategories */
         $serviceCategories = collect([
             [
                 'name' => 'Pháp lý môi trường',
@@ -340,6 +342,7 @@ HTML;
 
     private function seedPosts(CarbonInterface $publishedAt): void
     {
+        /** @var Collection<string, PostCategory> $postCategories */
         $postCategories = collect([
             ['name' => 'Tin quốc tế', 'slug' => 'tin-quoc-te', 'sort_order' => 1],
             ['name' => 'Tin trong nước', 'slug' => 'tin-trong-nuoc', 'sort_order' => 2],

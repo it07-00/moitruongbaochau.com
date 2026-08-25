@@ -34,7 +34,7 @@ class TestimonialForm
                             ->image()
                             ->disk('public')
                             ->directory('uploads/testimonials')
-                            ->imageResizeMode('cover'),
+                            ->automaticallyResizeImagesMode('cover'),
                         Textarea::make('content')
                             ->label('Nội dung đánh giá / nhận xét')
                             ->required()
