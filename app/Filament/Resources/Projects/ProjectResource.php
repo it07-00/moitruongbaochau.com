@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Projects;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Projects\Pages\CreateProject;
 use App\Filament\Resources\Projects\Pages\EditProject;
 use App\Filament\Resources\Projects\Pages\ListProjects;
@@ -64,7 +65,17 @@ class ProjectResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(function (string $operation, ?string $state, callable $set, callable $get) {
+                                if ($operation === 'create' || blank($get('slug'))) {
+                                    $set('slug', Str::slug($state));
+                                }
+                                if (blank($get('meta_title'))) {
+                                    $set('meta_title', $state);
+                                }
+                                if (blank($get('og_title'))) {
+                                    $set('og_title', $state);
+                                }
+                            }),
                         TextInput::make('slug')
                             ->label('Đường dẫn tĩnh (Slug)')
                             ->required()
@@ -87,10 +98,32 @@ class ProjectResource extends Resource
                         Textarea::make('summary')
                             ->label('Tóm tắt dự án')
                             ->rows(3)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    if (blank($get('meta_description'))) {
+                                        $set('meta_description', $clean);
+                                    }
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dự án')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (blank($get('meta_description')) && filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    $set('meta_description', $clean);
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
                     ])->columns(2),
 
                 Section::make('Hình ảnh & Thời gian')
@@ -111,27 +144,7 @@ class ProjectResource extends Resource
                             ->default(now()),
                     ])->columns(2),
 
-                Section::make('Cấu hình SEO')
-                    ->collapsed()
-                    ->components([
-                        TextInput::make('meta_title')
-                            ->label('Meta Title'),
-                        TextInput::make('meta_description')
-                            ->label('Meta Description'),
-                        TextInput::make('canonical_url')
-                            ->label('Canonical URL'),
-                        TextInput::make('robots')
-                            ->label('Robots Tag')
-                            ->default('index,follow'),
-                        TextInput::make('og_title')
-                            ->label('OG Title'),
-                        TextInput::make('og_description')
-                            ->label('OG Description'),
-                        FileUpload::make('og_image')
-                            ->label('OG Image')
-                            ->image()
-                            ->directory('uploads/seo'),
-                    ])->columns(2),
+                SeoSection::make(),
             ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Services;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Services\Pages\EditService;
 use App\Filament\Resources\Services\Pages\ListServices;
@@ -64,7 +65,17 @@ class ServiceResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(function (string $operation, ?string $state, callable $set, callable $get) {
+                                if ($operation === 'create' || blank($get('slug'))) {
+                                    $set('slug', Str::slug($state));
+                                }
+                                if (blank($get('meta_title'))) {
+                                    $set('meta_title', $state);
+                                }
+                                if (blank($get('og_title'))) {
+                                    $set('og_title', $state);
+                                }
+                            }),
                         TextInput::make('slug')
                             ->label('Đường dẫn tĩnh (Slug)')
                             ->required()
@@ -84,10 +95,32 @@ class ServiceResource extends Resource
                         Textarea::make('short_description')
                             ->label('Mô tả ngắn gọn')
                             ->rows(3)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    if (blank($get('meta_description'))) {
+                                        $set('meta_description', $clean);
+                                    }
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dịch vụ')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (blank($get('meta_description')) && filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    $set('meta_description', $clean);
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
                     ])->columns(2),
 
                 Section::make('Hình ảnh & Hiển thị')
@@ -112,31 +145,7 @@ class ServiceResource extends Resource
                             ->default(now()),
                     ])->columns(2),
 
-                Section::make('Tối ưu hóa SEO')
-                    ->description('Cấu hình thẻ Meta Title, Description và OpenGraph phục vụ Google Search')
-                    ->collapsed()
-                    ->components([
-                        TextInput::make('meta_title')
-                            ->label('Meta Title')
-                            ->maxLength(255),
-                        TextInput::make('meta_description')
-                            ->label('Meta Description')
-                            ->maxLength(255),
-                        TextInput::make('canonical_url')
-                            ->label('Canonical URL')
-                            ->url(),
-                        TextInput::make('robots')
-                            ->label('Robots Tag')
-                            ->default('index,follow'),
-                        TextInput::make('og_title')
-                            ->label('OG Title (Facebook/Zalo)'),
-                        TextInput::make('og_description')
-                            ->label('OG Description'),
-                        FileUpload::make('og_image')
-                            ->label('OG Image')
-                            ->image()
-                            ->directory('uploads/seo'),
-                    ])->columns(2),
+                SeoSection::make(),
             ]);
     }
 

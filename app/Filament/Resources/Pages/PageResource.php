@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Pages;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Pages\Pages\CreatePage;
 use App\Filament\Resources\Pages\Pages\EditPage;
 use App\Filament\Resources\Pages\Pages\ListPages;
@@ -12,7 +13,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -60,7 +60,17 @@ class PageResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(function (string $operation, ?string $state, callable $set, callable $get) {
+                                if ($operation === 'create' || blank($get('slug'))) {
+                                    $set('slug', Str::slug($state));
+                                }
+                                if (blank($get('meta_title'))) {
+                                    $set('meta_title', $state);
+                                }
+                                if (blank($get('og_title'))) {
+                                    $set('og_title', $state);
+                                }
+                            }),
                         TextInput::make('slug')
                             ->label('Đường dẫn tĩnh (Slug)')
                             ->required()
@@ -79,39 +89,41 @@ class PageResource extends Resource
                             ->options(ContentStatus::class)
                             ->default(ContentStatus::Published->value)
                             ->required(),
-                        Textarea::make('excerpt')
-                            ->label('Mô tả tóm tắt')
-                            ->rows(3)
-                            ->columnSpanFull(),
-                        RichEditor::make('content')
-                            ->label('Nội dung chi tiết trang')
-                            ->columnSpanFull(),
-                    ])->columns(2),
-
-                Section::make('Cấu hình SEO Meta')
-                    ->collapsed()
-                    ->components([
-                        TextInput::make('meta_title')
-                            ->label('Meta Title'),
-                        TextInput::make('meta_description')
-                            ->label('Meta Description'),
-                        TextInput::make('canonical_url')
-                            ->label('Canonical URL'),
-                        TextInput::make('robots')
-                            ->label('Robots Tag')
-                            ->default('index,follow'),
-                        TextInput::make('og_title')
-                            ->label('OG Title'),
-                        TextInput::make('og_description')
-                            ->label('OG Description'),
-                        FileUpload::make('og_image')
-                            ->label('OG Image')
-                            ->image()
-                            ->directory('uploads/seo'),
                         DateTimePicker::make('published_at')
                             ->label('Ngày xuất bản')
                             ->default(now()),
+                        Textarea::make('excerpt')
+                            ->label('Mô tả tóm tắt')
+                            ->rows(3)
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    if (blank($get('meta_description'))) {
+                                        $set('meta_description', $clean);
+                                    }
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
+                        RichEditor::make('content')
+                            ->label('Nội dung chi tiết trang')
+                            ->columnSpanFull()
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
+                                if (blank($get('meta_description')) && filled($state)) {
+                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
+                                    $set('meta_description', $clean);
+                                    if (blank($get('og_description'))) {
+                                        $set('og_description', $clean);
+                                    }
+                                }
+                            }),
                     ])->columns(2),
+
+                SeoSection::make(),
             ]);
     }
 
