@@ -55,6 +55,7 @@ class AppServiceProvider extends ServiceProvider
                 ->orderBy('sort_order')
                 ->with(['posts' => fn ($query) => $query
                     ->published()
+                    ->with('category')
                     ->latest('published_at')
                     ->take(6),
                 ])

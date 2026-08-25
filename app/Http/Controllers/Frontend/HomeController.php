@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\PostCategory;
 use App\Models\Project;
 use App\Models\Service;
 use App\Support\SeoData;
@@ -27,10 +28,18 @@ class HomeController extends Controller
             ->latest('published_at')
             ->limit(6)
             ->get();
+        $postCategories = PostCategory::query()
+            ->where('is_active', true)
+            ->with(['posts' => function ($query) {
+                $query->published()
+                    ->with(['category', 'author'])
+                    ->latest('published_at');
+            }])
+            ->orderBy('sort_order')
+            ->get();
         $posts = Post::query()
             ->published()
-            ->where('is_featured', true)
-            ->select(['id', 'title', 'slug', 'excerpt', 'thumbnail', 'published_at'])
+            ->with(['category', 'author'])
             ->latest('published_at')
             ->limit(6)
             ->get();
@@ -54,6 +63,6 @@ class HomeController extends Controller
             ]],
         );
 
-        return view('frontend.home', compact('services', 'projects', 'posts', 'seo'));
+        return view('frontend.home', compact('services', 'projects', 'posts', 'postCategories', 'seo'));
     }
 }

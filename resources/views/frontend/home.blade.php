@@ -1788,384 +1788,44 @@
                     >Tất cả</a
                   >
                 </li>
+                @foreach ($postCategories as $cat)
                 <li class="shrink-0">
                   <a
                     class="inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-semibold whitespace-nowrap c-hover bg-black/8 hover:bg-primary text-black/80 hover:text-white transition-all"
                     href="#"
-                    data-filter="su-kien"
-                    >Sự kiện</a
+                    data-filter="{{ $cat->slug }}"
+                    >{{ $cat->name }}</a
                   >
                 </li>
-                <li class="shrink-0">
-                  <a
-                    class="inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-semibold whitespace-nowrap c-hover bg-black/8 hover:bg-primary text-black/80 hover:text-white transition-all"
-                    href="#"
-                    data-filter="xu-huong"
-                    >Xu hướng</a
-                  >
-                </li>
-                <li class="shrink-0">
-                  <a
-                    class="inline-flex items-center justify-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm sm:text-base font-semibold whitespace-nowrap c-hover bg-black/8 hover:bg-primary text-black/80 hover:text-white transition-all"
-                    href="#"
-                    data-filter="blog"
-                    >Chia sẻ</a
-                  >
-                </li>
+                @endforeach
               </ul>
             </div>
           </div>
           <div class="w-full 2xl:max-w-[95%] px-3 mx-auto">
             <div class="p-news-list mt-9">
               <div class="filter-content-news">
-                <div
-                  class="filter-grid filter-grid-news grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-6 items-stretch"
-                >
-                  <div class="group-items group-items-0 grid gap-3 sm:gap-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
-                      <div class="item flex flex-col group relative">
-                        <div class="c-cover rounded-xl md:rounded-2xl">
-                          <a
-                            class="block w-full c-scale-effect"
-                            href="#"
-                            aria-label="Hướng Dẫn Lập Báo Cáo ĐTM & Cấp Giấy Phép Môi Trường Theo Luật BVMT 2020"
-                          >
-                            <img
-                              src="{{ asset("assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png") }}"
-                              class="w-full object-cover as-16-9"
-                              width="768"
-                              height="512"
-                              alt="Hướng Dẫn Lập Báo Cáo ĐTM & Cấp Giấy Phép Môi Trường Theo Luật BVMT 2020"
-                              decoding="async"
-                              loading="lazy"
-                            />
-                          </a>
-                        </div>
-                        <div
-                          class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                        >
-                          <div
-                            class="c-terms flex flex-wrap items-center gap-2"
-                          >
-                            <a
-                              class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                              href="#"
-                              title="Chia sẻ"
-                              >Chia sẻ</a
-                            >
-                          </div>
-                          <a
-                            class="flex items-center w-full justify-between gap-3"
-                            href="#"
-                            title="Hướng Dẫn Lập Báo Cáo ĐTM & Cấp Giấy Phép Môi Trường Theo Luật BVMT 2020"
-                            ><p
-                              class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title"
-                            >
-                              Hướng Dẫn Lập Báo Cáo ĐTM & Cấp Giấy Phép Môi
-                              Trường Theo Luật BVMT 2020
-                            </p>
-                            <svg
-                              class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="12"
-                              viewBox="0 0 18 12"
-                              fill="none"
-                            >
-                              <path
-                                d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                                fill="currentColor"
-                              ></path></svg
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="item flex flex-col group relative">
-                        <div class="c-cover rounded-xl md:rounded-2xl">
-                          <a
-                            class="block w-full c-scale-effect"
-                            href="#"
-                            aria-label="Quy Định Bắt Buộc Kiểm Kê Khí Nhà Kính Cho Doanh Nghiệp Phát Thải Lớn"
-                          >
-                            <img
-                              src="{{ asset("assets/images/Lich-thang-8-768x432.png") }}"
-                              class="w-full object-cover as-16-9"
-                              width="768"
-                              height="512"
-                              alt="Quy Định Bắt Buộc Kiểm Kê Khí Nhà Kính Cho Doanh Nghiệp Phát Thải Lớn"
-                              decoding="async"
-                              loading="lazy"
-                            />
-                          </a>
-                        </div>
-                        <div
-                          class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                        >
-                          <div
-                            class="c-terms flex flex-wrap items-center gap-2"
-                          >
-                            <a
-                              class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                              href="#"
-                              title="Chia sẻ"
-                              >Chia sẻ</a
-                            >
-                          </div>
-                          <a
-                            class="flex items-center w-full justify-between gap-3"
-                            href="#"
-                            title="Quy Định Bắt Buộc Kiểm Kê Khí Nhà Kính Cho Doanh Nghiệp Phát Thải Lớn"
-                            ><p
-                              class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title"
-                            >
-                              Quy Định Bắt Buộc Kiểm Kê Khí Nhà Kính Cho Doanh
-                              Nghiệp Phát Thải Lớn
-                            </p>
-                            <svg
-                              class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="12"
-                              viewBox="0 0 18 12"
-                              fill="none"
-                            >
-                              <path
-                                d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                                fill="currentColor"
-                              ></path></svg
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item flex flex-col group relative">
-                      <div class="c-cover rounded-xl md:rounded-2xl">
-                        <a
-                          class="block w-full c-scale-effect"
-                          href="#"
-                          aria-label="Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU & Lời Khuyên Cho Doanh Nghiệp"
-                        >
-                          <img
-                            src="{{ asset("assets/images/6-768x429.png") }}"
-                            class="w-full object-cover as-16-9"
-                            width="1024"
-                            height="683"
-                            alt="Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU & Lời Khuyên Cho Doanh Nghiệp"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </a>
-                      </div>
-                      <div
-                        class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                      >
-                        <div class="c-terms flex flex-wrap items-center gap-2">
-                          <a
-                            class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                            href="#"
-                            title="Chia sẻ"
-                            >Chia sẻ</a
-                          >
-                        </div>
-                        <a
-                          class="flex items-center w-full justify-between gap-3"
-                          href="#"
-                          title="Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU & Lời Khuyên Cho Doanh Nghiệp"
-                          ><p
-                            class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title item-large"
-                          >
-                            Cơ Chế Điều Chỉnh Biên Giới Carbon (CBAM) Của EU &
-                            Lời Khuyên Cho Doanh Nghiệp
-                          </p>
-                          <svg
-                            class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="12"
-                            viewBox="0 0 18 12"
-                            fill="none"
-                          >
-                            <path
-                              d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                              fill="currentColor"
-                            ></path></svg
-                        ></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="group-items group-items-1 grid gap-3 sm:gap-6">
-                    <div class="item flex flex-col group relative">
-                      <div class="c-cover rounded-xl md:rounded-2xl">
-                        <a
-                          class="block w-full c-scale-effect"
-                          href="#"
-                          aria-label="Quy Trình Quan Trắc & Đo Kiểm Môi Trường Lao Động Định Kỳ Tại Nhà Máy"
-                        >
-                          <img
-                            src="{{ asset("assets/images/Hinh-1-768x512.jpg") }}"
-                            class="w-full object-cover as-16-9"
-                            width="1024"
-                            height="683"
-                            alt="Quy Trình Quan Trắc & Đo Kiểm Môi Trường Lao Động Định Kỳ Tại Nhà Máy"
-                            decoding="async"
-                            loading="lazy"
-                          />
-                        </a>
-                      </div>
-                      <div
-                        class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                      >
-                        <div class="c-terms flex flex-wrap items-center gap-2">
-                          <a
-                            class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                            href="#"
-                            title="Chia sẻ"
-                            >Chia sẻ</a
-                          >
-                        </div>
-                        <a
-                          class="flex items-center w-full justify-between gap-3"
-                          href="#"
-                          title="Quy Trình Quan Trắc & Đo Kiểm Môi Trường Lao Động Định Kỳ Tại Nhà Máy"
-                          ><p
-                            class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title item-large"
-                          >
-                            Quy Trình Quan Trắc & Đo Kiểm Môi Trường Lao Động
-                            Định Kỳ Tại Nhà Máy
-                          </p>
-                          <svg
-                            class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="12"
-                            viewBox="0 0 18 12"
-                            fill="none"
-                          >
-                            <path
-                              d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                              fill="currentColor"
-                            ></path></svg
-                        ></a>
-                      </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
-                      <div class="item flex flex-col group relative">
-                        <div class="c-cover rounded-xl md:rounded-2xl">
-                          <a
-                            class="block w-full c-scale-effect"
-                            href="#"
-                            aria-label="Các Công Nghệ Xử Lý Nước Thải Tiên Tiến Giúp Tiết Kiệm Chi Phí Vận Hành"
-                          >
-                            <img
-                              src="{{ asset("assets/images/Thiet-ke-chua-co-ten-2-768x429.png") }}"
-                              class="w-full object-cover as-16-9"
-                              width="768"
-                              height="512"
-                              alt="Các Công Nghệ Xử Lý Nước Thải Tiên Tiến Giúp Tiết Kiệm Chi Phí Vận Hành"
-                              decoding="async"
-                              loading="lazy"
-                            />
-                          </a>
-                        </div>
-                        <div
-                          class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                        >
-                          <div
-                            class="c-terms flex flex-wrap items-center gap-2"
-                          >
-                            <a
-                              class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                              href="#"
-                              title="Chia sẻ"
-                              >Chia sẻ</a
-                            >
-                          </div>
-                          <a
-                            class="flex items-center w-full justify-between gap-3"
-                            href="#"
-                            title="Các Công Nghệ Xử Lý Nước Thải Tiên Tiến Giúp Tiết Kiệm Chi Phí Vận Hành"
-                            ><p
-                              class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title"
-                            >
-                              Các Công Nghệ Xử Lý Nước Thải Tiên Tiến Giúp Tiết
-                              Kiệm Chi Phí Vận Hành
-                            </p>
-                            <svg
-                              class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="12"
-                              viewBox="0 0 18 12"
-                              fill="none"
-                            >
-                              <path
-                                d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                                fill="currentColor"
-                              ></path></svg
-                          ></a>
-                        </div>
-                      </div>
-                      <div class="item flex flex-col group relative">
-                        <div class="c-cover rounded-xl md:rounded-2xl">
-                          <a
-                            class="block w-full c-scale-effect"
-                            href="#"
-                            aria-label="Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ Môi Trường Mới Nhất"
-                          >
-                            <img
-                              src="{{ asset("assets/images/118-1-768x429.png") }}"
-                              class="w-full object-cover as-16-9"
-                              width="768"
-                              height="512"
-                              alt="Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ Môi Trường Mới Nhất"
-                              decoding="async"
-                              loading="lazy"
-                            />
-                          </a>
-                        </div>
-                        <div
-                          class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl"
-                        >
-                          <div
-                            class="c-terms flex flex-wrap items-center gap-2"
-                          >
-                            <a
-                              class="w-fit rounded-full inline-flex items-center px-3 py-1 text-white bg-primary/20 backdrop-blur-xs text-sm font-normal"
-                              href="#"
-                              title="Chia sẻ"
-                              >Chia sẻ</a
-                            >
-                          </div>
-                          <a
-                            class="flex items-center w-full justify-between gap-3"
-                            href="#"
-                            title="Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ Môi Trường Mới Nhất"
-                            ><p
-                              class="text-white text-shadow-white/20 font-bold line-clamp-2 c-content-title"
-                            >
-                              Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ
-                              Môi Trường Mới Nhất
-                            </p>
-                            <svg
-                              class="size-4 text-white flex-none opacity-0 group-hover:opacity-100 transition-opacity"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="12"
-                              viewBox="0 0 18 12"
-                              fill="none"
-                            >
-                              <path
-                                d="M16.9014 6.05377C17.1943 5.76088 17.1943 5.286 16.9014 4.99311L12.1285 0.220138C11.8356 -0.0727557 11.3607 -0.0727558 11.0678 0.220138C10.7749 0.513031 10.7749 0.987905 11.0678 1.2808L15.3104 5.52344L11.0678 9.76608C10.7749 10.059 10.7749 10.5338 11.0678 10.8267C11.3607 11.1196 11.8356 11.1196 12.1285 10.8267L16.9014 6.05377ZM0 5.52344L-6.55671e-08 6.27344L16.3711 6.27344L16.3711 5.52344L16.3711 4.77344L6.55671e-08 4.77344L0 5.52344Z"
-                                fill="currentColor"
-                              ></path></svg
-                          ></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <!-- Tab Pane: Tất cả -->
+                <div class="news-tab-pane" data-pane="-1">
+                  @include('frontend.partials.news-grid-set', ['posts' => $posts])
                 </div>
+
+                <!-- Tab Panes: Từng danh mục -->
+                @foreach ($postCategories as $cat)
+                <div class="news-tab-pane" data-pane="{{ $cat->slug }}" style="display: none;">
+                  @if ($cat->posts->isNotEmpty())
+                    @include('frontend.partials.news-grid-set', ['posts' => $cat->posts])
+                  @else
+                    <div class="text-center py-12 text-gray-500 font-medium">
+                      Chưa có bài viết nào trong danh mục này.
+                    </div>
+                  @endif
+                </div>
+                @endforeach
+              </div>
                 <div class="relative flex justify-center">
                   <a
                     class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80 inline-flex! mt-8"
-                    href="#"
+                    href="{{ route('posts.index') }}"
                     title="Xem thêm"
                     >Xem thêm<svg
                       class="size-4"

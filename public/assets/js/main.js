@@ -543,25 +543,126 @@ function initProjectFilter() {
 }
 
 /* ==========================================================================
-   9b. NEWS CATEGORY FILTER
+   9b. NEWS CATEGORY FILTER & AUTO-SWITCH
    ========================================================================== */
 function initNewsFilter() {
   const newsFilterLists = document.querySelectorAll('.filter-ul-news');
   if (newsFilterLists.length === 0) return;
 
   newsFilterLists.forEach((list) => {
-    const filterBtns = list.querySelectorAll('a');
-    filterBtns.forEach((btn) => {
+    const section = list.closest('.recent_post') || list.closest('section') || list.parentElement;
+    const filterBtns = Array.from(list.querySelectorAll('a[data-filter]'));
+    if (filterBtns.length === 0) return;
+
+    const tabPanes = Array.from(section.querySelectorAll('.news-tab-pane'));
+    const newsItems = section.querySelectorAll('.filter-content-news .item');
+    const subGrids = section.querySelectorAll('.filter-content-news .group-items > div.grid');
+    const groupItems = section.querySelectorAll('.filter-content-news .group-items');
+    const gridSets = section.querySelectorAll('.filter-content-news .filter-grid');
+
+    // Add transition styling to all items for smooth switching
+    newsItems.forEach((item) => {
+      item.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    });
+
+    function applyFilter(filterVal, targetBtn) {
+      filterBtns.forEach((b) => {
+        b.classList.remove('active', 'bg-primary', 'text-white', 'shadow-xs', 'font-bold');
+        b.classList.add('bg-black/8', 'text-black/80', 'font-semibold');
+      });
+      if (targetBtn) {
+        targetBtn.classList.add('active', 'bg-primary', 'text-white', 'shadow-xs', 'font-bold');
+        targetBtn.classList.remove('bg-black/8', 'text-black/80');
+      }
+
+      if (tabPanes.length > 0) {
+        // Tab Pane Mode: Each category has its own complete filled grid
+        tabPanes.forEach((pane) => {
+          const paneSlug = pane.getAttribute('data-pane');
+          if (paneSlug === String(filterVal)) {
+            pane.style.display = 'block';
+            pane.style.opacity = '0';
+            pane.style.transform = 'translateY(6px)';
+            pane.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+            requestAnimationFrame(() => {
+              pane.style.opacity = '1';
+              pane.style.transform = 'translateY(0)';
+            });
+          } else {
+            pane.style.display = 'none';
+            pane.style.opacity = '0';
+          }
+        });
+      } else {
+        // Fallback item filter
+        newsItems.forEach((item) => {
+          const cat = item.getAttribute('data-category');
+          if (filterVal === '-1' || filterVal === cat) {
+            item.style.display = 'flex';
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+            }, 20);
+          } else {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(6px)';
+            item.style.display = 'none';
+          }
+        });
+
+        // Update inner sub-grids
+        subGrids.forEach((grid) => {
+          const visibleItems = Array.from(grid.querySelectorAll('.item')).filter((el) => el.style.display !== 'none');
+          grid.style.display = visibleItems.length > 0 ? '' : 'none';
+        });
+
+        // Update group columns
+        groupItems.forEach((group) => {
+          const visibleItems = Array.from(group.querySelectorAll('.item')).filter((el) => el.style.display !== 'none');
+          group.style.display = visibleItems.length > 0 ? '' : 'none';
+        });
+
+        // Update whole grid sets
+        gridSets.forEach((gridSet) => {
+          const visibleItems = Array.from(gridSet.querySelectorAll('.item')).filter((el) => el.style.display !== 'none');
+          gridSet.style.display = visibleItems.length > 0 ? '' : 'none';
+        });
+      }
+    }
+
+    let currentIndex = 0;
+    let autoInterval = null;
+    let isPaused = false;
+
+    filterBtns.forEach((btn, index) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        filterBtns.forEach((b) => {
-          b.classList.remove('active', 'bg-primary', 'text-white', 'shadow-xs', 'font-bold');
-          b.classList.add('bg-black/8', 'text-black/80', 'font-semibold');
-        });
-        btn.classList.add('active', 'bg-primary', 'text-white', 'shadow-xs', 'font-bold');
-        btn.classList.remove('bg-black/8', 'text-black/80');
+        isPaused = true;
+        clearInterval(autoInterval);
+        currentIndex = index;
+        const filterVal = btn.getAttribute('data-filter');
+        applyFilter(filterVal, btn);
       });
     });
+
+    // Auto rotate tabs every 6s when not hovered or clicked
+    const startAutoCycle = () => {
+      if (filterBtns.length <= 1) return;
+      autoInterval = setInterval(() => {
+        if (isPaused) return;
+        currentIndex = (currentIndex + 1) % filterBtns.length;
+        const nextBtn = filterBtns[currentIndex];
+        if (nextBtn) {
+          const filterVal = nextBtn.getAttribute('data-filter');
+          applyFilter(filterVal, nextBtn);
+        }
+      }, 6000);
+    };
+
+    section.addEventListener('mouseenter', () => { isPaused = true; });
+    section.addEventListener('mouseleave', () => { isPaused = false; });
+
+    startAutoCycle();
   });
 }
 

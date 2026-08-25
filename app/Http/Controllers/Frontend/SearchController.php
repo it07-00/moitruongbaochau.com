@@ -27,7 +27,7 @@ class SearchController extends Controller
         if (mb_strlen($query) >= 2) {
             $like = '%'.$query.'%';
             $services = Service::query()->published()->where(fn ($builder) => $builder->where('name', 'like', $like)->orWhere('short_description', 'like', $like))->limit(10)->get();
-            $posts = Post::query()->published()->where(fn ($builder) => $builder->where('title', 'like', $like)->orWhere('excerpt', 'like', $like))->limit(10)->get();
+            $posts = Post::query()->published()->with(['category', 'author'])->where(fn ($builder) => $builder->where('title', 'like', $like)->orWhere('excerpt', 'like', $like))->limit(10)->get();
             $projects = Project::query()->published()->where(fn ($builder) => $builder->where('title', 'like', $like)->orWhere('summary', 'like', $like))->limit(10)->get();
         }
 
