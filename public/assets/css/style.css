@@ -55,6 +55,25 @@
   max-width: 95vw !important;
 }
 
+/* Anchor desktop mega menus to the full masthead instead of the trigger item. */
+nav#main-nav,
+#main-nav > .dropdown.menu,
+#main-nav > .dropdown.menu > li.menu-mega {
+  position: static !important;
+}
+
+#main-nav > .dropdown.menu {
+  contain: none !important;
+}
+
+#main-nav > .dropdown.menu > li.menu-mega::after {
+  display: none !important;
+}
+
+#main-nav > .dropdown.menu > li.menu-mega > .submenu {
+  top: 100% !important;
+}
+
 .dropdown.menu > li.menu-mega.col-2 > .submenu {
   min-width: 640px !important;
   grid-template-columns: repeat(2, minmax(290px, 1fr)) !important;
@@ -413,6 +432,11 @@
 .swiper-hero-banner .swiper-pagination-bullet-active {
   background: var(--color-primary, #ef4444) !important;
   width: 24px !important;
+}
+
+/* Keep wide hero artwork uncropped on tablet and desktop viewports. */
+#section-613b4656be {
+  height: clamp(380px, 37.01171875vw, 700px) !important;
 }
 
 /* Responsive Navigation Breakpoints */
