@@ -295,7 +295,7 @@
                     <!-- Left: Social Share Buttons -->
                     <div class="flex items-center gap-3.5 flex-wrap">
                       @php
-                        $shareUrl = 'https://moitruongbaochau.com/tuyen-dung/' . $job->slug;
+                        $shareUrl = url()->current();
                       @endphp
                       <span
                         class="font-extrabold text-sm sm:text-base uppercase tracking-wider text-gray-900"

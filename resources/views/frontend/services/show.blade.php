@@ -505,7 +505,7 @@
                         class="pt-6 sm:pt-8 mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-black"
                       >
                         @php
-                          $shareUrl = 'https://moitruongbaochau.com/dich-vu/' . $service->slug;
+                          $shareUrl = url()->current();
                         @endphp
                         <!-- Left: Social Share Buttons -->
                         <div class="flex items-center gap-3.5 sm:gap-4 flex-wrap">

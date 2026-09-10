@@ -250,7 +250,7 @@
                 <!-- Left: Social Share Buttons -->
                 <div class="flex items-center gap-3.5 sm:gap-4 flex-wrap">
                   @php
-                    $shareUrl = 'https://moitruongbaochau.com/tin-tuc/' . $post->slug;
+                    $shareUrl = url()->current();
                   @endphp
                   <span class="font-extrabold text-base sm:text-lg uppercase tracking-wider text-black">CHIA SẺ:</span>
                   <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
