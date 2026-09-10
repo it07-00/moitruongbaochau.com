@@ -87,7 +87,8 @@
                 <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
                   <!-- LEFT: TOC SIDEBAR (w-75 / ~300px) -->
                   <div
-                    class="sidebar-toc w-full lg:w-72 xl:w-80 lg:flex-none lg:sticky lg:top-[90px]"
+                    class="sidebar-toc flex-none"
+                    style="width: min(100%, 18rem)"
                     data-toc-spy
                   >
                     <div class="sidebar-inner">

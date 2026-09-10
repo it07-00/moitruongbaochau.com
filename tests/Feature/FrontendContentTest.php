@@ -39,6 +39,8 @@ class FrontendContentTest extends TestCase
         $this->get(route('services.show', $service->slug))
             ->assertOk()
             ->assertSee('data-toc-spy', false)
+            ->assertSee('sidebar-toc flex-none', false)
+            ->assertSee('width: min(100%, 18rem)', false)
             ->assertSee('data-toc-source', false)
             ->assertSee('Hồ sơ ĐTM gồm những gì?')
             ->assertSee('/storage/uploads/services/content/replacement.webp', false)
