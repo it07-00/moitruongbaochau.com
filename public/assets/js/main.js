@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilter();
   initNewsFilter();
   initContactForm();
+  initTableOfContents();
   initSmoothScroll();
   initHeroSlider();
 });
@@ -693,7 +694,82 @@ function initContactForm() {
 
 
 /* ==========================================================================
-   11. SMOOTH SCROLL FOR ANCHOR LINKS
+   11. TABLE OF CONTENTS
+   ========================================================================== */
+function initTableOfContents() {
+  document.querySelectorAll('[data-toc-spy]').forEach((sidebar) => {
+    const layout = sidebar.parentElement;
+    const source = layout ? layout.querySelector('[data-toc-source]') : null;
+    const list = sidebar.querySelector('.toc_list');
+    const toggle = sidebar.querySelector('[id="toc-toggle-btn"]');
+
+    if (!source || !list) return;
+
+    const headings = Array.from(source.querySelectorAll('h2, h3')).filter((heading) => heading.textContent.trim());
+
+    if (!headings.length) {
+      sidebar.hidden = true;
+      return;
+    }
+
+    const usedIds = new Set(Array.from(document.querySelectorAll('[id]')).map((element) => element.id));
+    list.replaceChildren();
+
+    headings.forEach((heading, index) => {
+      const existingAnchor = heading.id || heading.querySelector('[id]')?.id;
+      let anchor = existingAnchor || createTocAnchor(heading.textContent, index);
+      let suffix = 2;
+
+      while (!existingAnchor && usedIds.has(anchor)) {
+        anchor = `${createTocAnchor(heading.textContent, index)}-${suffix}`;
+        suffix += 1;
+      }
+
+      if (!existingAnchor) {
+        heading.id = anchor;
+        usedIds.add(anchor);
+      }
+
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+
+      link.href = `#${anchor}`;
+      link.textContent = heading.textContent.trim();
+      link.className = heading.tagName === 'H3'
+        ? 'block border-l-2 border-primary/20 pl-4 text-sm leading-snug text-black transition-colors hover:text-primary'
+        : 'block font-semibold leading-snug text-black transition-colors hover:text-primary';
+
+      item.appendChild(link);
+      list.appendChild(item);
+    });
+
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.addEventListener('click', () => {
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+        list.hidden = isExpanded;
+        toggle.querySelector('svg')?.classList.toggle('rotate-180', isExpanded);
+      });
+    }
+  });
+}
+
+function createTocAnchor(text, index) {
+  const anchor = text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return anchor || `muc-${index + 1}`;
+}
+
+/* ==========================================================================
+   12. SMOOTH SCROLL FOR ANCHOR LINKS
    ========================================================================== */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

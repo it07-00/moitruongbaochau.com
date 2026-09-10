@@ -31,13 +31,16 @@ class FrontendContentTest extends TestCase
     public function test_service_detail_renders_the_content_saved_from_admin(): void
     {
         $service = Service::factory()->create([
-            'content' => '<figure><img src="/storage/uploads/services/content/replacement.webp" alt="Ảnh ĐTM mới"></figure>',
+            'content' => '<h2>Hồ sơ ĐTM gồm những gì?</h2><figure><img src="/storage/uploads/services/content/replacement.webp" alt="Ảnh ĐTM mới"></figure>',
             'status' => ContentStatus::Published,
             'published_at' => now(),
         ]);
 
         $this->get(route('services.show', $service->slug))
             ->assertOk()
+            ->assertSee('data-toc-spy', false)
+            ->assertSee('data-toc-source', false)
+            ->assertSee('Hồ sơ ĐTM gồm những gì?')
             ->assertSee('/storage/uploads/services/content/replacement.webp', false)
             ->assertSee('Ảnh ĐTM mới')
             ->assertDontSee('/assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png', false);

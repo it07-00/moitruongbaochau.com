@@ -84,12 +84,11 @@
                 </div>
 
                 <!-- Two-Column Layout: Sidebar TOC on Left & Article Content on Right -->
-                <div class="flex flex-x gap-6 lg:gap-10 items-start">
+                <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
                   <!-- LEFT: TOC SIDEBAR (w-75 / ~300px) -->
                   <div
-                    class="sidebar-toc flex-none w-72 xl:w-80 hidden lg:block"
+                    class="sidebar-toc w-full lg:w-72 xl:w-80 lg:flex-none lg:sticky lg:top-[90px]"
                     data-toc-spy
-                    style="position: sticky; top: 90px; align-self: flex-start"
                   >
                     <div class="sidebar-inner">
                       <div
@@ -139,6 +138,7 @@
                   <div class="content flex-1 min-w-0">
                     <article
                       class="entry-content space-y-8 text-black"
+                      data-toc-source
                       itemtype="https://schema.org/CreativeWork"
                       itemscope
                     >
