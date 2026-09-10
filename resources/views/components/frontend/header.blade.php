@@ -9,7 +9,7 @@
   <div class="flex items-center justify-between px-4 py-3.5 border-b border-gray-100 bg-white gap-2">
     <a href="{{ route('home') }}" class="flex items-center gap-2.5 min-w-0 flex-1" rel="home">
       <img
-        src="{{ asset('assets/images/logo-leave-png-min.png') }}"
+        src="{{ asset(str_starts_with($websiteSettings['logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['logo'] : ($websiteSettings['logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
         width="36"
         height="36"
         class="h-9 w-9 shrink-0 object-contain"
@@ -59,61 +59,9 @@
   <!-- Main Mobile Navigation Accordion -->
   <div class="menu-outer flex-1 overflow-y-auto px-4 py-2">
     <ul id="menu-29035c419b" class="menu vertical vertical-menu mobile-menu flex flex-col gap-1 text-[14.5px]">
-      <li>
-        <a href="{{ route('home') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Trang chủ</a>
-      </li>
-      <li>
-        <a href="{{ route('about') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Giới thiệu</a>
-      </li>
-
-      <!-- Accordion: Dịch vụ môi trường (Load động từ Database) -->
-      <li class="has-submenu">
-        <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
-          <span>Dịch vụ môi trường</span>
-          <svg class="submenu-chevron size-4 w-4 h-4 text-gray-400 transition-transform duration-200" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button>
-        <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
-          @foreach($headerServiceCategories as $serviceCat)
-            <li class="pt-2 pb-0.5"><span class="block px-2 text-[11.5px] font-bold uppercase tracking-wider text-primary">{{ $serviceCat->name }}</span></li>
-            @foreach($serviceCat->services as $srv)
-              <li><a href="{{ route('services.show', $srv->slug) }}" class="mobile-nav-link block py-1.5 px-2.5 text-[13.5px] rounded-lg text-gray-600 hover:text-primary hover:bg-primary/5 transition-colors font-medium">{{ $srv->name }}</a></li>
-            @endforeach
-          @endforeach
-        </ul>
-      </li>
-
-      <li>
-        <a href="{{ route('projects.index') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Dự án</a>
-      </li>
-
-      <!-- Accordion: Tin tức & Pháp luật (3 danh mục: Tin quốc tế, Tin trong nước, Tin nội bộ) -->
-      <li class="has-submenu">
-        <button type="button" class="mobile-submenu-toggle w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors cursor-pointer text-left">
-          <span>Tin tức &amp; Pháp luật</span>
-          <svg class="submenu-chevron size-4 w-4 h-4 text-gray-400 transition-transform duration-200" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-        </button>
-        <ul class="submenu hidden pl-3.5 my-1 flex flex-col gap-0.5 border-l-2 border-primary/40 ml-3">
-          @foreach($headerPostCategories as $postCat)
-            <li>
-              <a href="{{ route('posts.index', ['category' => $postCat->slug]) }}" class="mobile-nav-link block py-2 px-2.5 text-[14px] rounded-lg text-gray-700 hover:text-primary hover:bg-primary/5 transition-colors font-medium">
-                {{ $postCat->name }}
-              </a>
-            </li>
-          @endforeach
-        </ul>
-      </li>
-
-      <li>
-        <a href="{{ route('recruitment.index') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Tuyển dụng</a>
-      </li>
-
-      <li>
-        <a href="{{ route('contact.index') }}" class="mobile-nav-link flex items-center py-2.5 px-3 rounded-xl font-medium text-gray-800 hover:bg-gray-50 hover:text-primary transition-colors">Liên hệ</a>
-      </li>
+      @foreach ($primaryMenuItems as $menuItem)
+        <x-frontend.mobile-menu-item :item="$menuItem" />
+      @endforeach
     </ul>
   </div>
 
@@ -142,7 +90,7 @@
             <a class="logo flex items-center" title="MÔI TRƯỜNG BẢO CHÂU" href="{{ route('home') }}" rel="home">
               <span class="custom-logo-link">
                 <img
-                  src="{{ asset('assets/images/logo-leave-png-min.png') }}"
+                  src="{{ asset(str_starts_with($websiteSettings['logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['logo'] : ($websiteSettings['logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                   class="custom-logo h-14 sm:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 hover:scale-105"
                   alt="Môi Trường Bảo Châu"
                   loading="eager"
@@ -156,84 +104,26 @@
         </div>
 
         <div class="nav-container pl-2 pr-2 xl:pl-6 xl:pr-4 hidden lg:flex items-center justify-center flex-1">
-          <nav class="nav" id="main-nav">
-            <ul
-              id="menu-8c6d27c2ee"
-              class="dropdown menu horizontal-menu main-nav u-flex-x items-center gap-1 xl:gap-2 min-h-11 xl:min-h-12 bg-black/6 backdrop-blur-md pt-1 px-3.5 xl:px-6 pb-1 rounded-full"
-              data-fx-dropdown-menu=""
-              data-hover="true"
-              data-autohide="true"
-            >
-              <li>
-                <a href="{{ route('home') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Trang chủ</a>
-              </li>
-
-              <li>
-                <a href="{{ route('about') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Giới thiệu</a>
-              </li>
-
-              <!-- Dịch vụ môi trường Mega Menu (Load động từ Database) -->
-              <li class="col-3 menu-mega">
-                <a href="{{ route('services.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 gap-1">
-                  Dịch vụ môi trường
-                  <svg class="size-3.5 w-3.5 h-3.5 opacity-60" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </a>
-                <ul class="submenu vertical menu">
-                  @foreach($headerServiceCategories as $serviceCat)
-                  <li>
-                    <a href="{{ route('services.index') }}" class="text-[14.5px] font-bold! text-primary uppercase pb-1 border-b border-white/10">{{ $serviceCat->name }}</a>
-                    <ul class="submenu vertical menu">
-                      @foreach($serviceCat->services as $srv)
-                      <li><a href="{{ route('services.show', $srv->slug) }}" title="{{ $srv->name }}">{{ $srv->name }}</a></li>
-                      @endforeach
-                    </ul>
-                  </li>
-                  @endforeach
-                </ul>
-              </li>
-
-              <li>
-                <a href="{{ route('projects.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Dự án</a>
-              </li>
-
-              <!-- MORE MENU ITEM FOR COMPACT SCREENS (1024px - 1279px) -->
-              <li class="nav-item-more relative">
-                <a href="javascript:;" class="flex items-center justify-center h-full font-bold text-base text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 leading-none cursor-pointer" title="Xem thêm" aria-label="Xem thêm menu">...</a>
-                <ul class="submenu vertical menu bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-black/8 py-2 px-1.5 min-w-[210px] text-[14px]">
-                  <li><a href="{{ route('posts.index') }}" class="flex items-center justify-between py-2 px-3 rounded-xl font-medium text-gray-800 hover:text-primary hover:bg-primary/5 transition-colors"><span>Tin tức &amp; Pháp luật</span></a></li>
-                  <li><a href="{{ route('recruitment.index') }}" class="flex items-center py-2 px-3 rounded-xl font-medium text-gray-800 hover:text-primary hover:bg-primary/5 transition-colors">Tuyển dụng</a></li>
-                  <li><a href="{{ route('contact.index') }}" class="flex items-center py-2 px-3 rounded-xl font-medium text-gray-800 hover:text-primary hover:bg-primary/5 transition-colors">Liên hệ</a></li>
-                </ul>
-              </li>
-
-              <!-- Tin tức & Pháp luật Dropdown Menu (3 mục: Tin quốc tế, Tin trong nước, Tin nội bộ) -->
-              <li class="relative nav-item-extended">
-                <a href="{{ route('posts.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5 gap-1">
-                  Tin tức &amp; Pháp luật
-                  <svg class="size-3.5 w-3.5 h-3.5 opacity-60" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </a>
-                <ul class="submenu vertical menu bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-black/8 py-2 px-1.5 min-w-[200px] text-[14px]">
-                  @foreach($headerPostCategories as $postCat)
-                  <li>
-                    <a href="{{ route('posts.index', ['category' => $postCat->slug]) }}" class="flex items-center py-2 px-3 rounded-xl font-medium text-gray-800 hover:text-primary hover:bg-primary/5 transition-colors">
-                      {{ $postCat->name }}
-                    </a>
-                  </li>
-                  @endforeach
-                </ul>
-              </li>
-
-              <li class="nav-item-extended">
-                <a href="{{ route('recruitment.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Tuyển dụng</a>
-              </li>
-
-              <li class="nav-item-extended">
-                <a href="{{ route('contact.index') }}" class="flex items-center h-full font-medium text-[14.5px] xl:text-[15px] text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition-colors py-2 px-3 rounded-full hover:bg-black/5">Liên hệ</a>
-              </li>
+          <nav class="nav" id="main-nav" aria-label="Điều hướng chính">
+            <ul class="header-nav-list">
+              @foreach ($primaryMenuItems as $menuItem)
+                @php
+                  $hasMegaDropdown = $menuItem->children->contains(fn ($child) => $child->children->isNotEmpty());
+                @endphp
+                <li class="header-nav-item {{ $hasMegaDropdown ? 'has-mega-menu' : ($menuItem->children->isNotEmpty() ? 'has-dropdown' : '') }}">
+                  <a href="{{ $menuItem->resolvedUrl() }}" target="{{ $menuItem->target }}" @if ($menuItem->target === '_blank') rel="noopener noreferrer" @endif>
+                    {{ $menuItem->label }}
+                    @if ($menuItem->children->isNotEmpty())
+                      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+                    @endif
+                  </a>
+                  @if ($menuItem->children->isNotEmpty())
+                    <div class="header-dropdown {{ $hasMegaDropdown ? 'header-dropdown-mega' : '' }}">
+                      <x-frontend.desktop-menu-children :items="$menuItem->children" />
+                    </div>
+                  @endif
+                </li>
+              @endforeach
             </ul>
           </nav>
         </div>
@@ -307,13 +197,13 @@
           </div>
 
           <a
-            class="hidden sm:inline-flex btn btn-primary-1 items-center justify-center font-semibold text-[13.5px] sm:text-[14.5px] py-2 sm:py-2.5 px-4 sm:px-5 rounded-full shadow-lg shadow-primary/25 hover:shadow-primary/80 transition-all text-white whitespace-nowrap"
+            class="header-consultation hidden sm:inline-flex btn btn-primary-1 items-center justify-center font-semibold text-[13.5px] sm:text-[14.5px] py-2 sm:py-2.5 px-4 sm:px-5 rounded-full shadow-lg shadow-primary/25 hover:shadow-primary/80 transition-all text-white whitespace-nowrap"
             href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', $websiteSettings['hotline'] ?? '0915549148') }}"
             title="Tư vấn ngay"
             target="_blank"
             rel="noopener noreferrer nofollow"
           >
-            Tư vấn ngay
+            {{ $websiteSettings['header_cta_label'] ?? 'Tư vấn ngay' }}
           </a>
 
           <div class="off-canvas-content lg:hidden flex items-center" data-fx-off-canvas-content="">
@@ -336,4 +226,3 @@
     </div>
   </header>
 </div>
-

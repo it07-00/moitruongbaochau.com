@@ -88,7 +88,7 @@ function initMobileMenu() {
 
   const openMenu = () => {
     drawer.classList.add('is-open');
-    drawer.style.setProperty('display', 'block', 'important');
+    drawer.style.setProperty('display', 'flex', 'important');
     drawer.style.setProperty('visibility', 'visible', 'important');
     drawer.style.setProperty('transform', 'translateX(0)', 'important');
 
@@ -147,11 +147,13 @@ function initMobileMenu() {
       if (!submenu) return;
 
       const isHidden = submenu.classList.contains('hidden') || submenu.style.display === 'none';
+      btn.setAttribute('aria-expanded', String(isHidden));
 
       // Đóng các submenu anh em cùng cấp
       const siblings = parentLi.parentElement.querySelectorAll(':scope > li.has-submenu');
       siblings.forEach((sib) => {
         if (sib !== parentLi) {
+          sib.querySelector('.mobile-submenu-toggle')?.setAttribute('aria-expanded', 'false');
           const sibSub = sib.querySelector(':scope > ul.submenu');
           const sibChev = sib.querySelector('.submenu-chevron');
           if (sibSub) {
@@ -761,6 +763,4 @@ document.addEventListener('livewire:init', () => {
     });
   }
 });
-
-
 

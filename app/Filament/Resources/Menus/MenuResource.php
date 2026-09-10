@@ -6,6 +6,7 @@ use App\Filament\Resources\Menus\Pages\CreateMenu;
 use App\Filament\Resources\Menus\Pages\EditMenu;
 use App\Filament\Resources\Menus\Pages\ListMenus;
 use App\Models\Menu;
+use App\Models\MenuItem;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -54,10 +55,12 @@ class MenuResource extends Resource
                         TextInput::make('name')
                             ->label('Tên Menu')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(191),
                         TextInput::make('location')
                             ->label('Vị trí hiển thị (Location Key)')
                             ->placeholder('Ví dụ: primary, footer...')
+                            ->helperText('Header sử dụng menu có vị trí primary.')
+                            ->unique(ignoreRecord: true)
                             ->required()
                             ->maxLength(255),
                         Toggle::make('is_active')
@@ -66,6 +69,7 @@ class MenuResource extends Resource
                     ])->columns(3),
 
                 Section::make('Các mục trong Menu (Menu Items)')
+                    ->description('Kéo thả để sắp xếp. Chọn mục cha để tạo menu con; để trống để hiển thị trên thanh chính. Với mục cha mới, lưu menu trước rồi chọn lại.')
                     ->components([
                         Repeater::make('items')
                             ->label('Danh sách liên kết')
@@ -74,9 +78,23 @@ class MenuResource extends Resource
                             ->components([
                                 TextInput::make('label')
                                     ->label('Nhãn hiển thị')
-                                    ->required(),
+                                    ->required()
+                                    ->maxLength(191),
+                                Select::make('parent_id')
+                                    ->label('Mục cha')
+                                    ->placeholder('Thanh menu chính')
+                                    ->options(function ($record, $livewire): array {
+                                        $menu = $livewire->getRecord();
+
+                                        return $menu instanceof Menu
+                                            ? self::parentOptions($menu, $record instanceof MenuItem ? $record : null)
+                                            : [];
+                                    })
+                                    ->searchable(),
                                 TextInput::make('url')
                                     ->label('Đường dẫn URL tùy chỉnh')
+                                    ->maxLength(191)
+                                    ->regex('/^(https?:\/\/|mailto:|tel:|\/(?!\/)|#)/i')
                                     ->placeholder('/du-an hoặc https://...'),
                                 TextInput::make('route_name')
                                     ->label('Hoặc tên Route Laravel')
@@ -92,7 +110,7 @@ class MenuResource extends Resource
                                     ->label('Hiển thị')
                                     ->default(true),
                             ])
-                            ->columns(5)
+                            ->columns(3)
                             ->columnSpanFull()
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['label'] ?? null),
@@ -134,6 +152,29 @@ class MenuResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    /** @return array<int, string> */
+    private static function parentOptions(Menu $menu, ?MenuItem $item): array
+    {
+        $items = $menu->loadMissing('items')->items->keyBy('id');
+
+        return $items->filter(function (MenuItem $candidate) use ($items, $item): bool {
+            $current = $candidate;
+            $visited = [];
+
+            while ($current !== null) {
+                if ($current->id === $item?->id || in_array($current->id, $visited, true)) {
+                    return false;
+                }
+                $visited[] = $current->id;
+                $current = $items->get($current->parent_id);
+            }
+
+            return true;
+        })->mapWithKeys(fn (MenuItem $candidate): array => [
+            $candidate->id => $candidate->label.' (#'.$candidate->id.')',
+        ])->all();
     }
 
     public static function getPages(): array

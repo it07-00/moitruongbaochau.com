@@ -36,6 +36,7 @@ class WebsiteSeeder extends Seeder
             $this->seedSettings();
             $this->seedRedirects();
             $this->seedMenu();
+            $this->call(HeaderNavigationSeeder::class);
         });
     }
 
@@ -347,6 +348,7 @@ HTML;
             ['name' => 'Tin quốc tế', 'slug' => 'tin-quoc-te', 'sort_order' => 1],
             ['name' => 'Tin trong nước', 'slug' => 'tin-trong-nuoc', 'sort_order' => 2],
             ['name' => 'Tin nội bộ', 'slug' => 'tin-noi-bo', 'sort_order' => 3],
+            ['name' => 'Văn bản pháp luật', 'slug' => 'van-ban-phap-luat', 'sort_order' => 4],
         ])->mapWithKeys(function (array $category): array {
             $model = PostCategory::query()->updateOrCreate(['slug' => $category['slug']], [...$category, 'is_active' => true]);
 
@@ -354,7 +356,7 @@ HTML;
         });
 
         // Xóa các danh mục cũ nếu có
-        PostCategory::query()->whereNotIn('slug', ['tin-quoc-te', 'tin-trong-nuoc', 'tin-noi-bo'])->delete();
+        PostCategory::query()->whereNotIn('slug', ['tin-quoc-te', 'tin-trong-nuoc', 'tin-noi-bo', 'van-ban-phap-luat'])->delete();
 
         $gpmtContent = <<<'HTML'
 <h2><span id="giay-phep-moi-truong-la-gi">Giấy phép môi trường là gì?</span></h2>

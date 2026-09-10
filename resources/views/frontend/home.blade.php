@@ -27,7 +27,6 @@
 <section
           id="section-613b4656be"
           class="section section-hero relative overflow-hidden"
-          style="height: clamp(380px, 55vw, 700px);"
         >
           <!-- Swiper Hero Slider (Load động từ Database) -->
           <div class="swiper swiper-hero-banner w-full h-full" id="hero-swiper">

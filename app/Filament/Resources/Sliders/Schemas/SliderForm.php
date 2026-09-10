@@ -29,7 +29,7 @@ class SliderForm
                             ->directory('uploads/sliders')
                             ->automaticallyResizeImagesMode('cover')
                             ->required()
-                            ->helperText('Khuyên dùng ảnh tỷ lệ 16:9 hoặc kích thước 1920x720px / 1536x570px.'),
+                            ->helperText('Khuyên dùng banner ngang khoảng 2.7:1 (1920×720 hoặc 1536×568 px). Ảnh được thu vừa khung trên điện thoại, không cắt nội dung.'),
                         TextInput::make('link')
                             ->label('Đường dẫn khi click (URL)')
                             ->placeholder('vd: /dich-vu hoặc https://...')

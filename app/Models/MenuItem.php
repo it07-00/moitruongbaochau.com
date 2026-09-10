@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Routing\Exceptions\UrlGenerationException;
 use Illuminate\Support\Facades\Route;
 
 class MenuItem extends Model
@@ -43,9 +44,15 @@ class MenuItem extends Model
     public function resolvedUrl(): string
     {
         if ($this->route_name !== null && Route::has($this->route_name)) {
-            return route($this->route_name);
+            try {
+                return route($this->route_name);
+            } catch (UrlGenerationException) {
+                // Parameterized routes can use the custom URL instead.
+            }
         }
 
-        return $this->url ?: '#';
+        return $this->url && preg_match('/^(https?:\/\/|mailto:|tel:|\/(?!\/)|#)/i', $this->url)
+            ? $this->url
+            : '#';
     }
 }

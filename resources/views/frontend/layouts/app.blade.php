@@ -8,6 +8,7 @@
     <link rel="icon" href="{{ asset('assets/images/cropped-chuan-192x192.png') }}" sizes="192x192">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ file_exists(public_path('assets/css/style.css')) ? filemtime(public_path('assets/css/style.css')) : time() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}?v={{ filemtime(public_path('assets/css/header.css')) }}">
     @livewireStyles
 </head>
 <body class="{{ $bodyClass ?? '' }}" itemscope itemtype="https://schema.org/WebPage">

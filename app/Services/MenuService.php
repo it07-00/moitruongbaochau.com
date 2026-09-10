@@ -29,12 +29,29 @@ class MenuService
             ->where('is_active', true)
             ->with(['items' => fn ($query) => $query
                 ->where('is_active', true)
-                ->whereNull('parent_id')
-                ->with(['children' => fn ($query) => $query->where('is_active', true)])])
+                ->orderBy('id')])
             ->first();
 
         /** @var Collection<int, MenuItem> $items */
         $items = $menu?->items ?? new Collection;
+
+        $groups = $items->groupBy(fn (MenuItem $item): int => $item->parent_id ?? 0);
+        $attachChildren = function (MenuItem $item, array $ancestors = []) use (&$attachChildren, $groups): void {
+            $ancestors[] = $item->getKey();
+            $children = new Collection($groups->get($item->getKey(), collect())
+                ->reject(fn (MenuItem $child): bool => in_array($child->getKey(), $ancestors, true))
+                ->values()->all());
+            $item->setRelation('children', $children);
+
+            foreach ($children as $child) {
+                $attachChildren($child, $ancestors);
+            }
+        };
+        $items = new Collection($groups->get(0, collect())->all());
+
+        foreach ($items as $item) {
+            $attachChildren($item);
+        }
 
         Cache::forever($cacheKey, $items);
 
