@@ -139,6 +139,19 @@ class PostResource extends Resource
                             ->default(now()),
                     ])->columns(2),
 
+                Section::make('Tài liệu PDF đính kèm')
+                    ->description('Tải lên file văn bản pháp luật, nghị định, thông tư hoặc báo cáo kỹ thuật (định dạng PDF). Hệ thống sẽ tự động hiển thị khung đọc trực tiếp và nút tải về trên website.')
+                    ->components([
+                        FileUpload::make('pdf_file')
+                            ->label('Tập tin PDF')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->directory('uploads/posts/documents')
+                            ->maxSize(51200)
+                            ->openable()
+                            ->downloadable()
+                            ->columnSpanFull(),
+                    ]),
+
                 SeoSection::make(),
             ]);
     }
@@ -163,6 +176,13 @@ class PostResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color('info'),
+                IconColumn::make('pdf_file')
+                    ->label('PDF')
+                    ->boolean()
+                    ->trueIcon(Heroicon::OutlinedDocumentArrowDown)
+                    ->falseIcon(null)
+                    ->color('danger')
+                    ->alignCenter(),
                 TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge(),

@@ -475,12 +475,13 @@ HTML;
                 'content' => $gpmtContent,
             ],
             [
-                'category' => 'tin-trong-nuoc',
+                'category' => 'van-ban-phap-luat',
                 'title' => 'Tổng Hợp Các Mức Phạt Vi Phạm Hành Chính Về Bảo Vệ Môi Trường Mới Nhất',
                 'slug' => 'tong-hop-muc-phat-vi-pham-moi-truong',
                 'image' => '118-1-768x429.png',
                 'excerpt' => 'Cập nhật mức xử phạt hành chính mới nhất trong lĩnh vực bảo vệ môi trường theo Nghị định 45/2022/NĐ-CP của Chính phủ.',
                 'content' => $gpmtContent,
+                'pdf_file' => 'uploads/posts/documents/nghi-dinh-45-2022-nd-cp-xu-phat-moi-truong.pdf',
             ],
             [
                 'category' => 'tin-quoc-te',
@@ -587,6 +588,7 @@ HTML;
                 'excerpt' => $post['excerpt'],
                 'content' => $post['content'],
                 'thumbnail' => $post['image'],
+                'pdf_file' => $post['pdf_file'] ?? null,
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
                 'published_at' => $publishedAt->copy()->subHours($index),

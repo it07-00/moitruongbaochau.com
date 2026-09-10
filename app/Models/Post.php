@@ -19,7 +19,7 @@ class Post extends Model
     use HasSeoAttributes;
 
     protected $fillable = [
-        'post_category_id', 'author_id', 'title', 'slug', 'excerpt', 'content', 'thumbnail',
+        'post_category_id', 'author_id', 'title', 'slug', 'excerpt', 'content', 'thumbnail', 'pdf_file',
         'status', 'is_featured', 'published_at', 'meta_title', 'meta_description',
         'canonical_url', 'robots', 'og_title', 'og_description', 'og_image',
         'twitter_title', 'twitter_description', 'twitter_image',
@@ -30,6 +30,28 @@ class Post extends Model
     protected function casts(): array
     {
         return ['is_featured' => 'boolean'];
+    }
+
+    public function getPdfUrlAttribute(): ?string
+    {
+        if (blank($this->pdf_file)) {
+            return null;
+        }
+
+        if (str_starts_with($this->pdf_file, 'http://') || str_starts_with($this->pdf_file, 'https://')) {
+            return $this->pdf_file;
+        }
+
+        return asset(str_starts_with($this->pdf_file, 'uploads/') ? 'storage/'.$this->pdf_file : $this->pdf_file);
+    }
+
+    public function getPdfFileNameAttribute(): ?string
+    {
+        if (blank($this->pdf_file)) {
+            return null;
+        }
+
+        return basename($this->pdf_file);
     }
 
     public function category(): BelongsTo
