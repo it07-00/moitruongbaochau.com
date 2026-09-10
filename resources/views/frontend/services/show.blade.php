@@ -142,6 +142,15 @@
                       itemtype="https://schema.org/CreativeWork"
                       itemscope
                     >
+                      @if(filled($service->content))
+                        @if(filled($service->short_description))
+                          <p class="text-base sm:text-lg leading-relaxed text-black">
+                            <em><strong>{{ $service->short_description }}</strong></em>
+                          </p>
+                        @endif
+
+                        {!! $service->content !!}
+                      @else
                       <!-- Lead Paragraph -->
                       <p
                         class="text-base sm:text-lg leading-relaxed text-black"
@@ -428,6 +437,7 @@
                           bàn giao tận tay khách hàng.
                         </p>
                       </div>
+                      @endif
 
                       <!-- Author Box -->
                       <section

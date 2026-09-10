@@ -114,16 +114,11 @@ class ProjectResource extends Resource
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dự án')
                             ->columnSpanFull()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
-                                if (blank($get('meta_description')) && filled($state)) {
-                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
-                                    $set('meta_description', $clean);
-                                    if (blank($get('og_description'))) {
-                                        $set('og_description', $clean);
-                                    }
-                                }
-                            }),
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('uploads/projects/content')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->fileAttachmentsMaxSize(10240),
                     ])->columns(2),
 
                 Section::make('Hình ảnh & Thời gian')
@@ -131,10 +126,10 @@ class ProjectResource extends Resource
                         FileUpload::make('thumbnail')
                             ->label('Ảnh dự án')
                             ->image()
+                            ->disk('public')
                             ->directory('uploads/projects')
-                            ->automaticallyResizeImagesMode('cover')
                             ->imageAspectRatio('16:9')
-                            ->automaticallyCropImagesToAspectRatio(),
+                            ->maxSize(10240),
                         DatePicker::make('completed_at')
                             ->label('Ngày hoàn thành'),
                         Toggle::make('is_featured')

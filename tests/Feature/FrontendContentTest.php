@@ -28,6 +28,21 @@ class FrontendContentTest extends TestCase
             ->assertSee($service->name);
     }
 
+    public function test_service_detail_renders_the_content_saved_from_admin(): void
+    {
+        $service = Service::factory()->create([
+            'content' => '<figure><img src="/storage/uploads/services/content/replacement.webp" alt="Ảnh ĐTM mới"></figure>',
+            'status' => ContentStatus::Published,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('services.show', $service->slug))
+            ->assertOk()
+            ->assertSee('/storage/uploads/services/content/replacement.webp', false)
+            ->assertSee('Ảnh ĐTM mới')
+            ->assertDontSee('/assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png', false);
+    }
+
     public function test_published_content_details_are_public_and_drafts_are_not(): void
     {
         $publishedService = Service::factory()->create([

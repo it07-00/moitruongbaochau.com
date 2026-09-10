@@ -111,16 +111,11 @@ class ServiceResource extends Resource
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dịch vụ')
                             ->columnSpanFull()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
-                                if (blank($get('meta_description')) && filled($state)) {
-                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
-                                    $set('meta_description', $clean);
-                                    if (blank($get('og_description'))) {
-                                        $set('og_description', $clean);
-                                    }
-                                }
-                            }),
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('uploads/services/content')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->fileAttachmentsMaxSize(10240),
                     ])->columns(2),
 
                 Section::make('Hình ảnh & Hiển thị')
@@ -128,10 +123,10 @@ class ServiceResource extends Resource
                         FileUpload::make('thumbnail')
                             ->label('Ảnh đại diện')
                             ->image()
+                            ->disk('public')
                             ->directory('uploads/services')
-                            ->automaticallyResizeImagesMode('cover')
                             ->imageAspectRatio('16:9')
-                            ->automaticallyCropImagesToAspectRatio(),
+                            ->maxSize(10240),
                         TextInput::make('icon')
                             ->label('Tên Icon (nếu có)'),
                         Toggle::make('is_featured')
