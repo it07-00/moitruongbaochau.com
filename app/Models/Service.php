@@ -20,7 +20,7 @@ class Service extends Model
 
     protected $fillable = [
         'service_category_id', 'name', 'slug', 'short_description', 'content', 'thumbnail',
-        'icon', 'status', 'is_featured', 'sort_order', 'published_at', 'meta_title',
+        'icon', 'status', 'view_count', 'tags', 'is_featured', 'sort_order', 'published_at', 'meta_title',
         'meta_description', 'canonical_url', 'robots', 'og_title', 'og_description',
         'og_image', 'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -29,7 +29,12 @@ class Service extends Model
 
     protected function casts(): array
     {
-        return ['is_featured' => 'boolean', 'sort_order' => 'integer'];
+        return [
+            'is_featured' => 'boolean',
+            'sort_order' => 'integer',
+            'view_count' => 'integer',
+            'tags' => 'array',
+        ];
     }
 
     public function category(): BelongsTo

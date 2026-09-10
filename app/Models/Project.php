@@ -19,7 +19,7 @@ class Project extends Model
 
     protected $fillable = [
         'title', 'slug', 'category', 'client', 'location', 'summary', 'content', 'thumbnail',
-        'completed_at', 'status', 'is_featured', 'published_at', 'meta_title',
+        'completed_at', 'status', 'view_count', 'tags', 'is_featured', 'published_at', 'meta_title',
         'meta_description', 'canonical_url', 'robots', 'og_title', 'og_description',
         'og_image', 'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -28,6 +28,11 @@ class Project extends Model
 
     protected function casts(): array
     {
-        return ['is_featured' => 'boolean', 'completed_at' => 'date'];
+        return [
+            'is_featured' => 'boolean',
+            'completed_at' => 'date',
+            'view_count' => 'integer',
+            'tags' => 'array',
+        ];
     }
 }

@@ -62,6 +62,8 @@ class ProjectController extends Controller
     public function show(string $slug): View
     {
         $project = Project::query()->published()->where('slug', $slug)->firstOrFail();
+        $project->increment('view_count');
+
         $relatedProjects = Project::query()
             ->published()
             ->whereKeyNot($project->getKey())

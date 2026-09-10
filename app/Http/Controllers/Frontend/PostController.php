@@ -58,6 +58,9 @@ class PostController extends Controller
             ->with(['category', 'author'])
             ->where('slug', $slug)
             ->firstOrFail();
+
+        $post->increment('view_count');
+
         $relatedPosts = Post::query()
             ->published()
             ->whereKeyNot($post->getKey())

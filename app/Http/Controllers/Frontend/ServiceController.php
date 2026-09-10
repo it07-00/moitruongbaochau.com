@@ -39,6 +39,8 @@ class ServiceController extends Controller
     public function show(string $slug): View
     {
         $service = Service::query()->published()->with('category:id,name,slug')->where('slug', $slug)->firstOrFail();
+        $service->increment('view_count');
+
         $relatedServices = Service::query()
             ->published()
             ->whereKeyNot($service->getKey())

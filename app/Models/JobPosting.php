@@ -20,7 +20,7 @@ class JobPosting extends Model
 
     protected $fillable = [
         'title', 'slug', 'location', 'employment_type', 'summary', 'thumbnail', 'content', 'requirements',
-        'benefits', 'status', 'published_at', 'expires_at', 'meta_title', 'meta_description',
+        'benefits', 'status', 'view_count', 'tags', 'published_at', 'expires_at', 'meta_title', 'meta_description',
         'canonical_url', 'robots', 'og_title', 'og_description', 'og_image',
         'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -29,7 +29,11 @@ class JobPosting extends Model
 
     protected function casts(): array
     {
-        return ['expires_at' => 'datetime'];
+        return [
+            'expires_at' => 'datetime',
+            'view_count' => 'integer',
+            'tags' => 'array',
+        ];
     }
 
     public function scopeOpen(Builder $query): Builder

@@ -20,7 +20,7 @@ class Post extends Model
 
     protected $fillable = [
         'post_category_id', 'author_id', 'title', 'slug', 'excerpt', 'content', 'thumbnail', 'pdf_file',
-        'status', 'is_featured', 'published_at', 'meta_title', 'meta_description',
+        'status', 'view_count', 'tags', 'is_featured', 'published_at', 'meta_title', 'meta_description',
         'canonical_url', 'robots', 'og_title', 'og_description', 'og_image',
         'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -29,7 +29,11 @@ class Post extends Model
 
     protected function casts(): array
     {
-        return ['is_featured' => 'boolean'];
+        return [
+            'is_featured' => 'boolean',
+            'view_count' => 'integer',
+            'tags' => 'array',
+        ];
     }
 
     public function getPdfUrlAttribute(): ?string
