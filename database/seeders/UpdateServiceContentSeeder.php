@@ -17,7 +17,7 @@ class UpdateServiceContentSeeder extends Seeder
 
         foreach ($services as $slug => $content) {
             Service::query()->where('slug', $slug)->update([
-                'content' => RichContentNormalizer::normalizeLegacyFigures($content),
+                'content' => RichContentNormalizer::normalize($content),
             ]);
             $this->command->info("✅ Đã cập nhật: {$slug}");
         }

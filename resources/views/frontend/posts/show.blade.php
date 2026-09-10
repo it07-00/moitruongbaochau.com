@@ -249,10 +249,13 @@
               <div class="pt-6 sm:pt-8 mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-black">
                 <!-- Left: Social Share Buttons -->
                 <div class="flex items-center gap-3.5 sm:gap-4 flex-wrap">
+                  @php
+                    $shareUrl = 'https://moitruongbaochau.com/tin-tuc/' . $post->slug;
+                  @endphp
                   <span class="font-extrabold text-base sm:text-lg uppercase tracking-wider text-black">CHIA SẺ:</span>
                   <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://moitruongbaochau.vn/news-detail.html"
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
                       target="_blank" rel="noopener noreferrer"
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                       title="Chia sẻ lên Facebook">
@@ -262,7 +265,7 @@
                       </svg>
                     </a>
                     <!-- X (Twitter) -->
-                    <a href="https://twitter.com/intent/tweet?url=https://moitruongbaochau.vn/news-detail.html"
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode($shareUrl) }}&amp;text={{ urlencode($post->title) }}"
                       target="_blank" rel="noopener noreferrer"
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                       title="Chia sẻ lên X">
@@ -282,7 +285,7 @@
                       </svg>
                     </button>
                     <!-- Email -->
-                    <a href="mailto:?subject=Kiến Thức &amp; Tin Tức Môi Trường Bảo Châu&amp;body=https://moitruongbaochau.vn/news-detail.html"
+                    <a href="mailto:?subject={{ urlencode($post->title) }}&amp;body={{ urlencode($shareUrl) }}"
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                       title="Gửi qua Email">
                       <svg class="size-6 sm:size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -293,8 +296,8 @@
                     </a>
                     <!-- Copy Link -->
                     <button onclick="
-                                      navigator.clipboard.writeText(window.location.href);
-                                      alert('Đã sao chép liên kết bài viết!');
+                                      navigator.clipboard.writeText('{{ $shareUrl }}');
+                                      alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
                                     "
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                       title="Sao chép liên kết">

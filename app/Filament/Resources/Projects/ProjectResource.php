@@ -8,6 +8,7 @@ use App\Filament\Resources\Projects\Pages\CreateProject;
 use App\Filament\Resources\Projects\Pages\EditProject;
 use App\Filament\Resources\Projects\Pages\ListProjects;
 use App\Models\Project;
+use App\Support\RichContentNormalizer;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -113,6 +114,7 @@ class ProjectResource extends Resource
                             }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dự án')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/projects/content')

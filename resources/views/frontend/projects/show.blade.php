@@ -388,6 +388,9 @@
                   >
                     <!-- Left: Social Share Buttons -->
                     <div class="flex items-center gap-3.5 flex-wrap">
+                      @php
+                        $shareUrl = 'https://moitruongbaochau.com/du-an/' . $project->slug;
+                      @endphp
                       <span
                         class="font-extrabold text-sm sm:text-base uppercase tracking-wider text-gray-900"
                         >CHIA SẺ:</span
@@ -395,7 +398,7 @@
                       <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                         <!-- Facebook -->
                         <a
-                          href="https://www.facebook.com/sharer/sharer.php?u=https://moitruongbaochau.vn/project-detail.html"
+                          href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
                           target="_blank"
                           rel="noopener noreferrer"
                           class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
@@ -412,7 +415,7 @@
                         </a>
                         <!-- X (Twitter) -->
                         <a
-                          href="https://twitter.com/intent/tweet?url=https://moitruongbaochau.vn/project-detail.html"
+                          href="https://twitter.com/intent/tweet?url={{ urlencode($shareUrl) }}&amp;text={{ urlencode($project->title ?? $project->name) }}"
                           target="_blank"
                           rel="noopener noreferrer"
                           class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
@@ -449,7 +452,7 @@
                         </button>
                         <!-- Email -->
                         <a
-                          href="mailto:?subject=Dự Án Giấy Phép Môi Trường BERICAP&amp;body=https://moitruongbaochau.vn/project-detail.html"
+                          href="mailto:?subject={{ urlencode($project->title ?? $project->name) }}&amp;body={{ urlencode($shareUrl) }}"
                           class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                           title="Gửi qua Email"
                         >
@@ -470,8 +473,8 @@
                         <!-- Copy Link -->
                         <button
                           onclick="
-                            navigator.clipboard.writeText(window.location.href);
-                            alert('Đã sao chép liên kết bài viết!');
+                            navigator.clipboard.writeText('{{ $shareUrl }}');
+                            alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
                           "
                           class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                           title="Sao chép liên kết"

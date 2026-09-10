@@ -8,6 +8,7 @@ use App\Filament\Resources\JobPostings\Pages\CreateJobPosting;
 use App\Filament\Resources\JobPostings\Pages\EditJobPosting;
 use App\Filament\Resources\JobPostings\Pages\ListJobPostings;
 use App\Models\JobPosting;
+use App\Support\RichContentNormalizer;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -111,6 +112,7 @@ class JobPostingResource extends Resource
                             }),
                         RichEditor::make('content')
                             ->label('Mô tả công việc (JD)')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/job-postings/content')
@@ -119,6 +121,7 @@ class JobPostingResource extends Resource
                             ->fileAttachmentsMaxSize(10240),
                         RichEditor::make('requirements')
                             ->label('Yêu cầu ứng viên')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/job-postings/content')
@@ -127,6 +130,7 @@ class JobPostingResource extends Resource
                             ->fileAttachmentsMaxSize(10240),
                         RichEditor::make('benefits')
                             ->label('Quyền lợi được hưởng')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/job-postings/content')

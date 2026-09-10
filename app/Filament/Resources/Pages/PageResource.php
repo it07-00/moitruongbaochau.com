@@ -8,6 +8,7 @@ use App\Filament\Resources\Pages\Pages\CreatePage;
 use App\Filament\Resources\Pages\Pages\EditPage;
 use App\Filament\Resources\Pages\Pages\ListPages;
 use App\Models\Page;
+use App\Support\RichContentNormalizer;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -126,6 +127,7 @@ class PageResource extends Resource
                             }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết trang')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (?string $state, callable $set, callable $get) {

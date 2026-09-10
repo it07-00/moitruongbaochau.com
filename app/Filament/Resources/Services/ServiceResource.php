@@ -8,6 +8,7 @@ use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Services\Pages\EditService;
 use App\Filament\Resources\Services\Pages\ListServices;
 use App\Models\Service;
+use App\Support\RichContentNormalizer;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -110,6 +111,7 @@ class ServiceResource extends Resource
                             }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết dịch vụ')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/services/content')

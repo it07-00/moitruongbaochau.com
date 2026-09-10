@@ -504,6 +504,9 @@
                       <div
                         class="pt-6 sm:pt-8 mt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-black"
                       >
+                        @php
+                          $shareUrl = 'https://moitruongbaochau.com/dich-vu/' . $service->slug;
+                        @endphp
                         <!-- Left: Social Share Buttons -->
                         <div class="flex items-center gap-3.5 sm:gap-4 flex-wrap">
                           <span
@@ -513,7 +516,7 @@
                           <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                             <!-- Facebook -->
                             <a
-                              href="https://www.facebook.com/sharer/sharer.php?u=https://moitruongbaochau.vn/service-detail.html"
+                              href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
                               target="_blank"
                               rel="noopener noreferrer"
                               class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
@@ -530,7 +533,7 @@
                             </a>
                             <!-- X (Twitter) -->
                             <a
-                              href="https://twitter.com/intent/tweet?url=https://moitruongbaochau.vn/service-detail.html"
+                              href="https://twitter.com/intent/tweet?url={{ urlencode($shareUrl) }}&amp;text={{ urlencode($service->name) }}"
                               target="_blank"
                               rel="noopener noreferrer"
                               class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
@@ -567,7 +570,7 @@
                             </button>
                             <!-- Email -->
                             <a
-                              href="mailto:?subject=Dịch Vụ Môi Trường Bảo Châu&amp;body=https://moitruongbaochau.vn/service-detail.html"
+                              href="mailto:?subject={{ urlencode($service->name) }}&amp;body={{ urlencode($shareUrl) }}"
                               class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                               title="Gửi qua Email"
                             >
@@ -588,8 +591,8 @@
                             <!-- Copy Link -->
                             <button
                               onclick="
-                                navigator.clipboard.writeText(window.location.href);
-                                alert('Đã sao chép liên kết bài viết!');
+                                navigator.clipboard.writeText('{{ $shareUrl }}');
+                                alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
                               "
                               class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                               title="Sao chép liên kết"
@@ -735,7 +738,7 @@
                 </h2>
               </div>
               <a
-                href="index.html#section-4bdc829f17"
+                href="{{ route('services.index') }}"
                 class="inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline"
               >
                 Xem tất cả dịch vụ
@@ -755,11 +758,11 @@
               </a>
             </div>
 
-            <!-- 3 Service Cards Chuẩn Style Project Detail -->
+            <!-- Dynamic Related Services -->
             <div
               class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full"
             >
-              <!-- Card 1: Báo Cáo ĐTM -->
+              @forelse ($relatedServices as $related)
               <div
                 class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
               >
@@ -768,22 +771,22 @@
                 >
                   <a
                     class="block w-full h-full c-scale-effect"
-                    href="index.html#section-4bdc829f17"
-                    aria-label="Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)"
+                    href="{{ route('services.show', $related->slug) }}"
+                    aria-label="{{ $related->name }}"
                   >
                     <img
-                      src="{{ asset("assets/images/BERICAP.jpg") }}"
+                      src="{{ $related->thumbnail ? asset($related->thumbnail) : asset('assets/images/BERICAP.jpg') }}"
                       class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       width="1024"
                       height="683"
-                      alt="Báo Cáo ĐTM"
+                      alt="{{ $related->name }}"
                       loading="lazy"
                     />
                   </a>
                   <span
                     class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
                   >
-                    Luật BVMT 2020
+                    Môi Trường Bảo Châu
                   </span>
                 </div>
                 <div class="p-content flex flex-col flex-1 justify-between">
@@ -793,7 +796,7 @@
                     >
                       <span
                         class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Hồ sơ pháp lý</span
+                        >{{ $related->category?->name ?? 'Dịch vụ uy tín' }}</span
                       >
                       <span class="text-xs text-black font-medium"
                         >Tư vấn trọn gói</span
@@ -801,31 +804,29 @@
                     </div>
                     <a
                       class="c-hover block"
-                      href="index.html#section-4bdc829f17"
-                      title="Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)"
+                      href="{{ route('services.show', $related->slug) }}"
+                      title="{{ $related->name }}"
                     >
                       <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
+                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug line-clamp-2"
                       >
-                        Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)
+                        {{ $related->name }}
                       </h3>
                     </a>
                     <p
                       class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
                     >
-                      Tư vấn lập báo cáo ĐTM thẩm định cấp Bộ Tài nguyên &amp;
-                      Môi trường và UBND cấp tỉnh cho dự án công nghiệp, hạ
-                      tầng.
+                      {{ $related->short_description }}
                     </p>
                   </div>
                   <div
                     class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
                   >
                     <span class="text-xs text-black font-medium truncate"
-                      >Cơ quan: Bộ TN&amp;MT / UBND Tỉnh</span
+                      >Môi Trường Bảo Châu</span
                     >
                     <a
-                      href="index.html#section-4bdc829f17"
+                      href="{{ route('services.show', $related->slug) }}"
                       class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
                     >
                       Chi tiết dịch vụ
@@ -846,181 +847,8 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Card 2: Kiểm Kê Khí Nhà Kính & Báo Cáo ESG -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="index.html#section-4bdc829f17"
-                    aria-label="Kiểm Kê Phát Thải Khí Nhà Kính & Báo Cáo ESG"
-                  >
-                    <img
-                      src="{{ asset("assets/images/PEPSICO.jpg") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="683"
-                      alt="Kiểm kê Khí nhà kính"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    ISO 14064-1
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Khí nhà kính &amp; ESG</span
-                      >
-                      <span class="text-xs text-black font-medium"
-                        >Tiêu chuẩn quốc tế</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="index.html#section-4bdc829f17"
-                      title="Kiểm Kê Phát Thải Khí Nhà Kính & Báo Cáo ESG"
-                    >
-                      <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Kiểm Kê Phát Thải Khí Nhà Kính &amp; Báo Cáo ESG
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
-                    >
-                      Đo đạc, tính toán dấu chân carbon phạm vi 1, 2, 3 và xây
-                      dựng chiến lược báo cáo ESG theo khung quốc tế GRI, CDP.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Tiêu chuẩn: GHG Protocol / ISO</span
-                    >
-                    <a
-                      href="index.html#section-4bdc829f17"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Chi tiết dịch vụ
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 3: Xử Lý Nước Thải & Khí Thải -->
-              <div
-                class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group"
-              >
-                <div
-                  class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10"
-                >
-                  <a
-                    class="block w-full h-full c-scale-effect"
-                    href="index.html#section-4bdc829f17"
-                    aria-label="Thiết Kế & Thi Công Hệ Thống Xử Lý Nước Thải"
-                  >
-                    <img
-                      src="{{ asset("assets/images/CTY-TAN-TIEN.png") }}"
-                      class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      width="1024"
-                      height="640"
-                      alt="Xử lý nước thải"
-                      loading="lazy"
-                    />
-                  </a>
-                  <span
-                    class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
-                  >
-                    QCVN 40:2011/BTNMT
-                  </span>
-                </div>
-                <div class="p-content flex flex-col flex-1 justify-between">
-                  <div>
-                    <div
-                      class="terms mb-3 flex flex-row flex-wrap items-center gap-2"
-                    >
-                      <span
-                        class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full"
-                        >Kỹ thuật xử lý</span
-                      >
-                      <span class="text-xs text-black font-medium"
-                        >EPC trọn gói</span
-                      >
-                    </div>
-                    <a
-                      class="c-hover block"
-                      href="index.html#section-4bdc829f17"
-                      title="Thiết Kế & Thi Công Hệ Thống Xử Lý Nước Thải"
-                    >
-                      <h3
-                        class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug"
-                      >
-                        Thiết Kế &amp; Thi Công Hệ Thống Xử Lý Nước Thải
-                      </h3>
-                    </a>
-                    <p
-                      class="mt-2 text-sm text-black line-clamp-2 leading-relaxed"
-                    >
-                      Tổng thầu EPC tư vấn, thiết kế, thi công và vận hành trạm
-                      xử lý nước thải công nghiệp, nước thải y tế đạt chuẩn xả
-                      thải.
-                    </p>
-                  </div>
-                  <div
-                    class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2"
-                  >
-                    <span class="text-xs text-black font-medium truncate"
-                      >Cam kết: Đạt chuẩn 100%</span
-                    >
-                    <a
-                      href="index.html#section-4bdc829f17"
-                      class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0"
-                    >
-                      Chi tiết dịch vụ
-                      <svg
-                        class="size-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
+              @empty
+              @endforelse
             </div>
           </div>
         </section>

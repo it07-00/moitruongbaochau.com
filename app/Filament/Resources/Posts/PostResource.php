@@ -8,6 +8,7 @@ use App\Filament\Resources\Posts\Pages\CreatePost;
 use App\Filament\Resources\Posts\Pages\EditPost;
 use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Models\Post;
+use App\Support\RichContentNormalizer;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -109,6 +110,7 @@ class PostResource extends Resource
                             }),
                         RichEditor::make('content')
                             ->label('Nội dung chi tiết')
+                            ->formatStateUsing(fn (?string $state): ?string => RichContentNormalizer::normalize($state))
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('uploads/posts/content')
