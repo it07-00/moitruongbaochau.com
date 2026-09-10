@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Service;
+use App\Support\RichContentNormalizer;
 use Illuminate\Database\Seeder;
 
 class UpdateServiceContentSeeder extends Seeder
@@ -15,7 +16,9 @@ class UpdateServiceContentSeeder extends Seeder
         $services = $this->getServiceContentData();
 
         foreach ($services as $slug => $content) {
-            Service::query()->where('slug', $slug)->update(['content' => $content]);
+            Service::query()->where('slug', $slug)->update([
+                'content' => RichContentNormalizer::normalizeLegacyFigures($content),
+            ]);
             $this->command->info("✅ Đã cập nhật: {$slug}");
         }
 

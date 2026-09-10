@@ -13,6 +13,7 @@ use App\Models\Redirect;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\Setting;
+use App\Support\RichContentNormalizer;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
@@ -329,7 +330,7 @@ HTML;
                 'service_category_id' => $serviceCategories[$service['category']]->getKey(),
                 'name' => $service['name'],
                 'short_description' => 'Khảo sát đúng nhu cầu, xây dựng hồ sơ và đồng hành giải trình theo quy định hiện hành.',
-                'content' => $serviceContent,
+                'content' => RichContentNormalizer::normalizeLegacyFigures($serviceContent),
                 'thumbnail' => $service['image'],
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
@@ -586,7 +587,7 @@ HTML;
                 'post_category_id' => $postCategories[$post['category']]->getKey(),
                 'title' => $post['title'],
                 'excerpt' => $post['excerpt'],
-                'content' => $post['content'],
+                'content' => RichContentNormalizer::normalizeLegacyFigures($post['content']),
                 'thumbnail' => $post['image'],
                 'pdf_file' => $post['pdf_file'] ?? null,
                 'status' => ContentStatus::Published,
@@ -738,7 +739,7 @@ HTML;
                 'client' => $project['client'],
                 'location' => $project['location'] ?? 'Toàn Quốc',
                 'summary' => $project['summary'],
-                'content' => $project['content'],
+                'content' => RichContentNormalizer::normalizeLegacyFigures($project['content']),
                 'thumbnail' => $project['image'],
                 'status' => ContentStatus::Published,
                 'is_featured' => true,
@@ -812,9 +813,9 @@ HTML;
                 'employment_type' => $job['employment_type'],
                 'summary' => $job['summary'],
                 'thumbnail' => $job['image'] ?? 'Bai-Dang-Bao-Chau-1024x572.png',
-                'content' => $job['content'],
-                'requirements' => $job['requirements'],
-                'benefits' => $job['benefits'],
+                'content' => RichContentNormalizer::normalizeLegacyFigures($job['content']),
+                'requirements' => RichContentNormalizer::normalizeLegacyFigures($job['requirements']),
+                'benefits' => RichContentNormalizer::normalizeLegacyFigures($job['benefits']),
                 'status' => ContentStatus::Published,
                 'published_at' => $publishedAt,
                 'expires_at' => now()->addMonths(6),
