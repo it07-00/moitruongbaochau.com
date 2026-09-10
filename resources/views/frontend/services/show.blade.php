@@ -17,7 +17,7 @@
                     >
                       <span
                         class="btn flex-0! btn-primary-2 border-primary/60! py-1.5! px-4! text-[13px]! font-bold shadow-md shadow-primary/20 hover:shadow-primary/60 rounded-full"
-                        >HỒ SƠ MÔI TRƯỜNG TRỌN GÓI</span
+                        >{{ $service->category?->name ?? 'HỒ SƠ MÔI TRƯỜNG TRỌN GÓI' }}</span
                       >
                     </div>
                   </div>
@@ -27,7 +27,7 @@
                     class="h2 font-bold text-foreground mb-5 mt-5"
                     itemprop="headline"
                   >
-                    Dịch Vụ Tư Vấn Lập Giấy Phép Môi Trường Chuẩn Luật 2020 Trọn Gói
+                    {{ $service->name }}
                   </h1>
 
                   <!-- Post Meta: Time & Views -->
@@ -126,86 +126,10 @@
                           </button>
                         </div>
                         <ul
+                          id="toc_list"
                           class="toc_list space-y-3 text-[16px] font-medium text-black"
                         >
-                          <li>
-                            <a
-                              href="#thiet-ke-website-ban-hang-la-gi"
-                              class="text-primary font-bold hover:underline block leading-snug"
-                              >• Giấy phép môi trường là gì?</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              href="#vi-sao-doanh-nghiep-can-thiet-ke-website-ban-hang"
-                              class="hover:text-primary block leading-snug transition-colors text-black"
-                              >• Vì sao doanh nghiệp cần có Giấy phép MT?</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              href="#thiet-ke-website-ban-hang-chuan-seo-can-dap-ung-dieu-gi"
-                              class="hover:text-primary block leading-snug transition-colors text-black"
-                              >• Đối tượng bắt buộc phải có Giấy phép MT</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              href="#nhung-tinh-nang-can-co-khi-thiet-ke-website-ban-hang"
-                              class="hover:text-primary block leading-snug transition-colors text-black"
-                              >• Thẩm quyền thẩm định &amp; phê duyệt</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              href="#quy-trinh-thiet-ke-website-ban-hang"
-                              class="hover:text-primary block leading-snug transition-colors font-semibold text-black"
-                              >• Quy trình tư vấn trọn gói tại Bảo Châu</a
-                            >
-                            <ul
-                              class="pl-4 mt-2 space-y-2 text-[14px] text-black font-normal border-l-2 border-primary/20 ml-2"
-                            >
-                              <li>
-                                <a href="#khao-sat-muc-tieu-va-yeu-cau" class="hover:text-primary block transition-colors text-black"
-                                  >1. Khảo sát &amp; Đo đạc hiện trạng</a
-                                >
-                              </li>
-                              <li>
-                                <a href="#xay-dung-cau-truc-website" class="hover:text-primary block transition-colors text-black"
-                                  >2. Lập báo cáo đề xuất cấp phép</a
-                                >
-                              </li>
-                              <li>
-                                <a href="#thiet-ke-giao-dien" class="hover:text-primary block transition-colors text-black"
-                                  >3. Nộp hồ sơ &amp; Tham vấn</a
-                                >
-                              </li>
-                              <li>
-                                <a href="#lap-trinh-va-kiem-thu" class="hover:text-primary block transition-colors text-black"
-                                  >4. Bảo vệ Hội đồng thẩm định</a
-                                >
-                              </li>
-                              <li>
-                                <a href="#ban-giao-va-huong-dan-quan-tri" class="hover:text-primary block transition-colors"
-                                  >5. Bàn giao Giấy phép gốc</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a
-                              href="#chi-phi-thiet-ke-website-ban-hang-phu-thuoc-vao-dau"
-                              class="hover:text-primary block leading-snug transition-colors"
-                              >• Báo giá &amp; Thời gian hoàn thành</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              href="#vi-sao-doanh-nghiep-lua-chon-hd-agency"
-                              class="hover:text-primary block leading-snug transition-colors"
-                              >• Vì sao chọn Môi Trường Bảo Châu?</a
-                            >
-                          </li>
+                          {{-- TOC sẽ được tự động generate bằng JS từ nội dung bài viết --}}
                         </ul>
                       </div>
                     </div>
