@@ -294,6 +294,9 @@
                   >
                     <!-- Left: Social Share Buttons -->
                     <div class="flex items-center gap-3.5 flex-wrap">
+                      @php
+                        $shareUrl = 'https://moitruongbaochau.com/tuyen-dung/' . $job->slug;
+                      @endphp
                       <span
                         class="font-extrabold text-sm sm:text-base uppercase tracking-wider text-gray-900"
                         >CHIA SẺ:</span
@@ -301,7 +304,7 @@
                       <div class="flex items-center gap-2 sm:gap-2.5 flex-wrap">
                         <!-- Facebook -->
                         <a
-                          href="https://www.facebook.com/sharer/sharer.php?u=https://moitruongbaochau.com/recruitment-detail.html"
+                          href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
                           target="_blank"
                           rel="noopener noreferrer"
                           class="p-2.5 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
@@ -339,8 +342,8 @@
                         <!-- Copy Link -->
                         <button
                           onclick="
-                            navigator.clipboard.writeText(window.location.href);
-                            alert('Đã sao chép liên kết tuyển dụng!');
+                            navigator.clipboard.writeText('{{ $shareUrl }}');
+                            alert('Đã sao chép liên kết tuyển dụng: {{ $shareUrl }}');
                           "
                           class="p-2.5 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                           title="Sao chép liên kết"

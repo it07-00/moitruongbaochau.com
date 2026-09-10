@@ -483,19 +483,19 @@
                           </svg>
                           Tags:
                         </span>
-                        <a href="{{ route("posts.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
+                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
                           #GiayPhepMoiTruong
                         </a>
-                        <a href="{{ route("posts.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
+                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
                           #TuVanMoiTruong
                         </a>
-                        <a href="{{ route("posts.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
+                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
                           #HoSoMoiTruongTronGoi
                         </a>
-                        <a href="{{ route("posts.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
+                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
                           #LuatBVMT2020
                         </a>
-                        <a href="{{ route("posts.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
+                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
                           #MoiTruongBaoChau
                         </a>
                       </div>
@@ -617,13 +617,11 @@
                                 if (navigator.share) {
                                   navigator.share({
                                     title: document.title,
-                                    url: window.location.href,
+                                    url: '{{ $shareUrl }}',
                                   });
                                 } else {
-                                  navigator.clipboard.writeText(
-                                    window.location.href,
-                                  );
-                                  alert('Đã sao chép liên kết!');
+                                  navigator.clipboard.writeText('{{ $shareUrl }}');
+                                  alert('Đã sao chép liên kết: {{ $shareUrl }}');
                                 }
                               "
                               class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"

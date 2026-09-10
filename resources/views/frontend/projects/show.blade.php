@@ -499,13 +499,11 @@
                             if (navigator.share) {
                               navigator.share({
                                 title: document.title,
-                                url: window.location.href,
+                                url: '{{ $shareUrl }}',
                               });
                             } else {
-                              navigator.clipboard.writeText(
-                                window.location.href,
-                              );
-                              alert('Đã sao chép liên kết!');
+                              navigator.clipboard.writeText('{{ $shareUrl }}');
+                              alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
                             }
                           "
                           class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
