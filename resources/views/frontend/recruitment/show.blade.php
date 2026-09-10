@@ -178,9 +178,9 @@
                     <img
                       width="1024"
                       height="572"
-                      src="{{ asset("assets/images/Bai-Dang-Bao-Chau-1024x572.png") }}"
+                      src="{{ str_starts_with($job->thumbnail ?? '', 'http') ? $job->thumbnail : (str_starts_with($job->thumbnail ?? '', 'uploads/') ? asset('storage/'.$job->thumbnail) : asset('assets/images/'.($job->thumbnail ?: 'Bai-Dang-Bao-Chau-1024x572.png'))) }}"
                       class="w-full h-auto object-cover"
-                      alt="Đội ngũ kỹ sư Môi Trường Bảo Châu"
+                      alt="{{ $job->title }}"
                       loading="lazy"
                       decoding="async"
                     />

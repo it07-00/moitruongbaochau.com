@@ -811,6 +811,7 @@ HTML;
                 'location' => $job['location'],
                 'employment_type' => $job['employment_type'],
                 'summary' => $job['summary'],
+                'thumbnail' => $job['image'] ?? 'Bai-Dang-Bao-Chau-1024x572.png',
                 'content' => $job['content'],
                 'requirements' => $job['requirements'],
                 'benefits' => $job['benefits'],

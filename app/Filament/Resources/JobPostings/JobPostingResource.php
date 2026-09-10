@@ -13,6 +13,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -21,6 +22,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -110,23 +112,39 @@ class JobPostingResource extends Resource
                         RichEditor::make('content')
                             ->label('Mô tả công việc (JD)')
                             ->columnSpanFull()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (?string $state, callable $set, callable $get) {
-                                if (blank($get('meta_description')) && filled($state)) {
-                                    $clean = Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($state))), 160, '');
-                                    $set('meta_description', $clean);
-                                    if (blank($get('og_description'))) {
-                                        $set('og_description', $clean);
-                                    }
-                                }
-                            }),
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('uploads/job-postings/content')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->fileAttachmentsMaxSize(10240),
                         RichEditor::make('requirements')
                             ->label('Yêu cầu ứng viên')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('uploads/job-postings/content')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->fileAttachmentsMaxSize(10240),
                         RichEditor::make('benefits')
                             ->label('Quyền lợi được hưởng')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->fileAttachmentsDisk('public')
+                            ->fileAttachmentsDirectory('uploads/job-postings/content')
+                            ->fileAttachmentsVisibility('public')
+                            ->fileAttachmentsAcceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->fileAttachmentsMaxSize(10240),
                     ])->columns(2),
+
+                Section::make('Hình ảnh & hiển thị')
+                    ->components([
+                        FileUpload::make('thumbnail')
+                            ->label('Ảnh đại diện vị trí tuyển dụng')
+                            ->image()
+                            ->disk('public')
+                            ->directory('uploads/job-postings')
+                            ->imageAspectRatio('16:9')
+                            ->maxSize(10240),
+                    ]),
 
                 SeoSection::make(),
             ]);
@@ -136,6 +154,10 @@ class JobPostingResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('thumbnail')
+                    ->label('Ảnh')
+                    ->disk('public')
+                    ->defaultImageUrl(fn ($record) => $record->thumbnail ? (str_starts_with($record->thumbnail, 'http') ? $record->thumbnail : (str_starts_with($record->thumbnail, 'uploads/') ? asset('storage/'.$record->thumbnail) : asset('assets/images/'.$record->thumbnail))) : asset('assets/images/Bai-Dang-Bao-Chau-1024x572.png')),
                 TextColumn::make('title')
                     ->label('Vị trí tuyển dụng')
                     ->searchable()
