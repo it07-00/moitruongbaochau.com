@@ -17,7 +17,7 @@ class RichContentNormalizerTest extends TestCase
 </figure>
 HTML;
 
-        $normalizedHtml = RichContentNormalizer::normalizeLegacyFigures($legacyHtml);
+        $normalizedHtml = RichContentNormalizer::normalize($legacyHtml);
         $document = RichContentRenderer::make($normalizedHtml)->toArray();
 
         $this->assertStringNotContainsString('<figure', $normalizedHtml);
@@ -32,7 +32,31 @@ HTML;
 
         $this->assertSame(
             $normalizedHtml,
-            RichContentNormalizer::normalizeLegacyFigures($normalizedHtml),
+            RichContentNormalizer::normalize($normalizedHtml),
         );
+    }
+
+    public function test_it_wraps_legacy_list_item_text_in_paragraphs_required_by_tiptap(): void
+    {
+        $legacyHtml = '<ul><li>Nội dung thứ nhất</li><li><strong>Nội dung thứ hai</strong></li></ul>';
+
+        $normalizedHtml = RichContentNormalizer::normalize($legacyHtml);
+        $document = RichContentRenderer::make($normalizedHtml)->toArray();
+
+        foreach ($document['content'][0]['content'] as $listItem) {
+            $this->assertSame('paragraph', $listItem['content'][0]['type']);
+        }
+    }
+
+    public function test_it_preserves_nested_lists_while_wrapping_the_leading_text(): void
+    {
+        $legacyHtml = '<ul><li>Mục cha<ul><li>Mục con</li></ul></li></ul>';
+
+        $normalizedHtml = RichContentNormalizer::normalize($legacyHtml);
+        $document = RichContentRenderer::make($normalizedHtml)->toArray();
+        $parentListItem = $document['content'][0]['content'][0];
+
+        $this->assertSame(['paragraph', 'bulletList'], array_column($parentListItem['content'], 'type'));
+        $this->assertSame('paragraph', $parentListItem['content'][1]['content'][0]['content'][0]['type']);
     }
 }
