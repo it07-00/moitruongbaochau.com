@@ -16,6 +16,7 @@ class RobotsController extends Controller
             'User-agent: *',
             'Allow: /',
             'Disallow: /admin/',
+            'Disallow: /tim-kiem',
             '',
             'Sitemap: '.route('sitemap'),
             '',

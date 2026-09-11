@@ -30,8 +30,9 @@ class ServiceController extends Controller
             $seoDescription,
             route('services.index'),
             [],
-            $page?->og_image ? asset($page->og_image) : null,
+            $page?->og_image,
         );
+        $seo = SeoData::withPagination($seo, $services);
 
         return view('frontend.services.index', compact('page', 'services', 'seo'));
     }

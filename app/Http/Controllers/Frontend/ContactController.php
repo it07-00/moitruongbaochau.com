@@ -23,15 +23,8 @@ class ContactController extends Controller
             $seoTitle,
             $seoDescription,
             route('contact.index'),
-            [[
-                '@context' => 'https://schema.org',
-                '@type' => 'LocalBusiness',
-                'name' => 'Môi Trường Bảo Châu',
-                'url' => route('contact.index'),
-                'telephone' => '+84915549148',
-                'email' => 'info@baochauenvir.com',
-            ]],
-            $page?->og_image ? asset($page->og_image) : null,
+            [SeoData::localBusinessSchema()],
+            $page?->og_image,
         );
 
         return view('frontend.contact', compact('page', 'seo'));

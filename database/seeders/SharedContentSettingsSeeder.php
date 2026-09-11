@@ -26,6 +26,11 @@ class SharedContentSettingsSeeder extends Seeder
     private function settings(): array
     {
         return [
+            'seo_locale' => [
+                'value' => 'vi_VN',
+                'type' => 'string',
+                'group' => 'seo',
+            ],
             'content_editor_name' => [
                 'value' => 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu',
                 'type' => 'string',

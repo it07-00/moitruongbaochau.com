@@ -2,74 +2,77 @@
 
 namespace App\Models\Concerns;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 trait HasSeoAttributes
 {
-    /**
-     * Boot the SEO trait to automatically generate SEO attributes if blank.
-     */
     public static function bootHasSeoAttributes(): void
     {
         static::saving(function (Model $model): void {
-            $title = (string) ($model->getAttribute('title') ?? $model->getAttribute('name') ?? '');
+            $oldTitle = self::generatedTitle($model, true);
+            $newTitle = self::generatedTitle($model);
+            $oldDescription = self::generatedDescription($model, true);
+            $newDescription = self::generatedDescription($model);
+            $oldImage = self::generatedImage($model, true);
+            $newImage = self::generatedImage($model);
 
-            // 1. Meta Title
-            if (blank($model->getAttribute('meta_title')) && filled($title)) {
-                $model->setAttribute('meta_title', Str::limit(strip_tags($title), 255, ''));
+            if (self::shouldRefresh($model, 'meta_title', $oldTitle) && filled($newTitle)) {
+                $model->setAttribute('meta_title', $newTitle);
             }
 
-            // 2. Meta Description
-            if (blank($model->getAttribute('meta_description'))) {
-                $rawDesc = (string) (
-                    $model->getAttribute('excerpt')
-                    ?? $model->getAttribute('summary')
-                    ?? $model->getAttribute('short_description')
-                    ?? $model->getAttribute('description')
-                    ?? $model->getAttribute('content')
-                    ?? ''
-                );
-                if (filled($rawDesc)) {
-                    $cleanDesc = trim(preg_replace('/\s+/', ' ', strip_tags($rawDesc)));
-                    $model->setAttribute('meta_description', Str::limit($cleanDesc, 160, ''));
-                }
+            if (self::shouldRefresh($model, 'meta_description', $oldDescription) && filled($newDescription)) {
+                $model->setAttribute('meta_description', $newDescription);
             }
 
-            // 3. Robots
             if (blank($model->getAttribute('robots'))) {
                 $model->setAttribute('robots', 'index,follow');
             }
 
-            // 4. OG Title
-            if (blank($model->getAttribute('og_title'))) {
-                $model->setAttribute('og_title', $model->getAttribute('meta_title') ?: Str::limit(strip_tags($title), 255, ''));
+            $oldMetaTitle = (string) ($model->getOriginal('meta_title') ?: $oldTitle);
+            $newMetaTitle = (string) ($model->getAttribute('meta_title') ?: $newTitle);
+            $oldMetaDescription = (string) ($model->getOriginal('meta_description') ?: $oldDescription);
+            $newMetaDescription = (string) ($model->getAttribute('meta_description') ?: $newDescription);
+
+            if (self::shouldRefresh($model, 'og_title', $oldMetaTitle) && filled($newMetaTitle)) {
+                $model->setAttribute('og_title', $newMetaTitle);
             }
 
-            // 5. OG Description
-            if (blank($model->getAttribute('og_description'))) {
-                $model->setAttribute('og_description', $model->getAttribute('meta_description') ?: null);
+            if (self::shouldRefresh($model, 'og_description', $oldMetaDescription) && filled($newMetaDescription)) {
+                $model->setAttribute('og_description', $newMetaDescription);
             }
 
-            // 6. OG Image
-            if (blank($model->getAttribute('og_image'))) {
-                $img = $model->getAttribute('thumbnail') ?? $model->getAttribute('image');
-                if (filled($img)) {
-                    $model->setAttribute('og_image', $img);
-                }
+            if (self::shouldRefresh($model, 'og_image', $oldImage) && filled($newImage)) {
+                $model->setAttribute('og_image', $newImage);
             }
 
-            // 7. Twitter Meta
-            if (blank($model->getAttribute('twitter_title'))) {
-                $model->setAttribute('twitter_title', $model->getAttribute('og_title'));
+            $oldOgTitle = (string) ($model->getOriginal('og_title') ?: $oldMetaTitle);
+            $newOgTitle = (string) ($model->getAttribute('og_title') ?: $newMetaTitle);
+            $oldOgDescription = (string) ($model->getOriginal('og_description') ?: $oldMetaDescription);
+            $newOgDescription = (string) ($model->getAttribute('og_description') ?: $newMetaDescription);
+            $oldOgImage = (string) ($model->getOriginal('og_image') ?: $oldImage);
+            $newOgImage = (string) ($model->getAttribute('og_image') ?: $newImage);
+
+            if (self::shouldRefresh($model, 'twitter_title', $oldOgTitle) && filled($newOgTitle)) {
+                $model->setAttribute('twitter_title', $newOgTitle);
             }
-            if (blank($model->getAttribute('twitter_description'))) {
-                $model->setAttribute('twitter_description', $model->getAttribute('og_description'));
+
+            if (self::shouldRefresh($model, 'twitter_description', $oldOgDescription) && filled($newOgDescription)) {
+                $model->setAttribute('twitter_description', $newOgDescription);
             }
-            if (blank($model->getAttribute('twitter_image')) && filled($model->getAttribute('og_image'))) {
-                $model->setAttribute('twitter_image', $model->getAttribute('og_image'));
+
+            if (self::shouldRefresh($model, 'twitter_image', $oldOgImage) && filled($newOgImage)) {
+                $model->setAttribute('twitter_image', $newOgImage);
             }
         });
+    }
+
+    public function scopeIndexable(Builder $query): Builder
+    {
+        return $query->where(fn (Builder $query): Builder => $query
+            ->whereNull('robots')
+            ->orWhere('robots', 'not like', 'noindex%'));
     }
 
     /**
@@ -89,5 +92,53 @@ trait HasSeoAttributes
             'twitter_description',
             'twitter_image',
         ];
+    }
+
+    private static function shouldRefresh(Model $model, string $attribute, ?string $oldGeneratedValue): bool
+    {
+        if (blank($model->getAttribute($attribute))) {
+            return true;
+        }
+
+        if (! $model->exists || $model->isDirty($attribute)) {
+            return false;
+        }
+
+        return (string) $model->getOriginal($attribute) === (string) $oldGeneratedValue;
+    }
+
+    private static function generatedTitle(Model $model, bool $original = false): string
+    {
+        $attributes = $original ? $model->getOriginal() : $model->getAttributes();
+        $title = (string) ($attributes['title'] ?? $attributes['name'] ?? '');
+
+        return Str::limit(self::cleanText($title), 60, '');
+    }
+
+    private static function generatedDescription(Model $model, bool $original = false): string
+    {
+        $attributes = $original ? $model->getOriginal() : $model->getAttributes();
+
+        foreach (['excerpt', 'summary', 'short_description', 'description', 'content'] as $attribute) {
+            $value = (string) ($attributes[$attribute] ?? '');
+
+            if (filled($value)) {
+                return Str::limit(self::cleanText($value), 160, '');
+            }
+        }
+
+        return '';
+    }
+
+    private static function generatedImage(Model $model, bool $original = false): string
+    {
+        $attributes = $original ? $model->getOriginal() : $model->getAttributes();
+
+        return (string) ($attributes['thumbnail'] ?? $attributes['image'] ?? '');
+    }
+
+    private static function cleanText(string $value): string
+    {
+        return Str::squish(html_entity_decode(strip_tags($value), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
     }
 }

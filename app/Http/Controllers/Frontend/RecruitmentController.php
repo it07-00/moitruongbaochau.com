@@ -26,8 +26,9 @@ class RecruitmentController extends Controller
             $seoDescription,
             route('recruitment.index'),
             [],
-            $page?->og_image ? asset($page->og_image) : null,
+            $page?->og_image,
         );
+        $seo = SeoData::withPagination($seo, $jobs);
 
         return view('frontend.recruitment.index', compact('page', 'jobs', 'seo'));
     }

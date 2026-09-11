@@ -79,7 +79,7 @@ class WebsiteSeeder extends Seeder
             ],
             'status' => ContentStatus::Published,
             'published_at' => $publishedAt,
-            'meta_title' => 'Môi Trường Bảo Châu - Dịch vụ & Kỹ thuật môi trường chuyên nghiệp',
+            'meta_title' => 'Môi Trường Bảo Châu | Dịch vụ môi trường trọn gói',
             'meta_description' => 'Tư vấn môi trường, giấy phép môi trường, quan trắc, kiểm kê khí nhà kính và giải pháp xử lý môi trường cho doanh nghiệp.',
         ]);
 
@@ -849,7 +849,7 @@ HTML;
             'zalo' => 'https://zalo.me/0915549148',
 
             // 4. SEO Mặc định (SEO)
-            'seo_default_title' => 'Môi Trường Bảo Châu - Dịch vụ & Kỹ thuật môi trường chuyên nghiệp',
+            'seo_default_title' => 'Môi Trường Bảo Châu | Dịch vụ môi trường trọn gói',
             'seo_default_description' => 'Tư vấn Giấy phép Môi trường, Báo cáo ĐTM, Kiểm kê Khí nhà kính ESG và Xử lý Nước thải trọn gói uy tín.',
             'seo_default_image' => 'assets/images/optimized/og-moi-truong-bao-chau.webp',
         ] as $key => $value) {

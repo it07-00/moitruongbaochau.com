@@ -51,10 +51,11 @@ class ProjectController extends Controller
         $seo = SeoData::forPage(
             $categoryTitle,
             $seoDescription,
-            route('projects.index', $categoryFilter ? ['category' => $categoryFilter] : []),
+            route('projects.index', isset($categories[$categoryFilter]) ? ['category' => $categoryFilter] : []),
             [],
-            $page?->og_image ? asset($page->og_image) : null,
+            $page?->og_image,
         );
+        $seo = SeoData::withPagination($seo, $projects);
 
         return view('frontend.projects.index', compact('page', 'projects', 'categories', 'categoryCounts', 'totalProjects', 'categoryFilter', 'seo'));
     }

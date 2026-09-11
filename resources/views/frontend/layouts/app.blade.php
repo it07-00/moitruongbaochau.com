@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <x-seo :seo="$seo ?? []" />
-    <link rel="icon" href="{{ asset('assets/images/cropped-chuan-192x192.png') }}" sizes="192x192">
+    <link rel="icon" href="{{ asset(str_starts_with($websiteSettings['favicon'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['favicon'] : ($websiteSettings['favicon'] ?? 'assets/images/cropped-chuan-192x192.png')) }}" sizes="192x192">
+    <link rel="apple-touch-icon" href="{{ asset(str_starts_with($websiteSettings['favicon'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['favicon'] : ($websiteSettings['favicon'] ?? 'assets/images/cropped-chuan-192x192.png')) }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ file_exists(public_path('assets/css/style.css')) ? filemtime(public_path('assets/css/style.css')) : time() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}?v={{ filemtime(public_path('assets/css/header.css')) }}">

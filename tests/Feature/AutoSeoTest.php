@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AutoSeoTest extends TestCase
@@ -106,6 +107,68 @@ class AutoSeoTest extends TestCase
 
         $this->assertEquals('Giới thiệu Môi Trường Bảo Châu', $page->meta_title);
         $this->assertEquals('Công ty cổ phần Môi Trường Bảo Châu với hơn 10 năm kinh nghiệm.', $page->meta_description);
+    }
+
+    public function test_automatically_generated_seo_stays_synchronized_with_content_changes(): void
+    {
+        $post = Post::factory()->create([
+            'title' => 'Tiêu đề SEO ban đầu',
+            'excerpt' => 'Mô tả SEO ban đầu.',
+            'meta_title' => null,
+            'meta_description' => null,
+            'og_title' => null,
+            'og_description' => null,
+            'twitter_title' => null,
+            'twitter_description' => null,
+        ]);
+
+        $post->update([
+            'title' => 'Tiêu đề SEO đã cập nhật',
+            'excerpt' => 'Mô tả SEO đã cập nhật từ database.',
+        ]);
+
+        $this->assertSame('Tiêu đề SEO đã cập nhật', $post->meta_title);
+        $this->assertSame('Mô tả SEO đã cập nhật từ database.', $post->meta_description);
+        $this->assertSame('Tiêu đề SEO đã cập nhật', $post->og_title);
+        $this->assertSame('Mô tả SEO đã cập nhật từ database.', $post->twitter_description);
+    }
+
+    public function test_manually_customized_seo_stays_unchanged_when_content_changes(): void
+    {
+        $post = Post::factory()->create([
+            'meta_title' => 'Tiêu đề SEO do quản trị viên đặt',
+            'meta_description' => 'Mô tả SEO do quản trị viên đặt.',
+        ]);
+
+        $post->update([
+            'title' => 'Tiêu đề nội dung mới',
+            'excerpt' => 'Mô tả nội dung mới.',
+        ]);
+
+        $this->assertSame('Tiêu đề SEO do quản trị viên đặt', $post->meta_title);
+        $this->assertSame('Mô tả SEO do quản trị viên đặt.', $post->meta_description);
+    }
+
+    public function test_refresh_command_normalizes_legacy_automatic_seo_and_preserves_custom_values(): void
+    {
+        $longTitle = 'Hướng dẫn chuyên sâu thủ tục môi trường tự động cho doanh nghiệp sản xuất năm 2026';
+        $automaticPost = Post::factory()->create([
+            'title' => $longTitle,
+            'meta_title' => $longTitle,
+            'og_title' => $longTitle,
+            'twitter_title' => $longTitle,
+        ]);
+        $customPost = Post::factory()->create([
+            'title' => $longTitle,
+            'meta_title' => 'Tiêu đề tùy chỉnh riêng',
+        ]);
+
+        $this->artisan('seo:refresh')->assertSuccessful();
+
+        $this->assertSame(60, Str::length($automaticPost->refresh()->meta_title));
+        $this->assertSame($automaticPost->meta_title, $automaticPost->og_title);
+        $this->assertSame($automaticPost->meta_title, $automaticPost->twitter_title);
+        $this->assertSame('Tiêu đề tùy chỉnh riêng', $customPost->refresh()->meta_title);
     }
 
     public function test_custom_seo_attributes_are_not_overwritten(): void

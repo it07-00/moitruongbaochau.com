@@ -43,10 +43,11 @@ class PostController extends Controller
         $seo = SeoData::forPage(
             $title,
             $seoDescription,
-            route('posts.index'),
+            route('posts.index', $currentCategory ? ['category' => $currentCategory->slug] : []),
             [],
-            $page?->og_image ? asset($page->og_image) : null,
+            $page?->og_image,
         );
+        $seo = SeoData::withPagination($seo, $posts);
 
         return view('frontend.posts.index', compact('page', 'posts', 'postCategories', 'currentCategory', 'seo'));
     }

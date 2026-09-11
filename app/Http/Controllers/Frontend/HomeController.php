@@ -82,21 +82,11 @@ class HomeController extends Controller
             $seoTitle,
             $seoDescription,
             route('home'),
-            [[
-                '@context' => 'https://schema.org',
-                '@type' => 'Organization',
-                '@id' => route('home').'#organization',
-                'name' => 'Môi Trường Bảo Châu',
-                'url' => route('home'),
-                'logo' => asset('assets/images/optimized/logo-bao-chau.webp'),
-            ], [
-                '@context' => 'https://schema.org',
-                '@type' => 'WebSite',
-                '@id' => route('home').'#website',
-                'name' => 'Môi Trường Bảo Châu',
-                'url' => route('home'),
-            ]],
-            $page?->og_image ? asset($page->og_image) : null,
+            [
+                SeoData::organizationSchema(),
+                SeoData::websiteSchema(),
+            ],
+            $page?->og_image,
         );
 
         return view('frontend.home', compact('page', 'sliders', 'serviceCategories', 'services', 'projects', 'posts', 'postCategories', 'testimonials', 'partners', 'presses', 'seo'));
