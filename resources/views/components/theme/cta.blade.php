@@ -1,6 +1,7 @@
 @props([
     'title' => 'Bạn đang cần tư vấn giải pháp môi trường?',
     'description' => 'Đội ngũ Bảo Châu sẵn sàng khảo sát nhu cầu và đề xuất lộ trình phù hợp cho doanh nghiệp.',
+    'phone' => null,
 ])
 
 <section id="section-cta" {{ $attributes->merge(['class' => 'section section-cta py-12 lg:py-20']) }}>
@@ -12,7 +13,7 @@
                 <p class="mt-5 max-w-3xl text-base leading-relaxed text-gray-600 sm:text-lg">{{ $description }}</p>
                 <div class="mt-7 flex flex-wrap gap-3">
                     <a href="{{ route('contact.index') }}" class="c-button rounded-full bg-primary px-6 py-3 font-bold text-white">Nhận tư vấn ngay</a>
-                    <a href="tel:0915549148" class="c-light-button glass-effect rounded-full border border-black/10 px-6 py-3 font-bold">0915 549 148</a>
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $phone ?? ($websiteSettings['hotline'] ?? '0915549148')) }}" class="c-light-button glass-effect rounded-full border border-black/10 px-6 py-3 font-bold">{{ $phone ?? ($websiteSettings['hotline'] ?? '0915 549 148') }}</a>
                 </div>
             </div>
             <div class="flex justify-center rounded-3xl bg-white p-6 shadow-sm">

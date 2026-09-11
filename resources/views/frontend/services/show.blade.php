@@ -57,7 +57,7 @@
                             d="M12 8v4l3 3M3.223 14A9 9 0 1 0 12 3a9 9 0 0 0-8.294 5.5M7 9H3V5"
                           />
                         </svg>
-                        <span class="date">1 tháng trước</span>
+                        <span class="date">{{ $service->published_at?->format('d/m/Y') ?? $service->created_at->format('d/m/Y') }}</span>
                       </div>
 
                       <div class="flex items-center gap-1.5 views-svg">
@@ -77,7 +77,7 @@
                             d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0m11 0c-2.4 4-5.4 6-9 6c-3.6 0-6.6-2-9-6c2.4-4 5.4-6 9-6c3.6 0 6.6 2 9 6"
                           />
                         </svg>
-                        <span class="views">2,480 lượt xem</span>
+                        <span class="views">{{ number_format($service->view_count) }} lượt xem</span>
                       </div>
                     </div>
                   </div>
@@ -454,9 +454,9 @@
                               <img
                                 width="536"
                                 height="522"
-                                src="{{ asset("assets/images/logo-leave-png-min.png") }}"
+                                src="{{ asset(str_starts_with($websiteSettings['content_editor_logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['content_editor_logo'] : ($websiteSettings['content_editor_logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                                 class="object-contain p-2"
-                                alt="Môi Trường Bảo Châu"
+                                alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}"
                               />
                             </span>
                           </div>
@@ -464,41 +464,15 @@
                             <p
                               class="name h4 font-bold text-base sm:text-lg text-black mb-0"
                             >
-                              Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu
+                              {{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}
                             </p>
                             <p class="text-xs sm:text-sm text-black mt-1">
-                              Đội ngũ Thạc sĩ, Kỹ sư Môi trường với hơn 10 năm
-                              kinh nghiệm trong tư vấn hồ sơ môi trường và giải
-                              pháp kỹ thuật tại Việt Nam.
+                              {{ $websiteSettings['content_editor_bio'] ?? 'Đội ngũ Thạc sĩ, Kỹ sư Môi trường với hơn 10 năm kinh nghiệm trong tư vấn hồ sơ môi trường và giải pháp kỹ thuật tại Việt Nam.' }}
                             </p>
                           </div>
                         </div>
                       </section>
-
-                      <!-- Service Hashtags -->
-                      <div class="entry-tags mt-8 flex flex-wrap items-center gap-2 sm:gap-2.5">
-                        <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-black mr-1">
-                          <svg class="size-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
-                          </svg>
-                          Tags:
-                        </span>
-                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                          #GiayPhepMoiTruong
-                        </a>
-                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                          #TuVanMoiTruong
-                        </a>
-                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                          #HoSoMoiTruongTronGoi
-                        </a>
-                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                          #LuatBVMT2020
-                        </a>
-                        <a href="{{ route("services.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                          #MoiTruongBaoChau
-                        </a>
-                      </div>
+                      <x-frontend.content-tags :tags="$service->tags" :url="route('services.index')" />
 
                       <!-- SOCIAL SHARING & RATING FOOTER BAR -->
                       <div
@@ -643,59 +617,7 @@
                             </button>
                           </div>
                         </div>
-
-                        <!-- Right: Star Rating -->
-                        <div class="flex items-center gap-3 sm:gap-4">
-                          <div
-                            class="flex items-center text-amber-500 gap-1 sm:gap-1.5"
-                            style="color: #f59e0b"
-                          >
-                            <svg
-                              class="fill-current size-5.5 sm:size-6.5"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                              />
-                            </svg>
-                            <svg
-                              class="fill-current size-5.5 sm:size-6.5"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                              />
-                            </svg>
-                            <svg
-                              class="fill-current size-5.5 sm:size-6.5"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                              />
-                            </svg>
-                            <svg
-                              class="fill-current size-5.5 sm:size-6.5"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                              />
-                            </svg>
-                            <svg
-                              class="fill-current size-5.5 sm:size-6.5"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                              />
-                            </svg>
-                          </div>
-                          <span
-                            class="text-base sm:text-lg font-extrabold text-black"
-                            >5/5 <span class="font-medium text-gray-700 text-sm sm:text-base">(24 bình chọn)</span></span
-                          >
-                        </div>
+                        <x-frontend.content-rating :average="$service->rating_average" :count="$service->rating_count" large />
                       </div>
                     </article>
                   </div>
@@ -773,7 +695,7 @@
                     aria-label="{{ $related->name }}"
                   >
                     <img
-                      src="{{ $related->thumbnail ? asset($related->thumbnail) : asset('assets/images/BERICAP.jpg') }}"
+                      src="{{ $related->thumbnail_url }}"
                       class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       width="1024"
                       height="683"

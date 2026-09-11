@@ -7,6 +7,7 @@ use App\Models\JobPosting;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -46,6 +47,23 @@ class FrontendContentTest extends TestCase
             ->assertSee('/storage/uploads/services/content/replacement.webp', false)
             ->assertSee('Ảnh ĐTM mới')
             ->assertDontSee('/assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png', false);
+    }
+
+    public function test_service_detail_renders_related_service_thumbnail_and_category(): void
+    {
+        $category = ServiceCategory::factory()->create(['name' => 'Kiểm kê khí nhà kính']);
+        $service = Service::factory()->for($category, 'category')->create();
+        $relatedService = Service::factory()->for($category, 'category')->create([
+            'name' => 'Tư vấn CBAM, ESG và vòng đời sản phẩm LCA',
+            'thumbnail' => 'slide-4.png',
+        ]);
+
+        $this->get(route('services.show', $service->slug))
+            ->assertOk()
+            ->assertSee($relatedService->name)
+            ->assertSee(asset('assets/images/slide-4.png'), false)
+            ->assertSee($category->name)
+            ->assertDontSee('src="'.asset('slide-4.png').'"', false);
     }
 
     public function test_published_content_details_are_public_and_drafts_are_not(): void

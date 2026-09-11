@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ContentTagsAndViewCountSeeder extends Seeder
 {
@@ -26,22 +27,29 @@ class ContentTagsAndViewCountSeeder extends Seeder
             'tu-van-lap-ho-so-ve-sinh-lao-dong' => ['HoSoVeSinhLaoDong', 'YTeCoSo', 'QuanLyMoiTruong', 'MoiTruongBaoChau'],
         ];
 
-        foreach (Service::all() as $service) {
+        foreach (Service::with('category')->get() as $service) {
+            if (filled($service->tags)) {
+                continue;
+            }
+
             $tags = $serviceTagMap[$service->slug] ?? [
-                str_replace(' ', '', ucwords(preg_replace('/[^a-zA-Z0-9]/', ' ', $service->name))),
-                $service->category ? str_replace(' ', '', ucwords(preg_replace('/[^a-zA-Z0-9]/', ' ', $service->category->name))) : 'DichVuMoiTruong',
+                $this->tagFrom($service->name, 'DichVuMoiTruong'),
+                $this->tagFrom($service->category?->name, 'DichVuMoiTruong'),
                 'TuVanMoiTruong',
                 'MoiTruongBaoChau',
             ];
 
             $service->update([
-                'tags' => $tags,
-                'view_count' => $service->view_count > 0 ? $service->view_count : rand(1500, 3800),
+                'tags' => array_values(array_unique($tags)),
             ]);
         }
 
         // 2. Seed Posts
-        foreach (Post::all() as $post) {
+        foreach (Post::with('category')->get() as $post) {
+            if (filled($post->tags)) {
+                continue;
+            }
+
             $tags = [
                 'TinTucMoiTruong',
                 'LuatBVMT2020',
@@ -49,32 +57,38 @@ class ContentTagsAndViewCountSeeder extends Seeder
                 'MoiTruongBaoChau',
             ];
             if ($post->category) {
-                $tags[] = str_replace(' ', '', ucwords(preg_replace('/[^a-zA-Z0-9]/', ' ', $post->category->name)));
+                $tags[] = $this->tagFrom($post->category->name, 'TinTucMoiTruong');
             }
 
             $post->update([
-                'tags' => array_unique($tags),
-                'view_count' => $post->view_count > 0 ? $post->view_count : rand(1200, 4500),
+                'tags' => array_values(array_unique($tags)),
             ]);
         }
 
         // 3. Seed Projects
         foreach (Project::all() as $project) {
+            if (filled($project->tags)) {
+                continue;
+            }
+
             $tags = [
                 'DuAnTieuBieu',
                 'NangLucThucHien',
-                $project->category ? str_replace(' ', '', ucwords(preg_replace('/[^a-zA-Z0-9]/', ' ', $project->category))) : 'DuAnMoiTruong',
+                $this->tagFrom($project->category, 'DuAnMoiTruong'),
                 'MoiTruongBaoChau',
             ];
 
             $project->update([
-                'tags' => array_unique($tags),
-                'view_count' => $project->view_count > 0 ? $project->view_count : rand(900, 2600),
+                'tags' => array_values(array_unique($tags)),
             ]);
         }
 
         // 4. Seed Job Postings
         foreach (JobPosting::all() as $job) {
+            if (filled($job->tags)) {
+                continue;
+            }
+
             $tags = [
                 'TuyenDungBaoChau',
                 'ViecLamMoiTruong',
@@ -83,9 +97,19 @@ class ContentTagsAndViewCountSeeder extends Seeder
             ];
 
             $job->update([
-                'tags' => array_unique($tags),
-                'view_count' => $job->view_count > 0 ? $job->view_count : rand(600, 1800),
+                'tags' => array_values(array_unique($tags)),
             ]);
         }
+    }
+
+    private function tagFrom(?string $value, string $fallback): string
+    {
+        if (blank($value)) {
+            return $fallback;
+        }
+
+        $tag = Str::studly(preg_replace('/[^a-zA-Z0-9]+/', ' ', Str::ascii($value)) ?? '');
+
+        return filled($tag) ? $tag : $fallback;
     }
 }

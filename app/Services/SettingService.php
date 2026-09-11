@@ -28,6 +28,23 @@ class SettingService
         return $this->all()[$key] ?? $default;
     }
 
+    /**
+     * @param  array<int, array<string, string>>  $default
+     * @return array<int, array<string, string>>
+     */
+    public function json(string $key, array $default = []): array
+    {
+        $value = $this->get($key);
+
+        if (! is_string($value)) {
+            return $default;
+        }
+
+        $decoded = json_decode($value, true);
+
+        return is_array($decoded) ? $decoded : $default;
+    }
+
     public function forget(): void
     {
         Cache::forget('website.settings');

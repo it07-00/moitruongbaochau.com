@@ -19,7 +19,7 @@ class Project extends Model
 
     protected $fillable = [
         'title', 'slug', 'category', 'client', 'location', 'summary', 'content', 'thumbnail',
-        'completed_at', 'status', 'view_count', 'tags', 'is_featured', 'published_at', 'meta_title',
+        'completed_at', 'status', 'view_count', 'tags', 'rating_average', 'rating_count', 'is_featured', 'published_at', 'meta_title',
         'meta_description', 'canonical_url', 'robots', 'og_title', 'og_description',
         'og_image', 'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -33,6 +33,8 @@ class Project extends Model
             'completed_at' => 'date',
             'view_count' => 'integer',
             'tags' => 'array',
+            'rating_average' => 'decimal:1',
+            'rating_count' => 'integer',
         ];
     }
 }

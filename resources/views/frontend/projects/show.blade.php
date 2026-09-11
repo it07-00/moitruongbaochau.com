@@ -83,7 +83,13 @@
                       d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 9v7.5"
                     />
                   </svg>
-                  Năm thực hiện: {{ $project->completed_at ? $project->completed_at->format('Y') : '2024' }}
+                  Năm thực hiện: {{ $project->completed_at ? $project->completed_at->format('Y') : ($project->published_at?->format('Y') ?? 'Đang cập nhật') }}
+                </span>
+                <span class="inline-flex items-center gap-1.5 text-black font-medium">
+                  <svg class="size-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0m11 0c-2.4 4-5.4 6-9 6s-6.6-2-9-6c2.4-4 5.4-6 9-6s6.6 2 9 6" />
+                  </svg>
+                  {{ number_format($project->view_count) }} lượt xem
                 </span>
               </div>
             </div>
@@ -356,31 +362,7 @@
                       </div>
                     </div>
                   </div>
-
-                  <!-- Project Hashtags -->
-                  <div class="entry-tags mt-8 flex flex-wrap items-center gap-2 sm:gap-2.5">
-                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-black mr-1">
-                      <svg class="size-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5" />
-                      </svg>
-                      Tags:
-                    </span>
-                    <a href="{{ route("projects.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                      #DuAnBaoChau
-                    </a>
-                    <a href="{{ route("projects.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                      #GiayPhepMoiTruong
-                    </a>
-                    <a href="{{ route("projects.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                      #BericapVietNam
-                    </a>
-                    <a href="{{ route("projects.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                      #NhaMayBaoBi
-                    </a>
-                    <a href="{{ route("projects.index") }}" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200">
-                      #MoiTruongBaoChau
-                    </a>
-                  </div>
+                  <x-frontend.content-tags :tags="$project->tags" :url="route('projects.index')" />
 
                   <!-- SOCIAL SHARING & RATING FOOTER BAR -->
                   <div
@@ -525,63 +507,7 @@
                         </button>
                       </div>
                     </div>
-
-                    <!-- Right: Star Rating -->
-                    <div class="flex items-center gap-2.5">
-                      <div
-                        class="flex items-center text-amber-500 gap-1"
-                        style="color: #f59e0b"
-                      >
-                        <svg
-                          class="fill-current"
-                          style="width: 18px; height: 18px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 18px; height: 18px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 18px; height: 18px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 18px; height: 18px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 18px; height: 18px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                      </div>
-                      <span class="text-sm font-bold text-gray-900"
-                        >5/5 - (1 bình chọn)</span
-                      >
-                    </div>
+                    <x-frontend.content-rating :average="$project->rating_average" :count="$project->rating_count" />
                   </div>
                 </article>
               </div>
@@ -703,9 +629,9 @@
                       Hotline Tư Vấn Nhanh
                     </p>
                     <a
-                      href="tel:0915549148"
+                      href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['hotline'] ?? '0915549148') }}"
                       class="text-base sm:text-lg font-bold text-gray-900 hover:text-primary transition-colors"
-                      >0915 549 148</a
+                      >{{ $websiteSettings['hotline'] ?? '0915 549 148' }}</a
                     >
                   </div>
                 </div>
@@ -908,10 +834,10 @@
                   >
                     <a
                       class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80"
-                      href="tel:0915549148"
-                      title="Hotline: 0915 549 148"
+                      href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['hotline'] ?? '0915549148') }}"
+                      title="Hotline: {{ $websiteSettings['hotline'] ?? '0915 549 148' }}"
                     >
-                      <span>Hotline: 0915 549 148</span>
+                      <span>Hotline: {{ $websiteSettings['hotline'] ?? '0915 549 148' }}</span>
                       <svg
                         class="size-4"
                         xmlns="http://www.w3.org/2000/svg"

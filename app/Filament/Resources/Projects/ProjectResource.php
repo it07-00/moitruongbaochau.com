@@ -18,6 +18,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -140,6 +141,27 @@ class ProjectResource extends Resource
                         DateTimePicker::make('published_at')
                             ->label('Ngày đăng')
                             ->default(now()),
+                        TagsInput::make('tags')
+                            ->label('Thẻ nội dung')
+                            ->helperText('Nhập tag không kèm ký tự #.')
+                            ->columnSpanFull(),
+                        TextInput::make('view_count')
+                            ->label('Lượt xem')
+                            ->numeric()
+                            ->minValue(0)
+                            ->default(0),
+                        TextInput::make('rating_average')
+                            ->label('Điểm đánh giá')
+                            ->numeric()
+                            ->minValue(1)
+                            ->maxValue(5)
+                            ->step(0.1),
+                        TextInput::make('rating_count')
+                            ->label('Số lượt đánh giá')
+                            ->numeric()
+                            ->minValue(0)
+                            ->step(1)
+                            ->default(0),
                     ])->columns(2),
 
                 SeoSection::make(),

@@ -63,6 +63,7 @@ class SettingResource extends Resource
                                 'social' => '3. Kênh truyền thông & MXH (Zalo, Facebook, Youtube)',
                                 'seo' => '4. Cấu hình SEO mặc định toàn trang',
                                 'homepage' => '5. Khối giới thiệu Trang chủ',
+                                'content' => '6. Nội dung dùng chung (Tác giả, mô tả)',
                             ])
                             ->default('general')
                             ->required(),
@@ -106,6 +107,8 @@ class SettingResource extends Resource
                         'about' => 'Trang Giới thiệu (Lịch sử, Tổ chức, Sứ mệnh)',
                         'seo' => 'Cấu hình SEO',
                         'contact' => 'Thông tin liên hệ',
+                        'social' => 'Kênh truyền thông & MXH',
+                        'content' => 'Nội dung dùng chung',
                     ]),
             ])
             ->defaultSort('group', 'asc')

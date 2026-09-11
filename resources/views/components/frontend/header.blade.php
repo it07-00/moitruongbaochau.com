@@ -14,11 +14,11 @@
         height="36"
         class="h-9 w-9 shrink-0 object-contain"
         style="width: 36px; height: 36px; min-width: 36px; min-height: 36px; max-width: 36px; max-height: 36px;"
-        alt="Môi Trường Bảo Châu"
+        alt="{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}"
         loading="eager"
       />
       <div class="flex flex-col min-w-0">
-        <span class="font-bold text-[13px] text-[#064e3b] uppercase leading-tight tracking-tight truncate">Môi Trường Bảo Châu</span>
+        <span class="font-bold text-[13px] text-[#064e3b] uppercase leading-tight tracking-tight truncate">{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}</span>
         <span class="text-[10px] text-black font-medium truncate">Tư vấn &amp; Kỹ thuật MT</span>
       </div>
     </a>
@@ -87,19 +87,19 @@
       <div class="container px-3 sm:px-4 mx-auto flex items-center justify-between gap-2 sm:gap-4">
         <div class="masthead-logo flex-shrink-0">
           <div class="site-logo">
-            <a class="logo flex items-center" title="MÔI TRƯỜNG BẢO CHÂU" href="{{ route('home') }}" rel="home">
+            <a class="logo flex items-center" title="{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}" href="{{ route('home') }}" rel="home">
               <span class="custom-logo-link">
                 <img
                   src="{{ asset(str_starts_with($websiteSettings['logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['logo'] : ($websiteSettings['logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                   class="custom-logo h-14 sm:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 hover:scale-105"
-                  alt="Môi Trường Bảo Châu"
+                  alt="{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}"
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
                 />
               </span>
             </a>
-            <p class="sr-only">MÔI TRƯỜNG BẢO CHÂU</p>
+            <p class="sr-only">{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}</p>
           </div>
         </div>
 
@@ -159,36 +159,16 @@
                   <div class="frm-hint">
                     <p class="hint-title font-medium mt-6 mb-4">Dịch vụ môi trường nổi bật</p>
                     <ul class="hint-list flex flex-col gap-4 ml-3">
-                      <li>
-                        <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.index') }}" title="Kiểm Kê Khí Nhà Kính (ESG - CBAM)">
-                          <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
-                          Kiểm Kê Khí Nhà Kính (ESG - CBAM)
-                        </a>
-                      </li>
-                      <li>
-                        <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.index') }}" title="Lập Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)">
-                          <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
-                          Lập Báo Cáo Đánh Giá Tác Động Môi Trường (ĐTM)
-                        </a>
-                      </li>
-                      <li>
-                        <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.index') }}" title="Cấp Giấy Phép Môi Trường Theo Luật 2020">
-                          <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
-                          Cấp Giấy Phép Môi Trường Theo Luật 2020
-                        </a>
-                      </li>
-                      <li>
-                        <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.index') }}" title="Quan Trắc Môi Trường Lao Động Định Kỳ">
-                          <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
-                          Quan Trắc Môi Trường Lao Động Định Kỳ
-                        </a>
-                      </li>
-                      <li>
-                        <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.index') }}" title="Thiết Kế & Thi Công Hệ Thống Xử Lý Nước Thải">
-                          <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
-                          Thiết Kế & Thi Công Hệ Thống Xử Lý Nước Thải
-                        </a>
-                      </li>
+                      @forelse ($headerServices as $headerService)
+                        <li>
+                          <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.show', $headerService->slug) }}" title="{{ $headerService->name }}">
+                            <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                            {{ $headerService->name }}
+                          </a>
+                        </li>
+                      @empty
+                        <li class="text-[14px] text-black/60">Chưa có dịch vụ nổi bật.</li>
+                      @endforelse
                     </ul>
                   </div>
                 </form>

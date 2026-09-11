@@ -83,22 +83,12 @@
                         <div>
                             <p class="text-[#047857] font-bold text-[14px] uppercase tracking-wider mb-3.5">KINH DOANH (08:00 - 17:00 MỖI NGÀY)</p>
                             <ul class="space-y-3.5 text-[16px] text-[#374151]">
-                                <li class="flex items-center gap-2">
-                                    <a href="tel:0915219148" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">0915 219 148</a>
-                                    <span class="text-[#374151]"> - Ms. Nhật Quỳnh</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <a href="tel:0915549148" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">0915 549 148</a>
-                                    <span class="text-[#374151]"> - Ms. San San</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <a href="tel:0942241148" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">094 224 1148</a>
-                                    <span class="text-[#374151]"> - Ms. Thanh Thảo</span>
-                                </li>
-                                <li class="flex items-center gap-2">
-                                    <a href="tel:0917283148" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">0917 283 148</a>
-                                    <span class="text-[#374151]"> - Ms. Tường Vy</span>
-                                </li>
+                                @foreach ($footerSalesContacts as $contact)
+                                    <li class="flex items-center gap-2">
+                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $contact['phone']) }}" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">{{ $contact['phone'] }}</a>
+                                        <span class="text-[#374151]"> - {{ $contact['name'] }}</span>
+                                    </li>
+                                @endforeach
                             </ul>
                             <p class="text-[13.5px] text-[#6b7280] italic mt-3">Tất cả các ngày trong tuần (Trừ chủ nhật, ngày Lễ, tết Âm Lịch)</p>
                         </div>
@@ -106,10 +96,12 @@
                         <div class="pt-5">
                             <p class="text-[#047857] font-bold text-[14px] uppercase tracking-wider mb-3.5">NV. TƯ VẤN (08:00 - 17:00 MỖI NGÀY)</p>
                             <ul class="space-y-3.5 text-[16px] text-[#374151]">
-                                <li class="flex items-center gap-2">
-                                    <a href="tel:0917297338" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">0917 297 338</a>
-                                    <span class="text-[#374151]"> - Ms. Mỹ Trân</span>
-                                </li>
+                                @foreach ($footerConsultingContacts as $contact)
+                                    <li class="flex items-center gap-2">
+                                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', $contact['phone']) }}" class="text-[#059669] font-bold text-[17px] lining-nums hover:underline">{{ $contact['phone'] }}</a>
+                                        <span class="text-[#374151]"> - {{ $contact['name'] }}</span>
+                                    </li>
+                                @endforeach
                             </ul>
                             <p class="text-[13.5px] text-[#6b7280] italic mt-3">Từ Thứ 2 đến Thứ 7 (Trừ chủ nhật, ngày Lễ, tết Âm Lịch)</p>
                         </div>

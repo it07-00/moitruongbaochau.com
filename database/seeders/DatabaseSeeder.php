@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             SliderSeeder::class,
             TestimonialSeeder::class,
             PartnerSeeder::class,
+            SharedContentSettingsSeeder::class,
+            ContentTagsAndViewCountSeeder::class,
         ]);
     }
 }

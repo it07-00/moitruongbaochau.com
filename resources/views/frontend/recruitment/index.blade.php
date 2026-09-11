@@ -416,7 +416,7 @@
                     </div>
                     <div>
                       <p class="text-xs font-bold uppercase tracking-wider text-primary">Hotline Tuyển dụng (Zalo)</p>
-                      <p class="text-base font-bold text-black">0915 549 148 <span class="text-xs font-normal text-black/70">(Ms. San San - HR Manager)</span></p>
+                      <p class="text-base font-bold text-black">{{ $websiteSettings['hr_contact_phone'] ?? ($websiteSettings['hotline'] ?? '0915 549 148') }} <span class="text-xs font-normal text-black/70">({{ $websiteSettings['hr_contact_name'] ?? 'Ms. San San - HR Manager' }})</span></p>
                     </div>
                   </div>
 

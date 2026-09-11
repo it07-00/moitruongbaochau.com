@@ -1140,7 +1140,7 @@
               của bạn.
             </p>
             <a
-              href="https://zalo.me/0915549148"
+              href="{{ $websiteSettings['zalo'] ?? 'https://zalo.me/0915549148' }}"
               target="_blank"
               class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80"
               title="Liên hệ ngay"

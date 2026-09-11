@@ -1168,10 +1168,10 @@
                   >
                     <a
                       class="btn btn-primary-1 shadow-xl shadow-primary/30 hover:shadow-lg hover:shadow-primary/80"
-                      href="tel:0915549148"
-                      title="Hotline: 0915 549 148"
+                      href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['hotline'] ?? '0915549148') }}"
+                      title="Hotline: {{ $websiteSettings['hotline'] ?? '0915 549 148' }}"
                     >
-                      <span>Hotline: 0915 549 148</span>
+                      <span>Hotline: {{ $websiteSettings['hotline'] ?? '0915 549 148' }}</span>
                       <svg
                         class="size-4"
                         xmlns="http://www.w3.org/2000/svg"

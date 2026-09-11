@@ -80,6 +80,12 @@
                   </svg>
                   Hạn nộp: {{ $job->expires_at ? $job->expires_at->format('d/m/Y') : 'Đang nhận hồ sơ' }}
                 </span>
+                <span class="inline-flex items-center gap-2 text-black font-semibold text-sm sm:text-base lg:text-lg">
+                  <svg class="size-5 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0m11 0c-2.4 4-5.4 6-9 6s-6.6-2-9-6c2.4-4 5.4-6 9-6s6.6 2 9 6" />
+                  </svg>
+                  {{ number_format($job->view_count) }} lượt xem
+                </span>
               </div>
             </div>
           </div>
@@ -233,60 +239,7 @@
                     </div>
                   </div>
                   @endif
-
-                  <!-- Job Hashtags (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
-                  <div
-                    class="entry-tags mt-8 flex flex-wrap items-center gap-2.5 sm:gap-3"
-                  >
-                    <span
-                      class="inline-flex items-center gap-2 text-sm sm:text-base font-extrabold uppercase tracking-wider text-black mr-1"
-                    >
-                      <svg
-                        class="size-4.5 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5-3.9 19.5m-2.1-19.5-3.9 19.5"
-                        />
-                      </svg>
-                      Tags:
-                    </span>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="inline-flex items-center px-4 py-2 rounded-full text-sm sm:text-base font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      #TuyenDungBaoChau
-                    </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="inline-flex items-center px-4 py-2 rounded-full text-sm sm:text-base font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      #KySuMoiTruong
-                    </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="inline-flex items-center px-4 py-2 rounded-full text-sm sm:text-base font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      #BaoCaoDTM
-                    </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="inline-flex items-center px-4 py-2 rounded-full text-sm sm:text-base font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      #GiayPhepMoiTruong
-                    </a>
-                    <a
-                      href="{{ route("recruitment.index") }}"
-                      class="inline-flex items-center px-4 py-2 rounded-full text-sm sm:text-base font-semibold bg-gray-100/90 text-black hover:bg-primary hover:text-white transition-all duration-200"
-                    >
-                      #ViecLamTPHCM
-                    </a>
-                  </div>
+                  <x-frontend.content-tags :tags="$job->tags" :url="route('recruitment.index')" large />
 
                   <!-- SOCIAL SHARING & RATING FOOTER BAR (CHUẨN NHƯ PROJECT-DETAIL.HTML) -->
                   <div
@@ -364,63 +317,7 @@
                         </button>
                       </div>
                     </div>
-
-                    <!-- Right: Star Rating -->
-                    <div class="flex items-center gap-2.5">
-                      <div
-                        class="flex items-center text-amber-500 gap-1"
-                        style="color: #f59e0b"
-                      >
-                        <svg
-                          class="fill-current"
-                          style="width: 20px; height: 20px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 20px; height: 20px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 20px; height: 20px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 20px; height: 20px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                        <svg
-                          class="fill-current"
-                          style="width: 20px; height: 20px"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                      </div>
-                      <span class="text-base font-bold text-gray-900"
-                        >5/5 - (Tuyệt vời)</span
-                      >
-                    </div>
+                    <x-frontend.content-rating :average="$job->rating_average" :count="$job->rating_count" large />
                   </div>
                 </article>
               </div>
@@ -602,10 +499,10 @@
 
                     <a
                       class="btn btn-secondary-2 shadow-xl shadow-secondary/25 hover:shadow-lg hover:shadow-secondary/70"
-                      href="tel:0915549148"
-                      title="Hotline HR: 0915 549 148"
+                      href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['hr_contact_phone'] ?? ($websiteSettings['hotline'] ?? '0915549148')) }}"
+                      title="Hotline HR: {{ $websiteSettings['hr_contact_phone'] ?? ($websiteSettings['hotline'] ?? '0915 549 148') }}"
                     >
-                      <span>Hotline HR: 0915 549 148</span>
+                      <span>Hotline HR: {{ $websiteSettings['hr_contact_phone'] ?? ($websiteSettings['hotline'] ?? '0915 549 148') }}</span>
                       <svg
                         class="size-4"
                         xmlns="http://www.w3.org/2000/svg"

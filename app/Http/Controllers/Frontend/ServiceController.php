@@ -43,9 +43,10 @@ class ServiceController extends Controller
 
         $relatedServices = Service::query()
             ->published()
+            ->with('category:id,name,slug')
             ->whereKeyNot($service->getKey())
             ->when($service->service_category_id, fn ($query) => $query->where('service_category_id', $service->service_category_id))
-            ->select(['id', 'name', 'slug', 'short_description', 'thumbnail'])
+            ->select(['id', 'service_category_id', 'name', 'slug', 'short_description', 'thumbnail'])
             ->limit(3)
             ->get();
         $seo = SeoData::forContent($service, route('services.show', $service->slug), 'Service');

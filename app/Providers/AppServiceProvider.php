@@ -51,15 +51,28 @@ class AppServiceProvider extends ServiceProvider
             $view->with('websiteSettings', app(SettingService::class)->all());
         });
         View::composer('components.frontend.header', function ($view): void {
-            $view->with('primaryMenuItems', app(MenuService::class)->items('primary'));
+            $view->with([
+                'primaryMenuItems' => app(MenuService::class)->items('primary'),
+                'headerServices' => Service::query()
+                    ->published()
+                    ->orderByDesc('is_featured')
+                    ->orderBy('sort_order')
+                    ->take(5)
+                    ->get(['id', 'name', 'slug']),
+            ]);
         });
         View::composer('components.frontend.footer', function ($view): void {
-            $view->with('footerServices', Service::query()
-                ->published()
-                ->orderBy('sort_order')
-                ->take(7)
-                ->get()
-            );
+            $settingService = app(SettingService::class);
+
+            $view->with([
+                'footerServices' => Service::query()
+                    ->published()
+                    ->orderBy('sort_order')
+                    ->take(7)
+                    ->get(['id', 'name', 'slug']),
+                'footerSalesContacts' => $settingService->json('footer_sales_contacts'),
+                'footerConsultingContacts' => $settingService->json('footer_consulting_contacts'),
+            ]);
         });
 
         if (app()->isProduction()) {

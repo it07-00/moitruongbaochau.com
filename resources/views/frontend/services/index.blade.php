@@ -50,6 +50,6 @@
     :title="$page?->metadata['cta_title'] ?? 'Cần tư vấn giải pháp môi trường tối ưu cho doanh nghiệp?'"
     :description="$page?->metadata['cta_desc'] ?? 'Đội ngũ kỹ sư và chuyên gia pháp lý của Môi Trường Bảo Châu luôn sẵn sàng đồng hành, khảo sát và đưa ra phương án phù hợp nhất.'"
     :buttonText="$page?->metadata['cta_button_text'] ?? 'Liên hệ tư vấn ngay'"
-    :phone="$page?->metadata['cta_phone'] ?? '0915 549 148'"
+    :phone="$page?->metadata['cta_phone'] ?? ($websiteSettings['hotline'] ?? '0915 549 148')"
 />
 @endsection
