@@ -3,6 +3,7 @@
 #masthead .nav-container { min-width: 0; }
 #main-nav { width: 100%; }
 #main-nav .header-nav-list {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -14,6 +15,9 @@
 }
 .header-nav-item {
   position: relative;
+}
+.header-nav-item.has-mega-menu {
+  position: static;
 }
 .header-nav-item > a {
   position: relative;

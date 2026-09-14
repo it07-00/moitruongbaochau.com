@@ -60,23 +60,51 @@ class HeaderNavigationSeeder extends Seeder
             }
 
             $services = $roots['services.index'];
+            $servicesIndexUrl = route('services.index', absolute: false);
             $categories = ServiceCategory::query()->where('is_active', true)->orderBy('sort_order')
                 ->with(['services' => fn ($query) => $query->published()->orderBy('sort_order')])->get();
+            $activeServiceGroupIds = [];
             foreach ($categories as $index => $category) {
-                $group = $menu->items()->firstOrCreate(
-                    ['parent_id' => $services->id, 'label' => $category->name],
-                    ['url' => route('services.index', absolute: false), 'sort_order' => $index],
-                );
+                $group = $menu->items()
+                    ->where('parent_id', $services->id)
+                    ->where('url', $servicesIndexUrl)
+                    ->where('sort_order', $index)
+                    ->whereHas('children')
+                    ->first() ?? $menu->items()->firstOrNew([
+                        'parent_id' => $services->id,
+                        'label' => $category->name,
+                    ]);
+                $group->fill([
+                    'parent_id' => $services->id,
+                    'label' => $category->name,
+                    'url' => $servicesIndexUrl,
+                    'sort_order' => $index,
+                    'is_active' => true,
+                ]);
+                $group->save();
+                $activeServiceGroupIds[] = $group->getKey();
+                $activeServiceUrls = [];
+
                 foreach ($category->services as $serviceIndex => $service) {
                     $url = route('services.show', $service->slug, false);
-                    $menu->items()->firstOrCreate(
+                    $activeServiceUrls[] = $url;
+                    $menu->items()->updateOrCreate(
                         ['parent_id' => $group->id, 'url' => $url],
-                        ['label' => $service->name, 'sort_order' => $serviceIndex],
+                        ['label' => $service->name, 'sort_order' => $serviceIndex, 'is_active' => true],
                     );
                     $menu->items()->where('parent_id', $services->id)->where('url', $url)
                         ->update(['is_active' => false]);
                 }
+
+                $group->children()->whereNotIn('url', $activeServiceUrls)->update(['is_active' => false]);
             }
+
+            $menu->items()
+                ->where('parent_id', $services->id)
+                ->where('url', $servicesIndexUrl)
+                ->whereNotIn('id', $activeServiceGroupIds)
+                ->whereHas('children')
+                ->update(['is_active' => false]);
 
             $news = $roots['posts.index'];
             $legacyUrls = [

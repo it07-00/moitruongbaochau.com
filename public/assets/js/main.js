@@ -715,6 +715,9 @@ function initTableOfContents() {
     const usedIds = new Set(Array.from(document.querySelectorAll('[id]')).map((element) => element.id));
     list.replaceChildren();
 
+    let currentH2Item = null;
+    let currentSubList = null;
+
     headings.forEach((heading, index) => {
       const existingAnchor = heading.id || heading.querySelector('[id]')?.id;
       let anchor = existingAnchor || createTocAnchor(heading.textContent, index);
@@ -730,17 +733,38 @@ function initTableOfContents() {
         usedIds.add(anchor);
       }
 
-      const item = document.createElement('li');
       const link = document.createElement('a');
-
       link.href = `#${anchor}`;
       link.textContent = heading.textContent.trim();
-      link.className = heading.tagName === 'H3'
-        ? 'block border-l-2 border-primary/20 pl-4 text-sm leading-snug text-black transition-colors hover:text-primary'
-        : 'block font-semibold leading-snug text-black transition-colors hover:text-primary';
 
-      item.appendChild(link);
-      list.appendChild(item);
+      if (heading.tagName === 'H3') {
+        // Nest H3 as sub-item under the current H2
+        link.className = 'block text-[13.5px] leading-snug text-black transition-colors hover:text-primary py-0.5';
+
+        if (!currentSubList) {
+          currentSubList = document.createElement('ul');
+          currentSubList.className = 'toc_sublist mt-1.5 space-y-1 pl-4';
+          if (currentH2Item) {
+            currentH2Item.appendChild(currentSubList);
+          }
+        }
+
+        const subItem = document.createElement('li');
+        subItem.setAttribute('data-target', anchor);
+        subItem.appendChild(link);
+        currentSubList.appendChild(subItem);
+      } else {
+        // H2 - top-level item
+        link.className = 'block font-bold leading-snug text-black transition-colors hover:text-primary text-[15px]';
+
+        const item = document.createElement('li');
+        item.setAttribute('data-target', anchor);
+        item.appendChild(link);
+        list.appendChild(item);
+
+        currentH2Item = item;
+        currentSubList = null;
+      }
     });
 
     if (toggle) {
@@ -752,7 +776,58 @@ function initTableOfContents() {
         toggle.querySelector('svg')?.classList.toggle('rotate-180', isExpanded);
       });
     }
+
+    // ScrollSpy active highlighting
+    initTocScrollSpy(headings, sidebar);
   });
+}
+
+function initTocScrollSpy(headings, sidebar) {
+  if (!headings.length) return;
+
+  const headerOffset = 100;
+  let ticking = false;
+
+  const onScroll = () => {
+    const scrollPos = window.scrollY + headerOffset;
+    let currentHeading = null;
+
+    for (let i = 0; i < headings.length; i++) {
+      const heading = headings[i];
+      const headingTop = heading.getBoundingClientRect().top + window.scrollY;
+      if (headingTop <= scrollPos) {
+        currentHeading = heading;
+      } else {
+        break;
+      }
+    }
+
+    sidebar.querySelectorAll('.toc_list li.is-active').forEach((el) => {
+      el.classList.remove('is-active');
+    });
+
+    if (currentHeading) {
+      const activeId = currentHeading.id;
+      const activeItem = sidebar.querySelector(`li[data-target="${activeId}"]`);
+      if (activeItem) {
+        activeItem.classList.add('is-active');
+        const parentH2 = activeItem.closest('.toc_list > li');
+        if (parentH2 && parentH2 !== activeItem) {
+          parentH2.classList.add('is-active');
+        }
+      }
+    }
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  onScroll();
 }
 
 function createTocAnchor(text, index) {
@@ -781,7 +856,7 @@ function initSmoothScroll() {
       const targetEl = document.querySelector(targetId);
       if (targetEl) {
         e.preventDefault();
-        const headerOffset = 80;
+        const headerOffset = 90;
         const elementPosition = targetEl.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 

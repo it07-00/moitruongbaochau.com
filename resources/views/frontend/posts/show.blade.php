@@ -77,7 +77,8 @@
 
           <!-- RIGHT: ARTICLE CONTENT -->
           <div class="content flex-1 min-w-0">
-            <article class="entry-content space-y-8 text-black" data-toc-source itemtype="https://schema.org/CreativeWork" itemscope>
+            <article class="entry-content space-y-8 text-black" data-toc-source itemtype="https://schema.org/CreativeWork"
+              itemscope>
               @if($post->excerpt)
                 <!-- Lead Paragraph -->
                 <p class="text-base sm:text-lg leading-relaxed text-black">
@@ -92,11 +93,14 @@
                 <div
                   class="card-item relative overflow-hidden rounded-3xl border border-black/8 shadow-md bg-white mt-8 mb-6">
                   <!-- Responsive Card Header Toolbar -->
-                  <div class="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 bg-gray-50/95 border-b border-gray-200/80">
+                  <div
+                    class="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 bg-gray-50/95 border-b border-gray-200/80">
                     <div class="flex items-center gap-2.5 font-bold text-sm sm:text-base text-gray-900 min-w-0">
                       <span class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 c-text-1-box text-primary">
-                        <svg class="shrink-0" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        <svg class="shrink-0" width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none"
+                          viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
                       </span>
                       <span class="font-bold text-sm sm:text-base text-gray-900 truncate">Tài liệu PDF</span>
@@ -106,16 +110,20 @@
                         class="btn btn-primary-2 border-primary/60 py-1.5 px-3 text-xs sm:text-sm font-bold shadow-xs rounded-full inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                         title="Mở tài liệu trong tab mới">
                         <span>Toàn màn hình</span>
-                        <svg class="shrink-0" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        <svg class="shrink-0" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                          stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                         </svg>
                       </a>
                       <a href="{{ $post->pdf_url }}" download
                         class="btn btn-primary-1 py-1.5 px-3 text-xs sm:text-sm font-bold text-white shadow-md shadow-primary/25 rounded-full inline-flex items-center gap-1.5 whitespace-nowrap shrink-0"
                         title="Tải văn bản PDF về máy">
                         <span>Tải về</span>
-                        <svg class="shrink-0" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.5V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                        <svg class="shrink-0" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2"
+                          stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.5V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                         </svg>
                       </a>
                     </div>
@@ -137,8 +145,10 @@
                   <div class="w-24 sm:w-28 shrink-0 author-avatar">
                     <span
                       class="aspect-square rounded-2xl u-flex-center c-light-button overflow-hidden border border-black/8 shadow-sm">
-                      <img width="536" height="522" src="{{ asset(str_starts_with($websiteSettings['content_editor_logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['content_editor_logo'] : ($websiteSettings['content_editor_logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
-                        class="object-contain p-2" alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}" />
+                      <img width="536" height="522"
+                        src="{{ asset(str_starts_with($websiteSettings['content_editor_logo'] ?? '', 'uploads/') ? 'storage/' . $websiteSettings['content_editor_logo'] : ($websiteSettings['content_editor_logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
+                        class="object-contain p-2"
+                        alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}" />
                     </span>
                   </div>
                   <div class="author-info flex flex-col justify-around">
@@ -163,8 +173,8 @@
                   <span class="font-extrabold text-base sm:text-lg uppercase tracking-wider text-black">CHIA SẺ:</span>
                   <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
-                      target="_blank" rel="noopener noreferrer"
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}" target="_blank"
+                      rel="noopener noreferrer"
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90"
                       title="Chia sẻ lên Facebook">
                       <svg class="fill-current size-6 sm:size-7" viewBox="0 0 24 24">
@@ -204,9 +214,9 @@
                     </a>
                     <!-- Copy Link -->
                     <button onclick="
-                                      navigator.clipboard.writeText('{{ $shareUrl }}');
-                                      alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
-                                    "
+                                        navigator.clipboard.writeText('{{ $shareUrl }}');
+                                        alert('Đã sao chép liên kết bài viết: {{ $shareUrl }}');
+                                      "
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                       title="Sao chép liên kết">
                       <svg class="size-6 sm:size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -217,16 +227,16 @@
                     </button>
                     <!-- Native Share -->
                     <button onclick="
-                                      if (navigator.share) {
-                                        navigator.share({
-                                          title: document.title,
-                                          url: '{{ $shareUrl }}',
-                                        });
-                                      } else {
-                                        navigator.clipboard.writeText('{{ $shareUrl }}');
-                                        alert('Đã sao chép liên kết: {{ $shareUrl }}');
-                                      }
-                                    "
+                                        if (navigator.share) {
+                                          navigator.share({
+                                            title: document.title,
+                                            url: '{{ $shareUrl }}',
+                                          });
+                                        } else {
+                                          navigator.clipboard.writeText('{{ $shareUrl }}');
+                                          alert('Đã sao chép liên kết: {{ $shareUrl }}');
+                                        }
+                                      "
                       class="p-2 rounded-xl text-black hover:text-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer"
                       title="Chia sẻ">
                       <svg class="size-6 sm:size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
