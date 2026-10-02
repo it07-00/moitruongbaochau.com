@@ -94,13 +94,13 @@
           </div>
 
         </section>
-        <section id="section-db7ea4e65d" class="relative overflow-hidden">
+        <section id="section-db7ea4e65d" class="home-about relative overflow-hidden">
           <div class="container px-3 mx-auto relative py-10 lg:py-20">
             <div
-              class="grid lg:grid-cols-2 grid-cols-1 gap-12 items-center mb-6 md:mb-0"
+              class="home-about-grid grid lg:grid-cols-2 grid-cols-1 gap-12 items-center mb-6 md:mb-0"
             >
               <div
-                class="px-[8%] sm:px-[12%] flex justify-center items-center relative"
+                class="home-about-image px-[8%] sm:px-[12%] flex justify-center items-center relative"
               >
                 <!-- Hiệu ứng ánh sáng nền mờ nhẹ (ambient glow) -->
                 <div
@@ -116,7 +116,7 @@
                   loading="lazy"
                 />
               </div>
-              <div>
+              <div class="home-about-copy">
                 <div
                   class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                 >

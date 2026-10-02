@@ -1208,3 +1208,27 @@ nav#main-nav,
 
 
 
+
+/* Keep the homepage introduction compact and readable on phones. */
+@media (max-width: 767px) {
+  .home .section > .container,
+  .home .home-about > .container { padding-left: 20px; padding-right: 20px; }
+  .home .home-about > .container { padding-top: 28px; padding-bottom: 32px; }
+  .home .home-about-grid { gap: 24px; margin-bottom: 0; }
+  .home .home-about-copy { order: -1; }
+  .home .home-about-copy h2 { font-size: 26px; line-height: 1.35; margin-bottom: 16px; }
+  .home .home-about-copy h2 + div > div { margin-top: 0; font-size: 15px; line-height: 1.75; color: #181818; }
+  .home .home-about-copy .btn { margin-top: 20px; }
+  .home .home-about-image { padding: 0; }
+  .home .home-about-image > img { width: 160px; max-width: 100%; max-height: 180px; object-fit: contain; opacity: 1; }
+  .home .home-about-image > div { width: 160px; height: 160px; }
+  .home .home-about .cards { width: 100%; gap: 16px; }
+  .home .home-about .card-item { padding: 20px; border-radius: 18px; }
+  .home #hero-swiper .swiper-button-prev,
+  .home #hero-swiper .swiper-button-next { width: 30px !important; height: 30px !important; margin-top: -15px; }
+  .home #hero-swiper .swiper-button-prev:after,
+  .home #hero-swiper .swiper-button-next:after { font-size: 11px !important; }
+  .home #hero-swiper .swiper-button-prev { left: 6px; }
+  .home #hero-swiper .swiper-button-next { right: 6px; }
+  .home .site-content { padding-bottom: 72px; }
+}
