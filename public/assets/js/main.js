@@ -931,3 +931,14 @@ document.addEventListener('livewire:init', () => {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const footerGroups = document.querySelectorAll('.footer-services-fold, .footer-mobile-fold');
+  if (!footerGroups.length) return;
+  const mobileFooter = window.matchMedia('(max-width: 767px)');
+  const updateFooterServices = () => {
+    footerGroups.forEach((group) => { group.open = !mobileFooter.matches; });
+  };
+  updateFooterServices();
+  mobileFooter.addEventListener('change', updateFooterServices);
+});

@@ -4,10 +4,22 @@
     </div>
     <div id="footer-columns" class="footer-columns relative">
         <div class="container px-3 mx-auto">
+            <div class="footer-mobile-contact">
+                <h3>Thông tin liên hệ</h3>
+                <p><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>{{ $websiteSettings['address'] ?? '180/40 Nguyễn Hữu Cảnh, Phường Thạnh Mỹ Tây, TP. Hồ Chí Minh' }}</span></p>
+                <p><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m5 3 4 1 1 5-3 2a16 16 0 0 0 6 6l2-3 5 1 1 4c-1 5-8 1-12-3S1 4 5 3Z"/></svg><a href="tel:{{ preg_replace('/[^0-9+]/', '', $websiteSettings['hotline'] ?? '0915549148') }}">{{ $websiteSettings['hotline'] ?? '0915549148' }}</a></p>
+                <p><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><a href="mailto:{{ $websiteSettings['email'] ?? 'info@baochauenvir.com' }}">{{ $websiteSettings['email'] ?? 'info@baochauenvir.com' }}</a></p>
+                <div class="footer-mobile-social">
+                    <a href="{{ $websiteSettings['facebook'] ?? 'https://www.facebook.com/moitruongbaochau' }}" aria-label="Facebook" target="_blank" rel="noopener noreferrer nofollow">f</a>
+                    <a href="https://zalo.me/{{ preg_replace('/[^0-9]/', '', $websiteSettings['hotline'] ?? '0915549148') }}" aria-label="Zalo" target="_blank" rel="noopener noreferrer nofollow">Zalo</a>
+                    <a href="{{ $websiteSettings['youtube'] ?? 'https://www.youtube.com/@moitruongbaochau' }}" aria-label="YouTube" target="_blank" rel="noopener noreferrer nofollow"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="m10 9 6 3-6 3z" fill="#fff"/></svg></a>
+                </div>
+            </div>
             <div class="grid gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start">
                 <!-- CỘT 1: THÔNG TIN DOANH NGHIỆP -->
                 <div class="footer-col-1">
-                    <p class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Thông Tin Doanh Nghiệp</p>
+                    <details class="footer-mobile-fold" open>
+                    <summary class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Thông Tin Doanh Nghiệp</summary>
                     <div class="space-y-4">
                         <p class="text-[#047857] font-bold text-[16px] uppercase tracking-wide leading-snug">
                             {{ $websiteSettings['company_name'] ?? 'CÔNG TY TNHH DỊCH VỤ VÀ KỸ THUẬT MÔI TRƯỜNG BẢO CHÂU' }}
@@ -74,11 +86,13 @@
                             </ul>
                         </div>
                     </div>
+                    </details>
                 </div>
 
                 <!-- CỘT 2: TỔNG ĐÀI HỖ TRỢ -->
                 <div class="footer-col-2">
-                    <p class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Tổng Đài Hỗ Trợ</p>
+                    <details class="footer-mobile-fold" open>
+                    <summary class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Tổng Đài Hỗ Trợ</summary>
                     <div class="space-y-6">
                         <div>
                             <p class="text-[#047857] font-bold text-[14px] uppercase tracking-wider mb-3.5">KINH DOANH (08:00 - 17:00 MỖI NGÀY)</p>
@@ -106,17 +120,20 @@
                             <p class="text-[13.5px] text-[#6b7280] italic mt-3">Từ Thứ 2 đến Thứ 7 (Trừ chủ nhật, ngày Lễ, tết Âm Lịch)</p>
                         </div>
                     </div>
+                    </details>
                 </div>
 
                 <!-- CỘT 3: DỊCH VỤ TRỌNG TÂM -->
                 <div class="footer-col-3">
-                    <p class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Dịch Vụ Môi Trường</p>
+                    <details class="footer-services-fold" open>
+                    <summary class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Dịch Vụ Môi Trường</summary>
                     <ul class="menu menu-drop text-[16px] space-y-3.5">
                         @foreach($footerServices as $srv)
                         <li><a href="{{ $srv->getPublicUrl() }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">{{ $srv->name }}</a></li>
                         @endforeach
                         <li><a href="{{ route('projects.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Dự Án Tiêu Biểu &amp; Năng Lực Thực Hiện</a></li>
                     </ul>
+                    </details>
                 </div>
             </div>
 
@@ -134,13 +151,10 @@
                 <div class="text-center lg:text-left w-full text-[#4b5563]">
                     © <span class="copyright-year text-[#064e3b] font-semibold">{{ now()->year }}</span> {{ $websiteSettings['company_name'] ?? 'Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu.' }}
                 </div>
-                <div class="flex gap-1.25 justify-center items-center w-full text-[#4b5563]">
-                    Đồng hành
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 w-5 h-5 fill-[#059669] text-[#059669]">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"></path>
-                    </svg>
-                    cùng
-                    <span class="font-bold text-[#064e3b]">MÔI TRƯỜNG BẢO CHÂU</span>
+                <div class="footer-tagline flex gap-1.25 justify-center items-center w-full text-[#4b5563]">
+                    <span>BẢO CHÂU</span>
+                    <span aria-hidden="true">·</span>
+                    Vì môi trường bền vững
                 </div>
                 <div class="link-elm w-full flex items-center justify-center lg:justify-end text-[#4b5563]">
                     GPĐKKD: {{ $websiteSettings['tax_code'] ?? '0317615845 do Sở KH & ĐT TP.HCM cấp' }}

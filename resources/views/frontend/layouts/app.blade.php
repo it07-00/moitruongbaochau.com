@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ file_exists(public_path('assets/css/style.css')) ? filemtime(public_path('assets/css/style.css')) : time() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}?v={{ filemtime(public_path('assets/css/header.css')) }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/footer.css') }}?v={{ substr(hash_file('sha256', public_path('assets/css/footer.css')), 0, 12) }}">
     @livewireStyles
     @stack('styles')
 </head>
