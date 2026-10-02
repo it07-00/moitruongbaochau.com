@@ -1,10 +1,10 @@
 @extends('frontend.layouts.app', ['bodyClass' => 'ghg-survey-page'])
 
 @push('styles')
-  <link rel="stylesheet" href="{{ asset('assets/css/ghg-survey.css') }}?v={{ filemtime(public_path('assets/css/ghg-survey.css')) }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/ghg-survey.css') }}?v={{ hash_file('sha256', public_path('assets/css/ghg-survey.css')) }}">
 @endpush
 @push('scripts')
-  <script src="{{ asset('assets/js/ghg-survey.js') }}?v={{ filemtime(public_path('assets/js/ghg-survey.js')) }}" defer></script>
+  <script src="{{ asset('assets/js/ghg-survey.js') }}?v={{ hash_file('sha256', public_path('assets/js/ghg-survey.js')) }}" defer></script>
 @endpush
 
 @section('content')
@@ -83,9 +83,20 @@
             <p class="ghg-step-note">Nhập dữ liệu của năm {{ $declaration->data[1]['inventory_year'] }}. Với bảng theo tháng, giá trị 0 thể hiện không phát sinh; hãy kiểm tra đủ 12 tháng trước khi tiếp tục. Với nhiên liệu và thiết bị, không thêm dòng nếu không phát sinh.</p>
             @foreach($sections as $key => $section)
               <section class="ghg-card" data-ghg-section="{{ $key }}" @if(in_array($key, ['stationary_fuels', 'mobile_fuels'])) data-ghg-fuel-group="{{ $key === 'stationary_fuels' ? 'purpose' : 'equipment_type' }}" @endif>
-                <h3>{{ $section['label'] }}</h3>
+                <h3 @class(['ghg-wastewater-title' => in_array($key, ['domestic_wastewater', 'industrial_wastewater'])])>{{ $section['label'] }}</h3>
                 @if(isset($section['fields']['treatment_type']))
-                  <p class="ghg-field-hint">Chọn hệ thống xử lý ở một tháng rồi chọn “Áp dụng cho cả năm” để điền cho 11 tháng còn lại trong cùng bảng. Các số liệu từng tháng được giữ nguyên.</p>
+                  <div class="ghg-water-picker" data-ghg-water-picker>
+                    <div class="ghg-field">
+                      <label for="ghg-{{ $key }}-shared-treatment">Hệ thống xử lý</label>
+                      <select id="ghg-{{ $key }}-shared-treatment" data-ghg-water-treatment>
+                        <option value="">— Chọn hệ thống xử lý —</option>
+                        @foreach($section['fields']['treatment_type']['options'] as $option => $label)
+                          <option value="{{ $option }}">{{ $label }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <p class="ghg-field-hint">Chọn hệ thống xử lý để tự hiện bảng 12 tháng. Hệ thống được áp dụng chung cho cả năm; tháng không phát sinh nhập 0.</p>
+                  </div>
                 @endif
                 @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
                   <div data-ghg-fuel-picker>
@@ -102,11 +113,10 @@
                       </div>
                     @endforeach
                     </div>
-                    <p class="ghg-field-hint">Chọn nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị. Mỗi nhóm có bảng 12 tháng riêng; tháng không phát sinh nhập 0.</p>
-                    <button type="button" class="ghg-primary-button" data-ghg-add>Tạo bảng 12 tháng</button>
+                    <p class="ghg-field-hint">Chọn đủ nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị, bảng 12 tháng sẽ tự xuất hiện. Tháng không phát sinh nhập 0.</p>
                   </div>
                 @endif
-                <div data-ghg-rows>
+                <div data-ghg-rows @class(['ghg-wastewater-months' => in_array($key, ['domestic_wastewater', 'industrial_wastewater'])])>
                   @foreach((array) ($data[$key] ?? []) as $index => $rowData)
                     <x-ghg-survey-row :section="$section" :key="$key" :index="$index" :row-data="is_array($rowData) ? $rowData : []" />
                   @endforeach

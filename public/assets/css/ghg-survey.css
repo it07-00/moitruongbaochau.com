@@ -63,9 +63,10 @@
 .ghg-fuel-group { margin: 20px 0; padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; min-width: 0; }
 [data-ghg-fuel-picker] { margin: 20px 0; padding: 20px; border: 1px solid #e5e7eb; border-radius: 16px; }
 [data-ghg-fuel-picker][hidden], [data-ghg-new-fuel][hidden] { display: none; }
-.ghg-fuel-group > legend { padding: 0 8px; font-weight: 500; color: #800000; }
+.ghg-fuel-group > legend, .ghg-card .ghg-wastewater-title { max-width: 100%; padding: 10px 16px; border: 1px solid #edcaca; border-left: 4px solid #800000; border-radius: 10px; background: #fdf2f2; font-size: 16px; line-height: 1.5; font-weight: 500; color: #800000; overflow-wrap: anywhere; }
+.ghg-card .ghg-wastewater-title { width: fit-content; }
 .ghg-fuel-hint { margin: 6px 0 14px; color: #525866; font-size: 13px; line-height: 1.5; }
-.ghg-fuel-months { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ghg-fuel-months { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .ghg-fuel-months .ghg-data-row { display: block; margin: 0; padding: 10px; min-width: 0; border: 1px solid #edf0f2; border-radius: 10px; background: #fafafa; }
 .ghg-fuel-months .ghg-fields-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
 .ghg-fuel-month-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; white-space: nowrap; }
@@ -73,13 +74,39 @@
 .ghg-fuel-months .ghg-field-hint { display: none; }
 .ghg-fuel-months .ghg-field input { min-height: 40px; padding: 8px 10px; border-radius: 8px; font-size: 14px; }
 .ghg-fuel-months .ghg-field input:focus { outline-color: #800000; }
+.ghg-fuel-amount { display: flex; align-items: center; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; overflow: hidden; }
+.ghg-fuel-months .ghg-fuel-amount input { min-width: 0; border: 0; border-radius: 0; }
+.ghg-fuel-months .ghg-fuel-amount input:focus { outline: none; }
+.ghg-fuel-amount:focus-within { outline: 2px solid #800000; outline-offset: 2px; }
+.ghg-fuel-amount:has([aria-invalid="true"]) { border-color: #dc2626; }
+.ghg-fuel-unit { flex-shrink: 0; padding: 4px 10px; border-left: 1px solid #e5e7eb; color: #525866; font-size: 12px; }
 .ghg-fuel-notes { margin-top: 16px; }
 .ghg-fuel-notes textarea { display: block; width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; color: #181818; font: inherit; font-size: 14px; resize: vertical; }
 .ghg-fuel-notes textarea:focus { outline: 2px solid #800000; outline-offset: 2px; }
+.ghg-wastewater-months { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 16px; }
+.ghg-wastewater-months .ghg-data-row { margin: 0; padding: 12px 10px; background: #fafafa; border-radius: 10px; }
+.ghg-wastewater-months .ghg-data-row legend { padding: 0 4px; font-size: 13px; color: #800000; }
+.ghg-wastewater-months .ghg-fields-grid { grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ghg-wastewater-months .ghg-field label { font-size: 12px; margin-bottom: 4px; }
+.ghg-wastewater-months .ghg-field-hint { display: none; }
+.ghg-wastewater-months .ghg-field input, .ghg-wastewater-months .ghg-field select { min-height: 40px; font-size: 13px; padding: 8px; }
+.ghg-wastewater-months .ghg-fuel-amount input { min-width: 0; border: 0; border-radius: 0; }
+.ghg-wastewater-months .ghg-fuel-amount input:focus { outline: none; }
+.ghg-wastewater-months .ghg-fuel-unit { padding: 4px 6px; font-size: 11px; }
+.ghg-water-picker { padding: 16px; margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 12px; }
+.ghg-water-picker > .ghg-field { max-width: 520px; }
+.ghg-water-picker[hidden], .ghg-water-group[hidden], .ghg-water-change[hidden] { display: none; }
+.ghg-water-shared-treatment .ghg-fields-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ghg-water-change { margin-top: 16px; }
+@media (min-width: 640px) and (max-width: 1023px) { .ghg-wastewater-months .ghg-fields-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .ghg-field[hidden], .ghg-remove-row[hidden] { display: none; }
 @media (max-width: 639px) {
   .ghg-fuel-group { padding: 12px; }
-  .ghg-fuel-months { gap: 8px; }
+  .ghg-fuel-group > legend, .ghg-card .ghg-wastewater-title { padding: 8px 12px; font-size: 14px; }
+  .ghg-fuel-months { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ghg-wastewater-months { gap: 8px; }
+  .ghg-wastewater-months .ghg-fields-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ghg-wastewater-months .ghg-data-row { padding: 10px 6px; }
   .ghg-fuel-months .ghg-data-row { padding: 8px 6px; }
   .ghg-fuel-months .ghg-field input { padding: 8px 6px; }
 }

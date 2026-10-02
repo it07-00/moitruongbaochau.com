@@ -58,6 +58,69 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     newFuelButton?.addEventListener('click', showFuelPicker);
     const fieldInput = (row, field) => row.querySelector(`[name$="[${field}]"]`);
+    const waterPicker = section.querySelector('[data-ghg-water-picker]');
+    if (waterPicker) {
+      const treatmentPicker = waterPicker.querySelector('[data-ghg-water-treatment]');
+      const treatments = Array.from(rows.querySelectorAll('select[name$="[treatment_type]"]'));
+      const treatmentValues = new Set(treatments.map((select) => select.value));
+      const group = document.createElement('fieldset');
+      group.className = 'ghg-fuel-group ghg-water-group';
+      const legend = document.createElement('legend');
+      const sectionTitle = section.querySelector('h3').textContent;
+      legend.textContent = sectionTitle;
+      rows.before(group);
+      group.append(legend, rows);
+      const changeTreatment = document.createElement('button');
+      changeTreatment.type = 'button';
+      changeTreatment.className = 'ghg-secondary-button ghg-water-change';
+      changeTreatment.textContent = 'Đổi hệ thống xử lý';
+      group.append(changeTreatment);
+      const showWaterGroup = () => {
+        legend.textContent = `${sectionTitle} · ${treatmentPicker.selectedOptions[0].textContent}`;
+        treatments.forEach((select) => { select.closest('.ghg-field').hidden = true; });
+        rows.classList.add('ghg-water-shared-treatment');
+        group.hidden = false;
+        waterPicker.hidden = true;
+      };
+      if (treatmentValues.size === 1 && treatments[0]?.value) {
+        treatmentPicker.value = treatments[0].value;
+        showWaterGroup();
+      } else {
+        group.hidden = !rows.querySelector('[aria-invalid="true"], .ghg-error')
+          && treatmentValues.size <= 1
+          && !Array.from(rows.querySelectorAll('input[type="number"]')).some((input) => Number(input.value) !== 0 || input.value === '');
+        changeTreatment.hidden = true;
+      }
+      treatmentPicker.addEventListener('change', () => {
+        if (!treatmentPicker.value) return;
+        treatments.forEach((select) => { select.value = treatmentPicker.value; });
+        showWaterGroup();
+        changeTreatment.hidden = false;
+        rows.querySelector('input[type="number"]')?.focus();
+        dirty = true;
+      });
+      changeTreatment.addEventListener('click', () => {
+        waterPicker.hidden = false;
+        treatmentPicker.focus();
+      });
+    }
+    section.querySelectorAll('.ghg-wastewater-months input[type="number"]').forEach((input) => {
+      const label = input.closest('.ghg-field').querySelector('label');
+      const unitText = label.textContent.match(/\((m³|mg\/L)\)/)?.[1];
+      if (!unitText) return;
+      label.childNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) node.textContent = node.textContent.replace(/\s*\((m³|mg\/L)\)/, '');
+      });
+      const amount = document.createElement('div');
+      amount.className = 'ghg-fuel-amount';
+      input.before(amount);
+      const unit = document.createElement('span');
+      unit.className = 'ghg-fuel-unit';
+      unit.id = `${input.id}-unit`;
+      unit.textContent = unitText;
+      input.setAttribute('aria-describedby', [input.getAttribute('aria-describedby'), unit.id].filter(Boolean).join(' '));
+      amount.append(input, unit);
+    });
     const createRow = (values) => {
       const fragment = template.content.cloneNode(true);
       const row = fragment.querySelector('[data-ghg-row]');
@@ -107,6 +170,16 @@ document.addEventListener('DOMContentLoaded', () => {
         monthLabel.setAttribute('aria-hidden', 'true');
         monthLabel.textContent = `Tháng ${month}`;
         row.querySelector('.ghg-fields-grid').before(monthLabel);
+        const quantity = fieldInput(row, 'quantity');
+        const amount = document.createElement('div');
+        amount.className = 'ghg-fuel-amount';
+        quantity.before(amount);
+        const unit = document.createElement('span');
+        unit.className = 'ghg-fuel-unit';
+        unit.id = `${quantity.id}-unit`;
+        unit.textContent = fieldInput(row, 'unit').selectedOptions[0].textContent;
+        quantity.setAttribute('aria-describedby', [quantity.getAttribute('aria-describedby'), unit.id].filter(Boolean).join(' '));
+        amount.append(quantity, unit);
         ['month', 'fuel_type', groupField, 'unit', 'notes'].forEach((field) => {
           fieldInput(row, field).closest('.ghg-field').hidden = true;
         });
@@ -166,21 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
       newFuelButton.hidden = !fuelPicker.hidden;
     }
 
-    section.querySelector('[data-ghg-add]')?.addEventListener('click', () => {
-      if (groupField) {
+    fuelPicker?.addEventListener('change', (event) => {
+      if (event.target.matches('[data-ghg-group-field]')) {
         const choices = Array.from(section.querySelectorAll('[data-ghg-group-field]'));
         const missing = choices.find((select) => !select.value);
-        if (missing) {
-          if (typeof Swal !== 'undefined') {
-            Swal.fire({ icon: 'info', text: 'Vui lòng chọn đầy đủ thông tin để tạo 12 tháng.', confirmButtonColor: '#800000' });
-          }
-          missing.focus();
-          return;
-        }
+        if (missing) return;
         const values = Object.fromEntries(choices.map((select) => [select.dataset.ghgGroupField, select.value]));
         const key = JSON.stringify([values.fuel_type, values[groupField]]);
         const existing = Array.from(rows.querySelectorAll('[data-ghg-group-key]')).find((group) => group.dataset.ghgGroupKey === key);
         if (existing) {
+          fuelPicker.hidden = true;
+          newFuelButton.hidden = false;
           existing.querySelector('[name$="[quantity]"]').focus();
           if (typeof Swal !== 'undefined') Swal.fire({ icon: 'info', text: 'Nhóm nhiên liệu này đã có đủ 12 tháng. Vui lòng nhập số liệu trong nhóm đã tạo.', confirmButtonColor: '#800000' });
           return;
@@ -191,8 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
         newFuelButton.hidden = false;
         group.querySelector('[name$="[quantity]"]').focus();
         dirty = true;
-        return;
       }
+    });
+    section.querySelector('[data-ghg-add]')?.addEventListener('click', () => {
       if (rows.children.length >= 200) return;
       rows.insertAdjacentHTML('beforeend', template.innerHTML.replaceAll('__INDEX__', String(nextIndex++)));
       rows.lastElementChild.querySelector('input, select')?.focus();
