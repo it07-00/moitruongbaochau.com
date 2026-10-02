@@ -83,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return select.selectedOptions[0].textContent;
       }).join(' · ');
       group.append(legend);
+      const hint = document.createElement('p');
+      hint.className = 'ghg-fuel-hint';
+      hint.textContent = 'Lượng sử dụng theo từng tháng, đơn vị như trên. Tháng không phát sinh nhập 0.';
+      group.append(hint);
       const months = document.createElement('div');
       months.className = 'ghg-fuel-months';
       group.append(months);
@@ -98,12 +102,42 @@ document.addEventListener('DOMContentLoaded', () => {
           dirty = true;
         }
         row.querySelector('legend').textContent = `Tháng ${month}`;
-        ['month', 'fuel_type', groupField, 'unit'].forEach((field) => {
+        const monthLabel = document.createElement('span');
+        monthLabel.className = 'ghg-fuel-month-label';
+        monthLabel.setAttribute('aria-hidden', 'true');
+        monthLabel.textContent = `Tháng ${month}`;
+        row.querySelector('.ghg-fields-grid').before(monthLabel);
+        ['month', 'fuel_type', groupField, 'unit', 'notes'].forEach((field) => {
           fieldInput(row, field).closest('.ghg-field').hidden = true;
         });
         row.querySelector('[data-ghg-remove]').hidden = true;
         months.append(row);
       }
+      const notesField = document.createElement('div');
+      notesField.className = 'ghg-field ghg-fuel-notes';
+      const notesLabel = document.createElement('label');
+      const notesInput = document.createElement('textarea');
+      notesInput.id = `${fieldInput(firstRow, 'notes').id}-shared`;
+      notesInput.rows = 2;
+      notesInput.maxLength = 255;
+      notesInput.placeholder = 'Thiết bị, phân xưởng hoặc hóa đơn liên quan (nếu có)';
+      notesLabel.htmlFor = notesInput.id;
+      notesLabel.textContent = 'Ghi chú chung cho 12 tháng';
+      const monthlyNotes = Array.from(months.querySelectorAll('[data-ghg-row]')).map((row) => ({
+        month: fieldInput(row, 'month').value,
+        note: fieldInput(row, 'notes').value,
+      }));
+      const distinctNotes = new Set(monthlyNotes.map((item) => item.note));
+      notesInput.value = distinctNotes.size === 1
+        ? monthlyNotes[0].note
+        : monthlyNotes.filter((item) => item.note).map((item) => `Tháng ${item.month}: ${item.note}`).join('\n');
+      notesInput.addEventListener('input', () => {
+        months.querySelectorAll('[data-ghg-row]').forEach((row) => {
+          fieldInput(row, 'notes').value = notesInput.value;
+        });
+      });
+      notesField.append(notesLabel, notesInput);
+      group.append(notesField);
       const remove = document.createElement('button');
       remove.type = 'button';
       remove.className = 'ghg-remove-row';

@@ -60,15 +60,29 @@
 .ghg-confirmation { display: flex; align-items: flex-start; gap: 12px; margin-top: 24px; font-size: 14px; line-height: 1.6; cursor: pointer; }
 .ghg-confirmation input { margin-top: 4px; width: 20px; height: 20px; flex-shrink: 0; accent-color: #181818; }
 .ghg-honeypot { display: none; }
-.ghg-fuel-group { margin: 24px 0; padding: 20px; border: 1px solid #e5e7eb; border-radius: 16px; min-width: 0; }
+.ghg-fuel-group { margin: 20px 0; padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; min-width: 0; }
 [data-ghg-fuel-picker] { margin: 20px 0; padding: 20px; border: 1px solid #e5e7eb; border-radius: 16px; }
 [data-ghg-fuel-picker][hidden], [data-ghg-new-fuel][hidden] { display: none; }
 .ghg-fuel-group > legend { padding: 0 8px; font-weight: 500; color: #800000; }
-.ghg-fuel-months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.ghg-fuel-months .ghg-data-row { margin: 0; min-width: 0; }
-.ghg-fuel-months .ghg-fields-grid { grid-template-columns: minmax(0, 1fr); }
+.ghg-fuel-hint { margin: 6px 0 14px; color: #525866; font-size: 13px; line-height: 1.5; }
+.ghg-fuel-months { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.ghg-fuel-months .ghg-data-row { display: block; margin: 0; padding: 10px; min-width: 0; border: 1px solid #edf0f2; border-radius: 10px; background: #fafafa; }
+.ghg-fuel-months .ghg-fields-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.ghg-fuel-month-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; white-space: nowrap; }
+.ghg-fuel-months .ghg-data-row legend, .ghg-fuel-months .ghg-field label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ghg-fuel-months .ghg-field-hint { display: none; }
+.ghg-fuel-months .ghg-field input { min-height: 40px; padding: 8px 10px; border-radius: 8px; font-size: 14px; }
+.ghg-fuel-months .ghg-field input:focus { outline-color: #800000; }
+.ghg-fuel-notes { margin-top: 16px; }
+.ghg-fuel-notes textarea { display: block; width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; color: #181818; font: inherit; font-size: 14px; resize: vertical; }
+.ghg-fuel-notes textarea:focus { outline: 2px solid #800000; outline-offset: 2px; }
 .ghg-field[hidden], .ghg-remove-row[hidden] { display: none; }
-@media (max-width: 639px) { .ghg-fuel-months { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 639px) {
+  .ghg-fuel-group { padding: 12px; }
+  .ghg-fuel-months { gap: 8px; }
+  .ghg-fuel-months .ghg-data-row { padding: 8px 6px; }
+  .ghg-fuel-months .ghg-field input { padding: 8px 6px; }
+}
 .ghg-summary-section { margin-top: 16px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; padding: 16px; }
 .ghg-summary-section summary { font-weight: 500; cursor: pointer; }
 .ghg-summary-section h3 { font-weight: 500; font-size: 16px; margin: 20px 0 12px; }
