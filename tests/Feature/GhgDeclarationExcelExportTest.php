@@ -30,6 +30,15 @@ class GhgDeclarationExcelExportTest extends TestCase
         $data[1]['tax_code'] = '0317615845';
         $data[1]['contact_phone'] = '0915549148';
         $data[2]['stationary_fuels'] = [['month' => 1, 'fuel_type' => 'do', 'quantity' => 125.5, 'unit' => 'lit', 'purpose' => 'cong_nghiep_sx_xd']];
+        foreach (['domestic_wastewater' => ['tu_hoai', 'tap_trung_hieu_khi'], 'industrial_wastewater' => ['hieu_khi_cn', 'uasb']] as $section => $systems) {
+            $months = $data[4][$section];
+            $data[4][$section] = [];
+            foreach ($systems as $system) {
+                foreach ($months as $row) {
+                    $data[4][$section][] = array_replace($row, ['treatment_type' => $system, 'flow_volume_m3' => 123.5]);
+                }
+            }
+        }
         $record = GhgDeclaration::factory()->create(['data' => $data, 'evidence' => [['name' => 'hoa-don.pdf', 'category' => 'Điện', 'note' => 'Tháng 1', 'size' => 123, 'path' => 'private/secret.pdf']]]);
         $path = tempnam(sys_get_temp_dir(), 'ghg-test-');
         try {
@@ -42,6 +51,11 @@ class GhgDeclarationExcelExportTest extends TestCase
             $this->assertSame(125.5, $sheets['Nhiên liệu cố định'][2][2]);
             $this->assertNotSame('do', $sheets['Nhiên liệu cố định'][2][1]);
             $this->assertSame('hoa-don.pdf', $sheets['Chứng từ'][1][0]);
+            $waterRows = array_values(array_filter($sheets['Nước thải'], fn (array $row): bool => preg_match('/^Tháng \d+$/u', (string) ($row[0] ?? '')) === 1));
+            $this->assertCount(48, $waterRows);
+            $this->assertSame(12, count(array_filter($waterRows, fn (array $row): bool => $row[1] === 'UASB')));
+            $this->assertSame(12, count(array_filter($waterRows, fn (array $row): bool => $row[1] === 'Bể tự hoại')));
+            $this->assertSame(123.5, $waterRows[47][2]);
             $zip = new ZipArchive;
             $zip->open($path);
             foreach (range(1, 7) as $number) {

@@ -116,11 +116,15 @@
                     <p class="ghg-field-hint">Chọn đủ nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị, bảng 12 tháng sẽ tự xuất hiện. Tháng không phát sinh nhập 0.</p>
                   </div>
                 @endif
-                <div data-ghg-rows @class(['ghg-wastewater-months' => in_array($key, ['domestic_wastewater', 'industrial_wastewater'])])>
+                <div data-ghg-rows>
                   @foreach((array) ($data[$key] ?? []) as $index => $rowData)
                     <x-ghg-survey-row :section="$section" :key="$key" :index="$index" :row-data="is_array($rowData) ? $rowData : []" />
                   @endforeach
                 </div>
+                @if(isset($section['fields']['treatment_type']))
+                  <template data-ghg-template><x-ghg-survey-row :section="$section" :key="$key" index="__INDEX__" /></template>
+                  <button type="button" class="ghg-secondary-button" data-ghg-new-water>+ Thêm hệ thống xử lý khác</button>
+                @endif
                 @unless($section['monthly'])
                   <template data-ghg-template><x-ghg-survey-row :section="$section" :key="$key" index="__INDEX__" /></template>
                   @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))

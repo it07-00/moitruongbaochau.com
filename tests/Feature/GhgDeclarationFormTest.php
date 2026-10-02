@@ -117,6 +117,49 @@ class GhgDeclarationFormTest extends TestCase
         $this->post(route('ghg-form.save', 4), ['action' => 'next', 'data' => $data])->assertSessionHasErrors('data.domestic_wastewater');
     }
 
+    public function test_multiple_water_systems_persist_and_require_twelve_unique_months_each(): void
+    {
+        $this->saveGeneral();
+        foreach ([2, 3] as $step) {
+            $this->post(route('ghg-form.save', $step), ['action' => 'next', 'data' => GhgSurveyDefinition::defaults($step)])->assertSessionHasNoErrors();
+        }
+        $data = GhgSurveyDefinition::defaults(4);
+        foreach (['domestic_wastewater' => ['tu_hoai', 'tap_trung_hieu_khi'], 'industrial_wastewater' => ['hieu_khi_cn', 'uasb']] as $section => $systems) {
+            $months = $data[$section];
+            $data[$section] = [];
+            foreach ($systems as $system) {
+                foreach ($months as $row) {
+                    $data[$section][] = array_replace($row, ['treatment_type' => $system, 'flow_volume_m3' => 123.5]);
+                }
+            }
+        }
+        $this->post(route('ghg-form.save', 4), ['action' => 'next', 'data' => $data])->assertSessionHasNoErrors()->assertRedirect(route('ghg-form.step', 5));
+        $record = GhgDeclaration::query()->sole();
+        $this->assertSame($data, $record->data[4]);
+        $this->get(route('ghg-form.step', 4))->assertOk()->assertSee('Thêm hệ thống xử lý khác')->assertSee('123.5');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        Livewire::test(ViewGhgDeclaration::class, ['record' => $record->id])->assertSee('Bể tự hoại')->assertSee('Tập trung, hiếu khí')->assertSee('UASB');
+
+        $duplicate = $data;
+        $duplicate['domestic_wastewater'][1]['month'] = 1;
+        $this->post(route('ghg-form.save', 4), ['action' => 'save', 'data' => $duplicate])->assertSessionHasErrors('data.domestic_wastewater.1.month');
+        $missing = $data;
+        array_pop($missing['industrial_wastewater']);
+        $this->post(route('ghg-form.save', 4), ['action' => 'save', 'data' => $missing])->assertSessionHasErrors('data.industrial_wastewater');
+        $this->assertSame($data, $record->refresh()->data[4]);
+    }
+
+    public function test_water_can_be_saved_without_any_systems(): void
+    {
+        $this->saveGeneral();
+        foreach ([2, 3] as $step) {
+            $this->post(route('ghg-form.save', $step), ['action' => 'next', 'data' => GhgSurveyDefinition::defaults($step)])->assertSessionHasNoErrors();
+        }
+        $this->post(route('ghg-form.save', 4), ['action' => 'next', 'data' => []])->assertSessionHasNoErrors();
+        $this->assertSame(['domestic_wastewater' => [], 'industrial_wastewater' => []], GhgDeclaration::query()->sole()->data[4]);
+    }
+
     public function test_private_evidence_can_only_be_downloaded_by_admin(): void
     {
         Storage::fake('local');

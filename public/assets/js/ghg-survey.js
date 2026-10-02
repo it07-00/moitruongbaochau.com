@@ -58,53 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     newFuelButton?.addEventListener('click', showFuelPicker);
     const fieldInput = (row, field) => row.querySelector(`[name$="[${field}]"]`);
-    const waterPicker = section.querySelector('[data-ghg-water-picker]');
-    if (waterPicker) {
-      const treatmentPicker = waterPicker.querySelector('[data-ghg-water-treatment]');
-      const treatments = Array.from(rows.querySelectorAll('select[name$="[treatment_type]"]'));
-      const treatmentValues = new Set(treatments.map((select) => select.value));
-      const group = document.createElement('fieldset');
-      group.className = 'ghg-fuel-group ghg-water-group';
-      const legend = document.createElement('legend');
-      const sectionTitle = section.querySelector('h3').textContent;
-      legend.textContent = sectionTitle;
-      rows.before(group);
-      group.append(legend, rows);
-      const changeTreatment = document.createElement('button');
-      changeTreatment.type = 'button';
-      changeTreatment.className = 'ghg-secondary-button ghg-water-change';
-      changeTreatment.textContent = 'Đổi hệ thống xử lý';
-      group.append(changeTreatment);
-      const showWaterGroup = () => {
-        legend.textContent = `${sectionTitle} · ${treatmentPicker.selectedOptions[0].textContent}`;
-        treatments.forEach((select) => { select.closest('.ghg-field').hidden = true; });
-        rows.classList.add('ghg-water-shared-treatment');
-        group.hidden = false;
-        waterPicker.hidden = true;
-      };
-      if (treatmentValues.size === 1 && treatments[0]?.value) {
-        treatmentPicker.value = treatments[0].value;
-        showWaterGroup();
-      } else {
-        group.hidden = !rows.querySelector('[aria-invalid="true"], .ghg-error')
-          && treatmentValues.size <= 1
-          && !Array.from(rows.querySelectorAll('input[type="number"]')).some((input) => Number(input.value) !== 0 || input.value === '');
-        changeTreatment.hidden = true;
-      }
-      treatmentPicker.addEventListener('change', () => {
-        if (!treatmentPicker.value) return;
-        treatments.forEach((select) => { select.value = treatmentPicker.value; });
-        showWaterGroup();
-        changeTreatment.hidden = false;
-        rows.querySelector('input[type="number"]')?.focus();
-        dirty = true;
-      });
-      changeTreatment.addEventListener('click', () => {
-        waterPicker.hidden = false;
-        treatmentPicker.focus();
-      });
-    }
-    section.querySelectorAll('.ghg-wastewater-months input[type="number"]').forEach((input) => {
+    const decorateWaterNumbers = (container) => container.querySelectorAll('input[type="number"]').forEach((input) => {
       const label = input.closest('.ghg-field').querySelector('label');
       const unitText = label.textContent.match(/\((m³|mg\/L)\)/)?.[1];
       if (!unitText) return;
@@ -135,6 +89,115 @@ document.addEventListener('DOMContentLoaded', () => {
       Object.entries(values).forEach(([field, value]) => { fieldInput(row, field).value = value; });
       return row;
     };
+    const waterPicker = section.querySelector('[data-ghg-water-picker]');
+    if (waterPicker) {
+      const treatmentPicker = waterPicker.querySelector('[data-ghg-water-treatment]');
+      const newWaterButton = section.querySelector('[data-ghg-new-water]');
+      const showWaterPicker = () => {
+        treatmentPicker.value = '';
+        newWaterButton.before(waterPicker);
+        waterPicker.hidden = false;
+        newWaterButton.hidden = true;
+        treatmentPicker.focus();
+      };
+      const createWaterGroup = (groupRows) => {
+        const firstRow = groupRows[0];
+        const treatment = fieldInput(firstRow, 'treatment_type').value;
+        const group = document.createElement('fieldset');
+        group.className = 'ghg-fuel-group ghg-water-group';
+        group.dataset.ghgWaterSystem = treatment;
+        const legend = document.createElement('legend');
+        legend.textContent = fieldInput(firstRow, 'treatment_type').selectedOptions[0].textContent;
+        group.append(legend);
+        const months = document.createElement('div');
+        months.className = 'ghg-wastewater-months';
+        if (treatment) months.classList.add('ghg-water-shared-treatment');
+        group.append(months);
+        const zeroValues = Object.fromEntries(Array.from(firstRow.querySelectorAll('[name]')).map((input) => [
+          input.name.match(/\[([^\]]+)\]$/)[1], input.type === 'number' ? 0 : input.value,
+        ]));
+        for (let month = 1; month <= 12; month++) {
+          let row = groupRows.find((item) => Number(fieldInput(item, 'month').value) === month);
+          if (!row) {
+            row = createRow({ ...zeroValues, month, treatment_type: treatment });
+            dirty = true;
+          }
+          row.querySelector('legend').textContent = `Tháng ${month}`;
+          fieldInput(row, 'treatment_type').closest('.ghg-field').hidden = Boolean(treatment);
+          months.append(row);
+        }
+        decorateWaterNumbers(months);
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'ghg-remove-row';
+        remove.dataset.ghgRemoveWater = '';
+        remove.textContent = 'Xóa hệ thống xử lý (12 tháng)';
+        group.append(remove);
+        rows.append(group);
+        return group;
+      };
+      const systems = new Map();
+      Array.from(rows.querySelectorAll('[data-ghg-row]')).forEach((row) => {
+        const treatment = fieldInput(row, 'treatment_type').value;
+        if (!treatment && !row.querySelector('[aria-invalid="true"], .ghg-error')
+          && Array.from(row.querySelectorAll('input[type="number"]')).every((input) => input.value !== '' && Number(input.value) === 0)) {
+          row.remove();
+          return;
+        }
+        if (!systems.has(treatment)) systems.set(treatment, []);
+        systems.get(treatment).push(row);
+      });
+      systems.forEach((groupRows) => {
+        const months = groupRows.map((row) => Number(fieldInput(row, 'month').value));
+        if (months.every((month) => month >= 1 && month <= 12) && new Set(months).size === months.length
+          && rows.querySelectorAll('[data-ghg-row]').length + 12 - groupRows.length <= 200) {
+          createWaterGroup(groupRows);
+        }
+      });
+      waterPicker.hidden = rows.querySelector('[data-ghg-water-system]') !== null;
+      newWaterButton.hidden = !waterPicker.hidden;
+      newWaterButton.addEventListener('click', showWaterPicker);
+      treatmentPicker.addEventListener('change', () => {
+        if (!treatmentPicker.value) return;
+        const existing = Array.from(rows.querySelectorAll('[data-ghg-water-system]')).find((group) => group.dataset.ghgWaterSystem === treatmentPicker.value);
+        if (existing) {
+          waterPicker.hidden = true;
+          newWaterButton.hidden = false;
+          existing.querySelector('input[type="number"]')?.focus();
+          if (typeof Swal !== 'undefined') Swal.fire({ icon: 'info', text: 'Hệ thống xử lý này đã có bảng 12 tháng. Vui lòng nhập số liệu trong bảng đã tạo.', confirmButtonColor: '#800000' });
+          return;
+        }
+        const unassigned = rows.querySelector('[data-ghg-water-system=""]');
+        let group;
+        if (unassigned) {
+          unassigned.dataset.ghgWaterSystem = treatmentPicker.value;
+          unassigned.querySelector('legend').textContent = treatmentPicker.selectedOptions[0].textContent;
+          unassigned.querySelectorAll('select[name$="[treatment_type]"]').forEach((select) => {
+            select.value = treatmentPicker.value;
+            select.closest('.ghg-field').hidden = true;
+          });
+          unassigned.querySelector('.ghg-wastewater-months').classList.add('ghg-water-shared-treatment');
+          group = unassigned;
+        } else {
+          if (rows.querySelectorAll('[data-ghg-row]').length + 12 > 200) return;
+          const firstRow = createRow({ month: 1, treatment_type: treatmentPicker.value });
+          firstRow.querySelectorAll('input[type="number"]').forEach((input) => { input.value = 0; });
+          group = createWaterGroup([firstRow]);
+        }
+        waterPicker.hidden = true;
+        newWaterButton.hidden = false;
+        group.querySelector('input[type="number"]')?.focus();
+        dirty = true;
+      });
+      rows.addEventListener('click', (event) => {
+        const remove = event.target.closest('[data-ghg-remove-water]');
+        if (!remove) return;
+        remove.closest('[data-ghg-water-system]').remove();
+        if (!rows.querySelector('[data-ghg-water-system]')) showWaterPicker();
+        else newWaterButton.focus();
+        dirty = true;
+      });
+    }
     const createFuelGroup = (groupRows) => {
       const firstRow = groupRows[0];
       const group = document.createElement('fieldset');

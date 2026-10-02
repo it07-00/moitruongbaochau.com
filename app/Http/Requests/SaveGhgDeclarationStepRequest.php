@@ -83,9 +83,24 @@ class SaveGhgDeclarationStepRequest extends FormRequest
                 }
             }
             foreach (['domestic_wastewater', 'industrial_wastewater'] as $section) {
+                $systems = [];
                 foreach ((array) $this->input('data.'.$section, []) as $index => $row) {
+                    if (! is_array($row) || ! is_scalar($row['month'] ?? null) || ! is_scalar($row['treatment_type'] ?? '')) {
+                        continue;
+                    }
+                    $system = (string) ($row['treatment_type'] ?? '');
+                    $month = (int) $row['month'];
+                    if (isset($systems[$system][$month])) {
+                        $validator->errors()->add('data.'.$section.'.'.$index.'.month', 'Không được trùng tháng trong cùng hệ thống xử lý.');
+                    }
+                    $systems[$system][$month] = true;
                     if (is_array($row) && is_numeric($row['flow_volume_m3'] ?? null) && $row['flow_volume_m3'] > 0 && blank($row['treatment_type'] ?? null)) {
                         $validator->errors()->add('data.'.$section.'.'.$index.'.treatment_type', 'Vui lòng chọn hệ thống xử lý khi có lưu lượng nước thải.');
+                    }
+                }
+                foreach ($systems as $months) {
+                    if (count($months) !== 12 || array_diff(range(1, 12), array_keys($months)) !== []) {
+                        $validator->errors()->add('data.'.$section, 'Mỗi hệ thống xử lý phải có đủ 12 tháng.');
                     }
                 }
             }
@@ -98,7 +113,7 @@ class SaveGhgDeclarationStepRequest extends FormRequest
         $data = $this->input('data', []);
         if (is_array($data) && $step > 1 && $step < 7) {
             foreach (GhgSurveyDefinition::sections($step) as $key => $section) {
-                if (! $section['monthly'] && ! array_key_exists($key, $data)) {
+                if ((! $section['monthly'] || in_array($key, ['domestic_wastewater', 'industrial_wastewater'], true)) && ! array_key_exists($key, $data)) {
                     $data[$key] = [];
                 }
             }

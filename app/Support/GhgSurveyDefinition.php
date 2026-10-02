@@ -261,12 +261,13 @@ class GhgSurveyDefinition
             $rules['data.'.$key] = self::fieldRules($field);
         }
         foreach ($sections as $key => $section) {
-            $rules['data.'.$key] = $section['monthly'] ? ['required', 'array', 'size:12'] : ['present', 'array', 'max:200'];
+            $isWastewater = in_array($key, ['domestic_wastewater', 'industrial_wastewater'], true);
+            $rules['data.'.$key] = $section['monthly'] && ! $isWastewater ? ['required', 'array', 'size:12'] : ['present', 'array', 'max:200'];
             $rules['data.'.$key.'.*'] = ['array:'.implode(',', array_keys($section['fields']))];
             foreach ($section['fields'] as $name => $field) {
                 $rules['data.'.$key.'.*.'.$name] = self::fieldRules($field);
             }
-            if ($section['monthly']) {
+            if ($section['monthly'] && ! $isWastewater) {
                 $rules['data.'.$key.'.*.month'][] = 'distinct';
             }
         }
