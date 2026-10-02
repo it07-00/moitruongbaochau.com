@@ -47,6 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const groupField = section.dataset.ghgFuelGroup;
+    const fuelPicker = section.querySelector('[data-ghg-fuel-picker]');
+    const newFuelButton = section.querySelector('[data-ghg-new-fuel]');
+    const showFuelPicker = () => {
+      fuelPicker.querySelectorAll('select').forEach((select) => { select.value = ''; });
+      newFuelButton.before(fuelPicker);
+      fuelPicker.hidden = false;
+      newFuelButton.hidden = true;
+      fuelPicker.querySelector('select').focus();
+    };
+    newFuelButton?.addEventListener('click', showFuelPicker);
     const fieldInput = (row, field) => row.querySelector(`[name$="[${field}]"]`);
     const createRow = (values) => {
       const fragment = template.content.cloneNode(true);
@@ -118,6 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
           createFuelGroup(groupRows);
         }
       });
+      fuelPicker.hidden = rows.querySelector('[data-ghg-group-key]') !== null;
+      newFuelButton.hidden = !fuelPicker.hidden;
     }
 
     section.querySelector('[data-ghg-add]')?.addEventListener('click', () => {
@@ -141,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (rows.querySelectorAll('[data-ghg-row]').length + 12 > 200) return;
         const group = createFuelGroup([createRow({ ...values, month: 1, quantity: 0, notes: '' })]);
+        fuelPicker.hidden = true;
+        newFuelButton.hidden = false;
         group.querySelector('[name$="[quantity]"]').focus();
         dirty = true;
         return;
@@ -154,7 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const removeGroup = event.target.closest('[data-ghg-remove-group]');
       if (removeGroup) {
         removeGroup.closest('[data-ghg-group-key]').remove();
-        section.querySelector('[data-ghg-add]').focus();
+        if (!rows.querySelector('[data-ghg-group-key]')) {
+          showFuelPicker();
+        } else {
+          newFuelButton.focus();
+        }
         dirty = true;
         return;
       }

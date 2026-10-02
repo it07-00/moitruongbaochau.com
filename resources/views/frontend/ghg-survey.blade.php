@@ -88,7 +88,8 @@
                   <p class="ghg-field-hint">Chọn hệ thống xử lý ở một tháng rồi chọn “Áp dụng cho cả năm” để điền cho 11 tháng còn lại trong cùng bảng. Các số liệu từng tháng được giữ nguyên.</p>
                 @endif
                 @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
-                  <div class="ghg-fields-grid" data-ghg-fuel-picker>
+                  <div data-ghg-fuel-picker>
+                    <div class="ghg-fields-grid">
                     @foreach(['fuel_type', $key === 'stationary_fuels' ? 'purpose' : 'equipment_type', 'unit'] as $fieldName)
                       <div class="ghg-field">
                         <label for="ghg-{{ $key }}-new-{{ $fieldName }}">{{ $section['fields'][$fieldName]['label'] }}</label>
@@ -100,8 +101,10 @@
                         </select>
                       </div>
                     @endforeach
+                    </div>
+                    <p class="ghg-field-hint">Chọn nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị. Mỗi nhóm có bảng 12 tháng riêng; tháng không phát sinh nhập 0.</p>
+                    <button type="button" class="ghg-primary-button" data-ghg-add>Tạo bảng 12 tháng</button>
                   </div>
-                  <p class="ghg-field-hint">Chọn nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị để tạo đủ 12 tháng. Tháng không phát sinh nhập 0.</p>
                 @endif
                 <div data-ghg-rows>
                   @foreach((array) ($data[$key] ?? []) as $index => $rowData)
@@ -110,7 +113,11 @@
                 </div>
                 @unless($section['monthly'])
                   <template data-ghg-template><x-ghg-survey-row :section="$section" :key="$key" index="__INDEX__" /></template>
-                  <button type="button" class="ghg-secondary-button" data-ghg-add>{{ in_array($key, ['stationary_fuels', 'mobile_fuels']) ? '+ Tạo 12 tháng cho nhiên liệu' : '+ Thêm dòng dữ liệu' }}</button>
+                  @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
+                    <button type="button" class="ghg-secondary-button" data-ghg-new-fuel>+ Thêm nhiên liệu khác</button>
+                  @else
+                    <button type="button" class="ghg-secondary-button" data-ghg-add>+ Thêm dòng dữ liệu</button>
+                  @endif
                 @endunless
               </section>
             @endforeach
