@@ -82,8 +82,27 @@
           @elseif($step < 7)
             <p class="ghg-step-note">Nhập dữ liệu của năm {{ $declaration->data[1]['inventory_year'] }}. Với bảng theo tháng, giá trị 0 thể hiện không phát sinh; hãy kiểm tra đủ 12 tháng trước khi tiếp tục. Với nhiên liệu và thiết bị, không thêm dòng nếu không phát sinh.</p>
             @foreach($sections as $key => $section)
-              <section class="ghg-card" data-ghg-section="{{ $key }}">
+              <section class="ghg-card" data-ghg-section="{{ $key }}" @if(in_array($key, ['stationary_fuels', 'mobile_fuels'])) data-ghg-fuel-group="{{ $key === 'stationary_fuels' ? 'purpose' : 'equipment_type' }}" @endif>
                 <h3>{{ $section['label'] }}</h3>
+                @if(isset($section['fields']['treatment_type']))
+                  <p class="ghg-field-hint">Chọn hệ thống xử lý ở một tháng rồi chọn “Áp dụng cho cả năm” để điền cho 11 tháng còn lại trong cùng bảng. Các số liệu từng tháng được giữ nguyên.</p>
+                @endif
+                @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
+                  <div class="ghg-fields-grid" data-ghg-fuel-picker>
+                    @foreach(['fuel_type', $key === 'stationary_fuels' ? 'purpose' : 'equipment_type', 'unit'] as $fieldName)
+                      <div class="ghg-field">
+                        <label for="ghg-{{ $key }}-new-{{ $fieldName }}">{{ $section['fields'][$fieldName]['label'] }}</label>
+                        <select id="ghg-{{ $key }}-new-{{ $fieldName }}" data-ghg-group-field="{{ $fieldName }}">
+                          <option value="">— Chọn {{ mb_strtolower($section['fields'][$fieldName]['label']) }} —</option>
+                          @foreach($section['fields'][$fieldName]['options'] as $option => $label)
+                            <option value="{{ $option }}">{{ $label }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    @endforeach
+                  </div>
+                  <p class="ghg-field-hint">Chọn nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị để tạo đủ 12 tháng. Tháng không phát sinh nhập 0.</p>
+                @endif
                 <div data-ghg-rows>
                   @foreach((array) ($data[$key] ?? []) as $index => $rowData)
                     <x-ghg-survey-row :section="$section" :key="$key" :index="$index" :row-data="is_array($rowData) ? $rowData : []" />
@@ -91,7 +110,7 @@
                 </div>
                 @unless($section['monthly'])
                   <template data-ghg-template><x-ghg-survey-row :section="$section" :key="$key" index="__INDEX__" /></template>
-                  <button type="button" class="ghg-secondary-button" data-ghg-add>+ Thêm dòng dữ liệu</button>
+                  <button type="button" class="ghg-secondary-button" data-ghg-add>{{ in_array($key, ['stationary_fuels', 'mobile_fuels']) ? '+ Tạo 12 tháng cho nhiên liệu' : '+ Thêm dòng dữ liệu' }}</button>
                 @endunless
               </section>
             @endforeach
