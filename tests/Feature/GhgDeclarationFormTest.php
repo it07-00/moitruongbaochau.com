@@ -20,7 +20,14 @@ class GhgDeclarationFormTest extends TestCase
 
     public function test_public_form_loads_without_creating_a_draft(): void
     {
-        $this->get(route('ghg-form.index'))->assertOk()->assertSee('Thông tin chung')->assertSee('Nhiên liệu cố định')->assertSee('name="data[company_name]"', false)->assertSee('noindex,nofollow');
+        $this->get(route('ghg-form.index'))
+            ->assertOk()
+            ->assertSee('Thông tin chung')
+            ->assertSee('Nhiên liệu cố định')
+            ->assertSee('name="data[company_name]"', false)
+            ->assertSee('VD: 0317615845')
+            ->assertSee('Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu')
+            ->assertSee('noindex,nofollow');
         $this->assertSame(0, GhgDeclaration::query()->count());
     }
 

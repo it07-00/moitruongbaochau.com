@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        if (app()->isProduction()) {
+        if (app()->isProduction() || request()->isSecure() || request()->header('x-forwarded-proto') === 'https' || str_contains(request()->header('host', ''), 'trycloudflare.com')) {
             URL::forceScheme('https');
         }
     }

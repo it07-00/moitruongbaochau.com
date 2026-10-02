@@ -26,12 +26,13 @@ class GhgDeclarationController extends Controller
         $steps = GhgSurveyDefinition::steps();
         $sections = GhgSurveyDefinition::sections($step);
         $fields = GhgSurveyDefinition::generalFields();
+        $guide = GhgSurveyDefinition::stepGuide($step);
         $data = $request->old('data', $declaration?->data[$step] ?? GhgSurveyDefinition::defaults($step));
         $data = is_array($data) ? $data : GhgSurveyDefinition::defaults($step);
         $seo = SeoData::forPage('Biểu mẫu khai báo kiểm kê khí nhà kính 2026', 'Khai báo dữ liệu kiểm kê khí nhà kính theo 7 bước.', route('ghg-form.index'));
         $seo['robots'] = 'noindex,nofollow';
 
-        return view('frontend.ghg-survey', compact('declaration', 'step', 'steps', 'sections', 'fields', 'data', 'seo'));
+        return view('frontend.ghg-survey', compact('declaration', 'step', 'steps', 'sections', 'fields', 'guide', 'data', 'seo'));
     }
 
     public function store(SaveGhgDeclarationStepRequest $request, int $step): RedirectResponse

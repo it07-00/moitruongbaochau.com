@@ -10,8 +10,10 @@
 @section('content')
 <section class="ghg-survey-shell container px-3 mx-auto">
   <header class="ghg-survey-heading">
-    <a href="{{ route('declarations.greenhouse-gas-2026') }}" class="ghg-back-link">← Khai báo kiểm kê khí nhà kính 2026</a>
-    <p class="ghg-eyebrow">PHIẾU THU THẬP DỮ LIỆU</p>
+    <a href="{{ route('declarations.greenhouse-gas-2026') }}" class="ghg-back-link mb-3 inline-block">← Khai báo kiểm kê khí nhà kính 2026</a>
+    <div>
+      <x-theme.badge text="PHIẾU THU THẬP DỮ LIỆU" class="mb-2 mt-2" />
+    </div>
     <h1>Khai báo kiểm kê khí nhà kính</h1>
     <p>Điền dữ liệu theo từng bước. Bản nháp được lưu khi bạn bấm lưu hoặc tiếp tục; có thể mở lại trong cùng trình duyệt.</p>
   </header>
@@ -42,6 +44,26 @@
       </nav>
       <div class="ghg-form-content">
         <div class="ghg-step-heading"><span>Bước {{ $step }} / 7</span><h2>{{ $steps[$step] }}</h2></div>
+        @if(!empty($guide))
+          <aside class="ghg-guide-card" aria-label="Hướng dẫn điền biểu mẫu bước {{ $step }}">
+            <div class="ghg-guide-header">
+              <h3 class="ghg-guide-heading">💡 Hướng dẫn &amp; gợi ý nhập liệu</h3>
+              <p class="ghg-guide-title">{{ $guide['title'] }}</p>
+            </div>
+            <p class="ghg-guide-summary">{{ $guide['summary'] }}</p>
+            <ul class="ghg-guide-list">
+              @foreach($guide['items'] as $item)
+                <li>{{ $item }}</li>
+              @endforeach
+            </ul>
+            @if(!empty($guide['example']))
+              <div class="ghg-guide-example">
+                <strong>Ví dụ thực tế:</strong>
+                <span>{{ $guide['example'] }}</span>
+              </div>
+            @endif
+          </aside>
+        @endif
         @if(session('ghg_saved'))<p class="ghg-saved" role="status">{{ session('ghg_saved') }}</p>@endif
         @if($errors->any())
           <div class="ghg-error-summary" role="alert"><strong>Vui lòng kiểm tra lại thông tin:</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
@@ -82,9 +104,28 @@
                 <ul class="ghg-evidence-list">@foreach($declaration->evidence as $file)<li>{{ $file['name'] }} — đã lưu</li>@endforeach</ul>
               @endif
               <div class="ghg-fields-grid">
-                <div class="ghg-field"><label for="ghg-evidence">Tải chứng từ</label><input type="file" id="ghg-evidence" name="evidence[]" multiple accept=".pdf,.jpg,.jpeg,.png,.xlsx,.docx"></div>
-                <div class="ghg-field"><label for="ghg-evidence-category">Nhóm chứng từ</label><select id="ghg-evidence-category" name="evidence_category"><option value="">Chọn nhóm</option>@foreach($steps as $number => $label)@if($number > 1 && $number < 7)<option value="{{ $label }}" @selected(old('evidence_category') === $label)>{{ $label }}</option>@endif @endforeach</select></div>
-                <div class="ghg-field"><label for="ghg-evidence-note">Ghi chú chứng từ</label><input type="text" id="ghg-evidence-note" name="evidence_note" value="{{ old('evidence_note') }}" maxlength="500"></div>
+                <div class="ghg-field">
+                  <label for="ghg-evidence">Tải chứng từ</label>
+                  <input type="file" id="ghg-evidence" name="evidence[]" multiple accept=".pdf,.jpg,.jpeg,.png,.xlsx,.docx">
+                  <p class="ghg-field-hint">Chọn tối đa 10 tệp scan/ảnh: Hóa đơn điện EVN, hóa đơn dầu DO/FO, kết quả quan trắc...</p>
+                </div>
+                <div class="ghg-field">
+                  <label for="ghg-evidence-category">Nhóm chứng từ</label>
+                  <select id="ghg-evidence-category" name="evidence_category">
+                    <option value="">— Chọn nhóm chứng từ —</option>
+                    @foreach($steps as $number => $label)
+                      @if($number > 1 && $number < 7)
+                        <option value="{{ $label }}" @selected(old('evidence_category') === $label)>{{ $label }}</option>
+                      @endif
+                    @endforeach
+                  </select>
+                  <p class="ghg-field-hint">Phân loại theo bước khai báo để kỹ sư Bảo Châu đối chiếu nhanh hơn</p>
+                </div>
+                <div class="ghg-field">
+                  <label for="ghg-evidence-note">Ghi chú chứng từ</label>
+                  <input type="text" id="ghg-evidence-note" name="evidence_note" value="{{ old('evidence_note') }}" maxlength="500" placeholder="VD: Hóa đơn tiền điện EVN 12 tháng năm 2026, hóa đơn mua dầu DO...">
+                  <p class="ghg-field-hint">Mô tả tóm tắt nội dung file đính kèm (không bắt buộc)</p>
+                </div>
               </div>
               <label class="ghg-confirmation"><input type="checkbox" name="confirmation" value="1" @checked(old('confirmation'))><span>Tôi xác nhận dữ liệu đã nhập là chính xác và đồng ý gửi phiếu cho Môi Trường Bảo Châu để tiếp nhận, xử lý yêu cầu kiểm kê.</span></label>
             </div>

@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
         $middleware->append(SecurityHeaders::class);
         $middleware->alias(['admin' => EnsureAdmin::class]);
         $middleware->redirectGuestsTo(fn (): string => route('filament.admin.auth.login'));

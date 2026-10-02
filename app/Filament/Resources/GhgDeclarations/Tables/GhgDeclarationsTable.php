@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\GhgDeclarations\Tables;
 
+use App\Models\GhgDeclaration;
+use App\Services\GhgDeclarationExcelExport;
+use Filament\Actions\Action;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -26,6 +29,8 @@ class GhgDeclarationsTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                Action::make('exportExcel')->label('Xuất Excel')->icon('heroicon-o-arrow-down-tray')
+                    ->action(fn (GhgDeclaration $record) => app(GhgDeclarationExcelExport::class)->downloadDeclaration($record)),
             ])
             ->defaultSort('updated_at', 'desc');
     }
