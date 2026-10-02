@@ -2,7 +2,7 @@
   @assets
     <link rel="stylesheet" href="{{ asset('assets/css/ghg-survey.css') }}?v={{ filemtime(public_path('assets/css/ghg-survey.css')) }}">
   @endassets
-  <div class="ghg-card">
+  <div class="ghg-card ghg-admin-detail">
     <h3>{{ $this->record->company_name }}</h3>
     <p>Mã phiếu: {{ $this->record->reference }} — {{ $this->record->status === 'submitted' ? 'Đã nộp' : 'Bản nháp' }}</p>
     @if($this->record->submitted_at)<p>Nộp lúc {{ $this->record->submitted_at->format('H:i d/m/Y') }}</p>@endif

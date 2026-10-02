@@ -74,6 +74,17 @@
 .ghg-success { border-color: #6ee7b7; background: #ecfdf5; }
 .ghg-success h2 { font-weight: 500; font-size: 26px; margin-bottom: 16px; }
 .ghg-success p { margin: 12px 0; }
+.ghg-admin-detail,
+.ghg-admin-detail h3,
+.ghg-admin-detail p,
+.ghg-admin-detail summary,
+.ghg-admin-detail dd,
+.ghg-admin-detail th,
+.ghg-admin-detail td,
+.ghg-admin-detail li { color: #181818; }
+.ghg-admin-detail .ghg-summary-section summary { color: #800000; }
+.ghg-admin-detail .ghg-summary-general dt { color: #525866; }
+.ghg-admin-detail .ghg-back-link { color: #800000; text-decoration: underline; }
 .ghg-success-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: #800000; color: #fff; margin-bottom: 20px; font-size: 26px; }
 @media (max-width: 1023px) {
   .ghg-wizard-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; }
