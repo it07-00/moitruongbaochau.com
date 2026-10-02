@@ -5,7 +5,7 @@
 
 
   <!-- MAIN POST CONTENT SECTION (CHÍNH XÁC THEO CẤU TRÚC ẢNH MẪU USER) -->
-  <section class="section singular section-post pt-32 md:pt-40 pb-8 lg:pb-16">
+  <section class="section singular section-post pb-8 lg:pb-16">
     <div class="container px-3 mx-auto">
       <div class="content-all w-full min-w-0">
         <!-- Post Title & Meta Header Block -->
@@ -19,9 +19,22 @@
           </div>
 
           <!-- H1 Main Heading -->
-          <h1 class="h2 font-bold text-foreground mb-5 mt-5" itemprop="headline">
-            {{ $service->name }}
-          </h1>
+          <div class="service-title-row">
+            <h1 class="h2 font-bold text-foreground" itemprop="headline">
+              {{ $service->name }}
+            </h1>
+
+            @if($formUrl = $service->getDeclarationFormUrl())
+              <div class="declaration-cta-top">
+                <a href="{{ $formUrl }}" class="declaration-form-button">
+                  <span>Điền biểu mẫu ngay</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
+                  </svg>
+                </a>
+              </div>
+            @endif
+          </div>
 
           <!-- Post Meta: Time & Views -->
           <div
@@ -51,7 +64,7 @@
         <div class="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
           <!-- LEFT: TOC SIDEBAR (w-75 / ~300px) -->
           <div class="sidebar-toc flex-none" style="width: min(100%, 18rem)" data-toc-spy>
-            <div class="sidebar-inner" style="position: sticky; top: 6rem;">
+            <div class="sidebar-inner">
               <div id="toc_container" role="navigation" aria-label="Table of Contents"
                 class="no_bullets toc_title_center card-item relative glass-effect border border-black/8 bg-white/95 rounded-3xl p-5 sm:p-6 shadow-md">
                 <div class="flex items-center justify-between font-bold text-black mb-4 pb-3 border-b border-gray-100">
@@ -312,6 +325,21 @@
                 </div>
               @endif
 
+              @if($formUrl = $service->getDeclarationFormUrl())
+                <div class="declaration-form-panel card-item glass-effect border border-black/8 bg-white/95 rounded-3xl p-5 sm:p-6">
+                  <h2 class="text-xl sm:text-2xl font-bold text-black">Điền thông tin khai báo</h2>
+                  <p class="text-base sm:text-lg leading-relaxed text-black my-4">Vui lòng chuẩn bị thông tin doanh nghiệp và dữ liệu liên quan trước khi điền biểu mẫu.</p>
+                  <div class="declaration-cta-actions">
+                    <a href="{{ $formUrl }}" class="declaration-form-button">
+                      <span>Điền biểu mẫu ngay</span>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              @endif
+
               <!-- Author Box -->
               <section class="section section-author mt-10 pt-6">
                 <div class="flex flex-row gap-6 lg:gap-8 author-meta items-center">
@@ -465,7 +493,7 @@
           <div
             class="item relative flex flex-col gap-4 bg-white/95 glass-effect border border-black/8 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all duration-300 group">
             <div class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10">
-              <a class="block w-full h-full c-scale-effect" href="{{ route('services.show', $related->slug) }}"
+              <a class="block w-full h-full c-scale-effect" href="{{ $related->getPublicUrl() }}"
                 aria-label="{{ $related->name }}">
                 <img src="{{ $related->thumbnail_url }}"
                   class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -483,7 +511,7 @@
                     class="term btn btn-secondary-2 flex-0! py-1! px-3! text-[12px]! rounded-full">{{ $related->category?->name ?? 'Dịch vụ uy tín' }}</span>
                   <span class="text-xs text-black font-medium">Tư vấn trọn gói</span>
                 </div>
-                <a class="c-hover block" href="{{ route('services.show', $related->slug) }}" title="{{ $related->name }}">
+                <a class="c-hover block" href="{{ $related->getPublicUrl() }}" title="{{ $related->name }}">
                   <h3
                     class="font-bold text-lg text-black group-hover:text-primary transition-colors leading-snug line-clamp-2">
                     {{ $related->name }}
@@ -495,7 +523,7 @@
               </div>
               <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
                 <span class="text-xs text-black font-medium truncate">Môi Trường Bảo Châu</span>
-                <a href="{{ route('services.show', $related->slug) }}"
+                <a href="{{ $related->getPublicUrl() }}"
                   class="inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline whitespace-nowrap shrink-0">
                   Chi tiết dịch vụ
                   <svg class="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

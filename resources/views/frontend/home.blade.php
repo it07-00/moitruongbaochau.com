@@ -468,7 +468,7 @@
                             @if($category->services->isNotEmpty())
                               <div class="mt-4 flex flex-col gap-2">
                                 @foreach($category->services->take(4) as $s)
-                                  <a href="{{ route('services.show', $s->slug) }}" class="flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-primary transition-colors">
+                                  <a href="{{ $s->getPublicUrl() }}" class="flex items-center gap-2 text-sm font-semibold text-gray-800 hover:text-primary transition-colors">
                                     <svg class="size-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                     <span>{{ $s->name }}</span>
                                   </a>

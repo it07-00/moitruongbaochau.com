@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Service extends Model
 {
+    public const DECLARATION_ROUTES = [
+        'khai-bao-kiem-ke-khi-nha-kinh-2026' => 'declarations.greenhouse-gas-2026',
+        'khai-bao-kiem-toan-nang-luong-2026' => 'declarations.energy-audit-2026',
+    ];
+
     /** @use HasFactory<ServiceFactory> */
     use HasFactory;
 
@@ -42,6 +47,18 @@ class Service extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
+    public function getPublicUrl(): string
+    {
+        $routeName = self::DECLARATION_ROUTES[$this->slug] ?? null;
+
+        return $routeName ? route($routeName) : route('services.show', $this->slug);
+    }
+
+    public function getDeclarationFormUrl(): ?string
+    {
+        return isset(self::DECLARATION_ROUTES[$this->slug]) ? url('/form-'.$this->slug) : null;
     }
 
     public function getThumbnailUrlAttribute(): string

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/swiper.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}?v={{ filemtime(public_path('assets/css/header.css')) }}">
     @livewireStyles
+    @stack('styles')
 </head>
 <body class="{{ $bodyClass ?? '' }}" itemscope itemtype="https://schema.org/WebPage">
     <x-frontend.header />
@@ -29,6 +30,7 @@
     <script src="{{ asset('assets/js/swiper.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}?v={{ file_exists(public_path('assets/js/main.js')) ? filemtime(public_path('assets/js/main.js')) : time() }}" defer></script>
     @livewireScripts
+    @stack('scripts')
     @if(session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\GhgDeclarationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LegacyRedirectController;
 use App\Http\Controllers\Frontend\PageController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Frontend\RobotsController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\SitemapController;
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -18,6 +20,13 @@ Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
 Route::get('/trang/{slug}', [PageController::class, 'show'])->name('pages.show');
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
+Route::get('/form-khai-bao-kiem-ke-khi-nha-kinh-2026', [GhgDeclarationController::class, 'show'])->name('ghg-form.index');
+Route::get('/form-khai-bao-kiem-ke-khi-nha-kinh-2026/buoc/{step}', [GhgDeclarationController::class, 'show'])->whereNumber('step')->name('ghg-form.step');
+Route::post('/form-khai-bao-kiem-ke-khi-nha-kinh-2026/buoc/{step}', [GhgDeclarationController::class, 'store'])->whereNumber('step')->middleware('throttle:30,1')->name('ghg-form.save');
+Route::get('/admin/ghg-declarations/{declaration}/chung-tu/{evidence}', [GhgDeclarationController::class, 'download'])->whereNumber('evidence')->middleware('auth')->name('ghg-form.evidence');
+foreach (Service::DECLARATION_ROUTES as $slug => $routeName) {
+    Route::get('/'.$slug, [ServiceController::class, 'show'])->defaults('slug', $slug)->name($routeName);
+}
 Route::get('/tin-tuc', [PostController::class, 'index'])->name('posts.index');
 Route::get('/tin-tuc/{slug}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/du-an', [ProjectController::class, 'index'])->name('projects.index');

@@ -733,6 +733,8 @@ function initTableOfContents() {
         usedIds.add(anchor);
       }
 
+      heading.dataset.tocAnchor = anchor;
+
       const link = document.createElement('a');
       link.href = `#${anchor}`;
       link.textContent = heading.textContent.trim();
@@ -768,12 +770,27 @@ function initTableOfContents() {
     });
 
     if (toggle) {
-      toggle.setAttribute('aria-expanded', 'true');
+      const desktopLayout = window.matchMedia('(min-width: 1024px)');
+      const setExpanded = (expanded) => {
+        toggle.setAttribute('aria-expanded', String(expanded));
+        toggle.setAttribute('aria-controls', list.id);
+        toggle.setAttribute('aria-label', expanded ? 'Thu gọn mục lục' : 'Mở mục lục');
+        sidebar.dataset.tocExpanded = String(expanded);
+        list.hidden = !expanded;
+      };
+
+      setExpanded(desktopLayout.matches);
+      desktopLayout.addEventListener('change', (event) => setExpanded(event.matches));
+
       toggle.addEventListener('click', () => {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!isExpanded));
-        list.hidden = isExpanded;
-        toggle.querySelector('svg')?.classList.toggle('rotate-180', isExpanded);
+        setExpanded(!isExpanded);
+      });
+
+      list.addEventListener('click', (event) => {
+        if (!desktopLayout.matches && event.target.closest('a')) {
+          setExpanded(false);
+        }
       });
     }
 
@@ -790,7 +807,7 @@ function initTocScrollSpy(headings, sidebar) {
 
   const onScroll = () => {
     const scrollPos = window.scrollY + headerOffset;
-    let currentHeading = null;
+    let currentHeading = headings[0];
 
     for (let i = 0; i < headings.length; i++) {
       const heading = headings[i];
@@ -802,18 +819,18 @@ function initTocScrollSpy(headings, sidebar) {
       }
     }
 
-    sidebar.querySelectorAll('.toc_list li.is-active').forEach((el) => {
-      el.classList.remove('is-active');
+    sidebar.querySelectorAll('.toc_list li.is-active, .toc_list li.active').forEach((el) => {
+      el.classList.remove('is-active', 'active');
     });
 
     if (currentHeading) {
-      const activeId = currentHeading.id;
+      const activeId = currentHeading.dataset.tocAnchor || currentHeading.id;
       const activeItem = sidebar.querySelector(`li[data-target="${activeId}"]`);
       if (activeItem) {
-        activeItem.classList.add('is-active');
+        activeItem.classList.add('is-active', 'active');
         const parentH2 = activeItem.closest('.toc_list > li');
         if (parentH2 && parentH2 !== activeItem) {
-          parentH2.classList.add('is-active');
+          parentH2.classList.add('is-active', 'active');
         }
       }
     }
@@ -914,4 +931,3 @@ document.addEventListener('livewire:init', () => {
     });
   }
 });
-

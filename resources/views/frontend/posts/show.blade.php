@@ -50,8 +50,7 @@
         <!-- Two-Column Layout: Sidebar TOC on Left & Article Content on Right -->
         <div class="flex flex-x gap-6 lg:gap-10 items-start">
           <!-- LEFT: TOC SIDEBAR (w-72 xl:w-80) -->
-          <div class="sidebar-toc flex-none w-72 xl:w-80 hidden lg:block" data-toc-spy
-            style="position: sticky; top: 90px; align-self: flex-start">
+          <div class="sidebar-toc flex-none w-72 xl:w-80 hidden lg:block" data-toc-spy>
             <div class="sidebar-inner">
               <div id="toc_container" role="navigation" aria-label="Table of Contents"
                 class="no_bullets toc_title_center card-item relative glass-effect border border-black/8 bg-white/95 rounded-3xl p-5 sm:p-6 shadow-md">

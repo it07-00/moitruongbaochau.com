@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             PartnerSeeder::class,
             SharedContentSettingsSeeder::class,
             ContentTagsAndViewCountSeeder::class,
+            DeclarationService2026Seeder::class,
         ]);
     }
 }

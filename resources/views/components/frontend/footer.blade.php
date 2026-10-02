@@ -113,7 +113,7 @@
                     <p class="footer-title text-[#064e3b] text-xl lg:text-2xl font-bold mb-6">Dịch Vụ Môi Trường</p>
                     <ul class="menu menu-drop text-[16px] space-y-3.5">
                         @foreach($footerServices as $srv)
-                        <li><a href="{{ route('services.show', $srv->slug) }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">{{ $srv->name }}</a></li>
+                        <li><a href="{{ $srv->getPublicUrl() }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">{{ $srv->name }}</a></li>
                         @endforeach
                         <li><a href="{{ route('projects.index') }}" class="text-[#374151] hover:text-[#059669] hover:translate-x-1 transition-all block font-medium">Dự Án Tiêu Biểu &amp; Năng Lực Thực Hiện</a></li>
                     </ul>

@@ -50,7 +50,7 @@ class ServiceController extends Controller
             ->select(['id', 'service_category_id', 'name', 'slug', 'short_description', 'thumbnail'])
             ->limit(3)
             ->get();
-        $seo = SeoData::forContent($service, route('services.show', $service->slug), 'Service');
+        $seo = SeoData::forContent($service, $service->getPublicUrl(), 'Service');
 
         return view('frontend.services.show', compact('service', 'relatedServices', 'seo'));
     }

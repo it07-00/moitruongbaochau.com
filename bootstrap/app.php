@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(SecurityHeaders::class);
         $middleware->alias(['admin' => EnsureAdmin::class]);
-        $middleware->redirectGuestsTo(fn (): string => route('admin.login'));
+        $middleware->redirectGuestsTo(fn (): string => route('filament.admin.auth.login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

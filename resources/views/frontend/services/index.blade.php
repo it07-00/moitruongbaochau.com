@@ -28,7 +28,7 @@
             @forelse ($services as $service)
                 <x-theme.card
                     :title="$service->name"
-                    :url="route('services.show', $service->slug)"
+                    :url="$service->getPublicUrl()"
                     :excerpt="$service->short_description"
                     :image="$service->thumbnail"
                     :meta="$service->category?->name"

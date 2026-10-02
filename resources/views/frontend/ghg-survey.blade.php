@@ -1,0 +1,104 @@
+@extends('frontend.layouts.app', ['bodyClass' => 'ghg-survey-page'])
+
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('assets/css/ghg-survey.css') }}?v={{ filemtime(public_path('assets/css/ghg-survey.css')) }}">
+@endpush
+@push('scripts')
+  <script src="{{ asset('assets/js/ghg-survey.js') }}?v={{ filemtime(public_path('assets/js/ghg-survey.js')) }}" defer></script>
+@endpush
+
+@section('content')
+<section class="ghg-survey-shell container px-3 mx-auto">
+  <header class="ghg-survey-heading">
+    <a href="{{ route('declarations.greenhouse-gas-2026') }}" class="ghg-back-link">← Khai báo kiểm kê khí nhà kính 2026</a>
+    <p class="ghg-eyebrow">PHIẾU THU THẬP DỮ LIỆU</p>
+    <h1>Khai báo kiểm kê khí nhà kính</h1>
+    <p>Điền dữ liệu theo từng bước. Bản nháp được lưu khi bạn bấm lưu hoặc tiếp tục; có thể mở lại trong cùng trình duyệt.</p>
+  </header>
+
+  @if($declaration?->status === 'submitted')
+    <div class="ghg-card ghg-success" role="status">
+      <span class="ghg-success-icon" aria-hidden="true">✓</span>
+      <h2>Đã nhận phiếu khai báo của bạn</h2>
+      <p>Mã phiếu: <strong>{{ $declaration->reference }}</strong></p>
+      <p>Nộp lúc {{ $declaration->submitted_at->format('H:i d/m/Y') }}. Bảo Châu sẽ liên hệ qua thông tin bạn đã cung cấp.</p>
+      <p>Phiếu đã nộp được khóa chỉnh sửa.</p>
+    </div>
+    <x-ghg-survey-summary :declaration="$declaration" />
+  @else
+    <div class="ghg-wizard-layout">
+      <nav class="ghg-step-nav" aria-label="Các bước khai báo">
+        <ol>
+          @foreach($steps as $number => $label)
+            <li class="{{ $number === $step ? 'is-current' : '' }} {{ isset($declaration?->data[$number]) ? 'is-complete' : '' }}">
+              @if($number <= min(7, max(array_keys($declaration?->data ?? [0 => []])) + 1))
+                <a href="{{ route('ghg-form.step', $number) }}" @if($number === $step) aria-current="step" @endif><span>{{ $number }}</span>{{ $label }}</a>
+              @else
+                <span class="ghg-step-disabled"><span>{{ $number }}</span>{{ $label }}</span>
+              @endif
+            </li>
+          @endforeach
+        </ol>
+      </nav>
+      <div class="ghg-form-content">
+        <div class="ghg-step-heading"><span>Bước {{ $step }} / 7</span><h2>{{ $steps[$step] }}</h2></div>
+        @if(session('ghg_saved'))<p class="ghg-saved" role="status">{{ session('ghg_saved') }}</p>@endif
+        @if($errors->any())
+          <div class="ghg-error-summary" role="alert"><strong>Vui lòng kiểm tra lại thông tin:</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+            @if($step === 7)<p>Vui lòng chọn lại các tệp chưa được lưu sau khi sửa lỗi.</p>@endif
+          </div>
+        @endif
+        <form method="post" action="{{ route('ghg-form.save', $step) }}" enctype="multipart/form-data" data-ghg-form>
+          @csrf
+          <div class="ghg-honeypot" aria-hidden="true"><label for="ghg-website">Website</label><input id="ghg-website" type="text" name="website" tabindex="-1" autocomplete="off"></div>
+          @if($step === 1)
+            <div class="ghg-card"><h3>Thông tin doanh nghiệp và người liên hệ</h3><div class="ghg-fields-grid">
+              @foreach($fields as $key => $field)
+                <x-ghg-survey-field :field="$field" :name="'data['.$key.']'" :value="$data[$key] ?? ''" :error-key="'data.'.$key" :id="'ghg-'.$key" />
+              @endforeach
+            </div></div>
+          @elseif($step < 7)
+            <p class="ghg-step-note">Nhập dữ liệu của năm {{ $declaration->data[1]['inventory_year'] }}. Với bảng theo tháng, giá trị 0 thể hiện không phát sinh; hãy kiểm tra đủ 12 tháng trước khi tiếp tục. Với nhiên liệu và thiết bị, không thêm dòng nếu không phát sinh.</p>
+            @foreach($sections as $key => $section)
+              <section class="ghg-card" data-ghg-section="{{ $key }}">
+                <h3>{{ $section['label'] }}</h3>
+                <div data-ghg-rows>
+                  @foreach((array) ($data[$key] ?? []) as $index => $rowData)
+                    <x-ghg-survey-row :section="$section" :key="$key" :index="$index" :row-data="is_array($rowData) ? $rowData : []" />
+                  @endforeach
+                </div>
+                @unless($section['monthly'])
+                  <template data-ghg-template><x-ghg-survey-row :section="$section" :key="$key" index="__INDEX__" /></template>
+                  <button type="button" class="ghg-secondary-button" data-ghg-add>+ Thêm dòng dữ liệu</button>
+                @endunless
+              </section>
+            @endforeach
+          @else
+            <div class="ghg-card"><h3>Kiểm tra dữ liệu trước khi nộp</h3><p>Mở từng phần bên dưới để kiểm tra. Bạn có thể quay lại các bước trước để chỉnh sửa.</p><x-ghg-survey-summary :declaration="$declaration" /></div>
+            <div class="ghg-card">
+              <h3>Chứng từ và hóa đơn</h3>
+              <p>PDF, JPG, PNG, XLSX, DOCX; tối đa 10 tệp mỗi phiếu, 10MB mỗi tệp.</p>
+              @if($declaration->evidence)
+                <ul class="ghg-evidence-list">@foreach($declaration->evidence as $file)<li>{{ $file['name'] }} — đã lưu</li>@endforeach</ul>
+              @endif
+              <div class="ghg-fields-grid">
+                <div class="ghg-field"><label for="ghg-evidence">Tải chứng từ</label><input type="file" id="ghg-evidence" name="evidence[]" multiple accept=".pdf,.jpg,.jpeg,.png,.xlsx,.docx"></div>
+                <div class="ghg-field"><label for="ghg-evidence-category">Nhóm chứng từ</label><select id="ghg-evidence-category" name="evidence_category"><option value="">Chọn nhóm</option>@foreach($steps as $number => $label)@if($number > 1 && $number < 7)<option value="{{ $label }}" @selected(old('evidence_category') === $label)>{{ $label }}</option>@endif @endforeach</select></div>
+                <div class="ghg-field"><label for="ghg-evidence-note">Ghi chú chứng từ</label><input type="text" id="ghg-evidence-note" name="evidence_note" value="{{ old('evidence_note') }}" maxlength="500"></div>
+              </div>
+              <label class="ghg-confirmation"><input type="checkbox" name="confirmation" value="1" @checked(old('confirmation'))><span>Tôi xác nhận dữ liệu đã nhập là chính xác và đồng ý gửi phiếu cho Môi Trường Bảo Châu để tiếp nhận, xử lý yêu cầu kiểm kê.</span></label>
+            </div>
+          @endif
+          <div class="ghg-form-navigation">
+            @if($step > 1)<a href="{{ route('ghg-form.step', $step - 1) }}" class="ghg-back-link">← Quay lại</a>@else<span></span>@endif
+            <div class="ghg-form-buttons">
+              <button type="submit" name="action" value="save" class="ghg-secondary-button">Lưu nháp</button>
+              <button type="submit" name="action" value="{{ $step === 7 ? 'submit' : 'next' }}" class="ghg-primary-button">{{ $step === 7 ? 'Xác nhận và nộp phiếu' : 'Lưu và tiếp tục →' }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  @endif
+</section>
+@endsection

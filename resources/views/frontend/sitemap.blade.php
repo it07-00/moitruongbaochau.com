@@ -11,7 +11,7 @@
         <url><loc>{{ $page->canonical_url ?: route('pages.show', $page->slug) }}</loc><lastmod>{{ $page->updated_at->toAtomString() }}</lastmod></url>
     @endforeach
     @foreach ($services as $service)
-        <url><loc>{{ $service->canonical_url ?: route('services.show', $service->slug) }}</loc><lastmod>{{ $service->updated_at->toAtomString() }}</lastmod></url>
+        <url><loc>{{ $service->canonical_url ?: $service->getPublicUrl() }}</loc><lastmod>{{ $service->updated_at->toAtomString() }}</lastmod></url>
     @endforeach
     @foreach ($posts as $post)
         <url><loc>{{ $post->canonical_url ?: route('posts.show', $post->slug) }}</loc><lastmod>{{ $post->updated_at->toAtomString() }}</lastmod></url>

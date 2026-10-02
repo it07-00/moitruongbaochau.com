@@ -161,7 +161,7 @@
                     <ul class="hint-list flex flex-col gap-4 ml-3">
                       @forelse ($headerServices as $headerService)
                         <li>
-                          <a class="flex items-center gap-3 text-[14px] group" href="{{ route('services.show', $headerService->slug) }}" title="{{ $headerService->name }}">
+                          <a class="flex items-center gap-3 text-[14px] group" href="{{ $headerService->getPublicUrl() }}" title="{{ $headerService->name }}">
                             <svg class="w-4 h-4 text-primary" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
                             {{ $headerService->name }}
                           </a>
