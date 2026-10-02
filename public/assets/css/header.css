@@ -167,3 +167,16 @@
   #hero-swiper .swiper-pagination { bottom: 2px !important; }
   #header .dropdown-pane { max-width: calc(100vw - 24px); }
 }
+
+/* Desktop navigation pill. */
+@media (min-width: 1280px) {
+  #header #main-nav { width: auto; max-width: 100%; }
+  #header #main-nav .header-nav-list { flex-wrap: nowrap; gap: 2px; padding: 4px 10px; border-radius: 999px; background: #eceeed; border: 1px solid #e2e5e3; }
+  #header .header-nav-item > a { min-height: 40px; padding: 8px 11px; border-radius: 999px; color: #181818; font-size: 14px; font-weight: 500; line-height: 1.4; transition: color .15s ease, background .15s ease; }
+  #header .header-nav-item > a:hover,
+  #header .header-nav-item > a:focus-visible { background: #fff; color: #800000; }
+  #header .header-nav-item > a:focus-visible { outline: 2px solid #800000; outline-offset: 1px; }
+  #header .header-nav-item > a svg { width: 13px; height: 13px; }
+  #header .header-dropdown { top: calc(100% + 4px); }
+  #header .header-dropdown::before { content: ''; position: absolute; height: 8px; top: -8px; left: 0; right: 0; }
+}
