@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\ContentStatus;
 use App\Models\JobPosting;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
@@ -15,6 +17,21 @@ use Tests\TestCase;
 class FrontendDatabaseContentTest extends TestCase
 {
     use LazilyRefreshDatabase;
+
+    public function test_about_page_shows_capability_pdf_when_configured(): void
+    {
+        $page = Page::factory()->create([
+            'slug' => 'gioi-thieu', 'template' => 'about',
+            'status' => ContentStatus::Published, 'published_at' => now()->subDay(),
+            'metadata' => ['capability_pdf' => 'uploads/company-profile/profile.pdf'],
+        ]);
+        $this->get(route('about'))->assertOk()
+            ->assertSee('Hồ sơ năng lực Bảo Châu')
+            ->assertSee(asset('storage/uploads/company-profile/profile.pdf'))
+            ->assertSee('download="ho-so-nang-luc-bao-chau.pdf"', false);
+        $page->update(['metadata' => []]);
+        $this->get(route('about'))->assertOk()->assertDontSee('Xem hồ sơ năng lực ↗');
+    }
 
     public function test_service_detail_uses_database_metadata(): void
     {

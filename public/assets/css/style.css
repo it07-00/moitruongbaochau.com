@@ -1232,3 +1232,25 @@ nav#main-nav,
   .home #hero-swiper .swiper-button-next { right: 6px; }
   .home .site-content { padding-bottom: 72px; }
 }
+
+.about-capability-card { margin-top: 24px; padding: 20px; border: 1px solid #e2e9e4; border-radius: 16px; background: #f7faf8; color: #181818; }
+.about-capability-card h2 { font-size: 20px; font-weight: 500; margin-bottom: 8px; }
+.about-capability-card p { font-size: 14px; line-height: 1.65; }
+.about-capability-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+.about-capability-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1px solid #800000; color: #800000; font-size: 14px; font-weight: 500; }
+.about-capability-actions a:first-child { background: #800000; color: #fff; }
+.about-capability-actions a:focus-visible { outline: 2px solid #800000; outline-offset: 3px; }
+@media (max-width: 639px) { .about-capability-actions { flex-direction: column; } }
+
+@media (max-width: 767px) {
+  .section-about { padding-top: 28px; padding-bottom: 32px; }
+  .section-about > .container { padding-left: 20px; padding-right: 20px; }
+  .about-intro-grid { gap: 24px; }
+  .about-intro-copy { order: 0; }
+  .about-intro-copy h1 { font-size: 26px; font-weight: 500; line-height: 1.35; }
+  .about-intro-copy > .mt-6 { margin-top: 18px; font-size: 15px; line-height: 1.75; color: #181818; }
+  .about-intro-copy > .mt-6 p + p { margin-top: 14px; }
+  .about-intro-image { order: 1; }
+  .about-intro-image > div { max-width: 160px; }
+  .about-intro-image img { width: 160px; height: auto; max-height: 180px; object-fit: contain; }
+}

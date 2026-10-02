@@ -190,6 +190,21 @@ class PageResource extends Resource
                         TextInput::make('metadata.posts_title')->label('Tiêu đề khối Tin tức')->default('Tin tức & Kiến thức môi trường'),
                     ])->columns(2),
 
+                Section::make('Hồ sơ năng lực')
+                    ->description('Đính kèm PDF để khách hàng xem và tải trên trang Giới thiệu.')
+                    ->visible(fn ($get) => $get('template') === 'about' || $get('slug') === 'gioi-thieu')
+                    ->components([
+                        FileUpload::make('metadata.capability_pdf')
+                            ->label('Hồ sơ năng lực PDF')
+                            ->disk('public')
+                            ->directory('uploads/company-profile')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(51200)
+                            ->openable()
+                            ->downloadable()
+                            ->columnSpanFull(),
+                    ]),
+
                 // 3. CẤU HÌNH TRANG GIỚI THIỆU (TEMPLATE: ABOUT)
                 Section::make('Cấu hình Khối: Tầm nhìn & Sứ mệnh (Vision & Mission)')
                     ->description('Tùy chỉnh nội dung khối Tầm nhìn và 4 thẻ Sứ mệnh trên trang Giới thiệu')

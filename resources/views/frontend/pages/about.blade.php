@@ -6,8 +6,8 @@
         <!-- ABOUT HERO SECTION -->
         <section class="section section-about py-12 lg:py-20 overflow-hidden">
           <div class="container px-3 mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              <div class="lg:col-span-6 order-2 lg:order-1">
+            <div class="about-intro-grid grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              <div class="about-intro-copy lg:col-span-6 order-2 lg:order-1">
                 <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                   <span class="icon-list-icon">
                     <img src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}" />
@@ -36,8 +36,21 @@
                     </p>
                   @endif
                 </div>
+                @if(filled($page->metadata['capability_pdf'] ?? null))
+                  @php
+                    $capabilityPdfUrl = asset('storage/'.$page->metadata['capability_pdf']);
+                  @endphp
+                  <div class="about-capability-card">
+                    <h2>Hồ sơ năng lực Bảo Châu</h2>
+                    <p>Tìm hiểu về đội ngũ, lĩnh vực hoạt động và năng lực triển khai của chúng tôi.</p>
+                    <div class="about-capability-actions">
+                      <a href="{{ $capabilityPdfUrl }}" target="_blank" rel="noopener noreferrer">Xem hồ sơ năng lực ↗</a>
+                      <a href="{{ $capabilityPdfUrl }}" download="ho-so-nang-luc-bao-chau.pdf">Tải PDF ↓</a>
+                    </div>
+                  </div>
+                @endif
               </div>
-              <div class="lg:col-span-6 order-1 lg:order-2 flex justify-center">
+              <div class="about-intro-image lg:col-span-6 order-1 lg:order-2 flex justify-center">
                 <div class="relative w-full max-w-lg">
                   <div class="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl -z-10"></div>
                   @php
