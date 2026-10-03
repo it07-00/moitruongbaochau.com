@@ -12,6 +12,20 @@ class EnvironmentSurveyDefinition
         return [1 => 'Thông tin doanh nghiệp', 2 => 'Sản phẩm & sản lượng', 3 => 'Nhiên liệu', 4 => 'Nước thải & khí thải', 5 => 'Chất thải rắn', 6 => 'Hồ sơ pháp lý', 7 => 'Xác nhận & gửi'];
     }
 
+    /** @return array<int, string> */
+    public static function guides(): array
+    {
+        return [
+            1 => 'Điền thông tin doanh nghiệp và người phụ trách. Nếu có báo cáo BVMT năm 2025, hãy đính kèm để không cần nhập lại số liệu năm 2025.',
+            2 => 'Khai báo từng sản phẩm, đơn vị tính và sản lượng thực tế. Dùng cùng đơn vị khi so sánh số liệu hai năm.',
+            3 => 'Khai báo điện và từng loại nhiên liệu sử dụng theo hóa đơn hoặc sổ theo dõi. Ghi rõ đơn vị; số lượng cho phép số thập phân.',
+            4 => 'Ghi lưu lượng nước thải, nguồn phát sinh khí thải theo giấy phép và thực tế. Nếu có công trình xử lý, mô tả công suất, công nghệ và đính kèm hồ sơ.',
+            5 => 'Tách riêng rác sinh hoạt, chất thải công nghiệp và chất thải nguy hại. Đối chiếu khối lượng với chứng từ thu gom; ghi mã CTNH nếu có.',
+            6 => 'Chọn trạng thái cho từng nhóm hồ sơ. Chọn Có cần đính kèm ít nhất một tệp; mỗi tệp tối đa 20 MB và mỗi nhóm tối đa 10 tệp.',
+            7 => 'Rà soát toàn bộ dữ liệu và hồ sơ. Bấm Chỉnh sửa để quay lại từng bước, xác nhận thông tin rồi gửi phiếu; phiếu đã gửi sẽ được khóa chỉnh sửa.',
+        ];
+    }
+
     /** @return array<string, string> */
     public static function statuses(): array
     {

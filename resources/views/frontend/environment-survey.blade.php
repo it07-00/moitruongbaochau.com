@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app', ['bodyClass' => 'bvmt-survey-page'])
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/ghg-survey.css') }}?v={{ filemtime(public_path('assets/css/ghg-survey.css')) }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bvmt-survey.css') }}?v={{ filemtime(public_path('assets/css/bvmt-survey.css')) }}">
 @endpush
 @push('scripts')
@@ -7,11 +8,11 @@
 @endpush
 @section('content')
 @php($definition = \App\Support\EnvironmentSurveyDefinition::class)
-<section class="bvmt-shell" data-has-report="{{ (int) ($data['has_environment_report_2025'] ?? false) }}">
-    <header class="bvmt-heading">
-        <x-theme.badge text="PHIẾU KHẢO SÁT THÔNG TIN" />
-        <h1>Báo cáo công tác<br>bảo vệ môi trường <span>2026</span></h1>
-        <p>Cung cấp thông tin, số liệu và hồ sơ của doanh nghiệp. Dữ liệu được lưu khi chuyển bước; bạn có thể lưu nháp để tiếp tục sau.</p>
+<section class="bvmt-shell ghg-survey-shell" data-has-report="{{ (int) ($data['has_environment_report_2025'] ?? false) }}">
+    <header class="bvmt-heading ghg-survey-heading">
+        <x-theme.badge text="PHIẾU THU THẬP DỮ LIỆU" />
+        <h1>Báo cáo công tác bảo vệ môi trường 2026</h1>
+        <p>Điền dữ liệu theo từng bước. Bản nháp được lưu khi bạn bấm lưu hoặc tiếp tục; có thể mở lại trong cùng trình duyệt.</p>
     </header>
     @if($survey && ! $survey->isEditable())
         <div class="bvmt-notice bvmt-success" role="status"><h2>Đã nhận phiếu khảo sát của bạn</h2><p>Mã phiếu: <strong>{{ $survey->reference }}</strong> · {{ $definition::statuses()[$survey->status] }}</p><p>Gửi lúc {{ $survey->submitted_at?->timezone('Asia/Ho_Chi_Minh')->format('H:i d/m/Y') }}. Phiếu đã khóa chỉnh sửa; Bảo Châu sẽ liên hệ theo thông tin đã cung cấp.</p></div>
@@ -20,14 +21,11 @@
         @if($survey?->status === 'revision_required')<div class="bvmt-notice"><strong>Phiếu được mở lại để bổ sung.</strong><p>{{ collect($survey->history)->where('action', 'status')->where('status', 'revision_required')->last()['note'] ?? 'Vui lòng rà soát và gửi lại phiếu sau khi cập nhật.' }}</p></div>@endif
         @if(session('bvmt_saved'))<div class="bvmt-notice bvmt-success" role="status">{{ session('bvmt_saved') }}</div>@endif
         @if($errors->any())<div class="bvmt-notice bvmt-errors" role="alert" tabindex="-1"><strong>Vui lòng kiểm tra thông tin:</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul><p>Nội dung nhập đã được giữ lại. Các tệp chưa lưu cần chọn lại.</p></div>@endif
-        @if($survey)
-            <div class="bvmt-resume"><strong>Link riêng của doanh nghiệp</strong><p>Lưu link này để tiếp tục trên thiết bị khác. Chỉ chia sẻ với người phụ trách hồ sơ.</p><div><input aria-label="Link tiếp tục khảo sát" readonly value="{{ route('bvmt.show', ['survey' => $survey->token]) }}"><button type="button" class="bvmt-button" data-copy-link>Sao chép link</button></div></div>
-        @endif
-        <form id="bvmt-form" method="post" action="{{ $survey ? route('bvmt.save', ['survey' => $survey->token, 'step' => $step]) : route('bvmt.start') }}" enctype="multipart/form-data" novalidate>
+        <form id="bvmt-form" method="post" action="{{ route('bvmt.save', ['step' => $step]) }}" enctype="multipart/form-data" novalidate>
             @csrf
             <input type="hidden" name="target_step" id="bvmt-target-step" value="{{ $step }}">
             <div class="bvmt-honeypot" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-            <div class="bvmt-layout">
+            <div class="bvmt-layout ghg-wizard-layout">
                 <aside class="bvmt-sidebar">
                     <div class="bvmt-progress-label"><strong>Tiến độ hoàn thành</strong><span>{{ round(count($completed) / 6 * 100) }}%</span></div>
                     <progress max="6" value="{{ count($completed) }}" aria-label="Tiến độ hoàn thành"></progress>
@@ -37,7 +35,12 @@
                     <p class="bvmt-hint">Dấu <b class="bvmt-required">*</b> là thông tin cần có trước khi gửi. Có thể lưu nháp khi chưa điền đủ.</p>
                 </aside>
                 <div class="bvmt-main">
-                    <div class="bvmt-step-heading"><span>BƯỚC {{ $step }} / 7</span><h2>{{ $definition::steps()[$step] }}</h2></div>
+                    <div class="bvmt-step-heading ghg-step-heading"><span>Bước {{ $step }} / 7</span><h2>{{ $definition::steps()[$step] }}</h2></div>
+                    <aside class="ghg-guide-card" aria-label="Hướng dẫn điền biểu mẫu bước {{ $step }}">
+                        <div class="ghg-guide-header"><h3 class="ghg-guide-heading">💡 Hướng dẫn &amp; gợi ý nhập liệu</h3><p class="ghg-guide-title">{{ $definition::steps()[$step] }}</p></div>
+                        <p class="ghg-guide-summary">{{ $definition::guides()[$step] }}</p>
+                        <ul class="ghg-guide-list"><li>Dấu * là thông tin cần có trước khi gửi. Có thể lưu nháp khi chưa điền đủ.</li><li>Mở lại link biểu mẫu trong cùng trình duyệt để tiếp tục phiếu đã lưu.</li></ul>
+                    </aside>
                     @if(in_array($step, [2,3,4,5]) && ($data['has_environment_report_2025'] ?? false))<div class="bvmt-notice">Số liệu năm 2025 được lấy từ báo cáo đã cung cấp. Bạn chỉ cần nhập số liệu năm 2026.</div>@endif
                     @if($definition::fields($step) && $step !== 7)
                         <section class="bvmt-card"><div class="bvmt-grid">

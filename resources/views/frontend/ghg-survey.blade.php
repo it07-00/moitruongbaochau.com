@@ -87,6 +87,12 @@
                 @if($key === 'fire_extinguishers')
                   <p class="ghg-field-hint">Mỗi loại bình nhập một nhóm. Số lượng tính theo bình; khối lượng mới và lượng nạp lại là tổng kg trong năm. Không phát sinh nhập 0.</p>
                 @endif
+                @if($key === 'equipment')
+                  <p class="ghg-field-hint">Thêm từng thiết bị hoặc nhóm thiết bị có cùng thông số. Ghi công suất kèm đơn vị, năng lượng sử dụng và khu vực lắp đặt. Thông tin môi chất lạnh được khai báo riêng ở bảng Thiết bị làm lạnh bên dưới.</p>
+                @endif
+                @if($key === 'trees')
+                  <p class="ghg-field-hint">Thêm từng nhóm cây có cùng tên, loại, tỷ lệ tăng trưởng và tuổi. Tuổi tính theo năm, số lượng tính theo cây. Nếu không có cây xanh, để bảng trống.</p>
+                @endif
                 @if(in_array($key, ['electricity', 'steam']))
                   <p class="ghg-field-hint">Nhập số liệu theo hóa đơn của từng tháng; tháng không phát sinh nhập 0. {{ $key === 'electricity' ? 'Đơn vị: kWh.' : 'Chọn đơn vị đúng với hóa đơn cung cấp nhiệt hơi.' }}</p>
                 @endif
@@ -136,7 +142,7 @@
                   @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
                     <button type="button" class="ghg-secondary-button" data-ghg-new-fuel>+ Thêm nhiên liệu khác</button>
                   @else
-                    <button type="button" class="ghg-secondary-button" data-ghg-add>+ Thêm dòng dữ liệu</button>
+                    <button type="button" class="ghg-secondary-button" data-ghg-add>{{ match ($key) { 'trees' => '+ Thêm nhóm cây', 'equipment' => '+ Thêm thiết bị', default => '+ Thêm dòng dữ liệu' } }}</button>
                   @endif
                 @endunless
               </section>

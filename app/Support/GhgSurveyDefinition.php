@@ -9,7 +9,7 @@ class GhgSurveyDefinition
     /** @return array<int, string> */
     public static function steps(): array
     {
-        return [1 => 'Thông tin chung', 2 => 'Nhiên liệu cố định', 3 => 'Nhiên liệu di động', 4 => 'Nước thải', 5 => 'PCCC & Làm lạnh', 6 => 'Điện & Năng lượng', 7 => 'Xác nhận'];
+        return [1 => 'Thông tin chung', 2 => 'Nhiên liệu cố định', 3 => 'Nhiên liệu di động', 4 => 'Nước thải', 5 => 'Thiết bị, PCCC & Làm lạnh', 6 => 'Điện, năng lượng & cây xanh', 7 => 'Xác nhận'];
     }
 
     /** @return array<string, array<string, mixed>> */
@@ -111,6 +111,20 @@ class GhgSurveyDefinition
                 ],
             ],
             5 => [
+                'equipment' => [
+                    'label' => 'Danh sách thiết bị',
+                    'monthly' => false,
+                    'fields' => [
+                        'name' => self::field('Tên thiết bị', placeholder: 'VD: Máy lạnh'),
+                        'manufacture_year' => self::field('Năm sản xuất', 'number', min: 1900, max: 2100, placeholder: 'VD: 2020'),
+                        'brand' => self::field('Thương hiệu', placeholder: 'VD: Reetech'),
+                        'origin' => self::field('Xuất xứ', placeholder: 'VD: Việt Nam'),
+                        'capacity' => self::field('Công suất', placeholder: 'VD: 5 kW', hint: 'Ghi công suất và đơn vị theo thông số thiết bị, ví dụ kW, HP hoặc tấn/giờ'),
+                        'energy_source' => self::field('Năng lượng sử dụng', placeholder: 'VD: Điện, dầu DO, LPG'),
+                        'purpose' => self::field('Mục đích sử dụng', placeholder: 'VD: Làm mát'),
+                        'area' => self::field('Khu vực', placeholder: 'VD: Kho'),
+                    ],
+                ],
                 'fire_extinguishers' => [
                     'label' => 'Bình chữa cháy',
                     'monthly' => false,
@@ -152,6 +166,17 @@ class GhgSurveyDefinition
                         'month' => $month,
                         'consumption' => self::field('Nhiệt hơi tiêu thụ', 'decimal', placeholder: 'VD: 25.5', hint: 'Sản lượng hơi / nhiệt mua từ đơn vị cung cấp ngoài (nhập 0 nếu không dùng)'),
                         'unit' => self::field('Đơn vị', 'select', options: ['kWh' => 'kWh', 'MWh' => 'MWh', 'GJ' => 'GJ', 'TJ' => 'TJ'], hint: 'Đơn vị tính trên hóa đơn cung cấp nhiệt hơi'),
+                    ],
+                ],
+                'trees' => [
+                    'label' => 'Thống kê cây xanh',
+                    'monthly' => false,
+                    'fields' => [
+                        'name' => self::field('Tên cây', placeholder: 'VD: Sao đen', hint: 'Tên loài cây trồng tại cơ sở'),
+                        'tree_type' => self::field('Loại cây', 'select', options: ['hardwood' => 'Gỗ cứng', 'conifer' => 'Lá kim']),
+                        'growth_rate' => self::field('Tỷ lệ tăng trưởng', 'select', options: ['fast' => 'Nhanh', 'medium' => 'Trung bình', 'slow' => 'Chậm']),
+                        'age_years' => self::field('Số tuổi cây', 'number', max: 10000, placeholder: 'VD: 5', hint: 'Tuổi cây tính theo năm tại năm kiểm kê'),
+                        'quantity' => self::field('Số lượng', 'number', min: 1, placeholder: 'VD: 20', hint: 'Số cây cùng loài, loại, tỷ lệ tăng trưởng và tuổi'),
                     ],
                 ],
             ],
@@ -204,9 +229,10 @@ class GhgSurveyDefinition
                 'example' => 'Ví dụ: Tháng 1 nước thải sinh hoạt phát sinh 120 m³, BOD sau xử lý là 25 mg/L, Tổng N là 15 mg/L qua hệ thống bể tự hoại.',
             ],
             5 => [
-                'title' => 'Thiết bị PCCC và Hệ thống làm lạnh (Scope 1)',
+                'title' => 'Danh sách thiết bị, PCCC và hệ thống làm lạnh',
                 'summary' => 'Phát thải rò rỉ các loại khí nhà kính tiềm năng cao (HFCs, CO₂) từ bình chữa cháy và môi chất lạnh (gas điều hòa không khí, kho lạnh, chiller).',
                 'items' => [
+                    'Danh sách thiết bị: Ghi tên, năm sản xuất, thương hiệu, xuất xứ, công suất kèm đơn vị, năng lượng sử dụng, mục đích và khu vực lắp đặt theo tem máy hoặc hồ sơ thiết bị.',
                     'Thiết bị làm lạnh: Xem tem mác máy để biết loại gas (R-32, R-410A, R-134a, R-22...) và lượng nạp bổ sung trong năm theo biên bản bảo trì / hóa đơn nạp gas.',
                     'Bình chữa cháy: Thống kê số bình đang sử dụng, khối lượng nạp sạc lại trong đợt bảo dưỡng PCCC định kỳ hoặc số bình mua sắm mới/thải bỏ.',
                     'Nếu trong năm không nạp thêm gas hoặc không nạp sạc bình PCCC, nhập số 0 ở các trường khối lượng nạp.',
@@ -214,12 +240,13 @@ class GhgSurveyDefinition
                 'example' => 'Ví dụ: Hệ thống điều hòa trung tâm VRV Daikin dùng gas R-410A, nạp bù 3,5 kg gas trong đợt bảo dưỡng tháng 6; 20 bình chữa cháy MFZ4 đang sử dụng.',
             ],
             6 => [
-                'title' => 'Điện năng tiêu thụ và Năng lượng mua vào (Scope 2)',
+                'title' => 'Điện năng, năng lượng mua vào và thống kê cây xanh',
                 'summary' => 'Phát thải gián tiếp từ việc tiêu thụ điện lưới quốc gia và nhiệt hơi mua ngoài phục vụ toàn bộ hoạt động của doanh nghiệp.',
                 'items' => [
                     'Điện lưới: Tra cứu sản lượng điện tiêu thụ (kWh) trên 12 hóa đơn tiền điện EVN hàng tháng (từ tháng 1 đến tháng 12 của năm kiểm kê).',
                     'Nhiệt hơi / Lạnh: Nếu cơ sở mua hơi nhiệt từ đơn vị cung cấp bên ngoài, nhập sản lượng theo hóa đơn (chọn đơn vị kWh, MWh, GJ, TJ); nếu không dùng thì nhập 0.',
                     'Bảng yêu cầu đủ 12 tháng: Điền đầy đủ chỉ số kWh của từng tháng để hệ thống tổng hợp hệ số phát thải chuẩn xác.',
+                    'Cây xanh: Thêm từng nhóm cây theo tên, loại gỗ cứng hoặc lá kim, tỷ lệ tăng trưởng, tuổi cây và số lượng. Nếu không có cây xanh, để bảng trống.',
                 ],
                 'example' => 'Ví dụ: Tháng 1 chỉ số điện tiêu thụ trên hóa đơn EVN là 18.500 kWh; nhiệt hơi mua ngoài không có thì nhập 0.',
             ],
@@ -263,6 +290,9 @@ class GhgSurveyDefinition
         foreach ($sections as $key => $section) {
             $isWastewater = in_array($key, ['domestic_wastewater', 'industrial_wastewater'], true);
             $rules['data.'.$key] = $section['monthly'] && ! $isWastewater ? ['required', 'array', 'size:12'] : ['present', 'array', 'max:200'];
+            if (in_array($key, ['trees', 'equipment'], true)) {
+                $rules['data.'.$key] = ['sometimes', 'array', 'max:200'];
+            }
             $rules['data.'.$key.'.*'] = ['array:'.implode(',', array_keys($section['fields']))];
             foreach ($section['fields'] as $name => $field) {
                 $rules['data.'.$key.'.*.'.$name] = self::fieldRules($field);

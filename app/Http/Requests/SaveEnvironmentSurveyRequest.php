@@ -15,7 +15,7 @@ class SaveEnvironmentSurveyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $survey = $this->route('survey');
+        $survey = $this->currentSurvey();
         abort_if($survey instanceof EnvironmentSurvey && ! $survey->isEditable(), 409, 'Phiếu đã gửi được khóa chỉnh sửa.');
         abort_unless(in_array((int) $this->route('step', 1), range(1, 7), true), 404);
 
@@ -30,7 +30,7 @@ class SaveEnvironmentSurveyRequest extends FormRequest
     public function rules(): array
     {
         $step = (int) $this->route('step', 1);
-        $survey = $this->route('survey');
+        $survey = $this->currentSurvey();
         $data = array_replace($survey instanceof EnvironmentSurvey ? ($survey->data ?? []) : [], is_array($this->input('data')) ? $this->input('data') : []);
         $categories = match ($step) {
             1 => ['environment_report_2025'], 4 => ['wastewater', 'air'], 6 => array_keys(Definition::documents()), default => []
@@ -59,6 +59,13 @@ class SaveEnvironmentSurveyRequest extends FormRequest
             }
         }
         $this->merge(['data' => $data]);
+    }
+
+    private function currentSurvey(): ?EnvironmentSurvey
+    {
+        $reference = $this->session()->get('bvmt_survey.reference');
+
+        return $reference ? EnvironmentSurvey::query()->where('reference', $reference)->first() : null;
     }
 
     public function attributes(): array

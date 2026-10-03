@@ -31,6 +31,94 @@ class GhgDeclarationFormTest extends TestCase
         $this->assertSame(0, GhgDeclaration::query()->count());
     }
 
+    public function test_tree_inventory_persists_renders_and_can_be_removed(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(6);
+        $data['trees'] = [
+            ['name' => 'Sao đen', 'tree_type' => 'hardwood', 'growth_rate' => 'medium', 'age_years' => 5, 'quantity' => 20],
+            ['name' => 'Thông', 'tree_type' => 'conifer', 'growth_rate' => 'slow', 'age_years' => 10, 'quantity' => 3],
+        ];
+        $this->post(route('ghg-form.save', 6), ['action' => 'save', 'data' => $data])->assertSessionHasNoErrors();
+        $record = GhgDeclaration::query()->sole();
+        $this->assertEquals($data['trees'], $record->data[6]['trees']);
+        $this->get(route('ghg-form.step', 6))->assertOk()->assertSee('Thống kê cây xanh')->assertSee('+ Thêm nhóm cây')
+            ->assertSee('value="Sao đen"', false)->assertSee('data[trees][1][quantity]', false);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Sao đen')->assertSee('Gỗ cứng')->assertSee('Lá kim')->assertSee('Trung bình');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        Livewire::test(ViewGhgDeclaration::class, ['record' => $record->id])->assertSee('Sao đen')->assertSee('Thống kê cây xanh');
+        unset($data['trees']);
+        $this->post(route('ghg-form.save', 6), ['action' => 'next', 'data' => $data])->assertSessionHasNoErrors();
+        $this->assertSame([], $record->refresh()->data[6]['trees']);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Không có cây xanh.');
+    }
+
+    public function test_tree_inventory_rejects_invalid_rows_and_preserves_input(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(6);
+        $data['trees'] = [['name' => 'Cây cần sửa', 'tree_type' => 'invalid', 'growth_rate' => 'invalid', 'age_years' => -1, 'quantity' => 1.5]];
+        $this->from(route('ghg-form.step', 6))->post(route('ghg-form.save', 6), ['action' => 'save', 'data' => $data])
+            ->assertSessionHasErrors(['data.trees.0.tree_type', 'data.trees.0.growth_rate', 'data.trees.0.age_years', 'data.trees.0.quantity'])
+            ->assertSessionHasInput('data.trees.0.name', 'Cây cần sửa');
+        $this->get(route('ghg-form.step', 6))->assertOk()->assertSee('value="Cây cần sửa"', false);
+        $this->assertSame([], GhgDeclaration::query()->sole()->data[6]['trees']);
+        $data['trees'] = [['quantity' => 0]];
+        $this->post(route('ghg-form.save', 6), ['action' => 'next', 'data' => $data])
+            ->assertSessionHasErrors(['data.trees.0.name', 'data.trees.0.tree_type', 'data.trees.0.growth_rate', 'data.trees.0.age_years', 'data.trees.0.quantity']);
+    }
+
+    public function test_equipment_inventory_persists_renders_and_can_be_removed(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(5);
+        $data['equipment'] = [
+            ['name' => 'Máy lạnh kho', 'manufacture_year' => 2020, 'brand' => 'Reetech', 'origin' => 'Việt Nam', 'capacity' => '5 kW', 'energy_source' => 'Điện', 'purpose' => 'Làm mát', 'area' => 'Kho'],
+            ['name' => 'Máy phát điện', 'manufacture_year' => 2023, 'brand' => 'Cummins', 'origin' => 'Mỹ', 'capacity' => '200 kVA', 'energy_source' => 'Dầu DO', 'purpose' => 'Dự phòng', 'area' => 'Nhà máy'],
+        ];
+        $this->post(route('ghg-form.save', 5), ['action' => 'save', 'data' => $data])->assertSessionHasNoErrors();
+        $record = GhgDeclaration::query()->sole();
+        $this->assertEquals($data['equipment'], $record->data[5]['equipment']);
+        $this->get(route('ghg-form.step', 5))->assertOk()->assertSee('Danh sách thiết bị')->assertSee('+ Thêm thiết bị')
+            ->assertSee('value="Máy lạnh kho"', false)->assertSee('data[equipment][1][area]', false);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Máy lạnh kho')->assertSee('200 kVA')->assertSee('Reetech');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        Livewire::test(ViewGhgDeclaration::class, ['record' => $record->id])->assertSee('Máy lạnh kho')->assertSee('Danh sách thiết bị');
+        unset($data['equipment']);
+        $this->post(route('ghg-form.save', 5), ['action' => 'save', 'data' => $data])->assertSessionHasNoErrors();
+        $this->assertSame([], $record->refresh()->data[5]['equipment']);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Không có thiết bị.');
+    }
+
+    public function test_equipment_inventory_rejects_invalid_rows_and_preserves_input(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(5);
+        $data['equipment'] = [['name' => 'Thiết bị cần sửa', 'manufacture_year' => 1899, 'unexpected' => 'Không được lưu']];
+        $this->from(route('ghg-form.step', 5))->post(route('ghg-form.save', 5), ['action' => 'next', 'data' => $data])
+            ->assertSessionHasErrors(['data.equipment.0', 'data.equipment.0.manufacture_year', 'data.equipment.0.brand', 'data.equipment.0.origin', 'data.equipment.0.capacity', 'data.equipment.0.energy_source', 'data.equipment.0.purpose', 'data.equipment.0.area'])
+            ->assertSessionHasInput('data.equipment.0.name', 'Thiết bị cần sửa');
+        $this->get(route('ghg-form.step', 5))->assertOk()->assertSee('value="Thiết bị cần sửa"', false);
+        $this->assertSame([], GhgDeclaration::query()->sole()->data[5]['equipment']);
+        $data['equipment'] = [['manufacture_year' => 2020.5]];
+        $this->post(route('ghg-form.save', 5), ['action' => 'save', 'data' => $data])->assertSessionHasErrors(['data.equipment.0.name', 'data.equipment.0.manufacture_year']);
+    }
+
+    public function test_existing_draft_without_new_inventories_can_still_be_submitted(): void
+    {
+        $this->completeSteps();
+        $record = GhgDeclaration::query()->sole();
+        $data = $record->data;
+        unset($data[6]['trees']);
+        unset($data[5]['equipment']);
+        $record->update(['data' => $data]);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Chưa khai báo cây xanh.')->assertSee('Chưa khai báo danh sách thiết bị.');
+        $this->post(route('ghg-form.save', 7), ['action' => 'submit', 'confirmation' => 1])->assertSessionHasNoErrors();
+        $this->assertSame('submitted', $record->refresh()->status);
+    }
+
     public function test_invalid_information_preserves_input(): void
     {
         $data = $this->generalData();

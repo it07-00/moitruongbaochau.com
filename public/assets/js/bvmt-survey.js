@@ -91,11 +91,6 @@
         form.setAttribute('aria-busy', 'true');
     });
     window.addEventListener('beforeunload', event => { if (dirty && !submitting) { event.preventDefault(); event.returnValue = ''; } });
-    document.querySelector('[data-copy-link]')?.addEventListener('click', async event => {
-        const input = event.target.closest('.bvmt-resume').querySelector('input');
-        try { await navigator.clipboard.writeText(input.value); event.target.textContent = 'Đã sao chép'; }
-        catch { input.select(); event.target.textContent = 'Chọn link để sao chép'; }
-    });
     updateConditions();
     document.querySelector('.bvmt-errors')?.focus();
 })();

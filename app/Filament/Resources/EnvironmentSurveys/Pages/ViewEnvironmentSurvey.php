@@ -17,7 +17,7 @@ class ViewEnvironmentSurvey extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('openSurvey')->label('Mở link doanh nghiệp')->url(fn (): string => route('bvmt.show', ['survey' => $this->record->token]))->openUrlInNewTab(),
+            Action::make('openSurvey')->label('Mở phiếu')->url(fn (): string => route('bvmt.admin.resume', ['survey' => $this->record]))->openUrlInNewTab(),
             Action::make('exportExcel')->label('Xuất Excel')->url(fn (): string => route('bvmt.admin.export', ['survey' => $this->record])),
             Action::make('downloadFiles')->label('Tải hồ sơ ZIP')->url(fn (): string => route('bvmt.admin.archive', ['survey' => $this->record]))->visible(fn (): bool => $this->record->files()->exists()),
             Action::make('requestRevision')->label('Mở lại / yêu cầu bổ sung')->color('warning')

@@ -69,6 +69,12 @@ class GhgDeclarationDemoSeeder extends Seeder
             $data[6]['electricity'][$month - 1] = ['month' => $month, 'consumption_kwh' => (18500 + $month * 150) * $number];
             $data[6]['steam'][$month - 1] = ['month' => $month, 'consumption' => (25.5 + $month) * $number, 'unit' => 'GJ'];
         }
+        $data[6]['trees'] = [
+            ['name' => 'Sao đen (dữ liệu mẫu)', 'tree_type' => 'hardwood', 'growth_rate' => 'medium', 'age_years' => 5, 'quantity' => 20 * $number],
+        ];
+        $data[5]['equipment'] = [
+            ['name' => 'Máy lạnh văn phòng (dữ liệu mẫu)', 'manufacture_year' => 2020, 'brand' => 'Reetech', 'origin' => 'Việt Nam', 'capacity' => '5 kW', 'energy_source' => 'Điện', 'purpose' => 'Làm mát', 'area' => 'Văn phòng'],
+        ];
         $data[5]['fire_extinguishers'] = [
             ['extinguisher_type' => 'MT5', 'new_count' => 5, 'new_weight_kg' => 25, 'in_use_count' => 20, 'recharge_kg' => 10, 'disposed_count' => 2],
             ['extinguisher_type' => 'MFZ4', 'new_count' => 4, 'new_weight_kg' => 16, 'in_use_count' => 30, 'recharge_kg' => 8, 'disposed_count' => 1],

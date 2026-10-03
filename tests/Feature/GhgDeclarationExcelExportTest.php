@@ -29,6 +29,13 @@ class GhgDeclarationExcelExportTest extends TestCase
         $data[1]['company_name'] = '=HYPERLINK("https://example.com")';
         $data[1]['tax_code'] = '0317615845';
         $data[1]['contact_phone'] = '0915549148';
+        $data[5]['equipment'] = [
+            ['name' => '=Máy lạnh', 'manufacture_year' => 2020, 'brand' => 'Reetech', 'origin' => 'Việt Nam', 'capacity' => '5 kW', 'energy_source' => 'Điện', 'purpose' => 'Làm mát', 'area' => 'Kho'],
+        ];
+        $data[6]['trees'] = [
+            ['name' => '=Sao đen', 'tree_type' => 'hardwood', 'growth_rate' => 'fast', 'age_years' => 5, 'quantity' => 20],
+            ['name' => 'Thông', 'tree_type' => 'conifer', 'growth_rate' => 'slow', 'age_years' => 10, 'quantity' => 3],
+        ];
         $data[2]['stationary_fuels'] = [['month' => 1, 'fuel_type' => 'do', 'quantity' => 125.5, 'unit' => 'lit', 'purpose' => 'cong_nghiep_sx_xd']];
         foreach (['domestic_wastewater' => ['tu_hoai', 'tap_trung_hieu_khi'], 'industrial_wastewater' => ['hieu_khi_cn', 'uasb']] as $section => $systems) {
             $months = $data[4][$section];
@@ -51,6 +58,10 @@ class GhgDeclarationExcelExportTest extends TestCase
             $this->assertSame(125.5, $sheets['Nhiên liệu cố định'][2][2]);
             $this->assertNotSame('do', $sheets['Nhiên liệu cố định'][2][1]);
             $this->assertSame('hoa-don.pdf', $sheets['Chứng từ'][1][0]);
+            $equipmentRows = array_values(array_filter($sheets[GhgSurveyDefinition::steps()[5]], fn (array $row): bool => ($row[0] ?? null) === '=Máy lạnh'));
+            $this->assertSame([['=Máy lạnh', 2020, 'Reetech', 'Việt Nam', '5 kW', 'Điện', 'Làm mát', 'Kho']], $equipmentRows);
+            $treeRows = array_values(array_filter($sheets[GhgSurveyDefinition::steps()[6]], fn (array $row): bool => in_array($row[0] ?? null, ['=Sao đen', 'Thông'], true)));
+            $this->assertSame([['=Sao đen', 'Gỗ cứng', 'Nhanh', 5, 20], ['Thông', 'Lá kim', 'Chậm', 10, 3]], $treeRows);
             $waterRows = array_values(array_filter($sheets['Nước thải'], fn (array $row): bool => preg_match('/^Tháng \d+$/u', (string) ($row[0] ?? '')) === 1));
             $this->assertCount(48, $waterRows);
             $this->assertSame(12, count(array_filter($waterRows, fn (array $row): bool => $row[1] === 'UASB')));

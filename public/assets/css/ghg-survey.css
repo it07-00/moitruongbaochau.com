@@ -8,7 +8,7 @@
 .ghg-step-nav ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .ghg-step-nav ol::-webkit-scrollbar { display: none; }
 .ghg-step-nav li { flex: 1 0 auto; }
-.ghg-step-nav a, .ghg-step-disabled { display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 12px 10px; border-radius: 12px; font-size: 15px; font-weight: 500; line-height: 1.4; white-space: nowrap; color: #181818; }
+.ghg-step-nav a, .ghg-step-disabled { display: flex; align-items: center; justify-content: flex-start; gap: 12px; padding: 12px 10px; border-radius: 12px; font-size: 15px; font-weight: 500; line-height: 1.4; white-space: normal; color: #181818; }
 .ghg-step-nav li span span, .ghg-step-nav a > span { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: #f3f4f6; font-size: 14px; }
 .ghg-step-disabled { color: #525866; }
 .ghg-step-nav a:hover { background: #faf5f5; }

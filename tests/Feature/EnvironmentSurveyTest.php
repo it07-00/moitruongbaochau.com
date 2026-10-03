@@ -38,14 +38,42 @@ class EnvironmentSurveyTest extends TestCase
         $this->get('/khao-sat/not-a-token')->assertNotFound();
     }
 
+    public function test_fixed_link_resumes_the_same_draft_without_exposing_a_token(): void
+    {
+        $this->post(route('bvmt.save', ['step' => 1]), ['action' => 'save', 'data' => ['company_name' => 'Công ty dùng link cố định']])
+            ->assertRedirect(route('bvmt.step', ['step' => 1]));
+        $survey = EnvironmentSurvey::query()->sole();
+        $this->get(route('bvmt.index'))->assertOk()->assertSee('Công ty dùng link cố định')->assertDontSee($survey->token)
+            ->assertSee('ghg-guide-card')->assertSee('ghg-survey.css')->assertSee('bvmt-survey.css');
+        $this->post(route('bvmt.save', ['step' => 1]), ['action' => 'goto', 'target_step' => 2, 'data' => ['company_name' => 'Công ty đã cập nhật']])
+            ->assertRedirect(route('bvmt.step', ['step' => 2]));
+        $this->assertSame(1, EnvironmentSurvey::query()->count());
+        $this->get(route('bvmt.index'))->assertOk()->assertSee('Bước 2 / 7');
+        $this->assertSame('Công ty đã cập nhật', $survey->refresh()->company_name);
+    }
+
+    public function test_fixed_links_do_not_select_another_survey_from_query_parameters(): void
+    {
+        Storage::fake('local');
+        $survey = EnvironmentSurvey::factory()->create(['data' => ['company_name' => 'Doanh nghiệp riêng']]);
+        $file = SurveyFile::factory()->create(['environment_survey_id' => $survey->id]);
+        $this->get(route('bvmt.index', ['survey' => $survey->token]))->assertOk()->assertDontSee('Doanh nghiệp riêng');
+        $this->get(route('bvmt.file', ['file' => $file, 'survey' => $survey->token]))->assertNotFound();
+        $this->delete(route('bvmt.file.delete', ['file' => $file]))->assertNotFound();
+        $this->post(route('bvmt.start', ['survey' => $survey->token]), ['action' => 'save', 'data' => ['company_name' => 'Doanh nghiệp mới']])->assertSessionHasNoErrors();
+        $this->assertSame(2, EnvironmentSurvey::query()->count());
+        $this->assertSame('Doanh nghiệp riêng', $survey->refresh()->data['company_name']);
+    }
+
     public function test_all_steps_render_saved_rows_and_information(): void
     {
         $row = ['name' => 'Dữ liệu đã lưu', 'unit' => 'kg', 'quantity_2025' => 0, 'quantity_2026' => 12.5];
         $data = $this->companyData() + Definition::defaults(4) + $this->documentsData();
         $data += ['has_wastewater_treatment' => false, 'has_air_treatment' => false, 'products' => [$row], 'fuels' => [$row], 'domestic_wastes' => [$row], 'industrial_wastes' => [$row + ['is_reused_as_material' => false]], 'hazardous_wastes' => [$row + ['code' => '18 01 01']]];
         $survey = EnvironmentSurvey::factory()->create(['data' => $data]);
+        $this->withSession(['bvmt_survey.reference' => $survey->reference]);
         foreach (range(1, 7) as $step) {
-            $response = $this->get(route('bvmt.step', ['survey' => $survey->token, 'step' => $step]))->assertOk()->assertSee(Definition::steps()[$step]);
+            $response = $this->get(route('bvmt.step', ['step' => $step]))->assertOk()->assertSee(Definition::steps()[$step]);
             if (in_array($step, [2, 3, 5], true)) {
                 $response->assertSee('value="12.5"', false)->assertSee('Dữ liệu đã lưu');
             }
@@ -59,7 +87,8 @@ class EnvironmentSurveyTest extends TestCase
         $this->assertSame(64, strlen($survey->token));
         $this->assertSame('draft', $survey->status);
         $this->flushSession();
-        $this->get(route('bvmt.show', ['survey' => $survey->token]))->assertOk()->assertSee('Doanh nghiệp A')->assertSee('Link riêng của doanh nghiệp');
+        $this->get(route('bvmt.show', ['survey' => $survey->token]))->assertRedirect(route('bvmt.step', ['step' => 1]));
+        $this->get(route('bvmt.index'))->assertOk()->assertSee('Doanh nghiệp A')->assertDontSee($survey->token);
         $this->post($this->saveUrl($survey, 1), ['action' => 'next', 'data' => ['company_name' => 'Dữ liệu giữ lại']])->assertSessionHasErrors('data.contact_email')->assertSessionHasInput('data.company_name', 'Dữ liệu giữ lại');
         $this->assertSame('Doanh nghiệp A', $survey->refresh()->company_name);
     }
@@ -99,7 +128,7 @@ class EnvironmentSurveyTest extends TestCase
         $this->assertSame('available', $survey->data['documents']['environment_report_2025']['status']);
         $this->post($this->saveUrl($survey, 2), ['action' => 'next', 'data' => ['products' => [['name' => 'Sản phẩm', 'unit' => 'kg', 'quantity_2025' => -999, 'quantity_2026' => 12.5]]]])->assertSessionHasNoErrors();
         $this->assertArrayNotHasKey('quantity_2025', $survey->refresh()->data['products'][0]);
-        $this->get(route('bvmt.step', ['survey' => $survey->token, 'step' => 6]))->assertOk()->assertSee('Đã cung cấp ở bước 1');
+        $this->get(route('bvmt.step', ['step' => 6]))->assertOk()->assertSee('Đã cung cấp ở bước 1');
         $this->assertSame(1, $survey->files()->count());
     }
 
@@ -162,13 +191,13 @@ class EnvironmentSurveyTest extends TestCase
         $this->post($this->saveUrl($survey, 1), ['action' => 'save', 'data' => [], 'uploads' => ['environment_report_2025' => [UploadedFile::fake()->create('report.pdf', 1, 'application/pdf')]]])->assertSessionHasNoErrors();
         $file = $survey->files()->sole();
         Storage::disk('local')->assertExists($file->path);
-        $this->get(route('bvmt.file', ['survey' => $other->token, 'file' => $file]))->assertNotFound();
-        $this->delete(route('bvmt.file.delete', ['survey' => $other->token, 'file' => $file]))->assertNotFound();
-        $this->get(route('bvmt.file', ['survey' => $survey->token, 'file' => $file]))->assertDownload('report.pdf');
+        $this->withSession(['bvmt_survey.reference' => $other->reference])->get(route('bvmt.file', ['file' => $file]))->assertNotFound();
+        $this->delete(route('bvmt.file.delete', ['file' => $file]))->assertNotFound();
+        $this->withSession(['bvmt_survey.reference' => $survey->reference])->get(route('bvmt.file', ['file' => $file]))->assertDownload('report.pdf');
         SurveyFile::factory()->count(9)->create(['environment_survey_id' => $survey->id]);
         $this->post($this->saveUrl($survey, 1), ['action' => 'save', 'data' => [], 'uploads' => ['environment_report_2025' => [UploadedFile::fake()->create('extra.pdf', 1, 'application/pdf')]]])->assertSessionHasErrors('uploads.environment_report_2025');
         $this->assertSame(10, $survey->files()->count());
-        $this->delete(route('bvmt.file.delete', ['survey' => $survey->token, 'file' => $file]))->assertNoContent();
+        $this->delete(route('bvmt.file.delete', ['file' => $file]))->assertNoContent();
         $this->assertModelMissing($file);
     }
 
@@ -189,18 +218,18 @@ class EnvironmentSurveyTest extends TestCase
     public function test_whole_flow_submit_locks_updates_and_admin_can_reopen(): void
     {
         $survey = $this->completeSurvey();
-        $this->get(route('bvmt.step', ['survey' => $survey->token, 'step' => 7]))->assertOk()->assertSee('Chỉnh sửa bước 1');
+        $this->get(route('bvmt.step', ['step' => 7]))->assertOk()->assertSee('Chỉnh sửa bước 1');
         $this->post($this->saveUrl($survey, 7), ['action' => 'submit', 'data' => ['confirm_information' => 0]])->assertSessionHasErrors('data.confirm_information');
         $this->post($this->saveUrl($survey, 7), ['action' => 'submit', 'data' => ['confirm_information' => 1, 'submit_note' => 'Đã kiểm tra']])->assertSessionHasNoErrors();
         $this->assertSame('submitted', $survey->refresh()->status);
         $this->assertNotNull($survey->submitted_at);
-        $this->get(route('bvmt.show', ['survey' => $survey->token]))->assertOk()->assertSee('Đã nhận phiếu khảo sát của bạn');
+        $this->get(route('bvmt.index'))->assertOk()->assertSee('Đã nhận phiếu khảo sát của bạn');
         $this->post($this->saveUrl($survey, 1), ['action' => 'save', 'data' => ['company_name' => 'Thay đổi']])->assertStatus(409);
         $file = SurveyFile::factory()->create(['environment_survey_id' => $survey->id]);
-        $this->delete(route('bvmt.file.delete', ['survey' => $survey->token, 'file' => $file]))->assertStatus(409);
+        $this->delete(route('bvmt.file.delete', ['file' => $file]))->assertStatus(409);
         $this->actingAs(User::factory()->create(['is_admin' => true]));
         app(EnvironmentSurveyService::class)->changeStatus($survey, 'revision_required', 'Bổ sung thông tin liên hệ');
-        $this->get(route('bvmt.show', ['survey' => $survey->token]))->assertOk()->assertSee('Bổ sung thông tin liên hệ');
+        $this->get(route('bvmt.index'))->assertOk()->assertSee('Bổ sung thông tin liên hệ');
         $this->post($this->saveUrl($survey, 1), ['action' => 'save', 'data' => $this->companyData()])->assertSessionHasNoErrors();
         $file->delete();
         $this->post($this->saveUrl($survey, 7), ['action' => 'submit', 'data' => ['confirm_information' => 1]])->assertSessionHasNoErrors();
@@ -329,6 +358,8 @@ class EnvironmentSurveyTest extends TestCase
 
     private function saveUrl(EnvironmentSurvey $survey, int $step): string
     {
-        return route('bvmt.save', ['survey' => $survey->token, 'step' => $step]);
+        $this->withSession(['bvmt_survey.reference' => $survey->reference]);
+
+        return route('bvmt.save', ['step' => $step]);
     }
 }

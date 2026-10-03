@@ -20,14 +20,18 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
 Route::get('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'index'])->name('bvmt.index');
 Route::post('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'store'])->middleware('throttle:30,1')->name('bvmt.start');
-Route::prefix('/khao-sat/{survey:token}')->name('bvmt.')->group(function (): void {
-    Route::get('/', [EnvironmentSurveyController::class, 'show'])->name('show');
+Route::prefix('/form-bao-cao-cong-tac-bvmt-2026')->name('bvmt.')->group(function (): void {
     Route::get('/buoc/{step}', [EnvironmentSurveyController::class, 'show'])->whereNumber('step')->name('step');
     Route::post('/buoc/{step}', [EnvironmentSurveyController::class, 'store'])->whereNumber('step')->middleware('throttle:30,1')->name('save');
-    Route::get('/files/{file}', [EnvironmentSurveyController::class, 'download'])->name('file');
-    Route::delete('/files/{file}', [EnvironmentSurveyController::class, 'delete'])->middleware('throttle:30,1')->name('file.delete');
+    Route::get('/files/{file}', [EnvironmentSurveyController::class, 'downloadCurrent'])->name('file');
+    Route::delete('/files/{file}', [EnvironmentSurveyController::class, 'deleteCurrent'])->middleware('throttle:30,1')->name('file.delete');
+});
+Route::prefix('/khao-sat/{survey:token}')->name('bvmt.')->group(function (): void {
+    Route::get('/', [EnvironmentSurveyController::class, 'resume'])->name('show');
+    Route::get('/buoc/{step}', [EnvironmentSurveyController::class, 'resume'])->whereNumber('step')->name('legacy.step');
 });
 Route::middleware(['auth', 'admin'])->prefix('/admin/khao-sat-bvmt/{survey}')->name('bvmt.admin.')->group(function (): void {
+    Route::get('/open', [EnvironmentSurveyController::class, 'resume'])->name('resume');
     Route::get('/export', [EnvironmentSurveyController::class, 'export'])->name('export');
     Route::get('/download-files', [EnvironmentSurveyController::class, 'archive'])->name('archive');
     Route::get('/files/{file}', [EnvironmentSurveyController::class, 'download'])->name('file');

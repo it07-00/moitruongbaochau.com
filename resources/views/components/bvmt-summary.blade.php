@@ -29,12 +29,12 @@
                 @foreach($definition::documents() as $category => $label)
                     <div class="bvmt-document-summary"><strong>{{ $label }}</strong><span>{{ ['available' => 'Có', 'not_available' => 'Không có', 'pending' => 'Đang bổ sung'][$values['documents'][$category]['status'] ?? ''] ?? 'Chưa khai báo' }}</span>
                     @if($values['documents'][$category]['note'] ?? '')<p>{{ $values['documents'][$category]['note'] }}</p>@endif
-                    <ul>@foreach($survey?->files->where('category', $category) ?? [] as $file)<li><a href="{{ $admin ? route('bvmt.admin.file', ['survey' => $survey, 'file' => $file]) : route('bvmt.file', ['survey' => $survey->token, 'file' => $file]) }}">{{ $file->original_name }}</a></li>@endforeach</ul></div>
+                    <ul>@foreach($survey?->files->where('category', $category) ?? [] as $file)<li><a href="{{ $admin ? route('bvmt.admin.file', ['survey' => $survey, 'file' => $file]) : route('bvmt.file', ['file' => $file]) }}">{{ $file->original_name }}</a></li>@endforeach</ul></div>
                 @endforeach
             @endif
             @if($number === 4)
                 @foreach(['wastewater' => 'Hồ sơ công trình nước thải', 'air' => 'Hồ sơ công trình khí thải'] as $category => $label)
-                    <h4>{{ $label }}</h4><ul>@foreach($survey?->files->where('category', $category) ?? [] as $file)<li><a href="{{ $admin ? route('bvmt.admin.file', ['survey' => $survey, 'file' => $file]) : route('bvmt.file', ['survey' => $survey->token, 'file' => $file]) }}">{{ $file->original_name }}</a></li>@endforeach</ul>
+                    <h4>{{ $label }}</h4><ul>@foreach($survey?->files->where('category', $category) ?? [] as $file)<li><a href="{{ $admin ? route('bvmt.admin.file', ['survey' => $survey, 'file' => $file]) : route('bvmt.file', ['file' => $file]) }}">{{ $file->original_name }}</a></li>@endforeach</ul>
                 @endforeach
             @endif
         </details>

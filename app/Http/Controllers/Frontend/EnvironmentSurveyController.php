@@ -24,13 +24,19 @@ class EnvironmentSurveyController extends Controller
 
     public function index(Request $request): View|RedirectResponse
     {
-        $survey = $this->current($request);
-
-        return $survey ? to_route('bvmt.show', ['survey' => $survey->token]) : $this->show($request);
+        return $this->show($request);
     }
 
-    public function show(Request $request, ?EnvironmentSurvey $survey = null, int $step = 0): View
+    public function resume(Request $request, EnvironmentSurvey $survey, int $step = 0): RedirectResponse
     {
+        $request->session()->put('bvmt_survey.reference', $survey->reference);
+
+        return to_route('bvmt.step', ['step' => $step ?: $survey->current_step]);
+    }
+
+    public function show(Request $request, int $step = 0): View
+    {
+        $survey = $this->current($request);
         $step = $step ?: ($survey?->current_step ?? 1);
         abort_unless(in_array($step, range(1, 7), true), 404);
         $survey?->load('files');
@@ -43,12 +49,28 @@ class EnvironmentSurveyController extends Controller
         return view('frontend.environment-survey', compact('survey', 'step', 'data', 'completed', 'missing', 'seo'));
     }
 
-    public function store(SaveEnvironmentSurveyRequest $request, ?EnvironmentSurvey $survey = null, int $step = 1): RedirectResponse
+    public function store(SaveEnvironmentSurveyRequest $request, int $step = 1): RedirectResponse
     {
-        $survey = $this->surveys->save($survey ?? $this->current($request), $step, $request->validated());
+        $survey = $this->surveys->save($this->current($request), $step, $request->validated());
         $request->session()->put('bvmt_survey.reference', $survey->reference);
 
-        return to_route('bvmt.step', ['survey' => $survey->token, 'step' => $survey->current_step])->with('bvmt_saved', 'Đã lưu dữ liệu lúc '.now()->timezone('Asia/Ho_Chi_Minh')->format('H:i d/m/Y').'.');
+        return to_route('bvmt.step', ['step' => $survey->current_step])->with('bvmt_saved', 'Đã lưu dữ liệu lúc '.now()->timezone('Asia/Ho_Chi_Minh')->format('H:i d/m/Y').'.');
+    }
+
+    public function downloadCurrent(Request $request, SurveyFile $file): StreamedResponse
+    {
+        $survey = $this->current($request);
+        abort_unless($survey, 404);
+
+        return $this->download($survey, $file);
+    }
+
+    public function deleteCurrent(Request $request, SurveyFile $file): Response
+    {
+        $survey = $this->current($request);
+        abort_unless($survey, 404);
+
+        return $this->delete($survey, $file);
     }
 
     public function download(EnvironmentSurvey $survey, SurveyFile $file): StreamedResponse
