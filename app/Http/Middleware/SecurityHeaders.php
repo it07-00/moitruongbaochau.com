@@ -19,7 +19,11 @@ class SecurityHeaders
 
         $response->headers->set('X-Content-Type-Options', 'nosniff');
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
+        $response->headers->set('Referrer-Policy', $request->routeIs('bvmt.*') ? 'no-referrer' : 'strict-origin-when-cross-origin');
+        if ($request->routeIs('bvmt.*')) {
+            $response->headers->set('Cache-Control', 'private, no-store');
+            $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
+        }
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
         if ($request->secure()) {

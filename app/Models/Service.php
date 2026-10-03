@@ -58,6 +58,10 @@ class Service extends Model
 
     public function getDeclarationFormUrl(): ?string
     {
+        if ($this->slug === 'bao-cao-cong-tac-bao-ve-moi-truong-dinh-ky') {
+            return route('bvmt.index');
+        }
+
         return isset(self::DECLARATION_ROUTES[$this->slug]) ? url('/form-'.$this->slug) : null;
     }
 

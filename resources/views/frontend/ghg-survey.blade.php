@@ -84,6 +84,12 @@
             @foreach($sections as $key => $section)
               <section class="ghg-card" data-ghg-section="{{ $key }}" @if(in_array($key, ['stationary_fuels', 'mobile_fuels'])) data-ghg-fuel-group="{{ $key === 'stationary_fuels' ? 'purpose' : 'equipment_type' }}" @endif>
                 <h3 @class(['ghg-wastewater-title' => in_array($key, ['domestic_wastewater', 'industrial_wastewater'])])>{{ $section['label'] }}</h3>
+                @if($key === 'fire_extinguishers')
+                  <p class="ghg-field-hint">Mỗi loại bình nhập một nhóm. Số lượng tính theo bình; khối lượng mới và lượng nạp lại là tổng kg trong năm. Không phát sinh nhập 0.</p>
+                @endif
+                @if(in_array($key, ['electricity', 'steam']))
+                  <p class="ghg-field-hint">Nhập số liệu theo hóa đơn của từng tháng; tháng không phát sinh nhập 0. {{ $key === 'electricity' ? 'Đơn vị: kWh.' : 'Chọn đơn vị đúng với hóa đơn cung cấp nhiệt hơi.' }}</p>
+                @endif
                 @if(isset($section['fields']['treatment_type']))
                   <div class="ghg-water-picker" data-ghg-water-picker>
                     <div class="ghg-field">
@@ -116,7 +122,7 @@
                     <p class="ghg-field-hint">Chọn đủ nhiên liệu, {{ $key === 'stationary_fuels' ? 'mục đích sử dụng' : 'loại phương tiện' }} và đơn vị, bảng 12 tháng sẽ tự xuất hiện. Tháng không phát sinh nhập 0.</p>
                   </div>
                 @endif
-                <div data-ghg-rows>
+                <div data-ghg-rows @class(['ghg-energy-months' => in_array($key, ['electricity', 'steam'])])>
                   @foreach((array) ($data[$key] ?? []) as $index => $rowData)
                     <x-ghg-survey-row :section="$section" :key="$key" :index="$index" :row-data="is_array($rowData) ? $rowData : []" />
                   @endforeach

@@ -58,6 +58,32 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     newFuelButton?.addEventListener('click', showFuelPicker);
     const fieldInput = (row, field) => row.querySelector(`[name$="[${field}]"]`);
+    if (section.querySelector('.ghg-energy-months')) {
+      rows.querySelectorAll('[data-ghg-row]').forEach((row) => {
+        const quantity = row.querySelector('input[type="number"]');
+        const amount = document.createElement('div');
+        amount.className = 'ghg-fuel-amount';
+        quantity.before(amount);
+        amount.append(quantity);
+        const unitSelect = fieldInput(row, 'unit');
+        if (unitSelect) {
+          const unitField = unitSelect.closest('.ghg-field');
+          unitField.hidden = true;
+          unitSelect.classList.add('ghg-energy-unit');
+          unitSelect.setAttribute('aria-label', `Đơn vị nhiệt hơi tháng ${fieldInput(row, 'month').value}`);
+          amount.append(unitSelect);
+          const unitError = unitField.querySelector('.ghg-error');
+          if (unitError) quantity.closest('.ghg-field').append(unitError);
+        } else {
+          const unit = document.createElement('span');
+          unit.className = 'ghg-fuel-unit';
+          unit.id = `${quantity.id}-unit`;
+          unit.textContent = 'kWh';
+          quantity.setAttribute('aria-describedby', [quantity.getAttribute('aria-describedby'), unit.id].filter(Boolean).join(' '));
+          amount.append(unit);
+        }
+      });
+    }
     const decorateWaterNumbers = (container) => container.querySelectorAll('input[type="number"]').forEach((input) => {
       const label = input.closest('.ghg-field').querySelector('label');
       const unitText = label.textContent.match(/\((m³|mg\/L)\)/)?.[1];

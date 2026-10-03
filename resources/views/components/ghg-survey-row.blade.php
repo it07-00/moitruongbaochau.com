@@ -1,6 +1,6 @@
 @props(['section', 'key', 'index', 'rowData' => []])
 <fieldset class="ghg-data-row" data-ghg-row>
-  <legend>{{ $section['monthly'] ? 'Tháng '.($rowData['month'] ?? ((int) $index + 1)) : 'Dòng dữ liệu' }}</legend>
+  <legend>{{ $section['monthly'] ? 'Tháng '.($rowData['month'] ?? ((int) $index + 1)) : ($key === 'fire_extinguishers' ? 'Thông tin loại bình' : 'Dòng dữ liệu') }}</legend>
   <div class="ghg-fields-grid">
     @foreach($section['fields'] as $name => $field)
       @if($name === 'month' && $section['monthly'])

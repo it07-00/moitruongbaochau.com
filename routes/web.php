@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\EnvironmentSurveyController;
 use App\Http\Controllers\Frontend\GhgDeclarationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LegacyRedirectController;
@@ -17,6 +18,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
+Route::get('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'index'])->name('bvmt.index');
+Route::post('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'store'])->middleware('throttle:30,1')->name('bvmt.start');
+Route::prefix('/khao-sat/{survey:token}')->name('bvmt.')->group(function (): void {
+    Route::get('/', [EnvironmentSurveyController::class, 'show'])->name('show');
+    Route::get('/buoc/{step}', [EnvironmentSurveyController::class, 'show'])->whereNumber('step')->name('step');
+    Route::post('/buoc/{step}', [EnvironmentSurveyController::class, 'store'])->whereNumber('step')->middleware('throttle:30,1')->name('save');
+    Route::get('/files/{file}', [EnvironmentSurveyController::class, 'download'])->name('file');
+    Route::delete('/files/{file}', [EnvironmentSurveyController::class, 'delete'])->middleware('throttle:30,1')->name('file.delete');
+});
+Route::middleware(['auth', 'admin'])->prefix('/admin/khao-sat-bvmt/{survey}')->name('bvmt.admin.')->group(function (): void {
+    Route::get('/export', [EnvironmentSurveyController::class, 'export'])->name('export');
+    Route::get('/download-files', [EnvironmentSurveyController::class, 'archive'])->name('archive');
+    Route::get('/files/{file}', [EnvironmentSurveyController::class, 'download'])->name('file');
+});
 Route::get('/trang/{slug}', [PageController::class, 'show'])->name('pages.show');
 Route::get('/dich-vu', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/dich-vu/{slug}', [ServiceController::class, 'show'])->name('services.show');
