@@ -37,6 +37,7 @@ class GhgDeclarationExcelExportTest extends TestCase
             ['name' => 'Thông', 'tree_type' => 'conifer', 'growth_rate' => 'slow', 'age_years' => 10, 'quantity' => 3],
         ];
         $data[2]['stationary_fuels'] = [['month' => 1, 'fuel_type' => 'do', 'quantity' => 125.5, 'unit' => 'lit', 'purpose' => 'cong_nghiep_sx_xd']];
+        $data[6]['other_activities'] = [['name' => 'Xử lý chất thải rắn', 'description' => 'Chất thải sản xuất', 'quantity' => 120.5, 'unit' => 'tấn', 'notes' => 'Theo phiếu cân']];
         foreach (['domestic_wastewater' => ['tu_hoai', 'tap_trung_hieu_khi'], 'industrial_wastewater' => ['hieu_khi_cn', 'uasb']] as $section => $systems) {
             $months = $data[4][$section];
             $data[4][$section] = [];
@@ -62,6 +63,8 @@ class GhgDeclarationExcelExportTest extends TestCase
             $this->assertSame([['=Máy lạnh', 2020, 'Reetech', 'Việt Nam', '5 kW', 'Điện', 'Làm mát', 'Kho']], $equipmentRows);
             $treeRows = array_values(array_filter($sheets[GhgSurveyDefinition::steps()[6]], fn (array $row): bool => in_array($row[0] ?? null, ['=Sao đen', 'Thông'], true)));
             $this->assertSame([['=Sao đen', 'Gỗ cứng', 'Nhanh', 5, 20], ['Thông', 'Lá kim', 'Chậm', 10, 3]], $treeRows);
+            $otherRows = array_values(array_filter($sheets[GhgSurveyDefinition::steps()[6]], fn (array $row): bool => ($row[0] ?? null) === 'Xử lý chất thải rắn'));
+            $this->assertSame([['Xử lý chất thải rắn', 'Chất thải sản xuất', 120.5, 'tấn', 'Theo phiếu cân']], $otherRows);
             $waterRows = array_values(array_filter($sheets['Nước thải'], fn (array $row): bool => preg_match('/^Tháng \d+$/u', (string) ($row[0] ?? '')) === 1));
             $this->assertCount(48, $waterRows);
             $this->assertSame(12, count(array_filter($waterRows, fn (array $row): bool => $row[1] === 'UASB')));

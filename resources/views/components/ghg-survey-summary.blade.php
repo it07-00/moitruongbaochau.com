@@ -17,6 +17,7 @@
               <p>{{ match ($key) {
                 'trees' => array_key_exists($key, $declaration->data[$step]) ? 'Không có cây xanh.' : 'Chưa khai báo cây xanh.',
                 'equipment' => array_key_exists($key, $declaration->data[$step]) ? 'Không có thiết bị.' : 'Chưa khai báo danh sách thiết bị.',
+                'other_activities' => array_key_exists($key, $declaration->data[$step]) ? 'Không có thông tin kiểm kê khác.' : 'Chưa khai báo thông tin kiểm kê khác.',
                 default => 'Không phát sinh.',
               } }}</p>
             @else

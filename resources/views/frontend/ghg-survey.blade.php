@@ -142,7 +142,7 @@
                   @if(in_array($key, ['stationary_fuels', 'mobile_fuels']))
                     <button type="button" class="ghg-secondary-button" data-ghg-new-fuel>+ Thêm nhiên liệu khác</button>
                   @else
-                    <button type="button" class="ghg-secondary-button" data-ghg-add>{{ match ($key) { 'trees' => '+ Thêm nhóm cây', 'equipment' => '+ Thêm thiết bị', default => '+ Thêm dòng dữ liệu' } }}</button>
+                    <button type="button" class="ghg-secondary-button" data-ghg-add>{{ match ($key) { 'trees' => '+ Thêm nhóm cây', 'equipment' => '+ Thêm thiết bị', 'other_activities' => '+ Thêm nội dung khác', default => '+ Thêm dòng dữ liệu' } }}</button>
                   @endif
                 @endunless
               </section>

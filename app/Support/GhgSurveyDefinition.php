@@ -179,6 +179,17 @@ class GhgSurveyDefinition
                         'quantity' => self::field('Số lượng', 'number', min: 1, placeholder: 'VD: 20', hint: 'Số cây cùng loài, loại, tỷ lệ tăng trưởng và tuổi'),
                     ],
                 ],
+                'other_activities' => [
+                    'label' => 'Thông tin kiểm kê khác',
+                    'monthly' => false,
+                    'fields' => [
+                        'name' => self::field('Tên nguồn phát thải / hoạt động khác', placeholder: 'VD: Xử lý chất thải rắn', hint: 'Khai báo nội dung chưa có trong các mục phía trên'),
+                        'description' => self::field('Mô tả', required: false, placeholder: 'VD: Loại chất thải, quy trình xử lý, thời gian phát sinh'),
+                        'quantity' => self::field('Lượng phát sinh / sử dụng', 'decimal', required: false, placeholder: 'VD: 120.5', hint: 'Số liệu trong năm kiểm kê, nếu có'),
+                        'unit' => self::field('Đơn vị', required: false, placeholder: 'VD: kg, tấn, m³, lít'),
+                        'notes' => self::field('Ghi chú', required: false, placeholder: 'VD: Nguồn số liệu hoặc thông tin cần tư vấn thêm'),
+                    ],
+                ],
             ],
             default => [],
         };
@@ -247,6 +258,7 @@ class GhgSurveyDefinition
                     'Nhiệt hơi / Lạnh: Nếu cơ sở mua hơi nhiệt từ đơn vị cung cấp bên ngoài, nhập sản lượng theo hóa đơn (chọn đơn vị kWh, MWh, GJ, TJ); nếu không dùng thì nhập 0.',
                     'Bảng yêu cầu đủ 12 tháng: Điền đầy đủ chỉ số kWh của từng tháng để hệ thống tổng hợp hệ số phát thải chuẩn xác.',
                     'Cây xanh: Thêm từng nhóm cây theo tên, loại gỗ cứng hoặc lá kim, tỷ lệ tăng trưởng, tuổi cây và số lượng. Nếu không có cây xanh, để bảng trống.',
+                    'Thông tin kiểm kê khác: Bấm "+ Thêm nội dung khác" để khai báo nguồn phát thải hoặc hoạt động chưa có trong biểu mẫu. Nếu không có, để trống.',
                 ],
                 'example' => 'Ví dụ: Tháng 1 chỉ số điện tiêu thụ trên hóa đơn EVN là 18.500 kWh; nhiệt hơi mua ngoài không có thì nhập 0.',
             ],
@@ -290,7 +302,7 @@ class GhgSurveyDefinition
         foreach ($sections as $key => $section) {
             $isWastewater = in_array($key, ['domestic_wastewater', 'industrial_wastewater'], true);
             $rules['data.'.$key] = $section['monthly'] && ! $isWastewater ? ['required', 'array', 'size:12'] : ['present', 'array', 'max:200'];
-            if (in_array($key, ['trees', 'equipment'], true)) {
+            if (in_array($key, ['trees', 'equipment', 'other_activities'], true)) {
                 $rules['data.'.$key] = ['sometimes', 'array', 'max:200'];
             }
             $rules['data.'.$key.'.*'] = ['array:'.implode(',', array_keys($section['fields']))];

@@ -18,6 +18,39 @@ class GhgDeclarationFormTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    public function test_other_inventory_information_persists_renders_and_can_be_removed(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(6);
+        $data['other_activities'] = [
+            ['name' => 'Xử lý chất thải rắn', 'description' => 'Chất thải sản xuất', 'quantity' => 120.5, 'unit' => 'tấn', 'notes' => 'Theo phiếu cân'],
+            ['name' => 'Nguồn phát thải cần tư vấn'],
+        ];
+        $this->post(route('ghg-form.save', 6), ['action' => 'save', 'data' => $data])->assertSessionHasNoErrors();
+        $record = GhgDeclaration::query()->sole();
+        $this->assertEquals($data['other_activities'], $record->data[6]['other_activities']);
+        $this->get(route('ghg-form.step', 6))->assertOk()->assertSee('+ Thêm nội dung khác')->assertSee('value="Xử lý chất thải rắn"', false);
+        $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Xử lý chất thải rắn')->assertSee('Theo phiếu cân');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        Livewire::test(ViewGhgDeclaration::class, ['record' => $record->id])->assertSee('Xử lý chất thải rắn')->assertSee('Theo phiếu cân');
+        unset($data['other_activities']);
+        $this->post(route('ghg-form.save', 6), ['action' => 'save', 'data' => $data])->assertSessionHasNoErrors();
+        $this->assertSame([], $record->refresh()->data[6]['other_activities']);
+    }
+
+    public function test_other_inventory_information_rejects_invalid_data_and_preserves_input(): void
+    {
+        $this->completeSteps();
+        $data = GhgSurveyDefinition::defaults(6);
+        $data['other_activities'] = [['name' => '', 'quantity' => -1, 'description' => 'Nội dung cần giữ', 'unit' => str_repeat('a', 256)]];
+        $this->from(route('ghg-form.step', 6))->post(route('ghg-form.save', 6), ['action' => 'save', 'data' => $data])
+            ->assertSessionHasErrors(['data.other_activities.0.name', 'data.other_activities.0.quantity', 'data.other_activities.0.unit'])
+            ->assertSessionHasInput('data.other_activities.0.description', 'Nội dung cần giữ');
+        $this->get(route('ghg-form.step', 6))->assertOk()->assertSee('value="Nội dung cần giữ"', false);
+        $this->assertSame([], GhgDeclaration::query()->sole()->data[6]['other_activities']);
+    }
+
     public function test_public_form_loads_without_creating_a_draft(): void
     {
         $this->get(route('ghg-form.index'))
@@ -112,6 +145,7 @@ class GhgDeclarationFormTest extends TestCase
         $record = GhgDeclaration::query()->sole();
         $data = $record->data;
         unset($data[6]['trees']);
+        unset($data[6]['other_activities']);
         unset($data[5]['equipment']);
         $record->update(['data' => $data]);
         $this->get(route('ghg-form.step', 7))->assertOk()->assertSee('Chưa khai báo cây xanh.')->assertSee('Chưa khai báo danh sách thiết bị.');

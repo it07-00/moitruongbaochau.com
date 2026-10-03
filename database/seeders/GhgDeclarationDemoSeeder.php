@@ -72,6 +72,9 @@ class GhgDeclarationDemoSeeder extends Seeder
         $data[6]['trees'] = [
             ['name' => 'Sao đen (dữ liệu mẫu)', 'tree_type' => 'hardwood', 'growth_rate' => 'medium', 'age_years' => 5, 'quantity' => 20 * $number],
         ];
+        $data[6]['other_activities'] = [
+            ['name' => 'Chất thải rắn (dữ liệu mẫu)', 'description' => 'Chuyển giao xử lý trong năm', 'quantity' => 12.5 * $number, 'unit' => 'tấn', 'notes' => 'Số liệu minh họa, không dùng làm báo cáo thực tế'],
+        ];
         $data[5]['equipment'] = [
             ['name' => 'Máy lạnh văn phòng (dữ liệu mẫu)', 'manufacture_year' => 2020, 'brand' => 'Reetech', 'origin' => 'Việt Nam', 'capacity' => '5 kW', 'energy_source' => 'Điện', 'purpose' => 'Làm mát', 'area' => 'Văn phòng'],
         ];
