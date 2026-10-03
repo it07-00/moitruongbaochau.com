@@ -50,7 +50,10 @@ class CapabilityProfileContentTest extends TestCase
         $this->assertTrue($services->every(fn (Service $service): bool => str_contains($service->content, 'Cập nhật pháp lý đến tháng 09/2026')));
         $this->assertTrue($services->every(fn (Service $service): bool => count($service->tags ?? []) >= 10));
 
-        $allServices = Service::query()->published()->get();
+        $publishedServices = Service::query()->published()->get();
+        $this->assertCount(21, $publishedServices);
+        $this->assertTrue($publishedServices->contains('slug', 'bao-cao-cong-tac-bao-ve-moi-truong-dinh-ky'));
+        $allServices = $publishedServices->reject(fn (Service $service): bool => $service->slug === 'bao-cao-cong-tac-bao-ve-moi-truong-dinh-ky');
 
         $this->assertCount(20, $allServices);
         $this->assertTrue($allServices->every(
@@ -115,7 +118,7 @@ class CapabilityProfileContentTest extends TestCase
         $response->assertOk()
             ->assertSee('18 lĩnh vực dịch vụ môi trường &amp; phát triển bền vững', false)
             ->assertSee('Tư vấn, lập báo cáo phát triển bền vững (ESG)');
-        $response->assertViewHas('services', fn ($services): bool => $services->total() === 20 && $services->perPage() === 12);
+        $response->assertViewHas('services', fn ($services): bool => $services->total() === 21 && $services->perPage() === 12);
 
         $this->get(route('services.index', ['page' => 2]))
             ->assertOk()
