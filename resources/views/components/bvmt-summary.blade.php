@@ -22,7 +22,7 @@
                 <h4>{{ $table['label'] }}</h4>
                 @php($columns = array_filter($table['fields'], fn ($field) => $definition::visible($field, $values)))
                 <div class="bvmt-table-scroll"><table><thead><tr>@foreach($columns as $field)<th>{{ $field['label'] }}</th>@endforeach</tr></thead><tbody>
-                    @forelse($values[$key] ?? [] as $row)<tr>@foreach($columns as $name => $field)<td>{{ $format($row[$name] ?? null, $field) }}</td>@endforeach</tr>@empty<tr><td colspan="{{ count($columns) }}">Không khai báo phát sinh.</td></tr>@endforelse
+                    @forelse($values[$key] ?? [] as $row)<tr>@foreach($columns as $name => $field)<td data-label="{{ $field['label'] }}">{{ $format($row[$name] ?? null, $field) }}</td>@endforeach</tr>@empty<tr><td colspan="{{ count($columns) }}">Không khai báo phát sinh.</td></tr>@endforelse
                 </tbody></table></div>
             @endforeach
             @if($number === 6)

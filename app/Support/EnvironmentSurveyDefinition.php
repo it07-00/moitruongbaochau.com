@@ -44,30 +44,30 @@ class EnvironmentSurveyDefinition
 
         return match ($step) {
             1 => [
-                'company_name' => self::field('Tên doanh nghiệp'),
-                'tax_code' => self::field('Mã số thuế', required: false),
-                'address' => self::field('Địa chỉ', 'textarea', max: 1000),
-                'contact_name' => self::field('Người phụ trách cung cấp thông tin'),
-                'contact_position' => self::field('Chức vụ', required: false),
-                'contact_phone' => self::field('Số điện thoại', 'tel', max: 30),
-                'contact_email' => self::field('Email', 'email'),
-                'employee_count_2026' => self::field('Số lượng lao động năm 2026', 'integer'),
-                'business_type' => self::field('Loại hình sản xuất, kinh doanh, dịch vụ', max: 500),
+                'company_name' => self::field('Tên doanh nghiệp', placeholder: 'VD: CÔNG TY TNHH SẢN XUẤT ABC'),
+                'tax_code' => self::field('Mã số thuế', required: false, placeholder: 'VD: 0312345678'),
+                'address' => self::field('Địa chỉ', 'textarea', max: 1000, placeholder: 'VD: Lô A1, Khu công nghiệp, phường/xã, tỉnh/thành phố'),
+                'contact_name' => self::field('Người phụ trách cung cấp thông tin', placeholder: 'VD: Nguyễn Văn An'),
+                'contact_position' => self::field('Chức vụ', required: false, placeholder: 'VD: Nhân viên phụ trách môi trường'),
+                'contact_phone' => self::field('Số điện thoại', 'tel', max: 30, placeholder: 'VD: 0912345678'),
+                'contact_email' => self::field('Email', 'email', placeholder: 'VD: moitruong@congty.vn'),
+                'employee_count_2026' => self::field('Số lượng lao động năm 2026', 'integer', placeholder: 'VD: 150'),
+                'business_type' => self::field('Loại hình sản xuất, kinh doanh, dịch vụ', max: 500, placeholder: 'VD: Sản xuất hàng may mặc, chế biến thực phẩm'),
                 'operation_frequency' => self::field('Tần suất hoạt động', 'select', options: ['regular' => 'Thường xuyên', 'seasonal' => 'Theo mùa vụ']),
                 'seasonal_start_month' => self::field('Từ tháng', 'month', condition: 'seasonal'),
                 'seasonal_end_month' => self::field('Đến tháng', 'month', condition: 'seasonal'),
                 'has_environment_report_2025' => self::field('Có Báo cáo công tác BVMT năm 2025?', 'boolean', options: $yesNo),
-                'other_information' => self::field('Thông tin khác', 'textarea', false, max: 5000),
+                'other_information' => self::field('Thông tin khác', 'textarea', false, max: 5000, placeholder: 'VD: Thay đổi công suất, địa điểm hoặc thời gian hoạt động trong năm 2026'),
             ],
             4 => [
                 'has_wastewater_treatment' => self::field('Có công trình xử lý nước thải?', 'boolean', options: $yesNo),
-                'wastewater_treatment_description' => self::field('Công trình nước thải: tên, công suất, thuyết minh', 'textarea', max: 10000, condition: 'wastewater'),
+                'wastewater_treatment_description' => self::field('Công trình nước thải: tên, công suất, thuyết minh', 'textarea', max: 10000, condition: 'wastewater', placeholder: 'VD: Hệ thống xử lý nước thải công suất 50 m³/ngày, công nghệ sinh học hiếu khí, vận hành từ năm 2020'),
                 'has_air_treatment' => self::field('Có công trình xử lý khí thải?', 'boolean', options: $yesNo),
-                'air_treatment_description' => self::field('Công trình khí thải: tên, công suất, thuyết minh', 'textarea', max: 10000, condition: 'air'),
+                'air_treatment_description' => self::field('Công trình khí thải: tên, công suất, thuyết minh', 'textarea', max: 10000, condition: 'air', placeholder: 'VD: Hệ thống lọc bụi túi vải cho lò hơi, công suất 10.000 m³/giờ'),
             ],
             7 => [
                 'confirm_information' => self::field('Tôi xác nhận các thông tin cung cấp là đúng theo hồ sơ hiện có của doanh nghiệp', 'checkbox'),
-                'submit_note' => self::field('Ghi chú khi gửi', 'textarea', false, max: 5000),
+                'submit_note' => self::field('Ghi chú khi gửi', 'textarea', false, max: 5000, placeholder: 'VD: Doanh nghiệp sẽ bổ sung chứng từ thu gom chất thải sau khi nhận từ nhà cung cấp'),
             ],
             default => [],
         };
@@ -77,32 +77,32 @@ class EnvironmentSurveyDefinition
     public static function tables(int $step): array
     {
         $quantities = [
-            'name' => self::field('Tên / chủng loại'), 'unit' => self::field('Đơn vị', max: 50),
-            'quantity_2025' => self::field('Năm 2025', 'decimal', condition: 'year2025'),
-            'quantity_2026' => self::field('Năm 2026', 'decimal'),
+            'name' => self::field('Tên / chủng loại', placeholder: 'VD: Giấy, bìa carton, thức ăn thừa'), 'unit' => self::field('Đơn vị', max: 50, placeholder: 'VD: kg, tấn, m³, lít, kWh'),
+            'quantity_2025' => self::field('Năm 2025', 'decimal', condition: 'year2025', placeholder: 'VD: 1250.5'),
+            'quantity_2026' => self::field('Năm 2026', 'decimal', placeholder: 'VD: 1500.75'),
         ];
         $type = self::field('Loại nước thải', 'select', options: ['domestic' => 'Nước thải sinh hoạt', 'production' => 'Nước thải sản xuất', 'cooling' => 'Nước làm mát']);
 
         return match ($step) {
-            2 => ['products' => ['label' => 'Sản phẩm và sản lượng', 'fields' => $quantities, 'fixed' => false]],
-            3 => ['fuels' => ['label' => 'Nhiên liệu sử dụng', 'fields' => $quantities, 'fixed' => false]],
+            2 => ['products' => ['label' => 'Sản phẩm và sản lượng', 'fields' => array_replace($quantities, ['name' => self::field('Tên sản phẩm', placeholder: 'VD: Áo thun, bao bì giấy, thực phẩm đóng hộp')]), 'fixed' => false]],
+            3 => ['fuels' => ['label' => 'Nhiên liệu sử dụng', 'fields' => array_replace($quantities, ['name' => self::field('Tên nhiên liệu', placeholder: 'VD: Điện, Dầu DO, LPG, Than')]), 'fixed' => false]],
             4 => [
                 'approved_wastewater_flows' => ['label' => 'Lưu lượng nước thải được phê duyệt', 'fixed' => true, 'fields' => [
-                    'type' => $type, 'flow' => self::field('Lưu lượng phê duyệt', 'decimal', false),
-                    'unit' => self::field('Đơn vị', max: 50), 'source_document' => self::field('Nguồn: ĐTM / GPMT / hồ sơ cũ', required: false),
+                    'type' => $type, 'flow' => self::field('Lưu lượng phê duyệt', 'decimal', false, placeholder: 'VD: 50'),
+                    'unit' => self::field('Đơn vị', max: 50, placeholder: 'VD: m³/ngày'), 'source_document' => self::field('Nguồn: ĐTM / GPMT / hồ sơ cũ', required: false, placeholder: 'VD: GPMT số 123/GPMT, cấp ngày 15/03/2024'),
                 ]],
                 'actual_wastewater_flows' => ['label' => 'Lưu lượng nước thải phát sinh', 'fixed' => true, 'fields' => [
-                    'type' => $type, 'flow_2025' => self::field('Năm 2025', 'decimal', false, condition: 'year2025'),
-                    'flow_2026' => self::field('Năm 2026', 'decimal', false), 'unit' => self::field('Đơn vị', max: 50),
+                    'type' => $type, 'flow_2025' => self::field('Năm 2025', 'decimal', false, condition: 'year2025', placeholder: 'VD: 35.5'),
+                    'flow_2026' => self::field('Năm 2026', 'decimal', false, placeholder: 'VD: 40.25'), 'unit' => self::field('Đơn vị', max: 50, placeholder: 'VD: m³/ngày'),
                 ]],
             ],
             5 => [
                 'domestic_wastes' => ['label' => 'Rác sinh hoạt', 'fields' => $quantities, 'fixed' => false],
                 'industrial_wastes' => ['label' => 'Rác công nghiệp thông thường', 'fixed' => false, 'fields' => $quantities + [
                     'is_reused_as_material' => self::field('Tái sử dụng làm nguyên liệu?', 'boolean', options: ['1' => 'Có', '0' => 'Không']),
-                    'reuse_note' => self::field('Ghi chú tái sử dụng', required: false, max: 1000),
+                    'reuse_note' => self::field('Ghi chú tái sử dụng', required: false, max: 1000, placeholder: 'VD: Thu hồi phế liệu để tái sử dụng trong sản xuất'),
                 ]],
-                'hazardous_wastes' => ['label' => 'Chất thải nguy hại', 'fixed' => false, 'fields' => ['code' => self::field('Mã CTNH', required: false, max: 50)] + $quantities],
+                'hazardous_wastes' => ['label' => 'Chất thải nguy hại', 'fixed' => false, 'fields' => ['code' => self::field('Mã CTNH', required: false, max: 50, placeholder: 'Nhập mã theo chứng từ CTNH')] + array_replace($quantities, ['name' => self::field('Tên chất thải nguy hại', placeholder: 'VD: Dầu nhớt thải, giẻ lau dính dầu, bóng đèn thải')])],
             ],
             default => [],
         };
@@ -216,9 +216,9 @@ class EnvironmentSurveyDefinition
         return ['required' => 'Vui lòng nhập hoặc chọn :attribute.', 'numeric' => ':attribute phải là số.', 'integer' => ':attribute phải là số nguyên.', 'min' => ':attribute không được âm.', 'max' => ':attribute vượt quá giới hạn :max.', 'email' => 'Email không hợp lệ.', 'in' => 'Vui lòng chọn giá trị hợp lệ cho :attribute.', 'boolean' => 'Vui lòng chọn Có hoặc Không.', 'accepted' => 'Vui lòng xác nhận thông tin trước khi gửi.', 'size' => 'Cần đủ ba loại nước thải.', 'distinct' => 'Không được trùng loại nước thải.'];
     }
 
-    /** @return array{label: string, type: string, required: bool, options: array<mixed>, max: int, condition: string} */
-    private static function field(string $label, string $type = 'text', bool $required = true, array $options = [], int $max = 255, string $condition = ''): array
+    /** @return array{label: string, type: string, required: bool, options: array<mixed>, max: int, condition: string, placeholder: string} */
+    private static function field(string $label, string $type = 'text', bool $required = true, array $options = [], int $max = 255, string $condition = '', string $placeholder = ''): array
     {
-        return compact('label', 'type', 'required', 'options', 'max', 'condition');
+        return compact('label', 'type', 'required', 'options', 'max', 'condition', 'placeholder');
     }
 }

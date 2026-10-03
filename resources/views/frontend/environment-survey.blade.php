@@ -7,7 +7,7 @@
 @endpush
 @section('content')
 @php($definition = \App\Support\EnvironmentSurveyDefinition::class)
-<section class="bvmt-shell container px-3 mx-auto" data-has-report="{{ (int) ($data['has_environment_report_2025'] ?? false) }}">
+<section class="bvmt-shell" data-has-report="{{ (int) ($data['has_environment_report_2025'] ?? false) }}">
     <header class="bvmt-heading">
         <x-theme.badge text="PHIẾU KHẢO SÁT THÔNG TIN" />
         <h1>Báo cáo công tác<br>bảo vệ môi trường <span>2026</span></h1>
@@ -32,7 +32,7 @@
                     <div class="bvmt-progress-label"><strong>Tiến độ hoàn thành</strong><span>{{ round(count($completed) / 6 * 100) }}%</span></div>
                     <progress max="6" value="{{ count($completed) }}" aria-label="Tiến độ hoàn thành"></progress>
                     <nav aria-label="Các bước khảo sát"><ol>@foreach($definition::steps() as $number => $label)
-                        <li><button type="submit" name="action" value="goto" data-goto="{{ $number }}" @class(['bvmt-step', 'is-current' => $step === $number, 'is-complete' => in_array($number, $completed)]) @if($step === $number) aria-current="step" @endif><span>{{ in_array($number, $completed) ? '✓' : $number }}</span><strong>{{ $label }}</strong></button></li>
+                        <li><button type="submit" name="action" value="goto" data-goto="{{ $number }}" aria-label="Bước {{ $number }}: {{ $label }}" @class(['bvmt-step', 'is-current' => $step === $number, 'is-complete' => in_array($number, $completed)]) @if($step === $number) aria-current="step" @endif><span>{{ in_array($number, $completed) ? '✓' : $number }}</span><strong>{{ $label }}</strong></button></li>
                     @endforeach</ol></nav>
                     <p class="bvmt-hint">Dấu <b class="bvmt-required">*</b> là thông tin cần có trước khi gửi. Có thể lưu nháp khi chưa điền đủ.</p>
                 </aside>
