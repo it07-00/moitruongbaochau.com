@@ -3,8 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
+        "build": "npm run build:ghg-landing && vite build",
+        "dev": "vite",
+        "build:ghg-landing": "node resources/js/build-ghg-landing.mjs"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

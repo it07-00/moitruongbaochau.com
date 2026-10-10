@@ -7,6 +7,7 @@
     <url><loc>{{ route('projects.index') }}</loc></url>
     <url><loc>{{ route('recruitment.index') }}</loc></url>
     <url><loc>{{ route('contact.index') }}</loc></url>
+    <url><loc>{{ route('ghg-service.index') }}</loc><lastmod>2026-10-10</lastmod></url>
     @foreach ($pages as $page)
         <url><loc>{{ $page->canonical_url ?: route('pages.show', $page->slug) }}</loc><lastmod>{{ $page->updated_at->toAtomString() }}</lastmod></url>
     @endforeach

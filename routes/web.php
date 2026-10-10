@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\EnvironmentSurveyController;
 use App\Http\Controllers\Frontend\GhgDeclarationController;
+use App\Http\Controllers\Frontend\GhgServiceLandingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\LegacyRedirectController;
 use App\Http\Controllers\Frontend\PageController;
@@ -59,5 +60,8 @@ Route::post('/lien-he', [ContactController::class, 'store'])->middleware('thrott
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/tim-kiem', SearchController::class)->name('search');
+
+Route::get('/dich-vu-kiem-ke-khi-nha-kinh-chuyen-nghiep-cap-nhat-quy-dinh-phap-luat-moi-nhat', [GhgServiceLandingController::class, 'index'])->name('ghg-service.index');
+Route::post('/dich-vu-kiem-ke-khi-nha-kinh-chuyen-nghiep-cap-nhat-quy-dinh-phap-luat-moi-nhat', [GhgServiceLandingController::class, 'store'])->middleware('throttle:contact-form')->name('ghg-service.store');
 
 Route::fallback(LegacyRedirectController::class);

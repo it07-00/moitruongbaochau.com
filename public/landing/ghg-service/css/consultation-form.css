@@ -1,0 +1,79 @@
+/* Keep consultation fields in normal flow, isolated from legacy auth labels. */
+[data-consultation-form] .form-label {
+    position: static !important;
+    display: block;
+    inset: auto !important;
+    z-index: auto;
+    padding: 0;
+    margin: 0 0 6px;
+    background: transparent;
+    color: #25324a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+[data-consultation-form] > div.flex {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+}
+
+[data-consultation-form] > div.flex > div {
+    width: auto;
+    min-width: 0;
+}
+
+[data-consultation-form] .form-control {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    height: auto !important;
+    padding: 11px 12px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px;
+    background: #fff;
+    color: #25324a;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+[data-consultation-form] textarea.form-control {
+    min-height: 104px;
+    resize: vertical;
+}
+
+[data-consultation-form] .form-control:focus {
+    border-color: #1d71f2 !important;
+    outline: 2px solid #1d71f2;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+[data-consultation-form] .form-control[aria-invalid="true"] {
+    border-color: #dc3545 !important;
+}
+
+[data-consultation-form] [data-error-for] {
+    display: block;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+[data-consultation-form] [data-error-for]:empty {
+    display: none;
+}
+
+[data-consultation-tabs] > [role="tablist"] {
+    margin-bottom: 8px;
+}
+
+[data-consultation-tabs] > div:nth-child(2) {
+    padding: 16px !important;
+}
+
+@media (min-width: 640px) {
+    [data-consultation-form] > div.flex {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

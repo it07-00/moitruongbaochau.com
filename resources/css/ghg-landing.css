@@ -1,0 +1,21 @@
+@import "tailwindcss/theme.css";
+@import "tailwindcss/preflight.css";
+@import "tailwindcss/utilities.css";
+@theme {
+  --spacing-15: 60px; --spacing-18: 72px; --spacing-22: 88px;
+  --container-6xl: 1400px;
+  --color-blue-500: #273586; --color-blue-900: #101638;
+  --color-blue-600: #2563eb;
+  --color-red-500: #B72026; --color-yellow-500: #FFCB08;
+  --color-neutral-black: #3A3A3A; --color-grey-100: #C2C2C2;
+  --breakpoint-3xl: 1700px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --blur-sm: 4px;
+}
+/* Preserve the original landing's border and button behavior. */
+*, ::before, ::after { border-color: #e5e7eb; }
+button, [role="tab"] { cursor: pointer; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  [data-x-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
