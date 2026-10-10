@@ -21,6 +21,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class ContactResource extends Resource
@@ -31,9 +32,18 @@ class ContactResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Khách hàng & Liên hệ';
 
-    protected static ?string $navigationLabel = 'Yêu cầu tư vấn / Liên hệ';
+    protected static ?string $navigationLabel = 'Liên hệ website';
 
     protected static ?int $navigationSort = 1;
+
+    protected static bool $isGhgConsultation = false;
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        return static::$isGhgConsultation ? $query->ghgConsultations() : $query->generalContacts();
+    }
 
     public static function getModelLabel(): string
     {
@@ -47,7 +57,7 @@ class ContactResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = Contact::where('status', ContactStatus::New)->count();
+        $count = static::getEloquentQuery()->where('status', ContactStatus::New)->count();
 
         return $count > 0 ? (string) $count : null;
     }

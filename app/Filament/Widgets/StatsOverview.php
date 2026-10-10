@@ -17,7 +17,8 @@ class StatsOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
-        $newContacts = Contact::where('status', ContactStatus::New)->count();
+        $newContacts = Contact::generalContacts()->where('status', ContactStatus::New)->count();
+        $newGhgConsultations = Contact::ghgConsultations()->where('status', ContactStatus::New)->count();
         $totalServices = Service::count();
         $totalProjects = Project::count();
         $totalPosts = Post::count();
@@ -27,6 +28,12 @@ class StatsOverview extends StatsOverviewWidget
                 ->description($newContacts > 0 ? 'Khách hàng đang chờ phản hồi' : 'Tất cả liên hệ đã xử lý')
                 ->descriptionIcon($newContacts > 0 ? Heroicon::OutlinedExclamationCircle : Heroicon::OutlinedCheckCircle)
                 ->color($newContacts > 0 ? 'warning' : 'success'),
+
+            Stat::make('Tư vấn khí nhà kính mới', $newGhgConsultations)
+                ->description($newGhgConsultations > 0 ? 'Đăng ký tư vấn / Yêu cầu gọi lại' : 'Tất cả yêu cầu đã xử lý')
+                ->descriptionIcon(Heroicon::OutlinedPhone)
+                ->color($newGhgConsultations > 0 ? 'warning' : 'success')
+                ->url(route('filament.admin.resources.ghg-consultations.index')),
 
             Stat::make('Dịch vụ môi trường', $totalServices)
                 ->description('Đang cung cấp cho khách hàng')
