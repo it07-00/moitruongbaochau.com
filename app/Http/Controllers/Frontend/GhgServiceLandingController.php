@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGhgConsultationRequest;
+use App\Jobs\SyncGhgConsultationToSheet;
 use App\Models\Contact;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 
 class GhgServiceLandingController extends Controller
 {
@@ -34,7 +36,7 @@ class GhgServiceLandingController extends Controller
             $message .= "\nNội dung: ".$data['message'];
         }
 
-        Contact::query()->create([
+        $contact = Contact::query()->create([
             'name' => $data['name'],
             'email' => $data['email'] ?? null,
             'phone' => $data['phone'],
@@ -43,7 +45,15 @@ class GhgServiceLandingController extends Controller
             'source' => route('ghg-service.index'),
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
+            'sheets_sync_key' => (string) Str::uuid(),
+            'sheets_payload' => [
+                'company_name' => $data['company_name'] ?? '',
+                'message' => $data['message'] ?? '',
+                'consultation_type' => $isCallback ? 'Yêu cầu gọi lại' : 'Đăng ký tư vấn',
+            ],
         ]);
+
+        SyncGhgConsultationToSheet::dispatch($contact->id)->afterResponse();
 
         $success = 'Đã gửi yêu cầu thành công! Chuyên viên Bảo Châu sẽ liên hệ tư vấn cho bạn trong thời gian sớm nhất.';
 

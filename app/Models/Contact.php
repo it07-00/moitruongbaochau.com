@@ -16,7 +16,7 @@ class Contact extends Model
 
     protected $fillable = [
         'name', 'email', 'phone', 'topic', 'message', 'source', 'ip_address', 'user_agent',
-        'status', 'read_at',
+        'status', 'read_at', 'sheets_sync_key', 'sheets_payload',
     ];
 
     protected $attributes = ['status' => ContactStatus::New->value];
@@ -38,6 +38,12 @@ class Contact extends Model
 
     protected function casts(): array
     {
-        return ['status' => ContactStatus::class, 'read_at' => 'datetime'];
+        return [
+            'status' => ContactStatus::class,
+            'read_at' => 'datetime',
+            'sheets_payload' => 'array',
+            'sheets_synced_at' => 'datetime',
+            'sheets_last_attempt_at' => 'datetime',
+        ];
     }
 }
