@@ -82,7 +82,7 @@
 
     <script type="application/ld+json">{!! json_encode([
       '@context' => 'https://schema.org', '@graph' => [
-        ['@type' => 'Organization', '@id' => route('home').'#organization', 'name' => 'Môi Trường Bảo Châu', 'url' => route('home'), 'logo' => asset('landing/ghg-service/images/Logo.webp'), 'telephone' => '+84915549148', 'email' => 'info@baochauenvir.com'],
+        ['@type' => 'Organization', '@id' => route('home').'#organization', 'name' => 'Môi Trường Bảo Châu', 'url' => route('home'), 'logo' => asset('landing/ghg-service/images/Logo-160.webp'), 'telephone' => '+84915549148', 'email' => 'info@baochauenvir.com'],
         ['@type' => 'Service', '@id' => route('ghg-service.index').'#service', 'name' => 'Dịch vụ kiểm kê khí nhà kính', 'serviceType' => 'Tư vấn và lập báo cáo kiểm kê khí nhà kính', 'url' => route('ghg-service.index'), 'description' => 'Tư vấn kiểm kê, lập báo cáo, rà soát nghĩa vụ và hướng dẫn hồ sơ theo quy định hiện hành.', 'provider' => ['@id' => route('home').'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Việt Nam']],
         ['@type' => 'WebPage', '@id' => route('ghg-service.index').'#webpage', 'url' => route('ghg-service.index'), 'name' => 'Dịch vụ kiểm kê khí nhà kính 2026 | Môi Trường Bảo Châu', 'inLanguage' => 'vi-VN', 'mainEntity' => ['@id' => route('ghg-service.index').'#service'], 'breadcrumb' => ['@id' => route('ghg-service.index').'#breadcrumb']],
         ['@type' => 'BreadcrumbList', '@id' => route('ghg-service.index').'#breadcrumb', 'itemListElement' => [
@@ -146,44 +146,10 @@
     <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('landing/ghg-service/images/favicon-48.png') }}" />
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('landing/ghg-service/images/apple-touch-icon.png') }}" />
 
-    <!-- Custom Fonts -->
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/custom-fronts.css') }}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- owl carousel -->
-
-    <!-- Jquery Ui Css -->
-
-    <!-- Nice Select Css -->
-
-    <!-- Fontawasome Css -->
-
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/bootstrap-icons.min.css') }}" />
-
-    <!-- Jquery Js -->
-    <script src="{{ asset('landing/ghg-service/js/jquery-3.7.1.min.js') }}"></script>
-
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/global.css') }}" />
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/modal-auth.css') }}" />
-
-    <!-- AOS CSS -->
-    <link href="{{ asset('landing/ghg-service/css/aos.css') }}" rel="stylesheet" />
-
-    <!--them-->
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/styles.css') }}" />
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/consultation-form.css') }}" />
-
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/tailwind.css') }}" />
-
-    @if ($recaptchaSiteKey)
-    <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}" async defer></script>
-    @endif
+    <link rel="preload" href="{{ asset('landing/ghg-service/fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ asset('landing/ghg-service/fonts/inter-vietnamese.woff2') }}" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ asset('landing/ghg-service/images/sect-hero-bg.webp') }}" as="image" fetchpriority="high" />
+    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/tailwind.css') }}?v={{ filemtime(public_path('landing/ghg-service/css/tailwind.css')) }}" />
 
     <!-- Custom Scripts (Head) -->
 
@@ -226,12 +192,12 @@
           </button>
           <a href="{{ route('home') }}" aria-label="Môi Trường Bảo Châu - Trang chủ">
             <img
-              src="{{ asset('landing/ghg-service/images/Logo.webp') }}"
+              src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
               alt="Môi Trường Bảo Châu"
               width="80"
               height="80"
               class="size-12 max-w-none object-contain md:size-20"
-            decoding="async" loading="lazy" />
+            decoding="async" loading="eager" fetchpriority="high" />
           </a>
         </div>
 
@@ -753,14 +719,14 @@
                   class="w-[146px] h-[146px] object-contain self-center mb-4 md:mb-6"
                   data-x-aos="zoom-in"
                   height="146"
-                  src="{{ asset('landing/ghg-service/images/sect-hero-2.webp') }}"
+                  src="{{ asset('landing/ghg-service/images/sect-hero-2-292.webp') }}"
                   width="146"
                 decoding="async" />
                 <div class="pb-4 md:!pb-6 text-base md:text-lg">
                   <p class="text-white !mb-2" data-x-aos="fade-up">
                     ĐƠN VỊ TƯ VẤN CHUYÊN NGHIỆP:
                   </p>
-                  <h3
+                  <h2
                     class="font-medium text-yellow-500 !mb-2"
                     data-x-aos="fade-up"
                   >
@@ -768,7 +734,7 @@
                     <span class="text-lg md:text-2xl text-white">
                       MÔI TRƯỜNG BẢO CHÂU
                     </span>
-                  </h3>
+                  </h2>
                   <p class="text-white" data-x-aos="fade-up">
                     <span class="text-yellow-500">
                       Hơn
@@ -803,13 +769,13 @@
             >
               <!-- Header -->
               <div class="text-center">
-                <h3
+                <h2
                   class="text-white text-[15px] md:text-[20px] font-semibold md:leading-[28px] mb-1"
                   data-x-aos="fade-up"
                 >
                   ĐĂNG KÝ NHẬN BÁO GIÁ & TƯ VẤN KIỂM KÊ KNK<br />
                   BỞI CÁC CHUYÊN GIA MÔI TRƯỜNG BẢO CHÂU
-                </h3>
+                </h2>
                 <p
                   class="text-white text-base md:text-lg font-semibold"
                   data-x-aos="fade-up"
@@ -847,7 +813,7 @@
                     class="w-10 h-10 md:w-20 md:h-20 object-contain form-logo"
                     data-x-aos="zoom-in"
                     height="80"
-                    src="{{ asset('landing/ghg-service/images/Logo.webp') }}"
+                    src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
                     width="80"
                   decoding="async" loading="lazy" />
                   <p
@@ -1185,7 +1151,7 @@
                 height="534"
                 src="{{ asset('landing/ghg-service/images/bao-chau-business-benefits.webp') }}"
                 width="712"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-business-benefits-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-business-benefits.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-business-benefits-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-business-benefits-768.webp') }} 768w, {{ asset('landing/ghg-service/images/bao-chau-business-benefits.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
             </div>
           </div>
         </div>
@@ -1700,7 +1666,7 @@
             <section
         class="sec-timeline scroll-mt-24 bg-cover bg-top !pt-12 2xl:!pt-[72px] pb-16 md:pb-20 lg:pb-24 xl:pb-28 !px-4 2xl:!px-0 relative xl:scroll-mt-28"
         id="quy-trinh-thuc-hien"
-        style="background-image: url('{{ asset('landing/ghg-service/images/sect-timeline-bg.png') }}');"
+        style="background-image: url('{{ asset('landing/ghg-service/images/sect-timeline-bg.webp') }}');"
       >
         <!-- Overlay to ensure text readability and card contrast -->
         <div class="absolute inset-0 bg-neutral-black/40 pointer-events-none"></div>
@@ -2349,7 +2315,7 @@
         <!-- Logos -->
         <div class="flex justify-center items-center !gap-4 !mb-4 md:!mb-8">
           <img
-            src="{{ asset('landing/ghg-service/images/Logo.webp') }}"
+            src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
             alt="Môi Trường Bảo Châu"
             width="128"
             height="128"
@@ -2614,22 +2580,12 @@
     </style>
 
     <!-- Common Scripts -->
-    <script src="{{ asset('landing/ghg-service/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('landing/ghg-service/js/bootstrap.bundle.min.js') }}" defer></script>
 
     <!-- AOS JS -->
-    <script src="{{ asset('landing/ghg-service/js/aos.js') }}"></script>
+    <script src="{{ asset('landing/ghg-service/js/aos.js') }}" defer></script>
 
-    <!-- Specific scripts for Brich template -->
-    <script>
-      // Keep template scripts safe when the optional Nice Select plugin is unavailable.
-      if (window.jQuery && typeof window.jQuery.fn.niceSelect !== "function") {
-        window.jQuery.fn.niceSelect = function () {
-          return this;
-        };
-      }
-    </script>
-    <script src="{{ asset('landing/ghg-service/js/partners-carousel.js?v=20260715-2') }}"></script>
-    
+    <script src="{{ asset('landing/ghg-service/js/partners-carousel.js') }}" defer></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -2792,9 +2748,13 @@
       }
     </script>
     <script>
-      AOS.init({
-        duration: 650,
-        once: true,
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("[data-x-aos]").forEach((element) => {
+          if (!element.closest("#su-cap-thiet")) {
+            element.setAttribute("data-aos", element.getAttribute("data-x-aos"));
+          }
+        });
+        AOS.init({ duration: 650, once: true });
       });
 
       document.addEventListener("DOMContentLoaded", function () {
@@ -2914,122 +2874,7 @@
         }
       });
 
-      $(window).on("load", function () {
-        $("[data-x-aos]").each(function name(i, element) {
-          $(element).attr("data-aos", $(element).data("x-aos"));
-        });
 
-        (function ($) {
-          $(function () {
-            var $scroller = $(".course-modules");
-            if (!$scroller.length) return;
-
-            // Viewport is the immediate parent, which already has overflow-hidden in your HTML
-            var $viewport = $scroller.parent();
-
-            var state = {
-              startX: 0,
-              startTranslate: 0,
-              translate: 0, // current translateX in px
-              minTranslate: 0, // most negative value (left limit)
-              maxTranslate: 0, // right limit (0)
-              isDown: false,
-              moved: false,
-            };
-
-            function clamp(v, min, max) {
-              return Math.max(min, Math.min(max, v));
-            }
-
-            function setTranslate(x) {
-              state.translate = clamp(
-                x,
-                state.minTranslate,
-                state.maxTranslate,
-              );
-              $scroller.css("--cm-x", state.translate + "px");
-            }
-
-            function computeBounds() {
-              var vpWidth = $viewport.width();
-              var scWidth = $scroller.outerWidth(true);
-
-              // If scroller is wider than viewport, allow negative translate up to left-most
-              state.minTranslate = Math.min(0, vpWidth - scWidth);
-              state.maxTranslate = 0;
-              setTranslate(state.translate); // clamp current
-            }
-
-            computeBounds();
-            $(window).on("resize", computeBounds);
-
-            function getClientX(e) {
-              var oe = e.originalEvent || e;
-              if (oe.touches && oe.touches[0]) return oe.touches[0].clientX;
-              if (oe.changedTouches && oe.changedTouches[0])
-                return oe.changedTouches[0].clientX;
-              return oe.clientX || 0;
-            }
-
-            function onDown(e) {
-              state.isDown = true;
-              state.moved = false;
-              $scroller.addClass("dragging");
-              state.startX = getClientX(e);
-              state.startTranslate = state.translate;
-              $(document).on(
-                "mousemove.drag mouseup.drag touchmove.drag touchend.drag touchcancel.drag pointermove.drag pointerup.drag",
-                onMoveOrUp,
-              );
-            }
-
-            function onMoveOrUp(e) {
-              var type = e.type;
-              if (/mouseup|touchend|touchcancel|pointerup/.test(type)) {
-                state.isDown = false;
-                $scroller.removeClass("dragging");
-                $(document).off(".drag");
-                return;
-              }
-
-              if (!state.isDown) return;
-              var dx = getClientX(e) - state.startX;
-              if (Math.abs(dx) > 3) state.moved = true;
-              setTranslate(state.startTranslate + dx);
-              // prevent text selection / image dragging while actively dragging horizontally
-              e.preventDefault();
-            }
-
-            // Prevent click on children after a drag gesture
-            $scroller.on("click", function (e) {
-              if (state.moved) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-              }
-            });
-
-            // Bind down events to start dragging with mouse or touch
-            $scroller.on("mousedown touchstart pointerdown", onDown);
-
-            // Trackpad / wheel horizontal scroll support
-            $viewport.on(
-              "wheel",
-              function (e) {
-                var oe = e.originalEvent;
-                var deltaX = oe.deltaX;
-                // If only vertical delta present but user holds Shift, use it as horizontal
-                if (!deltaX && oe.deltaY && oe.shiftKey) deltaX = oe.deltaY;
-                if (!deltaX) return;
-                setTranslate(state.translate - deltaX);
-                e.preventDefault();
-              },
-              { passive: false },
-            );
-          });
-        })(jQuery);
-        console.log("load aossssssss");
-        AOS.refreshHard();
-      });
     </script>
 
 
@@ -3037,6 +2882,6 @@
     <!-- Custom Scripts (Body End) -->
   
     <div hidden data-consultation-settings data-site-key="{{ $recaptchaSiteKey }}" data-previous-form="{{ old('form_id', session('consultation_form_id')) }}"></div>
-    <script src="{{ asset('landing/ghg-service/js/consultation-form.js') }}" defer></script>
+    <script src="{{ asset('landing/ghg-service/js/consultation-form.js') }}?v={{ filemtime(public_path('landing/ghg-service/js/consultation-form.js')) }}" defer></script>
   </body>
 </html>

@@ -3,6 +3,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const forms = document.querySelectorAll('[data-consultation-form]');
   const siteKey = settings?.dataset.siteKey;
 
+  let recaptchaLoading;
+
+  function loadRecaptcha() {
+    if (!siteKey) return Promise.resolve();
+    if (window.grecaptcha?.ready) return Promise.resolve();
+    if (recaptchaLoading) return recaptchaLoading;
+    recaptchaLoading = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => fail(), 10000);
+      const fail = () => {
+        clearTimeout(timeout);
+        script.remove();
+        recaptchaLoading = undefined;
+        reject(new Error('Không tải được reCAPTCHA. Vui lòng kiểm tra kết nối và thử lại.'));
+      };
+      script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
+      script.async = true;
+      script.onload = () => {
+        clearTimeout(timeout);
+        if (!window.grecaptcha?.ready) { fail(); return; }
+        resolve();
+      };
+      script.onerror = fail;
+      document.head.appendChild(script);
+    });
+    return recaptchaLoading;
+  }
+
+  document.addEventListener('focusin', event => {
+    if (event.target.closest('[data-consultation-form]')) loadRecaptcha().catch(() => {});
+  });
+  document.addEventListener('pointerover', event => {
+    if (event.target.closest('[data-consultation-form]')) loadRecaptcha().catch(() => {});
+  }, { passive: true });
+
   function revealForm(formId) {
     const form = document.getElementById(formId);
     if (!form) return;
@@ -29,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function captchaToken() {
     if (!siteKey) return '';
+    await loadRecaptcha();
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => reject(new Error('Không tải được reCAPTCHA. Vui lòng kiểm tra kết nối và thử lại.')), 10000);
       if (!window.grecaptcha?.ready) {

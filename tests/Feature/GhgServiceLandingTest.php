@@ -42,7 +42,14 @@ class GhgServiceLandingTest extends TestCase
         $this->assertSame($nodes['Organization']['@id'], $nodes['Service']['provider']['@id']);
         $this->assertSame($nodes['Service']['@id'], $nodes['WebPage']['mainEntity']['@id']);
         $this->assertSame([route('home'), route('services.index'), route('ghg-service.index')], array_column($nodes['BreadcrumbList']['itemListElement'], 'item'));
-        $response->assertDontSee('cdn.tailwindcss.com')->assertSee('landing/ghg-service/css/tailwind.css');
+        $response->assertDontSee('cdn.tailwindcss.com')
+            ->assertDontSee('jquery-3.7.1.min.js')
+            ->assertDontSee('fonts.googleapis.com')
+            ->assertDontSee('sect-timeline-bg.png')
+            ->assertSee('landing/ghg-service/css/tailwind.css');
+        $this->assertSame(1, $xpath->query('//head/link[@rel="stylesheet"]')->length);
+        $this->assertSame(1, $xpath->query('//head/link[@rel="preload"][@as="image"][@fetchpriority="high"]')->length);
+        $this->assertSame('eager', $xpath->query('//header//img[contains(@src, "Logo-160.webp")]')->item(0)->getAttribute('loading'));
 
         foreach ($xpath->query('//img[@src]') as $image) {
             $path = parse_url($image->getAttribute('src'), PHP_URL_PATH);
@@ -167,7 +174,10 @@ class GhgServiceLandingTest extends TestCase
             ->assertUnprocessable()->assertJsonValidationErrors('g-recaptcha-response');
         Http::assertNothingSent();
         $this->assertDatabaseCount('contacts', 0);
-        $this->get(route('ghg-service.index'))->assertSee('recaptcha/api.js')->assertDontSee('test-secret');
+        $this->get(route('ghg-service.index'))
+            ->assertSee('data-site-key=', false)
+            ->assertDontSee('recaptcha/api.js')
+            ->assertDontSee('test-secret');
     }
 
     public function test_recaptcha_verifies_token_score_action_and_hostname(): void
