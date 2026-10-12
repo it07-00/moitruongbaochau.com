@@ -11,6 +11,8 @@
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var currentIndex = 0;
     var autoplayTimer = null;
+    var visible = visibleSlides();
+    var resizePending = false;
 
     function visibleSlides() {
         if (window.innerWidth >= 1536) return 8;
@@ -22,14 +24,13 @@
     }
 
     function render() {
-        var visible = visibleSlides();
         var maximumIndex = Math.max(0, slides.length - visible);
         currentIndex = Math.min(currentIndex, maximumIndex);
         track.style.transform = 'translate3d(' + (currentIndex * (-100 / visible)) + '%, 0, 0)';
     }
 
     function move(direction) {
-        var maximumIndex = Math.max(0, slides.length - visibleSlides());
+        var maximumIndex = Math.max(0, slides.length - visible);
         currentIndex += direction;
 
         if (currentIndex > maximumIndex) currentIndex = 0;
@@ -66,7 +67,15 @@
     section.addEventListener('mouseleave', startAutoplay);
     section.addEventListener('focusin', stopAutoplay);
     section.addEventListener('focusout', startAutoplay);
-    window.addEventListener('resize', render);
+    window.addEventListener('resize', function () {
+        if (resizePending) return;
+        resizePending = true;
+        window.requestAnimationFrame(function () {
+            visible = visibleSlides();
+            render();
+            resizePending = false;
+        });
+    });
 
     render();
     startAutoplay();

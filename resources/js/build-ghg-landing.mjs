@@ -1,6 +1,7 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 import { compile, optimize } from '@tailwindcss/node';
 import { Scanner } from '@tailwindcss/oxide';
 import { transform } from 'lightningcss';
@@ -39,6 +40,16 @@ const templateCss = (await Promise.all(stylesheets.map(async name => {
     });
     return transform({ filename: name, code: Buffer.from(css), minify: true, unusedSymbols: [...unusedSymbols] }).code.toString();
 }))).join('\n');
-const output = optimize(templateCss + '\n' + compiler.build(candidates), { minify: true }).code;
+let bundledCss = templateCss + '\n' + compiler.build(candidates);
+const assetVersions = new Map();
+for (const match of bundledCss.matchAll(/url\((['"]?)([^)'"\s]+)\1\)/g)) {
+    const url = match[2];
+    if (/^(data:|https?:|\/|#)/.test(url) || assetVersions.has(url)) continue;
+    const file = resolve(cssFolder, url.split('?')[0]);
+    const version = createHash('sha256').update(await readFile(file)).digest('hex').slice(0, 12);
+    assetVersions.set(url, `${url.split('?')[0]}?v=${version}`);
+}
+bundledCss = bundledCss.replace(/url\((['"]?)([^)'"\s]+)\1\)/g, (match, quote, url) => assetVersions.has(url) ? `url(${quote}${assetVersions.get(url)}${quote})` : match);
+const output = optimize(bundledCss, { minify: true }).code;
 await writeFile(resolve(root, 'public/landing/ghg-service/css/tailwind.css'), output);
 console.log(`Landing CSS: ${candidates.length} candidates, ${Buffer.byteLength(output)} bytes`);

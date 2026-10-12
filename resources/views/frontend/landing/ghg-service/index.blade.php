@@ -1,3 +1,10 @@
+@php
+    $landingAsset = static function (string $path): string {
+        static $urls = [];
+
+        return $urls[$path] ??= asset($path).'?v='.substr(hash_file('sha256', public_path($path)), 0, 12);
+    };
+@endphp
 <!DOCTYPE html>
 <html lang="vi">
   <head>
@@ -68,7 +75,7 @@
     <meta property="og:site_name" content="Môi Trường Bảo Châu" />
     <meta property="og:locale" content="vi_VN" />
     <meta property="og:url" content="{{ route('ghg-service.index') }}" />
-    <meta property="og:image" content="{{ asset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.png') }}" />
+    <meta property="og:image" content="{{ $landingAsset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.png') }}" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1448" />
     <meta property="og:image:height" content="1086" />
@@ -77,12 +84,12 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Dịch vụ kiểm kê khí nhà kính 2026 | Môi Trường Bảo Châu" />
     <meta name="twitter:description" content="Bảo Châu tư vấn kiểm kê khí nhà kính, lập báo cáo và rà soát nghĩa vụ theo quy định hiện hành năm 2026. Đăng ký tư vấn, nhận báo giá cho doanh nghiệp." />
-    <meta name="twitter:image" content="{{ asset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.png') }}" />
+    <meta name="twitter:image" content="{{ $landingAsset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.png') }}" />
     <meta name="twitter:image:alt" content="Dịch vụ kiểm kê khí nhà kính cho doanh nghiệp - Môi Trường Bảo Châu" />
 
     <script type="application/ld+json">{!! json_encode([
       '@context' => 'https://schema.org', '@graph' => [
-        ['@type' => 'Organization', '@id' => route('home').'#organization', 'name' => 'Môi Trường Bảo Châu', 'url' => route('home'), 'logo' => asset('landing/ghg-service/images/Logo-160.webp'), 'telephone' => '+84915549148', 'email' => 'info@baochauenvir.com'],
+        ['@type' => 'Organization', '@id' => route('home').'#organization', 'name' => 'Môi Trường Bảo Châu', 'url' => route('home'), 'logo' => $landingAsset('landing/ghg-service/images/Logo-160.webp'), 'telephone' => '+84915549148', 'email' => 'info@baochauenvir.com'],
         ['@type' => 'Service', '@id' => route('ghg-service.index').'#service', 'name' => 'Dịch vụ kiểm kê khí nhà kính', 'serviceType' => 'Tư vấn và lập báo cáo kiểm kê khí nhà kính', 'url' => route('ghg-service.index'), 'description' => 'Tư vấn kiểm kê, lập báo cáo, rà soát nghĩa vụ và hướng dẫn hồ sơ theo quy định hiện hành.', 'provider' => ['@id' => route('home').'#organization'], 'areaServed' => ['@type' => 'Country', 'name' => 'Việt Nam']],
         ['@type' => 'WebPage', '@id' => route('ghg-service.index').'#webpage', 'url' => route('ghg-service.index'), 'name' => 'Dịch vụ kiểm kê khí nhà kính 2026 | Môi Trường Bảo Châu', 'inLanguage' => 'vi-VN', 'mainEntity' => ['@id' => route('ghg-service.index').'#service'], 'breadcrumb' => ['@id' => route('ghg-service.index').'#breadcrumb']],
         ['@type' => 'BreadcrumbList', '@id' => route('ghg-service.index').'#breadcrumb', 'itemListElement' => [
@@ -93,16 +100,16 @@
       ],
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
 
-    <script src="{{ asset('landing/ghg-service/js/facebook-pixel.js') }}?v={{ filemtime(public_path('landing/ghg-service/js/facebook-pixel.js')) }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/facebook-pixel.js') }}" defer></script>
 
     <!-- fav icon -->
-    <link rel="icon" type="image/png" sizes="48x48" href="{{ asset('landing/ghg-service/images/favicon-48.png') }}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('landing/ghg-service/images/apple-touch-icon.png') }}" />
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ $landingAsset('landing/ghg-service/images/favicon-48.png') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ $landingAsset('landing/ghg-service/images/apple-touch-icon.png') }}" />
 
-    <link rel="preload" href="{{ asset('landing/ghg-service/fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="{{ asset('landing/ghg-service/fonts/inter-vietnamese.woff2') }}" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="{{ asset('landing/ghg-service/images/sect-hero-bg.webp') }}" as="image" fetchpriority="high" />
-    <link rel="stylesheet" href="{{ asset('landing/ghg-service/css/tailwind.css') }}?v={{ filemtime(public_path('landing/ghg-service/css/tailwind.css')) }}" />
+    <link rel="preload" href="{{ $landingAsset('landing/ghg-service/fonts/inter-latin.woff2') }}" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ $landingAsset('landing/ghg-service/fonts/inter-vietnamese.woff2') }}" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ $landingAsset('landing/ghg-service/images/sect-hero-bg.webp') }}" as="image" fetchpriority="high" />
+    <link rel="stylesheet" href="{{ $landingAsset('landing/ghg-service/css/tailwind.css') }}" />
 
     <!-- Custom Scripts (Head) -->
 
@@ -136,7 +143,7 @@
             aria-expanded="false"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/menu-bar.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/menu-bar.svg') }}"
               alt=""
               class="size-5 max-w-none"
               width="24"
@@ -145,7 +152,7 @@
           </button>
           <a href="{{ route('home') }}" aria-label="Môi Trường Bảo Châu - Trang chủ">
             <img
-              src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }}" srcset="{{ $landingAsset('landing/ghg-service/images/Logo-48.webp') }} 48w, {{ $landingAsset('landing/ghg-service/images/Logo-80.webp') }} 80w, {{ $landingAsset('landing/ghg-service/images/Logo-96.webp') }} 96w, {{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }} 160w" sizes="(min-width: 768px) 80px, 48px"
               alt="Môi Trường Bảo Châu"
               width="80"
               height="80"
@@ -176,7 +183,7 @@
                     class="size-4"
                     width="16"
                     height="16"
-                    src="{{ asset('landing/ghg-service/images/telephone.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/telephone.svg') }}"
                     alt=""
                   decoding="async" />
                   <span>
@@ -196,7 +203,7 @@
                     class="size-4"
                     width="16"
                     height="16"
-                    src="{{ asset('landing/ghg-service/images/email.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/email.svg') }}"
                     alt=""
                   decoding="async" />
                   <a href="mailto:info@baochauenvir.com" class="text-gray-700"
@@ -215,7 +222,7 @@
                   class="flex items-center space-x-2"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/facebook.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/facebook.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -232,7 +239,7 @@
                   class="flex items-center space-x-2"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/telephone.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/telephone.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -254,7 +261,7 @@
                   class="nav-item relative py-[22px] flex items-center space-x-2 text-[#3A3A3A] hover:text-[#273586] transition-colors"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/streaming.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/streaming.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -267,7 +274,7 @@
                   class="nav-item relative py-[22px] flex items-center space-x-2 text-[#3A3A3A] hover:text-[#273586] transition-colors"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/benefit.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/benefit.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -280,7 +287,7 @@
                   class="nav-item relative py-[22px] flex items-center space-x-2 text-[#3A3A3A] hover:text-[#273586] transition-colors"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/users.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/users.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -293,7 +300,7 @@
                   class="nav-item relative py-[22px] flex items-center space-x-2 text-[#3A3A3A] hover:text-[#273586] transition-colors"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/playlist.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/playlist.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -306,7 +313,7 @@
                   class="nav-item relative py-[22px] flex items-center space-x-2 text-[#3A3A3A] hover:text-[#273586] transition-colors"
                 >
                   <img
-                    src="{{ asset('landing/ghg-service/images/chat.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/chat.svg') }}"
                     alt=""
                     width="24"
                     height="24"
@@ -365,7 +372,7 @@
             class="nav-item relative flex min-h-11 w-full items-center gap-3 rounded-lg !px-3 !py-2.5 text-sm font-medium text-[#3A3A3A] transition-colors hover:bg-blue-50 hover:text-[#273586]"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/streaming.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/streaming.svg') }}"
               alt=""
               width="24"
               height="24"
@@ -378,7 +385,7 @@
             class="nav-item relative flex min-h-11 w-full items-center gap-3 rounded-lg !px-3 !py-2.5 text-sm font-medium text-[#3A3A3A] transition-colors hover:bg-blue-50 hover:text-[#273586]"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/benefit.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/benefit.svg') }}"
               alt=""
               width="24"
               height="24"
@@ -391,7 +398,7 @@
             class="nav-item relative flex min-h-11 w-full items-center gap-3 rounded-lg !px-3 !py-2.5 text-sm font-medium text-[#3A3A3A] transition-colors hover:bg-blue-50 hover:text-[#273586]"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/users.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/users.svg') }}"
               alt=""
               width="24"
               height="24"
@@ -404,7 +411,7 @@
             class="nav-item relative flex min-h-11 w-full items-center gap-3 rounded-lg !px-3 !py-2.5 text-sm font-medium text-[#3A3A3A] transition-colors hover:bg-blue-50 hover:text-[#273586]"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/playlist.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/playlist.svg') }}"
               alt=""
               width="24"
               height="24"
@@ -417,7 +424,7 @@
             class="nav-item relative flex min-h-11 w-full items-center gap-3 rounded-lg !px-3 !py-2.5 text-sm font-medium text-[#3A3A3A] transition-colors hover:bg-blue-50 hover:text-[#273586]"
           >
             <img
-              src="{{ asset('landing/ghg-service/images/chat.svg') }}"
+              src="{{ $landingAsset('landing/ghg-service/images/chat.svg') }}"
               alt=""
               width="24"
               height="24"
@@ -454,7 +461,7 @@
               class="flex min-h-10 items-center justify-center gap-2 rounded-lg !px-2 !py-2 transition-colors hover:bg-blue-50"
             >
               <img
-                src="{{ asset('landing/ghg-service/images/facebook.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/facebook.svg') }}"
                 alt=""
                 width="24"
                 height="24"
@@ -471,7 +478,7 @@
               class="flex min-h-10 items-center justify-center gap-2 rounded-lg !px-2 !py-2 transition-colors hover:bg-blue-50"
             >
               <img
-                src="{{ asset('landing/ghg-service/images/telephone.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/telephone.svg') }}"
                 alt=""
                 width="24"
                 height="24"
@@ -488,7 +495,7 @@
               class="flex min-h-10 items-center justify-center gap-2 rounded-lg !px-2 !py-2 transition-colors hover:bg-blue-50"
             >
               <img
-                src="{{ asset('landing/ghg-service/images/links.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/links.svg') }}"
                 alt=""
                 width="24"
                 height="24"
@@ -507,7 +514,7 @@
                 class="size-4"
                 width="16"
                 height="16"
-                src="{{ asset('landing/ghg-service/images/telephone.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/telephone.svg') }}"
                 alt=""
               decoding="async" />
               <span>
@@ -527,7 +534,7 @@
                 class="size-4"
                 width="16"
                 height="16"
-                src="{{ asset('landing/ghg-service/images/email.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/email.svg') }}"
                 alt=""
               decoding="async" />
               <a href="mailto:info@baochauenvir.com" class="text-gray-700"
@@ -572,7 +579,7 @@
                   class="size-8 xl:size-11"
                   data-x-aos="zoom-in"
                   height="44"
-                  src="{{ asset('landing/ghg-service/images/rounded-arrow.svg') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/rounded-arrow.svg') }}"
                   width="44"
                 decoding="async" />
                 <span> ISO 14064-1 & GHG </span>
@@ -614,7 +621,7 @@
                     class="size-10 mb-2"
                     data-x-aos="zoom-in"
                     height="40"
-                    src="{{ asset('landing/ghg-service/images/benefit-2.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/benefit-2.svg') }}"
                     width="40"
                   decoding="async" />
                   <p
@@ -637,7 +644,7 @@
                     class="size-10 mb-2"
                     data-x-aos="zoom-in"
                     height="40"
-                    src="{{ asset('landing/ghg-service/images/target.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/target.svg') }}"
                     width="40"
                   decoding="async" />
                   <p
@@ -658,7 +665,7 @@
                 data-x-aos="zoom-in"
                 style="
                   background-image:
-                    url('{{ asset('landing/ghg-service/images/sect-hero-bg.webp') }}'),
+                    url('{{ $landingAsset('landing/ghg-service/images/sect-hero-bg.webp') }}'),
                     linear-gradient(
                       90deg,
                       #0093cd 0%,
@@ -672,7 +679,9 @@
                   class="w-[146px] h-[146px] object-contain self-center mb-4 md:mb-6"
                   data-x-aos="zoom-in"
                   height="146"
-                  src="{{ asset('landing/ghg-service/images/sect-hero-2-292.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/sect-hero-2-292.webp') }}"
+                  srcset="{{ $landingAsset('landing/ghg-service/images/sect-hero-2-146.webp') }} 146w, {{ $landingAsset('landing/ghg-service/images/sect-hero-2-292.webp') }} 292w"
+                  sizes="146px"
                   width="146"
                 decoding="async" />
                 <div class="pb-4 md:!pb-6 text-base md:text-lg">
@@ -709,9 +718,9 @@
                   loop
                   playsinline
                   preload="none"
-                  poster="{{ asset('landing/ghg-service/images/sect-hero-1.webp') }}"
+                  poster="{{ $landingAsset('landing/ghg-service/images/sect-hero-1-704.webp') }}"
                 >
-                  <source src="{{ asset('landing/ghg-service/kkknk-intro-4k.mp4') }}" type="video/mp4" />
+                  <source src="{{ $landingAsset('landing/ghg-service/kkknk-intro-4k.mp4') }}" type="video/mp4" />
                   Trình duyệt của bạn không hỗ trợ phát video.
                 </video>
               </div>
@@ -766,7 +775,7 @@
                     class="w-10 h-10 md:w-20 md:h-20 object-contain form-logo"
                     data-x-aos="zoom-in"
                     height="80"
-                    src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }}" srcset="{{ $landingAsset('landing/ghg-service/images/Logo-48.webp') }} 48w, {{ $landingAsset('landing/ghg-service/images/Logo-80.webp') }} 80w, {{ $landingAsset('landing/ghg-service/images/Logo-96.webp') }} 96w, {{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }} 160w" sizes="(min-width: 768px) 80px, 48px"
                     width="80"
                   decoding="async" loading="lazy" />
                   <p
@@ -789,7 +798,7 @@
                       class="size-6 mx-auto mb-2 form-icon"
                       data-x-aos="zoom-in"
                       height="24"
-                      src="{{ asset('landing/ghg-service/images/blocked.svg') }}"
+                      src="{{ $landingAsset('landing/ghg-service/images/blocked.svg') }}"
                       width="24"
                     decoding="async" />
                     <p class="" data-x-aos="fade-up">TƯ VẤN<br />MIỄN PHÍ</p>
@@ -805,7 +814,7 @@
                       class="size-6 mx-auto mb-2 form-icon"
                       data-x-aos="zoom-in"
                       height="24"
-                      src="{{ asset('landing/ghg-service/images/infinity.svg') }}"
+                      src="{{ $landingAsset('landing/ghg-service/images/infinity.svg') }}"
                       width="24"
                     decoding="async" />
                     <p class="" data-x-aos="fade-up">
@@ -823,7 +832,7 @@
                       class="size-6 mx-auto mb-2 form-icon"
                       data-x-aos="zoom-in"
                       height="24"
-                      src="{{ asset('landing/ghg-service/images/no-spam.svg') }}"
+                      src="{{ $landingAsset('landing/ghg-service/images/no-spam.svg') }}"
                       width="24"
                     decoding="async" />
                     <p class="" data-x-aos="fade-up">
@@ -1102,9 +1111,9 @@
                 class="ghg-benefits-image rounded-2xl shadow-lg"
                 data-x-aos="zoom-in"
                 height="534"
-                src="{{ asset('landing/ghg-service/images/bao-chau-business-benefits.webp') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/bao-chau-business-benefits.webp') }}"
                 width="712"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-business-benefits-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-business-benefits-768.webp') }} 768w, {{ asset('landing/ghg-service/images/bao-chau-business-benefits.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-business-benefits-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-business-benefits-768.webp') }} 768w, {{ $landingAsset('landing/ghg-service/images/bao-chau-business-benefits.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
             </div>
           </div>
         </div>
@@ -1140,9 +1149,9 @@
                 class="aspect-[4/3] w-full rounded-md object-cover !mb-4"
                 data-x-aos="zoom-in"
                 height="314px"
-                src="{{ asset('landing/ghg-service/images/bao-chau-scope-1.webp') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1.webp') }}"
                 width="418px"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-1-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-1.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
               <h3
                 class="font-semibold text-red-500 text-lg md:text-xl xl:text-2xl mb-2"
                 data-x-aos="fade-up"
@@ -1169,9 +1178,9 @@
                 class="aspect-[4/3] w-full rounded-md object-cover !mb-4"
                 data-x-aos="zoom-in"
                 height="314px"
-                src="{{ asset('landing/ghg-service/images/bao-chau-scope-2.webp') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2.webp') }}"
                 width="418px"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-2-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-2.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
               <h3
                 class="font-semibold text-yellow-600 text-lg md:text-xl xl:text-2xl mb-2"
                 data-x-aos="fade-up"
@@ -1198,9 +1207,9 @@
                 class="aspect-[4/3] w-full rounded-md object-cover !mb-4"
                 data-x-aos="zoom-in"
                 height="314px"
-                src="{{ asset('landing/ghg-service/images/bao-chau-scope-3.webp') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3.webp') }}"
                 width="418px"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-3-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-3.webp') }} 1448w" sizes="(min-width: 1024px) 33vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3.webp') }} 1448w" sizes="(min-width: 1024px) 33vw, 100vw" />
               <h3
                 class="font-semibold text-green-600 text-lg md:text-xl xl:text-2xl mb-2"
                 data-x-aos="fade-up"
@@ -1228,8 +1237,8 @@
                   <img
                     alt="Scope 1 - Phát thải trực tiếp"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-                    src="{{ asset('landing/ghg-service/images/bao-chau-scope-1.webp') }}"
-                  width="1402" height="1122" decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-1-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-1.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
+                    src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1.webp') }}"
+                  width="1402" height="1122" decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-1.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
                   <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-red-950/95 to-red-700/70 !px-3 !py-2 text-center text-sm font-extrabold text-white md:text-base">
                     SCOPE 1
                   </figcaption>
@@ -1238,8 +1247,8 @@
                   <img
                     alt="Scope 2 - Phát thải từ năng lượng mua ngoài"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-                    src="{{ asset('landing/ghg-service/images/bao-chau-scope-2.webp') }}"
-                  width="1402" height="1122" decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-2-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-2.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
+                    src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2.webp') }}"
+                  width="1402" height="1122" decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-2.webp') }} 1402w" sizes="(min-width: 1024px) 33vw, 100vw" />
                   <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-amber-950/95 to-amber-600/70 !px-3 !py-2 text-center text-sm font-extrabold text-white md:text-base">
                     SCOPE 2
                   </figcaption>
@@ -1248,8 +1257,8 @@
                   <img
                     alt="Scope 3 - Phát thải trong chuỗi giá trị"
                     class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
-                    src="{{ asset('landing/ghg-service/images/bao-chau-scope-3.webp') }}"
-                  width="1448" height="1086" decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-scope-3-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-scope-3.webp') }} 1448w" sizes="(min-width: 1024px) 33vw, 100vw" />
+                    src="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3.webp') }}"
+                  width="1448" height="1086" decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-scope-3.webp') }} 1448w" sizes="(min-width: 1024px) 33vw, 100vw" />
                   <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-green-950/95 to-green-600/70 !px-3 !py-2 text-center text-sm font-extrabold text-white md:text-base">
                     SCOPE 3
                   </figcaption>
@@ -1291,9 +1300,9 @@
                   class="h-full w-full object-cover object-center"
                   data-x-aos="zoom-in"
                   height="420"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.webp') }}"
                   width="560"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-ghg-inventory-banner-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-ghg-inventory-banner-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-ghg-inventory-banner.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
               </div>
               <!-- Right side with content -->
               <div class="flex-auto text-center text-white md:text-left">
@@ -1343,9 +1352,9 @@
                 class="h-auto w-full max-w-[480px] rounded-2xl object-contain object-top shadow-lg xl:max-w-[520px]"
                 data-x-aos="zoom-in"
                 height="1536"
-                src="{{ asset('landing/ghg-service/images/bao-chau-about-portrait.webp') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/bao-chau-about-portrait.webp') }}"
                 width="1024"
-              decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-about-portrait-640.webp') }} 427w, {{ asset('landing/ghg-service/images/bao-chau-about-portrait.webp') }} 966w" sizes="(min-width: 1280px) 50vw, 100vw" />
+              decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-about-portrait-640.webp') }} 427w, {{ $landingAsset('landing/ghg-service/images/bao-chau-about-portrait.webp') }} 966w" sizes="(min-width: 1280px) 50vw, 100vw" />
             </div>
             <!-- Right Side - Content -->
             <div class="xl:pb-16 2xl:pb-20">
@@ -1369,7 +1378,7 @@
                       class="size-4 object-cover"
                       data-x-aos="zoom-in"
                       height="16"
-                      src="{{ asset('landing/ghg-service/images/gem.svg') }}"
+                      src="{{ $landingAsset('landing/ghg-service/images/gem.svg') }}"
                       width="16"
                     decoding="async" />
                   </div>
@@ -1392,7 +1401,7 @@
                       class="size-4 object-cover"
                       data-x-aos="zoom-in"
                       height="16"
-                      src="{{ asset('landing/ghg-service/images/gem.svg') }}"
+                      src="{{ $landingAsset('landing/ghg-service/images/gem.svg') }}"
                       width="16"
                     decoding="async" />
                   </div>
@@ -1435,7 +1444,7 @@
                         class="size-4 object-cover"
                         data-x-aos="zoom-in"
                         height="16"
-                        src="{{ asset('landing/ghg-service/images/gem.svg') }}"
+                        src="{{ $landingAsset('landing/ghg-service/images/gem.svg') }}"
                         width="16"
                       decoding="async" />
                     </div>
@@ -1455,7 +1464,7 @@
                         class="size-4 object-cover"
                         data-x-aos="zoom-in"
                         height="16"
-                        src="{{ asset('landing/ghg-service/images/gem.svg') }}"
+                        src="{{ $landingAsset('landing/ghg-service/images/gem.svg') }}"
                         width="16"
                       decoding="async" />
                     </div>
@@ -1477,7 +1486,7 @@
                         class="size-4 object-cover"
                         data-x-aos="zoom-in"
                         height="16"
-                        src="{{ asset('landing/ghg-service/images/gem.svg') }}"
+                        src="{{ $landingAsset('landing/ghg-service/images/gem.svg') }}"
                         width="16"
                       decoding="async" />
                     </div>
@@ -1533,9 +1542,9 @@
                   class="w-full aspect-[68/51] 2xl:aspect-auto 2xl:h-[513px] object-cover !mb-4"
                   data-x-aos="zoom-in"
                   height="1717"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-01.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-01.webp') }}"
                   width="2048"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-project-01-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-project-01.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-01-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-project-01.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
                 <p data-x-aos="fade-up">
                   GIẤY PHÉP MÔI TRƯỜNG - CÔNG TY TNHH SAMDUK VIỆT NAM
                 </p>
@@ -1546,9 +1555,9 @@
                   class="w-full aspect-[68/51] 2xl:aspect-auto 2xl:h-[513px] object-cover !mb-4"
                   data-x-aos="zoom-in"
                   height="1536"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-02.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-02.webp') }}"
                   width="2048"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-project-02-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-project-02.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-02-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-project-02.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
                 <p data-x-aos="fade-up">
                   PHÂN LOẠI LAO ĐỘNG TẠI CÔNG TY CỔ PHẦN GREENFEED VIỆT NAM
                 </p>
@@ -1559,7 +1568,7 @@
                   class="w-full aspect-[68/51] 2xl:aspect-auto 2xl:h-[513px] object-cover !mb-4"
                   data-x-aos="zoom-in"
                   height="289"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-03.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-03.webp') }}"
                   width="396"
                 decoding="async" loading="lazy" />
                 <p data-x-aos="fade-up">
@@ -1572,9 +1581,9 @@
                   class="w-full aspect-[68/51] 2xl:aspect-auto 2xl:h-[513px] object-cover !mb-4"
                   data-x-aos="zoom-in"
                   height="1080"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-04.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-04.webp') }}"
                   width="1580"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-project-04-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-project-04.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-04-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-project-04.webp') }} 1448w" sizes="(min-width: 1280px) 50vw, 100vw" />
                 <p data-x-aos="fade-up">
                   NHÀ MÁY MABUCHI MOTOR VIỆT NAM
                 </p>
@@ -1587,9 +1596,9 @@
                   class="w-full !mb-4 aspect-video object-cover object-center"
                   data-x-aos="zoom-in"
                   height="515"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-05.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-05.webp') }}"
                   width="900"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-project-05-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-project-05.webp') }} 900w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-05-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-project-05.webp') }} 900w" sizes="(min-width: 1280px) 50vw, 100vw" />
                 <p data-x-aos="fade-up">PHÂN LOẠI LAO ĐỘNG TẠI NHÀ MÁY SUNTORY PEPSICO VIỆT NAM</p>
               </div>
               <div>
@@ -1598,9 +1607,9 @@
                   class="w-full !mb-4 aspect-video object-cover object-center"
                   data-x-aos="zoom-in"
                   height="449"
-                  src="{{ asset('landing/ghg-service/images/bao-chau-project-06.webp') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-06.webp') }}"
                   width="800"
-                decoding="async" loading="lazy" srcset="{{ asset('landing/ghg-service/images/bao-chau-project-06-640.webp') }} 640w, {{ asset('landing/ghg-service/images/bao-chau-project-06.webp') }} 800w" sizes="(min-width: 1280px) 50vw, 100vw" />
+                decoding="async" loading="lazy" srcset="{{ $landingAsset('landing/ghg-service/images/bao-chau-project-06-640.webp') }} 640w, {{ $landingAsset('landing/ghg-service/images/bao-chau-project-06.webp') }} 800w" sizes="(min-width: 1280px) 50vw, 100vw" />
                 <p data-x-aos="fade-up">ĐÁNH GIÁ PHÂN LOẠI LAO ĐỘNG TẠI NHÀ MÁY BERICAP VIỆT NAM</p>
               </div>
             </div>
@@ -1612,14 +1621,14 @@
             class="w-full h-[155px] object-cover object-center"
             data-x-aos="zoom-in"
             height="155"
-            src="{{ asset('landing/ghg-service/images/sect-archivement-footer.svg') }}"
+            src="{{ $landingAsset('landing/ghg-service/images/sect-archivement-footer.svg') }}"
           decoding="async" />
         </div>
       </section>
             <section
         class="sec-timeline scroll-mt-24 bg-cover bg-top !pt-12 2xl:!pt-[72px] pb-16 md:pb-20 lg:pb-24 xl:pb-28 !px-4 2xl:!px-0 relative xl:scroll-mt-28"
         id="quy-trinh-thuc-hien"
-        style="background-image: url('{{ asset('landing/ghg-service/images/sect-timeline-bg.webp') }}');"
+        style="background-image: url('{{ $landingAsset('landing/ghg-service/images/sect-timeline-bg.webp') }}');"
       >
         <!-- Overlay to ensure text readability and card contrast -->
         <div class="absolute inset-0 bg-neutral-black/40 pointer-events-none"></div>
@@ -1841,7 +1850,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -1854,7 +1863,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -1867,7 +1876,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -1880,7 +1889,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -1946,7 +1955,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -1959,7 +1968,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2025,7 +2034,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2038,7 +2047,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2104,7 +2113,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2117,7 +2126,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2130,7 +2139,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2143,7 +2152,7 @@
                     class="size-5 mt-1 shrink-0"
                     data-x-aos="zoom-in"
                     height="20"
-                    src="{{ asset('landing/ghg-service/images/arrow-right.svg') }}"
+                    src="{{ $landingAsset('landing/ghg-service/images/arrow-right.svg') }}"
                     width="20"
                   decoding="async" />
                   <p data-x-aos="fade-up">
@@ -2190,57 +2199,57 @@
               <div class="bao-chau-partners__track -mx-2 flex h-full transition-transform duration-[450ms] ease-out will-change-transform motion-reduce:transition-none">
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-06.jpg') }}" alt="Bồ Công Anh Foods" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-06.jpg') }}" alt="Bồ Công Anh Foods" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-07.jpg') }}" alt="Mabuchi Motor" width="345" height="241" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-07.jpg') }}" alt="Mabuchi Motor" width="345" height="241" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-08.png') }}" alt="Pharmedic" width="500" height="500" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-08.png') }}" alt="Pharmedic" width="500" height="500" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-09.jpg') }}" alt="Thịnh Phát Environment Construction Investment" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-09.jpg') }}" alt="Thịnh Phát Environment Construction Investment" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-10.jpg') }}" alt="Môi Trường Xuyên Á" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-10.jpg') }}" alt="Môi Trường Xuyên Á" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-11.jpg') }}" alt="Hải Sơn Industrial Park" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-11.jpg') }}" alt="Hải Sơn Industrial Park" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-01.jpg') }}" alt="Thuận Việt Construction Investment" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-01.jpg') }}" alt="Thuận Việt Construction Investment" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-02.jpg') }}" alt="Nova Land" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-02.jpg') }}" alt="Nova Land" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-03.jpg') }}" alt="Capella Gallery Hall" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-03.jpg') }}" alt="Capella Gallery Hall" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-04.jpg') }}" alt="BMT FICO" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-04.jpg') }}" alt="BMT FICO" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
                 <div class="bao-chau-partners__slide h-full w-1/2 shrink-0 px-2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[14.285714%] 2xl:w-[12.5%]">
                   <figure class="m-0 flex h-[86px] items-center justify-center overflow-hidden rounded-md bg-white shadow-[0_6px_18px_rgba(21,76,3,0.14)] sm:h-[92px]">
-                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ asset('landing/ghg-service/images/bao-chau-client-05.jpg') }}" alt="Alpha Engineering" width="196" height="120" loading="lazy" decoding="async" />
+                    <img class="h-full w-full object-contain object-center p-[7px]" src="{{ $landingAsset('landing/ghg-service/images/bao-chau-client-05.jpg') }}" alt="Alpha Engineering" width="196" height="120" loading="lazy" decoding="async" />
                   </figure>
                 </div>
               </div>
@@ -2268,7 +2277,7 @@
         <!-- Logos -->
         <div class="flex justify-center items-center !gap-4 !mb-4 md:!mb-8">
           <img
-            src="{{ asset('landing/ghg-service/images/Logo-160.webp') }}"
+            src="{{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }}" srcset="{{ $landingAsset('landing/ghg-service/images/Logo-48.webp') }} 48w, {{ $landingAsset('landing/ghg-service/images/Logo-80.webp') }} 80w, {{ $landingAsset('landing/ghg-service/images/Logo-96.webp') }} 96w, {{ $landingAsset('landing/ghg-service/images/Logo-160.webp') }} 160w" sizes="(min-width: 768px) 128px, 88px"
             alt="Môi Trường Bảo Châu"
             width="128"
             height="128"
@@ -2301,7 +2310,7 @@
           <div class="text-center w-fit">
             <div class="flex items-center justify-center !gap-2 mb-1">
               <img
-                src="{{ asset('landing/ghg-service/images/telephone-2.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/telephone-2.svg') }}"
                 alt=""
                 width="16"
                 height="16"
@@ -2322,7 +2331,7 @@
           <div class="text-center w-fit">
             <div class="flex items-center justify-center !gap-2 mb-2">
               <img
-                src="{{ asset('landing/ghg-service/images/email-2.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/email-2.svg') }}"
                 alt=""
                 width="16"
                 height="16"
@@ -2340,7 +2349,7 @@
           <div class="text-center w-fit">
             <div class="flex items-center justify-center !gap-2 mb-2">
               <img
-                src="{{ asset('landing/ghg-service/images/links.svg') }}"
+                src="{{ $landingAsset('landing/ghg-service/images/links.svg') }}"
                 alt=""
                 width="16"
                 height="16"
@@ -2354,7 +2363,7 @@
                 target="_blank"
                 title="Facebook"
                 ><img
-                  src="{{ asset('landing/ghg-service/images/facebook-2.svg') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/facebook-2.svg') }}"
                   alt=""
                   width="24"
                   height="24"
@@ -2365,7 +2374,7 @@
                 target="_blank"
                 title="Zalo"
                 ><img
-                  src="{{ asset('landing/ghg-service/images/tiktok.svg') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/tiktok.svg') }}"
                   alt=""
                   width="24"
                   height="24"
@@ -2376,7 +2385,7 @@
                 target="_blank"
                 title="Website"
                 ><img
-                  src="{{ asset('landing/ghg-service/images/youtube-2.svg') }}"
+                  src="{{ $landingAsset('landing/ghg-service/images/youtube-2.svg') }}"
                   alt=""
                   width="24"
                   height="24"
@@ -2425,7 +2434,7 @@
               <div
                 class="d-flex align-items-center gap-1 justify-content-center"
               >
-                <img src="{{ asset('landing/ghg-service/images/target-icon.png') }}" alt="" decoding="async" />
+                <img src="{{ $landingAsset('landing/ghg-service/images/target-icon.png') }}" alt="" decoding="async" />
                 <span class="text-white"
                   >Tư vấn miễn phí · Báo giá dịch vụ · Hỗ trợ doanh nghiệp toàn quốc</span
                 >
@@ -2533,12 +2542,12 @@
     </style>
 
     <!-- Common Scripts -->
-    <script src="{{ asset('landing/ghg-service/js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/bootstrap.bundle.min.js') }}" defer></script>
 
     <!-- AOS JS -->
-    <script src="{{ asset('landing/ghg-service/js/aos.js') }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/aos.js') }}" defer></script>
 
-    <script src="{{ asset('landing/ghg-service/js/partners-carousel.js') }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/partners-carousel.js') }}" defer></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -2713,7 +2722,6 @@
       document.addEventListener("DOMContentLoaded", function () {
         // Get the header element
         const header = document.querySelector(".header");
-        let headerHeight = header.offsetHeight; // Get the header height
         let ticking = false; // For scroll performance
 
         // Function to handle scroll events
@@ -2766,9 +2774,7 @@
         // Initial check
         handleScroll();
 
-        // Recalculate header height on window resize
         window.addEventListener("resize", function () {
-          headerHeight = header.offsetHeight;
           handleScroll();
         });
 
@@ -2787,7 +2793,7 @@
               header.classList.remove("active");
               menuToggle.setAttribute("aria-expanded", "false");
               // Change icon back to hamburger
-              menuIcon.src = "{{ asset('landing/ghg-service/images/menu-bar.svg') }}";
+              menuIcon.src = "{{ $landingAsset('landing/ghg-service/images/menu-bar.svg') }}";
               menuIcon.alt = "Menu";
               // Enable body scroll
               document.body.style.overflow = "";
@@ -2809,7 +2815,7 @@
             mobileMenu.classList.add("hidden");
             header.classList.remove("active");
             menuToggle.setAttribute("aria-expanded", "false");
-            menuIcon.src = "{{ asset('landing/ghg-service/images/menu-bar.svg') }}";
+            menuIcon.src = "{{ $landingAsset('landing/ghg-service/images/menu-bar.svg') }}";
             menuIcon.alt = "Menu";
             document.body.style.overflow = "";
           };
@@ -2835,6 +2841,6 @@
     <!-- Custom Scripts (Body End) -->
   
     <div hidden data-consultation-settings data-site-key="{{ $recaptchaSiteKey }}" data-previous-form="{{ old('form_id', session('consultation_form_id')) }}"></div>
-    <script src="{{ asset('landing/ghg-service/js/consultation-form.js') }}?v={{ filemtime(public_path('landing/ghg-service/js/consultation-form.js')) }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/consultation-form.js') }}" defer></script>
   </body>
 </html>
