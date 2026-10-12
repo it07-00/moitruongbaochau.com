@@ -1,0 +1,26 @@
+.ghg-reveal-ready {
+    transition: opacity 650ms ease, transform 650ms ease;
+}
+
+.ghg-reveal-ready[data-x-aos="fade-up"] {
+    opacity: 0;
+    transform: translate3d(0, 100px, 0);
+}
+
+.ghg-reveal-ready[data-x-aos="zoom-in"] {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.ghg-reveal-ready.ghg-reveal-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ghg-reveal-ready {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

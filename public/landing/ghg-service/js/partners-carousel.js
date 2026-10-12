@@ -15,11 +15,11 @@
     var resizePending = false;
 
     function visibleSlides() {
-        if (window.innerWidth >= 1536) return 8;
-        if (window.innerWidth >= 1280) return 7;
-        if (window.innerWidth >= 1024) return 6;
-        if (window.innerWidth >= 768) return 4;
-        if (window.innerWidth >= 640) return 3;
+        if (window.matchMedia('(min-width: 1536px)').matches) return 8;
+        if (window.matchMedia('(min-width: 1280px)').matches) return 7;
+        if (window.matchMedia('(min-width: 1024px)').matches) return 6;
+        if (window.matchMedia('(min-width: 768px)').matches) return 4;
+        if (window.matchMedia('(min-width: 640px)').matches) return 3;
         return 2;
     }
 

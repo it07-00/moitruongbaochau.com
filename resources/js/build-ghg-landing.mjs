@@ -10,7 +10,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const folder = resolve(root, 'resources/views/frontend/landing/ghg-service');
 const files = (await readdir(folder)).filter(name => name.endsWith('.blade.php')).map(name => resolve(folder, name));
 const scriptFolder = resolve(root, 'public/landing/ghg-service/js');
-const scriptNames = ['consultation-form.js', 'bootstrap.bundle.min.js', 'aos.js', 'partners-carousel.js'];
+const scriptNames = ['consultation-form.js', 'bootstrap.bundle.min.js', 'scroll-reveal.js', 'partners-carousel.js'];
 files.push(...scriptNames.map(name => resolve(scriptFolder, name)));
 const sources = await Promise.all(files.map(async file => ({ content: await readFile(file, 'utf8'), extension: file.endsWith('.js') ? 'js' : 'html' })));
 const scanner = new Scanner({});
@@ -18,7 +18,7 @@ const candidates = scanner.scanFiles(sources.filter((source, index) => !scriptNa
 const input = resolve(root, 'resources/css/ghg-landing.css');
 const compiler = await compile(await readFile(input, 'utf8'), { base: dirname(input), onDependency() {} });
 const cssFolder = resolve(root, 'public/landing/ghg-service/css');
-const stylesheets = ['inter.css', 'bootstrap-icons.min.css', 'global.css', 'bootstrap.min.css', 'modal-auth.css', 'aos.css', 'styles.css', 'consultation-form.css'];
+const stylesheets = ['inter.css', 'bootstrap-icons.min.css', 'global.css', 'bootstrap.min.css', 'modal-auth.css', 'scroll-reveal.css', 'styles.css', 'consultation-form.css'];
 // Include runtime states, including Bootstrap's constructed backdrop class names.
 const usedSymbols = new Set(sources.flatMap(source => source.content.match(/[A-Za-z_][\w-]*/g) ?? []));
 ['modal-backdrop', 'modal-open', 'show', 'showing', 'hiding', 'fade', 'active', 'collapsing', 'aos-init', 'aos-animate'].forEach(name => usedSymbols.add(name));

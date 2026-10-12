@@ -2544,8 +2544,7 @@
     <!-- Common Scripts -->
     <script src="{{ $landingAsset('landing/ghg-service/js/bootstrap.bundle.min.js') }}" defer></script>
 
-    <!-- AOS JS -->
-    <script src="{{ $landingAsset('landing/ghg-service/js/aos.js') }}" defer></script>
+    <script src="{{ $landingAsset('landing/ghg-service/js/scroll-reveal.js') }}" defer></script>
 
     <script src="{{ $landingAsset('landing/ghg-service/js/partners-carousel.js') }}" defer></script>
 
@@ -2710,15 +2709,6 @@
       }
     </script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll("[data-x-aos]").forEach((element) => {
-          if (!element.closest("#su-cap-thiet")) {
-            element.setAttribute("data-aos", element.getAttribute("data-x-aos"));
-          }
-        });
-        AOS.init({ duration: 650, once: true });
-      });
-
       document.addEventListener("DOMContentLoaded", function () {
         // Get the header element
         const header = document.querySelector(".header");
