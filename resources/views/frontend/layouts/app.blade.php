@@ -27,10 +27,10 @@
     <x-frontend.header />
     <main class="main site-content" id="site-content">
         <div class="webhd-shap-bg" aria-hidden="true">
-            <x-frontend.image src="{{ asset('assets/images/bg-02.webp') }}" alt="" width="1698" height="1080" sizes="100vw" fetchpriority="{{ ($bodyClass ?? '') === 'home' ? 'high' : 'low' }}" decoding="async" />
+            <x-frontend.image src="{{ asset('assets/images/bg-02.webp') }}" alt="" width="1698" height="1080" sizes="100vw" loading="lazy" fetchpriority="low" decoding="async" />
         </div>
         <div class="webhd-shap" aria-hidden="true">
-            <x-frontend.image src="{{ asset('assets/images/logo-leave-png-min.png') }}" alt="" width="536" height="522" sizes="520px" class="opacity-15" fetchpriority="low" decoding="async" />
+            <x-frontend.image src="{{ asset('assets/images/logo-leave-png-min.png') }}" alt="" width="536" height="522" sizes="520px" class="opacity-15" loading="lazy" fetchpriority="low" decoding="async" />
         </div>
         @yield('content')
     </main>

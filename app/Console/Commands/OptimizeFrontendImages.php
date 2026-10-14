@@ -24,9 +24,11 @@ class OptimizeFrontendImages extends Command
                 if (! $file->isFile() || str_contains($file->getPathname(), DIRECTORY_SEPARATOR.'optimized'.DIRECTORY_SEPARATOR)) {
                     continue;
                 }
-                $relative = str_starts_with($file->getPathname(), public_path('assets/images'))
-                    ? 'assets/images/'.str_replace('\\', '/', substr($file->getPathname(), strlen(public_path('assets/images')) + 1))
-                    : 'storage/'.str_replace('\\', '/', substr($file->getPathname(), strlen(Storage::disk('public')->path('')) + 1));
+                $diskPath = rtrim(Storage::disk('public')->path(''), '\\/');
+                $assetsPath = rtrim(public_path('assets/images'), '\\/');
+                $relative = str_starts_with($file->getPathname(), $assetsPath)
+                    ? 'assets/images/'.str_replace('\\', '/', ltrim(substr($file->getPathname(), strlen($assetsPath)), '\\/'))
+                    : 'storage/'.str_replace('\\', '/', ltrim(substr($file->getPathname(), strlen($diskPath)), '\\/'));
                 try {
                     if ($optimizer->optimize($relative)) {
                         $count++;

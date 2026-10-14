@@ -377,7 +377,9 @@
     "assets/images/asterisk.png": {
         "width": 24,
         "height": 24,
-        "variants": []
+        "variants": {
+            "24": "assets/images/optimized/frontend-22cbcc920038860d-24.webp"
+        }
     },
     "assets/images/bao-gia-lai.png": {
         "width": 750,
@@ -391,12 +393,18 @@
     "assets/images/bao-kinh-te-xanh.png": {
         "width": 315,
         "height": 60,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-d2f19507e717a657-160.webp",
+            "315": "assets/images/optimized/frontend-d2f19507e717a657-315.webp"
+        }
     },
     "assets/images/bao-moi.png": {
         "width": 250,
         "height": 110,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-78e0281729b46fd9-160.webp",
+            "250": "assets/images/optimized/frontend-78e0281729b46fd9-250.webp"
+        }
     },
     "assets/images/baobithanhtien.png": {
         "width": 800,
@@ -545,7 +553,10 @@
     "assets/images/ketoansaokim.webp": {
         "width": 413,
         "height": 100,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-e62d460f4ab0d96e-160.webp",
+            "413": "assets/images/optimized/frontend-e62d460f4ab0d96e-413.webp"
+        }
     },
     "assets/images/laptopgaming.png": {
         "width": 2239,
@@ -588,7 +599,11 @@
     "assets/images/logo-dochi-office-768x344.webp": {
         "width": 768,
         "height": 344,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-d244802bfecabe85-160.webp",
+            "480": "assets/images/optimized/frontend-d244802bfecabe85-480.webp",
+            "768": "assets/images/optimized/frontend-d244802bfecabe85-768.webp"
+        }
     },
     "assets/images/logo-em-biet-doc-1-768x344.webp": {
         "width": 768,
@@ -631,7 +646,11 @@
     "assets/images/logo-me-since-768x344.webp": {
         "width": 768,
         "height": 344,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-a4ee1f1dc476f486-160.webp",
+            "480": "assets/images/optimized/frontend-a4ee1f1dc476f486-480.webp",
+            "768": "assets/images/optimized/frontend-a4ee1f1dc476f486-768.webp"
+        }
     },
     "assets/images/logo-nu-cuoi-duyen-768x344.webp": {
         "width": 768,
@@ -710,12 +729,18 @@
     "assets/images/nangluc.png": {
         "width": 358,
         "height": 128,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-fc852504610a9e06-160.webp",
+            "358": "assets/images/optimized/frontend-fc852504610a9e06-358.webp"
+        }
     },
     "assets/images/nhakhoaanna.png": {
         "width": 284,
         "height": 69,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-dc241dd11512fb92-160.webp",
+            "284": "assets/images/optimized/frontend-dc241dd11512fb92-284.webp"
+        }
     },
     "assets/images/nhakhoathanhtam.webp": {
         "width": 1920,
@@ -820,6 +845,17 @@
             "1920": "assets/images/optimized/frontend-fd8fb43abce5da2d-1920.webp"
         }
     },
+    "storage/uploads/job-postings/01M4W4K334ZBNK99GGXYSGB7BC.png": {
+        "width": 1600,
+        "height": 900,
+        "variants": {
+            "160": "assets/images/optimized/frontend-6287ce86c94e46d7-160.webp",
+            "480": "assets/images/optimized/frontend-6287ce86c94e46d7-480.webp",
+            "960": "assets/images/optimized/frontend-6287ce86c94e46d7-960.webp",
+            "1536": "assets/images/optimized/frontend-6287ce86c94e46d7-1536.webp",
+            "1600": "assets/images/optimized/frontend-6287ce86c94e46d7-1600.webp"
+        }
+    },
     "storage/uploads/partners/1-1-768x427.png": {
         "width": 768,
         "height": 427,
@@ -877,12 +913,18 @@
     "storage/uploads/partners/bao-kinh-te-xanh.png": {
         "width": 315,
         "height": 60,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-d2f19507e717a657-160.webp",
+            "315": "assets/images/optimized/frontend-d2f19507e717a657-315.webp"
+        }
     },
     "storage/uploads/partners/bao-moi.png": {
         "width": 250,
         "height": 110,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-78e0281729b46fd9-160.webp",
+            "250": "assets/images/optimized/frontend-78e0281729b46fd9-250.webp"
+        }
     },
     "storage/uploads/partners/bidrico.png": {
         "width": 522,
@@ -925,7 +967,10 @@
     "storage/uploads/partners/ketoansaokim.webp": {
         "width": 413,
         "height": 100,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-e62d460f4ab0d96e-160.webp",
+            "413": "assets/images/optimized/frontend-e62d460f4ab0d96e-413.webp"
+        }
     },
     "storage/uploads/partners/logo-Rart-768x344.webp": {
         "width": 768,
@@ -957,7 +1002,10 @@
     "storage/uploads/partners/nhakhoaanna.png": {
         "width": 284,
         "height": 69,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-dc241dd11512fb92-160.webp",
+            "284": "assets/images/optimized/frontend-dc241dd11512fb92-284.webp"
+        }
     },
     "storage/uploads/service-categories/Bai-Dang-Bao-Chau-1024x572.png": {
         "width": 1024,
@@ -997,6 +1045,17 @@
             "480": "assets/images/optimized/frontend-5a950b19265fe534-480.webp",
             "960": "assets/images/optimized/frontend-5a950b19265fe534-960.webp",
             "1024": "assets/images/optimized/frontend-5a950b19265fe534-1024.webp"
+        }
+    },
+    "storage/uploads/services/01M4W4K5XSR57MJSC4B2EPT0H7.png": {
+        "width": 1600,
+        "height": 900,
+        "variants": {
+            "160": "assets/images/optimized/frontend-6287ce86c94e46d7-160.webp",
+            "480": "assets/images/optimized/frontend-6287ce86c94e46d7-480.webp",
+            "960": "assets/images/optimized/frontend-6287ce86c94e46d7-960.webp",
+            "1536": "assets/images/optimized/frontend-6287ce86c94e46d7-1536.webp",
+            "1600": "assets/images/optimized/frontend-6287ce86c94e46d7-1600.webp"
         }
     },
     "storage/uploads/sliders/slide-1.png": {
@@ -1069,7 +1128,10 @@
     "storage/uploads/testimonials/nangluc.png": {
         "width": 358,
         "height": 128,
-        "variants": []
+        "variants": {
+            "160": "assets/images/optimized/frontend-fc852504610a9e06-160.webp",
+            "358": "assets/images/optimized/frontend-fc852504610a9e06-358.webp"
+        }
     },
     "storage/uploads/testimonials/sachstore.png": {
         "width": 500,

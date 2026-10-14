@@ -44,7 +44,7 @@ await writeFile(resolve(cssFolder, 'frontend.min.css'), full);
 // Include complete header, hero and introduction at both mobile and desktop breakpoints.
 const sourceFiles = ['resources/views/components/frontend/header.blade.php', 'resources/views/components/frontend/floating-contact.blade.php', 'resources/views/frontend/layouts/app.blade.php'];
 const sources = await Promise.all(sourceFiles.map(async path => ({ content: await readFile(resolve(root, path), 'utf8'), extension: 'html' })));
-sources.push({ content: (await readFile(resolve(root, 'resources/views/frontend/home.blade.php'), 'utf8')).split('id="section-2e070d0c2f"')[0], extension: 'html' });
+sources.push({ content: (await readFile(resolve(root, 'resources/views/frontend/home.blade.php'), 'utf8')).split('id="section-4bdc829f17"')[0], extension: 'html' });
 const used = new Set(new Scanner({}).scanFiles(sources));
 const critical = postcss.parse(css);
 critical.walkRules(rule => {
@@ -52,9 +52,7 @@ critical.walkRules(rule => {
     const classes = [...rule.selector.matchAll(/(?<!\\)\.((?:\\[0-9a-fA-F]{1,6}\s?|\\.|[\w-])+)/g)].map(match => match[1].replace(/\\([0-9a-fA-F]{1,6})\s?|\\(.)/g, (_, hex, char) => hex ? String.fromCodePoint(parseInt(hex, 16)) : char));
     if (classes.length && !classes.some(name => used.has(name))) rule.remove();
 });
-critical.walkAtRules('font-face', rule => {
-    if (!rule.toString().includes('font-family:Poppins')) rule.remove();
-});
+critical.walkAtRules('font-face', rule => rule.remove());
 critical.walkAtRules(rule => { if (rule.nodes && !rule.nodes.length) rule.remove(); });
 const inline = transform({ filename: 'frontend-critical.css', code: Buffer.from(critical.toString()), minify: true }).code;
 await writeFile(resolve(cssFolder, 'frontend-critical.css'), inline);
