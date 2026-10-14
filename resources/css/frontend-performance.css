@@ -14,6 +14,22 @@
     height: auto;
 }
 
+.webhd-shap {
+    width: 100vw;
+    height: min(60vw, 520px);
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.webhd-shap img {
+    width: 60%;
+    height: auto;
+    aspect-ratio: 1;
+    display: block;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .webhd-shap-bg img { animation: none; }
 }

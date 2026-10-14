@@ -28,6 +28,15 @@ css = css.replace(/url\((['"]?)([^)'"\s]+)\1\)/g, (match, quote, url) => version
 // The legacy generated stylesheet contains empty selectors inside color feature queries.
 const parsed = postcss.parse(css);
 parsed.walkRules(rule => { if (!rule.selector.trim()) rule.remove(); });
+const fontRules = postcss.root();
+parsed.walkAtRules('font-face', rule => {
+    if (rule.toString().includes('font-family:Poppins')) {
+        fontRules.append(rule.clone());
+        rule.remove();
+    }
+});
+const fonts = transform({ filename: 'frontend-fonts.css', code: Buffer.from(fontRules.toString()), minify: true }).code;
+await writeFile(resolve(cssFolder, 'frontend-fonts.css'), fonts);
 css = parsed.toString();
 const full = transform({ filename: 'frontend.css', code: Buffer.from(css), minify: true }).code;
 await writeFile(resolve(cssFolder, 'frontend.min.css'), full);

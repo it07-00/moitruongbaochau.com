@@ -301,12 +301,18 @@
                 <ul
                   class="tabs flex flex-col gap-4 sm:gap-5 lg:gap-5 mt-6 lg:mt-8 [&_.is-active>a]:border-primary! [&_.is-active>a]:bg-white! [&_.is-active>a]:shadow-xl! [&_.is-active>a]:shadow-primary/10! [&_.is-active>a]:border-2! [&_.is-active_span.tab-text]:text-primary! [&_.is-active_svg]:text-primary!"
                   data-fx-tabs=""
+                  role="tablist"
+                  aria-label="Nhóm dịch vụ môi trường"
                   id="services-extra-tabs-4bdc829f17"
                 >
                   @foreach($serviceCategories as $index => $category)
-                    <li class="tabs-title {{ $index === 0 ? 'is-active active' : '' }}">
+                    <li role="presentation" class="tabs-title {{ $index === 0 ? 'is-active active' : '' }}">
                       <a
                         href="#cat-tab-{{ $category->id }}"
+                        id="service-tab-{{ $category->id }}"
+                        role="tab"
+                        aria-controls="cat-tab-{{ $category->id }}"
+                        tabindex="{{ $index === 0 ? '0' : '-1' }}"
                         class="py-5 px-6 sm:py-6 sm:px-7 lg:py-6.5 lg:px-8 rounded-2xl lg:rounded-3xl bg-white border border-black/8 shadow-sm hover:shadow-lg hover:border-primary/50 transition-all flex items-center gap-5 sm:gap-6 lg:gap-7 {{ $index === 0 ? 'is-active active' : '' }}"
                         aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
                         title="{{ $category->name }}"
@@ -430,7 +436,7 @@
                   data-fx-tabs-content="services-extra-tabs-4bdc829f17"
                 >
                   @foreach($serviceCategories as $index => $category)
-                    <div class="tabs-panel {{ $index === 0 ? 'is-active' : '' }}" id="cat-tab-{{ $category->id }}">
+                    <div class="tabs-panel {{ $index === 0 ? 'is-active' : '' }}" id="cat-tab-{{ $category->id }}" role="tabpanel" aria-labelledby="service-tab-{{ $category->id }}" tabindex="0">
                       <div
                         class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
                       >

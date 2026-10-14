@@ -10,6 +10,7 @@
     @foreach(['Regular', 'SemiBold'] as $fontWeight)
         <link rel="preload" href="{{ asset('assets/fonts/SVN-Poppins-'.$fontWeight.'.subset.woff') }}?v={{ substr(hash_file('sha256', public_path('assets/fonts/SVN-Poppins-'.$fontWeight.'.subset.woff')), 0, 12) }}" as="font" type="font/woff" crossorigin>
     @endforeach
+    <style>{!! file_get_contents(public_path('assets/css/frontend-fonts.css')) !!}</style>
     @if(($bodyClass ?? '') === 'home')
         <style>{!! file_get_contents(public_path('assets/css/frontend-critical.css')) !!}</style>
         <link rel="preload" href="{{ asset('assets/css/frontend.min.css') }}?v={{ substr(hash_file('sha256', public_path('assets/css/frontend.min.css')), 0, 12) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">

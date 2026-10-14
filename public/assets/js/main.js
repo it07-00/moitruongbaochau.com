@@ -294,6 +294,12 @@ function initInfiniteMarquee() {
       slide.style.flexShrink = '0';
       const clone = slide.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
+      if (clone.hasAttribute('tabindex')) clone.setAttribute('tabindex', '-1');
+      clone.removeAttribute('id');
+      clone.querySelectorAll('[id]').forEach((element) => element.removeAttribute('id'));
+      clone.querySelectorAll('a, button, input, select, textarea, summary, [tabindex], [contenteditable]').forEach((element) => {
+        element.setAttribute('tabindex', '-1');
+      });
       wrapper.appendChild(clone);
     });
 
@@ -481,8 +487,22 @@ function initTabs() {
       ? document.querySelector(`[data-fx-tabs-content="${contentId}"]`)
       : document.querySelector('.tabs-content');
 
-    const links = tabsNav.querySelectorAll('a[href^="#"]');
+    const links = Array.from(tabsNav.querySelectorAll('a[href^="#"]'));
+    tabsNav.setAttribute('role', 'tablist');
     links.forEach((link) => {
+      link.setAttribute('role', 'tab');
+      link.addEventListener('keydown', (event) => {
+        let nextIndex = links.indexOf(link);
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (nextIndex + 1) % links.length;
+        else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (nextIndex - 1 + links.length) % links.length;
+        else if (event.key === 'Home') nextIndex = 0;
+        else if (event.key === 'End') nextIndex = links.length - 1;
+        else if (event.key === ' ') { event.preventDefault(); link.click(); return; }
+        else return;
+        event.preventDefault();
+        links[nextIndex].focus();
+        links[nextIndex].click();
+      });
       link.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -495,12 +515,14 @@ function initTabs() {
           links.forEach((l) => {
             l.classList.remove('active', 'is-active');
             l.setAttribute('aria-selected', 'false');
+            l.setAttribute('tabindex', '-1');
             const p = l.closest('.tabs-title');
             if (p) p.classList.remove('is-active', 'active');
           });
 
           link.classList.add('active', 'is-active');
           link.setAttribute('aria-selected', 'true');
+          link.setAttribute('tabindex', '0');
           const parentTitle = link.closest('.tabs-title');
           if (parentTitle) parentTitle.classList.add('is-active', 'active');
 
