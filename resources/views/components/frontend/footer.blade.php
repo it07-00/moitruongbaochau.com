@@ -1,6 +1,6 @@
 <footer id="footer" class="site-footer has-contact-link relative overflow-hidden bg-gradient-to-b from-[#e8f8f0] via-[#d6f4e6] to-[#c3eed9]" itemtype="https://schema.org/WPFooter" itemscope="">
     <div class="bg-absolute-footer hidden">
-        <img src="{{ asset('assets/images/footer-2-bg-1920x960.png') }}" class="object-cover object-left" width="1920" height="960" alt="" decoding="async" loading="lazy" />
+        <x-frontend.image src="{{ asset('assets/images/footer-2-bg-1920x960.png') }}" class="object-cover object-left" width="1920" height="960" alt="" decoding="async" loading="lazy"  />
     </div>
     <div id="footer-columns" class="footer-columns relative">
         <div class="container px-3 mx-auto">
@@ -140,7 +140,7 @@
             <!-- LOGO TRÒN FOOTER -->
             <div class="footer-logo flex justify-center items-center my-5 md:my-6">
                 <a title="MÔI TRƯỜNG BẢO CHÂU" href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/logo-leave-png-min.png') }}" class="default-logo w-36 sm:w-40 h-auto" width="1045" height="344" alt="MÔI TRƯỜNG BẢO CHÂU" loading="lazy" decoding="async" />
+                    <x-frontend.image src="{{ asset('assets/images/logo-leave-png-min.png') }}" class="default-logo w-36 sm:w-40 h-auto" width="1045" height="344" alt="MÔI TRƯỜNG BẢO CHÂU" loading="lazy" decoding="async"  />
                 </a>
             </div>
         </div>

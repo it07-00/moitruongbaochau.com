@@ -2,10 +2,20 @@
 
 namespace App\Providers;
 
+use App\Models\JobPosting;
+use App\Models\Media;
 use App\Models\Menu;
 use App\Models\MenuItem;
+use App\Models\Page;
+use App\Models\Partner;
+use App\Models\Post;
+use App\Models\Project;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Setting;
+use App\Models\Slider;
+use App\Models\Testimonial;
+use App\Observers\FrontendImageObserver;
 use App\Observers\MenuItemObserver;
 use App\Observers\MenuObserver;
 use App\Services\MenuService;
@@ -40,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! app()->isProduction());
         Menu::observe(MenuObserver::class);
         MenuItem::observe(MenuItemObserver::class);
+        foreach ([Media::class, Slider::class, Partner::class, Testimonial::class, Page::class, Post::class, Project::class, JobPosting::class, ServiceCategory::class, Service::class, Setting::class] as $model) {
+            $model::observe(FrontendImageObserver::class);
+        }
         Setting::saved(fn () => Cache::forget('website.settings'));
         Setting::deleted(fn () => Cache::forget('website.settings'));
 

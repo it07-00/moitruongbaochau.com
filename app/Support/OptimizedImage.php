@@ -7,6 +7,47 @@ class OptimizedImage
     /** @param array<string, array{width: int, height: int, variants: array<int, string>}>|null $manifest */
     public function __construct(private ?array $manifest = null) {}
 
+    public function forgetManifest(): void
+    {
+        $this->manifest = null;
+    }
+
+    public function html(?string $html): ?string
+    {
+        if (! $html || ! str_contains(strtolower($html), '<img')) {
+            return $html;
+        }
+
+        return preg_replace_callback('/<img\b[^>]*>/i', function (array $match): string {
+            $document = new \DOMDocument;
+            $previous = libxml_use_internal_errors(true);
+            try {
+                $document->loadHTML('<?xml encoding="UTF-8">'.$match[0], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                $image = $document->getElementsByTagName('img')->item(0);
+                if (! $image) {
+                    return $match[0];
+                }
+                $attributes = $this->attributes($image->getAttribute('src'));
+                foreach ($attributes as $name => $value) {
+                    if ($name !== 'src') {
+                        $image->setAttribute($name, (string) $value);
+                    }
+                }
+                if (isset($attributes['srcset']) && ! $image->hasAttribute('sizes')) {
+                    $image->setAttribute('sizes', '(min-width: 1024px) 800px, 100vw');
+                }
+                if (! $image->hasAttribute('loading')) {
+                    $image->setAttribute('loading', 'lazy');
+                }
+
+                return $document->saveHTML($image);
+            } finally {
+                libxml_clear_errors();
+                libxml_use_internal_errors($previous);
+            }
+        }, $html);
+    }
+
     /** @return array{src: string, width?: int, height?: int, srcset?: string} */
     public function attributes(string $source): array
     {

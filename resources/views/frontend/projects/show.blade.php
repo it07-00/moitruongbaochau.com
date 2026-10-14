@@ -13,13 +13,13 @@
               <!-- Subtitle Badge chuẩn quy chuẩn AGENTS.md 1.3 -->
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="Môi Trường Bảo Châu"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -99,7 +99,7 @@
               <div
                 class="w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/10 border border-gray-100"
               >
-                <img
+                <x-frontend.image
                   width="1200"
                   height="600"
                   src="{{ str_starts_with($project->thumbnail ?? '', 'http') ? $project->thumbnail : (str_starts_with($project->thumbnail ?? '', 'uploads/') ? asset('storage/' . $project->thumbnail) : asset('assets/images/' . ($project->thumbnail ?: 'BERICAP.jpg'))) }}"
@@ -108,7 +108,7 @@
                   loading="eager"
                   fetchpriority="high"
                   decoding="async"
-                />
+                 />
               </div>
             </div>
           </div>
@@ -189,7 +189,7 @@
                   @endif
 
                   <div class="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4">
-                    {!! str_contains($project->content, '<p>') || str_contains($project->content, '<h') || str_contains($project->content, '<div>') ? $project->content : nl2br(e($project->content)) !!}
+                    {!! str_contains($project->content, '<p>') || str_contains($project->content, '<h') || str_contains($project->content, '<div>') ? app(\App\Support\OptimizedImage::class)->html($project->content) : nl2br(e($project->content)) !!}
                   </div>
 
                   <!-- Project Showcase Image (Khoảng cách rõ ràng giữa ảnh và text) -->
@@ -197,7 +197,7 @@
                   <div
                     class="my-10 lg:my-14 rounded-3xl overflow-hidden shadow-xl border border-black/5"
                   >
-                    <img
+                    <x-frontend.image
                       width="1024"
                       height="572"
                       src="{{ str_starts_with($project->thumbnail ?? '', 'http') ? $project->thumbnail : (str_starts_with($project->thumbnail ?? '', 'uploads/') ? asset('storage/' . $project->thumbnail) : asset('assets/images/' . ($project->thumbnail ?: 'BERICAP.jpg'))) }}"
@@ -205,7 +205,7 @@
                       alt="{{ $project->title }}"
                       loading="lazy"
                       decoding="async"
-                    />
+                     />
                   </div>
                   @endif
 
@@ -652,13 +652,13 @@
                 <!-- Subtitle Badge chuẩn quy chuẩn -->
                 <div class="inline-flex items-center gap-2 lg:gap-3 mb-2">
                   <span class="icon-list-icon">
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/asterisk.png") }}"
                       class="size-5"
                       width="24"
                       height="24"
                       alt="Môi Trường Bảo Châu"
-                    />
+                     />
                   </span>
                   <span
                     class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs tracking-wider"
@@ -706,14 +706,14 @@
                     href="{{ route('projects.show', $relProj->slug) }}"
                     aria-label="{{ $relProj->title }}"
                   >
-                    <img
+                    <x-frontend.image
                       src="{{ str_starts_with($relProj->thumbnail ?? '', 'http') ? $relProj->thumbnail : (str_starts_with($relProj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $relProj->thumbnail) : asset('assets/images/' . ($relProj->thumbnail ?: 'BERICAP.jpg'))) }}"
                       class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       width="1024"
                       height="683"
                       alt="{{ $relProj->title }}"
                       loading="lazy"
-                    />
+                     />
                   </a>
                   <span
                     class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm"
@@ -797,13 +797,13 @@
                     class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                   >
                     <span class="icon-list-icon">
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/asterisk.png") }}"
                         class="size-5"
                         width="24"
                         height="24"
                         alt="Môi Trường Bảo Châu"
-                      />
+                       />
                     </span>
                     <span
                       class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -884,7 +884,7 @@
                     class="p-6 c-light-button glass-effect rounded-3xl border border-white shadow-sm flex items-center justify-center"
                     style="width: 210px; height: 210px"
                   >
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/logo-leave-png-min.png") }}"
                       alt="Môi Trường Bảo Châu"
                       style="width: 180px; height: 180px; object-fit: contain"
@@ -892,7 +892,7 @@
                       height="522"
                       decoding="async"
                       loading="lazy"
-                    />
+                     />
                   </div>
                 </div>
               </div>

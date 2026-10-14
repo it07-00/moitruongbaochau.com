@@ -85,7 +85,7 @@
                 </p>
               @endif
 
-              {!! $post->content !!}
+              {!! app(\App\Support\OptimizedImage::class)->html($post->content) !!}
 
               @if($post->pdf_file)
                 <!-- Integrated PDF Document Card & Viewer -->
@@ -144,10 +144,10 @@
                   <div class="w-24 sm:w-28 shrink-0 author-avatar">
                     <span
                       class="aspect-square rounded-2xl u-flex-center c-light-button overflow-hidden border border-black/8 shadow-sm">
-                      <img width="536" height="522"
+                      <x-frontend.image width="536" height="522"
                         src="{{ asset(str_starts_with($websiteSettings['content_editor_logo'] ?? '', 'uploads/') ? 'storage/' . $websiteSettings['content_editor_logo'] : ($websiteSettings['content_editor_logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                         class="object-contain p-2"
-                        alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}" />
+                        alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}"  />
                     </span>
                   </div>
                   <div class="author-info flex flex-col justify-around">
@@ -264,8 +264,8 @@
           <!-- Subtitle Badge chuẩn quy chuẩn AGENTS.md -->
           <div class="inline-flex items-center gap-2 lg:gap-3 mb-2">
             <span class="icon-list-icon">
-              <img src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24"
-                alt="BÀI VIẾT LIÊN QUAN" />
+              <x-frontend.image src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24"
+                alt="BÀI VIẾT LIÊN QUAN"  />
             </span>
             <span
               class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs tracking-wider">
@@ -293,10 +293,10 @@
             <div class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10">
               <a class="block w-full h-full c-scale-effect" href="{{ route('posts.show', $relPost->slug) }}"
                 aria-label="{{ $relPost->title }}">
-                <img
+                <x-frontend.image
                   src="{{ str_starts_with($relPost->thumbnail ?? '', 'http') ? $relPost->thumbnail : (str_starts_with($relPost->thumbnail ?? '', 'uploads/') ? asset('storage/' . $relPost->thumbnail) : asset('assets/images/' . ($relPost->thumbnail ?: '1-768x427.png'))) }}"
                   class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  width="1024" height="683" alt="{{ $relPost->title }}" loading="lazy" />
+                  width="1024" height="683" alt="{{ $relPost->title }}" loading="lazy"  />
               </a>
               <span
                 class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm">

@@ -10,7 +10,7 @@
               <div class="about-intro-copy lg:col-span-6 order-2 lg:order-1">
                 <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                   <span class="icon-list-icon">
-                    <img src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}" />
+                    <x-frontend.image src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}"  />
                   </span>
                   <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
                     {{ $page->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}
@@ -21,7 +21,7 @@
                 </h1>
                 <div class="mt-6 space-y-4 text-gray-600 leading-relaxed text-base">
                   @if(filled($page->content))
-                    {!! $page->content !!}
+                    {!! app(\App\Support\OptimizedImage::class)->html($page->content) !!}
                   @elseif(filled($page->excerpt))
                     <p>{!! nl2br(e($page->excerpt)) !!}</p>
                   @else
@@ -56,11 +56,11 @@
                   @php
                     $aboutImg = $page->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png');
                   @endphp
-                  <img
+                  <x-frontend.image
                     src="{{ $aboutImg }}"
                     class="w-full h-auto object-contain max-h-[420px] drop-shadow-xl"
                     alt="{{ $page->title ?? 'Giới thiệu Môi Trường Bảo Châu' }}"
-                  />
+                   />
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
               <div class="lg:col-span-2">
                 <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                   <span class="icon-list-icon">
-                    <img src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['vision_badge'] ?? ($websiteSettings['vision_badge'] ?? 'TẦM NHÌN & SỨ MỆNH') }}" />
+                    <x-frontend.image src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['vision_badge'] ?? ($websiteSettings['vision_badge'] ?? 'TẦM NHÌN & SỨ MỆNH') }}"  />
                   </span>
                   <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
                     {{ $page->metadata['vision_badge'] ?? ($websiteSettings['vision_badge'] ?? 'TẦM NHÌN & SỨ MỆNH') }}
@@ -178,13 +178,13 @@
             <div class="flex flex-col items-center mb-10 lg:mb-14 text-center">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="{{ $page->metadata['org_badge'] ?? ($websiteSettings['org_badge'] ?? 'SƠ ĐỒ BỘ MÁY') }}"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -582,7 +582,7 @@
             <div class="flex flex-col items-center mb-8 lg:mb-12">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['timeline_badge'] ?? ($websiteSettings['timeline_badge'] ?? 'Hành trình phát triển') }}" />
+                  <x-frontend.image src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="{{ $page->metadata['timeline_badge'] ?? ($websiteSettings['timeline_badge'] ?? 'Hành trình phát triển') }}"  />
                 </span>
                 <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
                   {{ $page->metadata['timeline_badge'] ?? ($websiteSettings['timeline_badge'] ?? 'Hành trình phát triển') }}
@@ -658,7 +658,7 @@
             <div class="flex flex-col items-center text-center mb-8 lg:mb-12">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="Khách hàng tiêu biểu" />
+                  <x-frontend.image src="{{ asset('assets/images/asterisk.png') }}" class="size-5" width="24" height="24" alt="Khách hàng tiêu biểu"  />
                 </span>
                 <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
                   Khách hàng tiêu biểu
@@ -681,21 +681,21 @@
                     <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                       @if($partner->link)
                         <a href="{{ $partner->link }}" target="_blank" rel="noopener noreferrer" class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300" title="{{ $partner->name }}">
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
                             class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
-                          />
+                           />
                         </a>
                       @else
                         <span class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white" title="{{ $partner->name }}">
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
                             class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
-                          />
+                           />
                         </span>
                       @endif
                     </div>
@@ -715,21 +715,21 @@
                     <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                       @if($partner->link)
                         <a href="{{ $partner->link }}" target="_blank" rel="noopener noreferrer" class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300" title="{{ $partner->name }}">
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
                             class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
-                          />
+                           />
                         </a>
                       @else
                         <span class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white" title="{{ $partner->name }}">
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
                             class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
-                          />
+                           />
                         </span>
                       @endif
                     </div>

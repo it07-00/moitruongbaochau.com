@@ -8,13 +8,13 @@
               <!-- Subtitle Badge Chuẩn AGENTS.md -->
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="Thông tin tuyển dụng"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -181,7 +181,7 @@
                   <div
                     class="my-10 lg:my-14 rounded-3xl overflow-hidden shadow-xl border border-black/5"
                   >
-                    <img
+                    <x-frontend.image
                       width="1024"
                       height="572"
                       src="{{ str_starts_with($job->thumbnail ?? '', 'http') ? $job->thumbnail : (str_starts_with($job->thumbnail ?? '', 'uploads/') ? asset('storage/'.$job->thumbnail) : asset('assets/images/'.($job->thumbnail ?: 'Bai-Dang-Bao-Chau-1024x572.png'))) }}"
@@ -189,7 +189,7 @@
                       alt="{{ $job->title }}"
                       loading="lazy"
                       decoding="async"
-                    />
+                     />
                   </div>
 
                   <!-- 2. Mô tả công việc chi tiết -->
@@ -202,7 +202,7 @@
                     <div
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
-                      {!! $job->content !!}
+                      {!! app(\App\Support\OptimizedImage::class)->html($job->content) !!}
                     </div>
                   </div>
 
@@ -217,7 +217,7 @@
                     <div
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
-                      {!! $job->requirements !!}
+                      {!! app(\App\Support\OptimizedImage::class)->html($job->requirements) !!}
                     </div>
                   </div>
                   @endif
@@ -234,7 +234,7 @@
                       class="text-gray-700 text-base sm:text-lg leading-relaxed space-y-5"
                     >
                       <div class="p-6 rounded-3xl bg-emerald-50/60 my-5">
-                        {!! $job->benefits !!}
+                        {!! app(\App\Support\OptimizedImage::class)->html($job->benefits) !!}
                       </div>
                     </div>
                   </div>
@@ -442,13 +442,13 @@
                     class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                   >
                     <span class="icon-list-icon">
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/asterisk.png") }}"
                         class="size-5"
                         width="24"
                         height="24"
                         alt="Môi Trường Bảo Châu"
-                      />
+                       />
                     </span>
                     <span
                       class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -527,7 +527,7 @@
                     class="p-6 c-light-button glass-effect rounded-3xl border border-white shadow-sm flex items-center justify-center"
                     style="width: 210px; height: 210px"
                   >
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/logo-leave-png-min.png") }}"
                       alt="Môi Trường Bảo Châu"
                       style="width: 180px; height: 180px; object-fit: contain"
@@ -535,7 +535,7 @@
                       height="522"
                       decoding="async"
                       loading="lazy"
-                    />
+                     />
                   </div>
                 </div>
               </div>

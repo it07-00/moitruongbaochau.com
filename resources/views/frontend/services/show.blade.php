@@ -98,7 +98,7 @@
                   </p>
                 @endif
 
-                {!! $service->content !!}
+                {!! app(\App\Support\OptimizedImage::class)->html($service->content) !!}
               @else
                 <!-- Lead Paragraph -->
                 <p class="text-base sm:text-lg leading-relaxed text-black">
@@ -143,9 +143,9 @@
 
                 <!-- Showcase Image -->
                 <figure class="wp-caption aligncenter my-8 rounded-2xl overflow-hidden shadow-lg border border-black/5">
-                  <img decoding="async" class="w-full h-auto object-cover"
+                  <x-frontend.image decoding="async" class="w-full h-auto object-cover"
                     src="{{ asset("assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png") }}"
-                    alt="Giấy phép môi trường Luật 2020" width="1024" height="576" />
+                    alt="Giấy phép môi trường Luật 2020" width="1024" height="576"  />
                   <figcaption class="wp-caption-text text-center text-xs text-black py-2 bg-gray-50 font-medium">
                     Hồ sơ đề nghị cấp Giấy phép môi trường theo Nghị định
                     08/2022/NĐ-CP
@@ -346,10 +346,10 @@
                   <div class="w-24 sm:w-28 shrink-0 author-avatar">
                     <span
                       class="aspect-square rounded-2xl u-flex-center c-light-button overflow-hidden border border-black/8 shadow-sm">
-                      <img width="536" height="522"
+                      <x-frontend.image width="536" height="522"
                         src="{{ asset(str_starts_with($websiteSettings['content_editor_logo'] ?? '', 'uploads/') ? 'storage/' . $websiteSettings['content_editor_logo'] : ($websiteSettings['content_editor_logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                         class="object-contain p-2"
-                        alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}" />
+                        alt="{{ $websiteSettings['content_editor_name'] ?? 'Ban Biên Tập Kỹ Thuật Môi Trường Bảo Châu' }}"  />
                     </span>
                   </div>
                   <div class="author-info flex flex-col justify-around">
@@ -466,8 +466,8 @@
           <!-- Subtitle Badge chuẩn quy chuẩn AGENTS.md -->
           <div class="inline-flex items-center gap-2 lg:gap-3 mb-2">
             <span class="icon-list-icon">
-              <img src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24"
-                alt="DỊCH VỤ MÔI TRƯỜNG LIÊN QUAN" />
+              <x-frontend.image src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24"
+                alt="DỊCH VỤ MÔI TRƯỜNG LIÊN QUAN"  />
             </span>
             <span
               class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs tracking-wider">
@@ -495,9 +495,9 @@
             <div class="p-thumb c-cover overflow-hidden rounded-2xl relative aspect-16/10">
               <a class="block w-full h-full c-scale-effect" href="{{ $related->getPublicUrl() }}"
                 aria-label="{{ $related->name }}">
-                <img src="{{ $related->thumbnail_url }}"
+                <x-frontend.image src="{{ $related->thumbnail_url }}"
                   class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  width="1024" height="683" alt="{{ $related->name }}" loading="lazy" />
+                  width="1024" height="683" alt="{{ $related->name }}" loading="lazy"  />
               </a>
               <span
                 class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-xs font-bold text-emerald-800 py-1 px-3 rounded-full shadow-sm">

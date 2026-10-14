@@ -11,7 +11,7 @@
               <div class="title_top">
                 <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                   <span class="icon-list-icon">
-                    <img src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24" alt="Tin tức" />
+                    <x-frontend.image src="{{ asset("assets/images/asterisk.png") }}" class="size-5" width="24" height="24" alt="Tin tức"  />
                   </span>
                   <span class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider">
                     {{ $page?->metadata['posts_badge'] ?? 'BẢN TIN BẢO CHÂU' }}
@@ -67,13 +67,13 @@
             >
               <div class="inline-flex items-center gap-2 mb-3">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="Môi Trường Bảo Châu"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text text-primary font-bold uppercase text-xs sm:text-sm tracking-wider"

@@ -13,13 +13,13 @@
               <!-- Subtitle Badge chuẩn quy chuẩn -->
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="{{ $page?->metadata['projects_badge'] ?? 'DỰ ÁN TIÊU BIỂU & HỒ SƠ NĂNG LỰC' }}"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -245,7 +245,7 @@
                       aria-label="{{ $proj->title }}"
                       title="{{ $proj->title }}"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ str_starts_with($proj->thumbnail ?? '', 'http') ? $proj->thumbnail : (str_starts_with($proj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $proj->thumbnail) : asset('assets/images/' . ($proj->thumbnail ?: 'BERICAP.jpg'))) }}"
                         class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         width="1024"
@@ -253,7 +253,7 @@
                         alt="{{ $proj->title }}"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </a>
                     @if($proj->location)
                     <span
@@ -355,13 +355,13 @@
               <!-- Subtitle Badge chuẩn quy chuẩn -->
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="Môi Trường Bảo Châu"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -487,13 +487,13 @@
             <div class="flex flex-col items-center text-center mb-8 lg:mb-12">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="Khách hàng tiêu biểu"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -520,49 +520,49 @@
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
                         height="427"
                         alt="Mon Ngon Moi Ngay Logo"
                         decoding="async"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/2-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
                         height="427"
                         alt="HAKUHODO LOGO"
                         decoding="async"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/mitsubishi-768x768.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
                         height="768"
                         alt="mitsubishi logo"
                         decoding="async"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/3-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -570,14 +570,14 @@
                         alt="UOB LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/4-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -585,14 +585,14 @@
                         alt="CBAS LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-em-biet-doc-1-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -600,14 +600,14 @@
                         alt="I CAN READ Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/5-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -615,14 +615,14 @@
                         alt="KAMINAIL LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/6-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -630,14 +630,14 @@
                         alt="TRIBECO LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-bidridco-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -645,14 +645,14 @@
                         alt="bidrico logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-breaktalk-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -660,14 +660,14 @@
                         alt="logo breaktalk"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/7-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -675,14 +675,14 @@
                         alt="FOODS FOR YOU LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logodaidongtien-768x448-71611-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -690,14 +690,14 @@
                         alt="Dai Dong Tien Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/8-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -705,14 +705,14 @@
                         alt="NASPHARMA LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/9-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -720,14 +720,14 @@
                         alt="TALENT GATE LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-v-holding-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -735,14 +735,14 @@
                         alt="v-holdings logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/10-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -750,14 +750,14 @@
                         alt="ABBANK LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-me-since-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -765,14 +765,14 @@
                         alt="Me Since Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/11-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -780,14 +780,14 @@
                         alt="THE TUTORX VIET NAM LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/12-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -795,7 +795,7 @@
                         alt="VIETNAM ECO LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                 </div>
@@ -813,7 +813,7 @@
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-Rart-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -821,14 +821,14 @@
                         alt=""
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-gocons-768x344.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -836,14 +836,14 @@
                         alt="Gocons Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-hucons-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -851,14 +851,14 @@
                         alt="Hucons Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-thanh-tam-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -866,14 +866,14 @@
                         alt="Nha Khoa Thanh Tam Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-nu-cuoi-duyen-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -881,14 +881,14 @@
                         alt="Nu Cuoi Duyen Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-dochi-office-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -896,14 +896,14 @@
                         alt="DOCHI OFFICE LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/1-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -911,14 +911,14 @@
                         alt="DOCHI HOME LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/2-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -926,14 +926,14 @@
                         alt="METALIX INTERIOR Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/3-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -941,14 +941,14 @@
                         alt="BBRACING Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/4-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -956,14 +956,14 @@
                         alt="TMA FARMS LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/5-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -971,14 +971,14 @@
                         alt="Trung Thanh Print Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/6-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -986,14 +986,14 @@
                         alt="Thebabyshopvn Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/7-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1001,14 +1001,14 @@
                         alt="Tra Hoa Viet Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/cropped-logo-inthanhtien-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1016,14 +1016,14 @@
                         alt="In Thanh Tien Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/cropped-logo-inminhkhang-1-768x344.webp") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1031,14 +1031,14 @@
                         alt="In Minh Khang Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/8-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1046,14 +1046,14 @@
                         alt="Nha Khoa Anna Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/9-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1061,14 +1061,14 @@
                         alt="TOPLAND LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/10-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1076,14 +1076,14 @@
                         alt="DH LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/11-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1091,14 +1091,14 @@
                         alt="THE BOOKKEEPING PEOPLE LOGO"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                   <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                     <span
                       class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/12-1-768x427.png") }}"
                         class="block h-[50px] md:h-[68px] w-auto"
                         width="768"
@@ -1106,7 +1106,7 @@
                         alt="TQQ Logo"
                         decoding="async"
                         loading="lazy"
-                      />
+                       />
                     </span>
                   </div>
                 </div>
@@ -1131,13 +1131,13 @@
                     class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                   >
                     <span class="icon-list-icon">
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/asterisk.png") }}"
                         class="size-5"
                         width="24"
                         height="24"
                         alt="Môi Trường Bảo Châu"
-                      />
+                       />
                     </span>
                     <span
                       class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -1218,7 +1218,7 @@
                     class="p-6 c-light-button glass-effect rounded-3xl border border-white shadow-sm flex items-center justify-center"
                     style="width: 210px; height: 210px"
                   >
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/logo-leave-png-min.png") }}"
                       alt="Môi Trường Bảo Châu"
                       style="width: 180px; height: 180px; object-fit: contain"
@@ -1226,7 +1226,7 @@
                       height="522"
                       decoding="async"
                       loading="lazy"
-                    />
+                     />
                   </div>
                 </div>
               </div>

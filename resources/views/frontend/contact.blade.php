@@ -10,13 +10,13 @@
             <div class="mb-8 lg:mb-12">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="{{ $page?->metadata['contact_badge'] ?? 'BẠN ĐANG CẦN GIẢI PHÁP PHÙ HỢP?' }}"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -206,13 +206,13 @@
             <div class="mb-8 lg:mb-12">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
                     class="size-5"
                     width="24"
                     height="24"
                     alt="{{ $websiteSettings['office_badge'] ?? 'TRỤ SỞ & VĂN PHÒNG' }}"
-                  />
+                   />
                 </span>
                 <span
                   class="icon-list-text bg-linear-to-r from-(--text-color) to-gra-light bg-clip-text text-transparent font-bold uppercase text-xs sm:text-sm tracking-wider"
@@ -240,13 +240,13 @@
                     <div
                       class="flex items-center gap-4 pb-6 mb-6 border-b border-gray-100"
                     >
-                      <img
+                      <x-frontend.image
                         src="{{ asset("assets/images/logo-leave-png-min.png") }}"
                         alt="{{ $websiteSettings['company_name'] ?? 'Môi Trường Bảo Châu' }}"
                         width="64"
                         height="64"
                         class="size-14 sm:size-16 object-contain shrink-0"
-                      />
+                       />
                       <div class="flex flex-col">
                         <span
                           class="text-[11px] font-bold uppercase tracking-wider text-primary"
