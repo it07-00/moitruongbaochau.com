@@ -63,6 +63,7 @@ class OptimizedImageTest extends TestCase
         $this->assertStringContainsString('height="522"', $html);
         $this->assertStringContainsString('sizes="140px"', $html);
         $this->assertStringContainsString('480w', $html);
+        $this->assertStringContainsString('src="'.asset('assets/logo-480.webp').'"', $html);
         $this->assertStringNotContainsString('1024', $html);
     }
 }

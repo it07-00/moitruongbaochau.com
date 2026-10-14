@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use App\Support\OptimizedImage;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -61,7 +62,7 @@ class FrontendContentTest extends TestCase
         $this->get(route('services.show', $service->slug))
             ->assertOk()
             ->assertSee($relatedService->name)
-            ->assertSee(asset('assets/images/slide-4.png'), false)
+            ->assertSee(app(OptimizedImage::class)->attributes(asset('assets/images/slide-4.png'))['src'], false)
             ->assertSee($category->name)
             ->assertDontSee('src="'.asset('slide-4.png').'"', false);
     }

@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app', ['bodyClass' => 'page-template-default page contact-page'])
+@extends('frontend.layouts.app', ['bodyClass' => 'page-template-default page contact-page', 'usesLivewire' => true])
 
 @section('content')
         <!-- SECTION: LIÊN HỆ TƯ VẤN (Theo đúng layout chuẩn thiết kế) -->

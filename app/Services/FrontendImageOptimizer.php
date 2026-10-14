@@ -16,6 +16,9 @@ class FrontendImageOptimizer
             return false;
         }
         $path = ltrim(rawurldecode(parse_url($source, PHP_URL_PATH) ?: ''), '/');
+        if (preg_match('#(?:^|[/\\\\])\.\.?([/\\\\]|$)#', $path)) {
+            return false;
+        }
         if (str_starts_with($path, 'uploads/') || str_starts_with($path, 'media/')) {
             $path = 'storage/'.$path;
         }
@@ -37,6 +40,11 @@ class FrontendImageOptimizer
         $dimensions = @getimagesize($file);
         if (! $dimensions || $dimensions[0] * $dimensions[1] > 20000000) {
             return false;
+        }
+        if (preg_match('#^storage/(?:media/|uploads/(?:sliders|partners|pages|service-categories|posts|projects|services|testimonials|job-postings|seo)/)#', $path)) {
+            if (! Storage::disk('public')->setVisibility(substr($path, strlen('storage/')), 'public')) {
+                throw new \RuntimeException('Cannot make frontend image readable.');
+            }
         }
         $output = public_path('assets/images/optimized');
         if (! is_dir($output) && ! mkdir($output, 0755, true) && ! is_dir($output)) {

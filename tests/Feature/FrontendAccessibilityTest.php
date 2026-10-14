@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\JobPosting;
 use App\Models\ServiceCategory;
 use DOMDocument;
 use DOMXPath;
@@ -52,5 +53,26 @@ class FrontendAccessibilityTest extends TestCase
         $this->assertStringNotContainsString('font-family:Poppins', $critical);
         $this->assertStringNotContainsString('font-family:Poppins;', $full);
         $this->assertStringContainsString('font-display:optional', $fonts);
+    }
+
+    public function test_static_homepage_does_not_load_livewire(): void
+    {
+        $this->get(route('home'))->assertOk()->assertDontSee('data-update-uri', false);
+    }
+
+    public function test_contact_page_loads_livewire_for_its_form(): void
+    {
+        $this->get(route('contact.index'))->assertOk()->assertSee('data-update-uri', false);
+    }
+
+    public function test_recruitment_page_loads_livewire_for_its_form(): void
+    {
+        $this->get(route('recruitment.index'))->assertOk()->assertSee('data-update-uri', false);
+    }
+
+    public function test_job_detail_loads_livewire_for_its_form(): void
+    {
+        $job = JobPosting::factory()->create();
+        $this->get(route('recruitment.show', $job->slug))->assertOk()->assertSee('data-update-uri', false);
     }
 }

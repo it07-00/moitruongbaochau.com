@@ -29,9 +29,7 @@ class OptimizedImage
                 }
                 $attributes = $this->attributes($image->getAttribute('src'));
                 foreach ($attributes as $name => $value) {
-                    if ($name !== 'src') {
-                        $image->setAttribute($name, (string) $value);
-                    }
+                    $image->setAttribute($name, (string) $value);
                 }
                 if (isset($attributes['srcset']) && ! $image->hasAttribute('sizes')) {
                     $image->setAttribute('sizes', '(min-width: 1024px) 800px, 100vw');

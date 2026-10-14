@@ -70,6 +70,7 @@ class AutomaticFrontendImageTest extends TestCase
             ->assertHasNoFormErrors();
         $slider = Slider::query()->latest('id')->firstOrFail();
         Storage::disk('public')->assertExists($slider->image);
+        $this->assertSame('public', Storage::disk('public')->getVisibility($slider->image));
         $entry = $this->manifest()['storage/'.$slider->image];
         $this->assertSame([160, 480, 960, 1536, 1920], array_keys($entry['variants']));
         foreach ($entry['variants'] as $width => $path) {
@@ -125,8 +126,9 @@ class AutomaticFrontendImageTest extends TestCase
 
     public function test_remote_missing_and_traversal_paths_are_not_processed(): void
     {
+        $this->image('private.png', 200, 100);
         $optimizer = app(FrontendImageOptimizer::class);
-        foreach (['https://outside.example/image.png', 'uploads/missing.png', 'storage/uploads/../private.png', 'data:image/png;base64,abc', 'uploads/document.pdf'] as $source) {
+        foreach (['https://outside.example/image.png', 'uploads/missing.png', 'storage/uploads/../private.png', 'storage/uploads/sliders/../sliders/private.png', 'storage/uploads/sliders/%2e%2e/sliders/private.png', 'data:image/png;base64,abc', 'uploads/document.pdf'] as $source) {
             $this->assertFalse($optimizer->optimize($source));
         }
         $this->assertFileDoesNotExist(public_path('assets/images/optimized/frontend-images.json'));

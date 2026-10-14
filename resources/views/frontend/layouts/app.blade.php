@@ -18,7 +18,9 @@
     @else
         <link rel="stylesheet" href="{{ asset('assets/css/frontend.min.css') }}?v={{ substr(hash_file('sha256', public_path('assets/css/frontend.min.css')), 0, 12) }}">
     @endif
-    @livewireStyles
+    @if($usesLivewire ?? false)
+        @livewireStyles
+    @endif
     @stack('styles')
 </head>
 <body class="{{ $bodyClass ?? '' }}" itemscope itemtype="https://schema.org/WebPage">
@@ -37,7 +39,9 @@
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/swiper.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}?v={{ file_exists(public_path('assets/js/main.js')) ? filemtime(public_path('assets/js/main.js')) : time() }}" defer></script>
-    @livewireScripts
+    @if($usesLivewire ?? false)
+        @livewireScripts
+    @endif
     @stack('scripts')
     @if(session('success'))
     <script>

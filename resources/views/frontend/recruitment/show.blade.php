@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app', ['bodyClass' => 'recruitment-template-default single single-recruitment'])
+@extends('frontend.layouts.app', ['bodyClass' => 'recruitment-template-default single single-recruitment', 'usesLivewire' => true])
 
 @section('content')
         <!-- HERO SECTION: JOB HEADER & FEATURED IMAGE -->

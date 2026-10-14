@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app', ['bodyClass' => 'archive post-type-archive post-type-archive-recruitment'])
+@extends('frontend.layouts.app', ['bodyClass' => 'archive post-type-archive post-type-archive-recruitment', 'usesLivewire' => true])
 
 @section('content')
         <!-- HERO SECTION: CƠ HỘI NGHỀ NGHIỆP -->
