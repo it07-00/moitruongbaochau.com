@@ -1,0 +1,1083 @@
+{
+    "assets/images/1-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b75f7c53ab0aba86-160.webp",
+            "480": "assets/images/optimized/frontend-b75f7c53ab0aba86-480.webp",
+            "768": "assets/images/optimized/frontend-b75f7c53ab0aba86-768.webp"
+        }
+    },
+    "assets/images/1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b7861c9097a3e104-160.webp",
+            "480": "assets/images/optimized/frontend-b7861c9097a3e104-480.webp",
+            "768": "assets/images/optimized/frontend-b7861c9097a3e104-768.webp"
+        }
+    },
+    "assets/images/10-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-37211af0813ead7e-160.webp",
+            "480": "assets/images/optimized/frontend-37211af0813ead7e-480.webp",
+            "768": "assets/images/optimized/frontend-37211af0813ead7e-768.webp"
+        }
+    },
+    "assets/images/10-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-a008e752241c7488-160.webp",
+            "480": "assets/images/optimized/frontend-a008e752241c7488-480.webp",
+            "768": "assets/images/optimized/frontend-a008e752241c7488-768.webp"
+        }
+    },
+    "assets/images/11-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-9c26fabd0e301b83-160.webp",
+            "480": "assets/images/optimized/frontend-9c26fabd0e301b83-480.webp",
+            "768": "assets/images/optimized/frontend-9c26fabd0e301b83-768.webp"
+        }
+    },
+    "assets/images/11-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-5deaa427ad21cf62-160.webp",
+            "480": "assets/images/optimized/frontend-5deaa427ad21cf62-480.webp",
+            "768": "assets/images/optimized/frontend-5deaa427ad21cf62-768.webp"
+        }
+    },
+    "assets/images/118-1-768x429.png": {
+        "width": 768,
+        "height": 429,
+        "variants": {
+            "160": "assets/images/optimized/frontend-be06161b1e1afc25-160.webp",
+            "480": "assets/images/optimized/frontend-be06161b1e1afc25-480.webp",
+            "768": "assets/images/optimized/frontend-be06161b1e1afc25-768.webp"
+        }
+    },
+    "assets/images/12-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-244eb00dc3f30b87-160.webp",
+            "480": "assets/images/optimized/frontend-244eb00dc3f30b87-480.webp",
+            "768": "assets/images/optimized/frontend-244eb00dc3f30b87-768.webp"
+        }
+    },
+    "assets/images/12-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-8265df486be64147-160.webp",
+            "480": "assets/images/optimized/frontend-8265df486be64147-480.webp",
+            "768": "assets/images/optimized/frontend-8265df486be64147-768.webp"
+        }
+    },
+    "assets/images/19-768x432.png": {
+        "width": 768,
+        "height": 432,
+        "variants": {
+            "160": "assets/images/optimized/frontend-d0650dc6ce405866-160.webp",
+            "480": "assets/images/optimized/frontend-d0650dc6ce405866-480.webp",
+            "768": "assets/images/optimized/frontend-d0650dc6ce405866-768.webp"
+        }
+    },
+    "assets/images/2-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-379efb4c93ada19d-160.webp",
+            "480": "assets/images/optimized/frontend-379efb4c93ada19d-480.webp",
+            "768": "assets/images/optimized/frontend-379efb4c93ada19d-768.webp"
+        }
+    },
+    "assets/images/2-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c6b77c9cc7067a84-160.webp",
+            "480": "assets/images/optimized/frontend-c6b77c9cc7067a84-480.webp",
+            "768": "assets/images/optimized/frontend-c6b77c9cc7067a84-768.webp"
+        }
+    },
+    "assets/images/3-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-18404a1ceb59900b-160.webp",
+            "480": "assets/images/optimized/frontend-18404a1ceb59900b-480.webp",
+            "768": "assets/images/optimized/frontend-18404a1ceb59900b-768.webp"
+        }
+    },
+    "assets/images/3-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c352f16ec5ecf0fe-160.webp",
+            "480": "assets/images/optimized/frontend-c352f16ec5ecf0fe-480.webp",
+            "768": "assets/images/optimized/frontend-c352f16ec5ecf0fe-768.webp"
+        }
+    },
+    "assets/images/4-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-4be456ef63166263-160.webp",
+            "480": "assets/images/optimized/frontend-4be456ef63166263-480.webp",
+            "768": "assets/images/optimized/frontend-4be456ef63166263-768.webp"
+        }
+    },
+    "assets/images/4-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-242d5cb0e0ac9262-160.webp",
+            "480": "assets/images/optimized/frontend-242d5cb0e0ac9262-480.webp",
+            "768": "assets/images/optimized/frontend-242d5cb0e0ac9262-768.webp"
+        }
+    },
+    "assets/images/5-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-d57ea62e0c404ff0-160.webp",
+            "480": "assets/images/optimized/frontend-d57ea62e0c404ff0-480.webp",
+            "768": "assets/images/optimized/frontend-d57ea62e0c404ff0-768.webp"
+        }
+    },
+    "assets/images/5-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-43167e4a70a6f0d0-160.webp",
+            "480": "assets/images/optimized/frontend-43167e4a70a6f0d0-480.webp",
+            "768": "assets/images/optimized/frontend-43167e4a70a6f0d0-768.webp"
+        }
+    },
+    "assets/images/5.-ceragem-1024x683.jpg": {
+        "width": 1024,
+        "height": 683,
+        "variants": {
+            "160": "assets/images/optimized/frontend-84e7823d41d318dd-160.webp",
+            "480": "assets/images/optimized/frontend-84e7823d41d318dd-480.webp",
+            "960": "assets/images/optimized/frontend-84e7823d41d318dd-960.webp",
+            "1024": "assets/images/optimized/frontend-84e7823d41d318dd-1024.webp"
+        }
+    },
+    "assets/images/6-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-6b67217d57809806-160.webp",
+            "480": "assets/images/optimized/frontend-6b67217d57809806-480.webp",
+            "768": "assets/images/optimized/frontend-6b67217d57809806-768.webp"
+        }
+    },
+    "assets/images/6-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-620a9483e5b6dc90-160.webp",
+            "480": "assets/images/optimized/frontend-620a9483e5b6dc90-480.webp",
+            "768": "assets/images/optimized/frontend-620a9483e5b6dc90-768.webp"
+        }
+    },
+    "assets/images/6-768x429.png": {
+        "width": 768,
+        "height": 429,
+        "variants": {
+            "160": "assets/images/optimized/frontend-3c8f5716688c3737-160.webp",
+            "480": "assets/images/optimized/frontend-3c8f5716688c3737-480.webp",
+            "768": "assets/images/optimized/frontend-3c8f5716688c3737-768.webp"
+        }
+    },
+    "assets/images/7-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-a6ea34f16765b81a-160.webp",
+            "480": "assets/images/optimized/frontend-a6ea34f16765b81a-480.webp",
+            "768": "assets/images/optimized/frontend-a6ea34f16765b81a-768.webp"
+        }
+    },
+    "assets/images/7-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-4b2f65d9bd6d4bac-160.webp",
+            "480": "assets/images/optimized/frontend-4b2f65d9bd6d4bac-480.webp",
+            "768": "assets/images/optimized/frontend-4b2f65d9bd6d4bac-768.webp"
+        }
+    },
+    "assets/images/8-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c700e9e6f5a06cd7-160.webp",
+            "480": "assets/images/optimized/frontend-c700e9e6f5a06cd7-480.webp",
+            "768": "assets/images/optimized/frontend-c700e9e6f5a06cd7-768.webp"
+        }
+    },
+    "assets/images/8-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-124d39144df4b548-160.webp",
+            "480": "assets/images/optimized/frontend-124d39144df4b548-480.webp",
+            "768": "assets/images/optimized/frontend-124d39144df4b548-768.webp"
+        }
+    },
+    "assets/images/9-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-acff252acf0659dd-160.webp",
+            "480": "assets/images/optimized/frontend-acff252acf0659dd-480.webp",
+            "768": "assets/images/optimized/frontend-acff252acf0659dd-768.webp"
+        }
+    },
+    "assets/images/9-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-add1e866583b7231-160.webp",
+            "480": "assets/images/optimized/frontend-add1e866583b7231-480.webp",
+            "768": "assets/images/optimized/frontend-add1e866583b7231-768.webp"
+        }
+    },
+    "assets/images/BERICAP.jpg": {
+        "width": 800,
+        "height": 449,
+        "variants": {
+            "160": "assets/images/optimized/frontend-2621254ba592d5b6-160.webp",
+            "480": "assets/images/optimized/frontend-2621254ba592d5b6-480.webp",
+            "800": "assets/images/optimized/frontend-2621254ba592d5b6-800.webp"
+        }
+    },
+    "assets/images/Bai-Dang-Bao-Chau-1024x572.png": {
+        "width": 1024,
+        "height": 572,
+        "variants": {
+            "160": "assets/images/optimized/frontend-67fc61edf7694ba7-160.webp",
+            "480": "assets/images/optimized/frontend-67fc61edf7694ba7-480.webp",
+            "960": "assets/images/optimized/frontend-67fc61edf7694ba7-960.webp",
+            "1024": "assets/images/optimized/frontend-67fc61edf7694ba7-1024.webp"
+        }
+    },
+    "assets/images/Bai-Dang-Bao-Chau-768x429.png": {
+        "width": 768,
+        "height": 429,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ac1bc5abc31b6a3a-160.webp",
+            "480": "assets/images/optimized/frontend-ac1bc5abc31b6a3a-480.webp",
+            "768": "assets/images/optimized/frontend-ac1bc5abc31b6a3a-768.webp"
+        }
+    },
+    "assets/images/CTY-TAN-TIEN-1024x640.png": {
+        "width": 1024,
+        "height": 640,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b8d88d8cbc6c9223-160.webp",
+            "480": "assets/images/optimized/frontend-b8d88d8cbc6c9223-480.webp",
+            "960": "assets/images/optimized/frontend-b8d88d8cbc6c9223-960.webp",
+            "1024": "assets/images/optimized/frontend-b8d88d8cbc6c9223-1024.webp"
+        }
+    },
+    "assets/images/CTY-TAN-TIEN.png": {
+        "width": 1440,
+        "height": 900,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ffd1102809698863-160.webp",
+            "480": "assets/images/optimized/frontend-ffd1102809698863-480.webp",
+            "960": "assets/images/optimized/frontend-ffd1102809698863-960.webp",
+            "1440": "assets/images/optimized/frontend-ffd1102809698863-1440.webp"
+        }
+    },
+    "assets/images/CTY-TNHH-DV-KT-MOI-TRUONG-1-768x284.png": {
+        "width": 768,
+        "height": 284,
+        "variants": {
+            "160": "assets/images/optimized/frontend-62dac2126d1318d9-160.webp",
+            "480": "assets/images/optimized/frontend-62dac2126d1318d9-480.webp",
+            "768": "assets/images/optimized/frontend-62dac2126d1318d9-768.webp"
+        }
+    },
+    "assets/images/Hinh-1-1024x683.jpg": {
+        "width": 1024,
+        "height": 683,
+        "variants": {
+            "160": "assets/images/optimized/frontend-dabdad4a99ef3c18-160.webp",
+            "480": "assets/images/optimized/frontend-dabdad4a99ef3c18-480.webp",
+            "960": "assets/images/optimized/frontend-dabdad4a99ef3c18-960.webp",
+            "1024": "assets/images/optimized/frontend-dabdad4a99ef3c18-1024.webp"
+        }
+    },
+    "assets/images/Hinh-1-768x512.jpg": {
+        "width": 768,
+        "height": 512,
+        "variants": {
+            "160": "assets/images/optimized/frontend-bdd26605176953de-160.webp",
+            "480": "assets/images/optimized/frontend-bdd26605176953de-480.webp",
+            "768": "assets/images/optimized/frontend-bdd26605176953de-768.webp"
+        }
+    },
+    "assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png": {
+        "width": 1024,
+        "height": 576,
+        "variants": {
+            "160": "assets/images/optimized/frontend-5a950b19265fe534-160.webp",
+            "480": "assets/images/optimized/frontend-5a950b19265fe534-480.webp",
+            "960": "assets/images/optimized/frontend-5a950b19265fe534-960.webp",
+            "1024": "assets/images/optimized/frontend-5a950b19265fe534-1024.webp"
+        }
+    },
+    "assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-768x432.png": {
+        "width": 768,
+        "height": 432,
+        "variants": {
+            "160": "assets/images/optimized/frontend-e9ab72feebf0bbb7-160.webp",
+            "480": "assets/images/optimized/frontend-e9ab72feebf0bbb7-480.webp",
+            "768": "assets/images/optimized/frontend-e9ab72feebf0bbb7-768.webp"
+        }
+    },
+    "assets/images/Lich-thang-8-768x432.png": {
+        "width": 768,
+        "height": 432,
+        "variants": {
+            "160": "assets/images/optimized/frontend-21683834e7d9ca00-160.webp",
+            "480": "assets/images/optimized/frontend-21683834e7d9ca00-480.webp",
+            "768": "assets/images/optimized/frontend-21683834e7d9ca00-768.webp"
+        }
+    },
+    "assets/images/PEPSICO.jpg": {
+        "width": 900,
+        "height": 515,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c5d5c0ac421ad29f-160.webp",
+            "480": "assets/images/optimized/frontend-c5d5c0ac421ad29f-480.webp",
+            "900": "assets/images/optimized/frontend-c5d5c0ac421ad29f-900.webp"
+        }
+    },
+    "assets/images/Thiet-ke-chua-co-ten-2-768x429.png": {
+        "width": 768,
+        "height": 429,
+        "variants": {
+            "160": "assets/images/optimized/frontend-f784ccd27bfe68e1-160.webp",
+            "480": "assets/images/optimized/frontend-f784ccd27bfe68e1-480.webp",
+            "768": "assets/images/optimized/frontend-f784ccd27bfe68e1-768.webp"
+        }
+    },
+    "assets/images/asterisk.png": {
+        "width": 24,
+        "height": 24,
+        "variants": []
+    },
+    "assets/images/bao-gia-lai.png": {
+        "width": 750,
+        "height": 184,
+        "variants": {
+            "160": "assets/images/optimized/frontend-1e6ba4a7f24016cd-160.webp",
+            "480": "assets/images/optimized/frontend-1e6ba4a7f24016cd-480.webp",
+            "750": "assets/images/optimized/frontend-1e6ba4a7f24016cd-750.webp"
+        }
+    },
+    "assets/images/bao-kinh-te-xanh.png": {
+        "width": 315,
+        "height": 60,
+        "variants": []
+    },
+    "assets/images/bao-moi.png": {
+        "width": 250,
+        "height": 110,
+        "variants": []
+    },
+    "assets/images/baobithanhtien.png": {
+        "width": 800,
+        "height": 187,
+        "variants": {
+            "160": "assets/images/optimized/frontend-423962f2b7e67fc3-160.webp",
+            "480": "assets/images/optimized/frontend-423962f2b7e67fc3-480.webp",
+            "800": "assets/images/optimized/frontend-423962f2b7e67fc3-800.webp"
+        }
+    },
+    "assets/images/bbracing.png": {
+        "width": 2501,
+        "height": 701,
+        "variants": {
+            "160": "assets/images/optimized/frontend-6f68907108816436-160.webp",
+            "480": "assets/images/optimized/frontend-6f68907108816436-480.webp",
+            "960": "assets/images/optimized/frontend-6f68907108816436-960.webp",
+            "1536": "assets/images/optimized/frontend-6f68907108816436-1536.webp",
+            "1920": "assets/images/optimized/frontend-6f68907108816436-1920.webp"
+        }
+    },
+    "assets/images/bencatusa.png": {
+        "width": 300,
+        "height": 60,
+        "variants": {
+            "160": "assets/images/optimized/frontend-faa8cc3e24f8b892-160.webp",
+            "300": "assets/images/optimized/frontend-faa8cc3e24f8b892-300.webp"
+        }
+    },
+    "assets/images/bg-02.webp": {
+        "width": 1698,
+        "height": 1080,
+        "variants": {
+            "160": "assets/images/optimized/frontend-2465325985c517f4-160.webp",
+            "480": "assets/images/optimized/frontend-2465325985c517f4-480.webp",
+            "960": "assets/images/optimized/frontend-2465325985c517f4-960.webp",
+            "1536": "assets/images/optimized/frontend-2465325985c517f4-1536.webp",
+            "1698": "assets/images/optimized/frontend-2465325985c517f4-1698.webp"
+        }
+    },
+    "assets/images/bidrico.png": {
+        "width": 522,
+        "height": 264,
+        "variants": {
+            "160": "assets/images/optimized/frontend-45063aa8a3e8404d-160.webp",
+            "480": "assets/images/optimized/frontend-45063aa8a3e8404d-480.webp",
+            "522": "assets/images/optimized/frontend-45063aa8a3e8404d-522.webp"
+        }
+    },
+    "assets/images/breadtalkvietnam.png": {
+        "width": 648,
+        "height": 156,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c7f0b854b0e02077-160.webp",
+            "480": "assets/images/optimized/frontend-c7f0b854b0e02077-480.webp",
+            "648": "assets/images/optimized/frontend-c7f0b854b0e02077-648.webp"
+        }
+    },
+    "assets/images/cropped-chuan-192x192.png": {
+        "width": 192,
+        "height": 192,
+        "variants": {
+            "160": "assets/images/optimized/frontend-546d299e1206f7e8-160.webp",
+            "192": "assets/images/optimized/frontend-546d299e1206f7e8-192.webp"
+        }
+    },
+    "assets/images/cropped-logo-inminhkhang-1-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-0989ad0657ef641f-160.webp",
+            "480": "assets/images/optimized/frontend-0989ad0657ef641f-480.webp",
+            "768": "assets/images/optimized/frontend-0989ad0657ef641f-768.webp"
+        }
+    },
+    "assets/images/cropped-logo-inthanhtien-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-8c368d6157a26710-160.webp",
+            "480": "assets/images/optimized/frontend-8c368d6157a26710-480.webp",
+            "768": "assets/images/optimized/frontend-8c368d6157a26710-768.webp"
+        }
+    },
+    "assets/images/daynghekimhoan.jpg": {
+        "width": 741,
+        "height": 693,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c8413f9594b8b9f6-160.webp",
+            "480": "assets/images/optimized/frontend-c8413f9594b8b9f6-480.webp",
+            "741": "assets/images/optimized/frontend-c8413f9594b8b9f6-741.webp"
+        }
+    },
+    "assets/images/dochihome.png": {
+        "width": 1920,
+        "height": 444,
+        "variants": {
+            "160": "assets/images/optimized/frontend-2c11a7f5d19158a7-160.webp",
+            "480": "assets/images/optimized/frontend-2c11a7f5d19158a7-480.webp",
+            "960": "assets/images/optimized/frontend-2c11a7f5d19158a7-960.webp",
+            "1536": "assets/images/optimized/frontend-2c11a7f5d19158a7-1536.webp",
+            "1920": "assets/images/optimized/frontend-2c11a7f5d19158a7-1920.webp"
+        }
+    },
+    "assets/images/footer-2-bg-1920x960.png": {
+        "width": 1920,
+        "height": 960,
+        "variants": {
+            "160": "assets/images/optimized/frontend-5d061e4d88abc358-160.webp",
+            "480": "assets/images/optimized/frontend-5d061e4d88abc358-480.webp",
+            "960": "assets/images/optimized/frontend-5d061e4d88abc358-960.webp",
+            "1536": "assets/images/optimized/frontend-5d061e4d88abc358-1536.webp",
+            "1920": "assets/images/optimized/frontend-5d061e4d88abc358-1920.webp"
+        }
+    },
+    "assets/images/google-reviews.png": {
+        "width": 1000,
+        "height": 414,
+        "variants": {
+            "160": "assets/images/optimized/frontend-e4ef342471288607-160.webp",
+            "480": "assets/images/optimized/frontend-e4ef342471288607-480.webp",
+            "960": "assets/images/optimized/frontend-e4ef342471288607-960.webp",
+            "1000": "assets/images/optimized/frontend-e4ef342471288607-1000.webp"
+        }
+    },
+    "assets/images/innhanhminhkhang.webp": {
+        "width": 1918,
+        "height": 392,
+        "variants": {
+            "160": "assets/images/optimized/frontend-fa7ab5fab2fac603-160.webp",
+            "480": "assets/images/optimized/frontend-fa7ab5fab2fac603-480.webp",
+            "960": "assets/images/optimized/frontend-fa7ab5fab2fac603-960.webp",
+            "1536": "assets/images/optimized/frontend-fa7ab5fab2fac603-1536.webp",
+            "1918": "assets/images/optimized/frontend-fa7ab5fab2fac603-1918.webp"
+        }
+    },
+    "assets/images/kaminail.png": {
+        "width": 945,
+        "height": 918,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b6893803235c0967-160.webp",
+            "480": "assets/images/optimized/frontend-b6893803235c0967-480.webp",
+            "945": "assets/images/optimized/frontend-b6893803235c0967-945.webp"
+        }
+    },
+    "assets/images/ketoansaokim.webp": {
+        "width": 413,
+        "height": 100,
+        "variants": []
+    },
+    "assets/images/laptopgaming.png": {
+        "width": 2239,
+        "height": 1952,
+        "variants": {
+            "160": "assets/images/optimized/frontend-14bd6092ffd4688f-160.webp",
+            "480": "assets/images/optimized/frontend-14bd6092ffd4688f-480.webp",
+            "960": "assets/images/optimized/frontend-14bd6092ffd4688f-960.webp",
+            "1536": "assets/images/optimized/frontend-14bd6092ffd4688f-1536.webp",
+            "1920": "assets/images/optimized/frontend-14bd6092ffd4688f-1920.webp"
+        }
+    },
+    "assets/images/logo-Rart-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-7065261712822333-160.webp",
+            "480": "assets/images/optimized/frontend-7065261712822333-480.webp",
+            "768": "assets/images/optimized/frontend-7065261712822333-768.webp"
+        }
+    },
+    "assets/images/logo-bidridco-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-063001569fb7fc63-160.webp",
+            "480": "assets/images/optimized/frontend-063001569fb7fc63-480.webp",
+            "768": "assets/images/optimized/frontend-063001569fb7fc63-768.webp"
+        }
+    },
+    "assets/images/logo-breaktalk-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-30952994aa3598fe-160.webp",
+            "480": "assets/images/optimized/frontend-30952994aa3598fe-480.webp",
+            "768": "assets/images/optimized/frontend-30952994aa3598fe-768.webp"
+        }
+    },
+    "assets/images/logo-dochi-office-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": []
+    },
+    "assets/images/logo-em-biet-doc-1-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ac2d300310d9e63e-160.webp",
+            "480": "assets/images/optimized/frontend-ac2d300310d9e63e-480.webp",
+            "768": "assets/images/optimized/frontend-ac2d300310d9e63e-768.webp"
+        }
+    },
+    "assets/images/logo-gocons-768x344.png": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ea651891e94786a2-160.webp",
+            "480": "assets/images/optimized/frontend-ea651891e94786a2-480.webp",
+            "768": "assets/images/optimized/frontend-ea651891e94786a2-768.webp"
+        }
+    },
+    "assets/images/logo-hucons-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-bd8bae8e612343ca-160.webp",
+            "480": "assets/images/optimized/frontend-bd8bae8e612343ca-480.webp",
+            "768": "assets/images/optimized/frontend-bd8bae8e612343ca-768.webp"
+        }
+    },
+    "assets/images/logo-leave-png-min.png": {
+        "width": 2048,
+        "height": 2048,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b507ed25493fa182-160.webp",
+            "480": "assets/images/optimized/frontend-b507ed25493fa182-480.webp",
+            "960": "assets/images/optimized/frontend-b507ed25493fa182-960.webp",
+            "1536": "assets/images/optimized/frontend-b507ed25493fa182-1536.webp",
+            "1920": "assets/images/optimized/frontend-b507ed25493fa182-1920.webp"
+        }
+    },
+    "assets/images/logo-me-since-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": []
+    },
+    "assets/images/logo-nu-cuoi-duyen-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-0bbd2fd65e59a307-160.webp",
+            "480": "assets/images/optimized/frontend-0bbd2fd65e59a307-480.webp",
+            "768": "assets/images/optimized/frontend-0bbd2fd65e59a307-768.webp"
+        }
+    },
+    "assets/images/logo-thanh-tam-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-de47a481acda95d2-160.webp",
+            "480": "assets/images/optimized/frontend-de47a481acda95d2-480.webp",
+            "768": "assets/images/optimized/frontend-de47a481acda95d2-768.webp"
+        }
+    },
+    "assets/images/logo-v-holding-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-0d518f997a28ae78-160.webp",
+            "480": "assets/images/optimized/frontend-0d518f997a28ae78-480.webp",
+            "768": "assets/images/optimized/frontend-0d518f997a28ae78-768.webp"
+        }
+    },
+    "assets/images/logodaidongtien-768x448-71611-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-346a3965a4546a42-160.webp",
+            "480": "assets/images/optimized/frontend-346a3965a4546a42-480.webp",
+            "768": "assets/images/optimized/frontend-346a3965a4546a42-768.webp"
+        }
+    },
+    "assets/images/missluxury.png": {
+        "width": 240,
+        "height": 168,
+        "variants": {
+            "160": "assets/images/optimized/frontend-73d793c148e2103b-160.webp",
+            "240": "assets/images/optimized/frontend-73d793c148e2103b-240.webp"
+        }
+    },
+    "assets/images/mitsubishi-768x768.png": {
+        "width": 768,
+        "height": 768,
+        "variants": {
+            "160": "assets/images/optimized/frontend-07fe1e373923246a-160.webp",
+            "480": "assets/images/optimized/frontend-07fe1e373923246a-480.webp",
+            "768": "assets/images/optimized/frontend-07fe1e373923246a-768.webp"
+        }
+    },
+    "assets/images/moi-truong-bao-chau-1024x603.jpg": {
+        "width": 1024,
+        "height": 603,
+        "variants": {
+            "160": "assets/images/optimized/frontend-dea81c161fdac378-160.webp",
+            "480": "assets/images/optimized/frontend-dea81c161fdac378-480.webp",
+            "960": "assets/images/optimized/frontend-dea81c161fdac378-960.webp",
+            "1024": "assets/images/optimized/frontend-dea81c161fdac378-1024.webp"
+        }
+    },
+    "assets/images/moi-truong-bao-chau.jpg": {
+        "width": 2048,
+        "height": 1205,
+        "variants": {
+            "160": "assets/images/optimized/frontend-5f2edadc70dbb50f-160.webp",
+            "480": "assets/images/optimized/frontend-5f2edadc70dbb50f-480.webp",
+            "960": "assets/images/optimized/frontend-5f2edadc70dbb50f-960.webp",
+            "1536": "assets/images/optimized/frontend-5f2edadc70dbb50f-1536.webp",
+            "1920": "assets/images/optimized/frontend-5f2edadc70dbb50f-1920.webp"
+        }
+    },
+    "assets/images/nangluc.png": {
+        "width": 358,
+        "height": 128,
+        "variants": []
+    },
+    "assets/images/nhakhoaanna.png": {
+        "width": 284,
+        "height": 69,
+        "variants": []
+    },
+    "assets/images/nhakhoathanhtam.webp": {
+        "width": 1920,
+        "height": 557,
+        "variants": {
+            "160": "assets/images/optimized/frontend-f3345727007f1623-160.webp",
+            "480": "assets/images/optimized/frontend-f3345727007f1623-480.webp",
+            "960": "assets/images/optimized/frontend-f3345727007f1623-960.webp",
+            "1536": "assets/images/optimized/frontend-f3345727007f1623-1536.webp",
+            "1920": "assets/images/optimized/frontend-f3345727007f1623-1920.webp"
+        }
+    },
+    "assets/images/nongnghieptrungthai.png": {
+        "width": 180,
+        "height": 178,
+        "variants": {
+            "160": "assets/images/optimized/frontend-f14f992aef0c4a90-160.webp",
+            "180": "assets/images/optimized/frontend-f14f992aef0c4a90-180.webp"
+        }
+    },
+    "assets/images/sachstore.png": {
+        "width": 500,
+        "height": 497,
+        "variants": {
+            "160": "assets/images/optimized/frontend-f6e177fdadf83248-160.webp",
+            "480": "assets/images/optimized/frontend-f6e177fdadf83248-480.webp",
+            "500": "assets/images/optimized/frontend-f6e177fdadf83248-500.webp"
+        }
+    },
+    "assets/images/slide-1.png": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-36b75685ceeb5b4d-160.webp",
+            "480": "assets/images/optimized/frontend-36b75685ceeb5b4d-480.webp",
+            "960": "assets/images/optimized/frontend-36b75685ceeb5b4d-960.webp",
+            "1024": "assets/images/optimized/frontend-36b75685ceeb5b4d-1024.webp"
+        }
+    },
+    "assets/images/slide-2.jpg": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-36d155a736609277-160.webp",
+            "480": "assets/images/optimized/frontend-36d155a736609277-480.webp",
+            "960": "assets/images/optimized/frontend-36d155a736609277-960.webp",
+            "1024": "assets/images/optimized/frontend-36d155a736609277-1024.webp"
+        }
+    },
+    "assets/images/slide-3.png": {
+        "width": 1536,
+        "height": 568,
+        "variants": {
+            "160": "assets/images/optimized/frontend-64817841eccb82b1-160.webp",
+            "480": "assets/images/optimized/frontend-64817841eccb82b1-480.webp",
+            "960": "assets/images/optimized/frontend-64817841eccb82b1-960.webp",
+            "1536": "assets/images/optimized/frontend-64817841eccb82b1-1536.webp"
+        }
+    },
+    "assets/images/slide-4.png": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-7fa8cda9bc2bece8-160.webp",
+            "480": "assets/images/optimized/frontend-7fa8cda9bc2bece8-480.webp",
+            "960": "assets/images/optimized/frontend-7fa8cda9bc2bece8-960.webp",
+            "1024": "assets/images/optimized/frontend-7fa8cda9bc2bece8-1024.webp"
+        }
+    },
+    "assets/images/thietbichuachaymiennam.png": {
+        "width": 306,
+        "height": 345,
+        "variants": {
+            "160": "assets/images/optimized/frontend-d32a70660931a0f1-160.webp",
+            "306": "assets/images/optimized/frontend-d32a70660931a0f1-306.webp"
+        }
+    },
+    "assets/images/thosuachuaviet.png": {
+        "width": 232,
+        "height": 126,
+        "variants": {
+            "160": "assets/images/optimized/frontend-415b694976868534-160.webp",
+            "232": "assets/images/optimized/frontend-415b694976868534-232.webp"
+        }
+    },
+    "assets/images/v-holdings.png": {
+        "width": 225,
+        "height": 192,
+        "variants": {
+            "160": "assets/images/optimized/frontend-9550066ce9090957-160.webp",
+            "225": "assets/images/optimized/frontend-9550066ce9090957-225.webp"
+        }
+    },
+    "assets/images/vuabaobigiay.png": {
+        "width": 1920,
+        "height": 708,
+        "variants": {
+            "160": "assets/images/optimized/frontend-fd8fb43abce5da2d-160.webp",
+            "480": "assets/images/optimized/frontend-fd8fb43abce5da2d-480.webp",
+            "960": "assets/images/optimized/frontend-fd8fb43abce5da2d-960.webp",
+            "1536": "assets/images/optimized/frontend-fd8fb43abce5da2d-1536.webp",
+            "1920": "assets/images/optimized/frontend-fd8fb43abce5da2d-1920.webp"
+        }
+    },
+    "storage/uploads/partners/1-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b75f7c53ab0aba86-160.webp",
+            "480": "assets/images/optimized/frontend-b75f7c53ab0aba86-480.webp",
+            "768": "assets/images/optimized/frontend-b75f7c53ab0aba86-768.webp"
+        }
+    },
+    "storage/uploads/partners/10-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-37211af0813ead7e-160.webp",
+            "480": "assets/images/optimized/frontend-37211af0813ead7e-480.webp",
+            "768": "assets/images/optimized/frontend-37211af0813ead7e-768.webp"
+        }
+    },
+    "storage/uploads/partners/12-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-244eb00dc3f30b87-160.webp",
+            "480": "assets/images/optimized/frontend-244eb00dc3f30b87-480.webp",
+            "768": "assets/images/optimized/frontend-244eb00dc3f30b87-768.webp"
+        }
+    },
+    "storage/uploads/partners/5-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-d57ea62e0c404ff0-160.webp",
+            "480": "assets/images/optimized/frontend-d57ea62e0c404ff0-480.webp",
+            "768": "assets/images/optimized/frontend-d57ea62e0c404ff0-768.webp"
+        }
+    },
+    "storage/uploads/partners/8-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c700e9e6f5a06cd7-160.webp",
+            "480": "assets/images/optimized/frontend-c700e9e6f5a06cd7-480.webp",
+            "768": "assets/images/optimized/frontend-c700e9e6f5a06cd7-768.webp"
+        }
+    },
+    "storage/uploads/partners/bao-gia-lai.png": {
+        "width": 750,
+        "height": 184,
+        "variants": {
+            "160": "assets/images/optimized/frontend-1e6ba4a7f24016cd-160.webp",
+            "480": "assets/images/optimized/frontend-1e6ba4a7f24016cd-480.webp",
+            "750": "assets/images/optimized/frontend-1e6ba4a7f24016cd-750.webp"
+        }
+    },
+    "storage/uploads/partners/bao-kinh-te-xanh.png": {
+        "width": 315,
+        "height": 60,
+        "variants": []
+    },
+    "storage/uploads/partners/bao-moi.png": {
+        "width": 250,
+        "height": 110,
+        "variants": []
+    },
+    "storage/uploads/partners/bidrico.png": {
+        "width": 522,
+        "height": 264,
+        "variants": {
+            "160": "assets/images/optimized/frontend-45063aa8a3e8404d-160.webp",
+            "480": "assets/images/optimized/frontend-45063aa8a3e8404d-480.webp",
+            "522": "assets/images/optimized/frontend-45063aa8a3e8404d-522.webp"
+        }
+    },
+    "storage/uploads/partners/breadtalkvietnam.png": {
+        "width": 648,
+        "height": 156,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c7f0b854b0e02077-160.webp",
+            "480": "assets/images/optimized/frontend-c7f0b854b0e02077-480.webp",
+            "648": "assets/images/optimized/frontend-c7f0b854b0e02077-648.webp"
+        }
+    },
+    "storage/uploads/partners/dochihome.png": {
+        "width": 1920,
+        "height": 444,
+        "variants": {
+            "160": "assets/images/optimized/frontend-2c11a7f5d19158a7-160.webp",
+            "480": "assets/images/optimized/frontend-2c11a7f5d19158a7-480.webp",
+            "960": "assets/images/optimized/frontend-2c11a7f5d19158a7-960.webp",
+            "1536": "assets/images/optimized/frontend-2c11a7f5d19158a7-1536.webp",
+            "1920": "assets/images/optimized/frontend-2c11a7f5d19158a7-1920.webp"
+        }
+    },
+    "storage/uploads/partners/kaminail.png": {
+        "width": 945,
+        "height": 918,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b6893803235c0967-160.webp",
+            "480": "assets/images/optimized/frontend-b6893803235c0967-480.webp",
+            "945": "assets/images/optimized/frontend-b6893803235c0967-945.webp"
+        }
+    },
+    "storage/uploads/partners/ketoansaokim.webp": {
+        "width": 413,
+        "height": 100,
+        "variants": []
+    },
+    "storage/uploads/partners/logo-Rart-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-7065261712822333-160.webp",
+            "480": "assets/images/optimized/frontend-7065261712822333-480.webp",
+            "768": "assets/images/optimized/frontend-7065261712822333-768.webp"
+        }
+    },
+    "storage/uploads/partners/logo-em-biet-doc-1-768x344.webp": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ac2d300310d9e63e-160.webp",
+            "480": "assets/images/optimized/frontend-ac2d300310d9e63e-480.webp",
+            "768": "assets/images/optimized/frontend-ac2d300310d9e63e-768.webp"
+        }
+    },
+    "storage/uploads/partners/logo-gocons-768x344.png": {
+        "width": 768,
+        "height": 344,
+        "variants": {
+            "160": "assets/images/optimized/frontend-ea651891e94786a2-160.webp",
+            "480": "assets/images/optimized/frontend-ea651891e94786a2-480.webp",
+            "768": "assets/images/optimized/frontend-ea651891e94786a2-768.webp"
+        }
+    },
+    "storage/uploads/partners/nhakhoaanna.png": {
+        "width": 284,
+        "height": 69,
+        "variants": []
+    },
+    "storage/uploads/service-categories/Bai-Dang-Bao-Chau-1024x572.png": {
+        "width": 1024,
+        "height": 572,
+        "variants": {
+            "160": "assets/images/optimized/frontend-67fc61edf7694ba7-160.webp",
+            "480": "assets/images/optimized/frontend-67fc61edf7694ba7-480.webp",
+            "960": "assets/images/optimized/frontend-67fc61edf7694ba7-960.webp",
+            "1024": "assets/images/optimized/frontend-67fc61edf7694ba7-1024.webp"
+        }
+    },
+    "storage/uploads/service-categories/CTY-TAN-TIEN-1024x640.png": {
+        "width": 1024,
+        "height": 640,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b8d88d8cbc6c9223-160.webp",
+            "480": "assets/images/optimized/frontend-b8d88d8cbc6c9223-480.webp",
+            "960": "assets/images/optimized/frontend-b8d88d8cbc6c9223-960.webp",
+            "1024": "assets/images/optimized/frontend-b8d88d8cbc6c9223-1024.webp"
+        }
+    },
+    "storage/uploads/service-categories/Hinh-1-1024x683.jpg": {
+        "width": 1024,
+        "height": 683,
+        "variants": {
+            "160": "assets/images/optimized/frontend-dabdad4a99ef3c18-160.webp",
+            "480": "assets/images/optimized/frontend-dabdad4a99ef3c18-480.webp",
+            "960": "assets/images/optimized/frontend-dabdad4a99ef3c18-960.webp",
+            "1024": "assets/images/optimized/frontend-dabdad4a99ef3c18-1024.webp"
+        }
+    },
+    "storage/uploads/service-categories/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png": {
+        "width": 1024,
+        "height": 576,
+        "variants": {
+            "160": "assets/images/optimized/frontend-5a950b19265fe534-160.webp",
+            "480": "assets/images/optimized/frontend-5a950b19265fe534-480.webp",
+            "960": "assets/images/optimized/frontend-5a950b19265fe534-960.webp",
+            "1024": "assets/images/optimized/frontend-5a950b19265fe534-1024.webp"
+        }
+    },
+    "storage/uploads/sliders/slide-1.png": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-36b75685ceeb5b4d-160.webp",
+            "480": "assets/images/optimized/frontend-36b75685ceeb5b4d-480.webp",
+            "960": "assets/images/optimized/frontend-36b75685ceeb5b4d-960.webp",
+            "1024": "assets/images/optimized/frontend-36b75685ceeb5b4d-1024.webp"
+        }
+    },
+    "storage/uploads/sliders/slide-2.jpg": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-36d155a736609277-160.webp",
+            "480": "assets/images/optimized/frontend-36d155a736609277-480.webp",
+            "960": "assets/images/optimized/frontend-36d155a736609277-960.webp",
+            "1024": "assets/images/optimized/frontend-36d155a736609277-1024.webp"
+        }
+    },
+    "storage/uploads/sliders/slide-3.png": {
+        "width": 1536,
+        "height": 568,
+        "variants": {
+            "160": "assets/images/optimized/frontend-64817841eccb82b1-160.webp",
+            "480": "assets/images/optimized/frontend-64817841eccb82b1-480.webp",
+            "960": "assets/images/optimized/frontend-64817841eccb82b1-960.webp",
+            "1536": "assets/images/optimized/frontend-64817841eccb82b1-1536.webp"
+        }
+    },
+    "storage/uploads/sliders/slide-4.png": {
+        "width": 1024,
+        "height": 379,
+        "variants": {
+            "160": "assets/images/optimized/frontend-7fa8cda9bc2bece8-160.webp",
+            "480": "assets/images/optimized/frontend-7fa8cda9bc2bece8-480.webp",
+            "960": "assets/images/optimized/frontend-7fa8cda9bc2bece8-960.webp",
+            "1024": "assets/images/optimized/frontend-7fa8cda9bc2bece8-1024.webp"
+        }
+    },
+    "storage/uploads/testimonials/2-1-768x427.png": {
+        "width": 768,
+        "height": 427,
+        "variants": {
+            "160": "assets/images/optimized/frontend-379efb4c93ada19d-160.webp",
+            "480": "assets/images/optimized/frontend-379efb4c93ada19d-480.webp",
+            "768": "assets/images/optimized/frontend-379efb4c93ada19d-768.webp"
+        }
+    },
+    "storage/uploads/testimonials/daynghekimhoan.jpg": {
+        "width": 741,
+        "height": 693,
+        "variants": {
+            "160": "assets/images/optimized/frontend-c8413f9594b8b9f6-160.webp",
+            "480": "assets/images/optimized/frontend-c8413f9594b8b9f6-480.webp",
+            "741": "assets/images/optimized/frontend-c8413f9594b8b9f6-741.webp"
+        }
+    },
+    "storage/uploads/testimonials/kaminail.png": {
+        "width": 945,
+        "height": 918,
+        "variants": {
+            "160": "assets/images/optimized/frontend-b6893803235c0967-160.webp",
+            "480": "assets/images/optimized/frontend-b6893803235c0967-480.webp",
+            "945": "assets/images/optimized/frontend-b6893803235c0967-945.webp"
+        }
+    },
+    "storage/uploads/testimonials/nangluc.png": {
+        "width": 358,
+        "height": 128,
+        "variants": []
+    },
+    "storage/uploads/testimonials/sachstore.png": {
+        "width": 500,
+        "height": 497,
+        "variants": {
+            "160": "assets/images/optimized/frontend-f6e177fdadf83248-160.webp",
+            "480": "assets/images/optimized/frontend-f6e177fdadf83248-480.webp",
+            "500": "assets/images/optimized/frontend-f6e177fdadf83248-500.webp"
+        }
+    }
+}

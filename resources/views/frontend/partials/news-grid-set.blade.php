@@ -23,7 +23,7 @@
       <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
         <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
           <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p0->slug) }}" aria-label="{{ $p0->title }}">
-            <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p0->title }}" decoding="async" loading="lazy" />
+            <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p0->title }}" decoding="async" loading="lazy" />
           </a>
         </div>
         <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">
@@ -51,7 +51,7 @@
       <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
         <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
           <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p1->slug) }}" aria-label="{{ $p1->title }}">
-            <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p1->title }}" decoding="async" loading="lazy" />
+            <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p1->title }}" decoding="async" loading="lazy" />
           </a>
         </div>
         <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">
@@ -82,7 +82,7 @@
     <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
       <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
         <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p2->slug) }}" aria-label="{{ $p2->title }}">
-          <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="1024" height="683" alt="{{ $p2->title }}" decoding="async" loading="lazy" />
+          <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="1024" height="683" alt="{{ $p2->title }}" decoding="async" loading="lazy" />
         </a>
       </div>
       <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">
@@ -114,7 +114,7 @@
     <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
       <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
         <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p3->slug) }}" aria-label="{{ $p3->title }}">
-          <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="1024" height="683" alt="{{ $p3->title }}" decoding="async" loading="lazy" />
+          <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="1024" height="683" alt="{{ $p3->title }}" decoding="async" loading="lazy" />
         </a>
       </div>
       <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">
@@ -144,7 +144,7 @@
       <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
         <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
           <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p4->slug) }}" aria-label="{{ $p4->title }}">
-            <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p4->title }}" decoding="async" loading="lazy" />
+            <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p4->title }}" decoding="async" loading="lazy" />
           </a>
         </div>
         <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">
@@ -172,7 +172,7 @@
       <div class="item flex flex-col group relative" data-category="{{ $catSlug }}">
         <div class="c-cover rounded-xl md:rounded-2xl overflow-hidden">
           <a class="block w-full c-scale-effect" href="{{ route('posts.show', $p5->slug) }}" aria-label="{{ $p5->title }}">
-            <img src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p5->title }}" decoding="async" loading="lazy" />
+            <x-frontend.image sizes="(min-width: 1024px) 50vw, 100vw" src="{{ $imgSrc }}" class="w-full object-cover as-16-9" width="768" height="512" alt="{{ $p5->title }}" decoding="async" loading="lazy" />
           </a>
         </div>
         <div class="c-content pointer-events-none flex flex-col gap-3 absolute left-0 bottom-0 w-full px-4 pb-4 pt-8 rounded-xl md:rounded-2xl">

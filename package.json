@@ -3,7 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "npm run build:ghg-landing && vite build",
+        "build": "npm run build:frontend && npm run build:ghg-landing && vite build",
+        "build:frontend": "node resources/js/build-frontend.mjs",
         "dev": "vite",
         "build:ghg-landing": "node resources/js/build-ghg-landing.mjs"
     },

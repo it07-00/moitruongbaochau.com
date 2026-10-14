@@ -1,0 +1,19 @@
+.webhd-shap-bg {
+    width: 100vw;
+    height: auto;
+    aspect-ratio: 1698 / 1080;
+}
+
+.webhd-shap-bg img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1698 / 1080;
+}
+
+.home-about-image img {
+    height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .webhd-shap-bg img { animation: none; }
+}

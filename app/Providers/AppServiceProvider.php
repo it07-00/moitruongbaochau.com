@@ -10,6 +10,7 @@ use App\Observers\MenuItemObserver;
 use App\Observers\MenuObserver;
 use App\Services\MenuService;
 use App\Services\SettingService;
+use App\Support\OptimizedImage;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->scoped(OptimizedImage::class);
     }
 
     /**

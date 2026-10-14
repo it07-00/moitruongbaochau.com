@@ -8,7 +8,7 @@
   <!-- Header Drawer: Logo & Close Button -->
   <div class="flex items-center justify-between px-4 py-3.5 border-b border-gray-100 bg-white gap-2">
     <a href="{{ route('home') }}" class="flex items-center gap-2.5 min-w-0 flex-1" rel="home">
-      <img
+      <x-frontend.image sizes="140px"
         src="{{ asset(str_starts_with($websiteSettings['logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['logo'] : ($websiteSettings['logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
         width="36"
         height="36"
@@ -89,7 +89,7 @@
           <div class="site-logo">
             <a class="logo flex items-center" title="{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}" href="{{ route('home') }}" rel="home">
               <span class="custom-logo-link">
-                <img
+                <x-frontend.image sizes="140px"
                   src="{{ asset(str_starts_with($websiteSettings['logo'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['logo'] : ($websiteSettings['logo'] ?? 'assets/images/logo-leave-png-min.png')) }}"
                   class="custom-logo h-14 sm:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 hover:scale-105"
                   alt="{{ $websiteSettings['company_short_name'] ?? 'Môi Trường Bảo Châu' }}"

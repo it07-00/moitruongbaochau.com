@@ -45,33 +45,33 @@
               <div class="swiper-slide">
                 @if ($slide->link)
                 <a href="{{ $slide->link }}" {!! $slide->open_in_new_tab ? 'target="_blank" rel="noopener noreferrer"' : '' !!} class="block w-full h-full" title="{{ $slideTitle }}">
-                  <img
-                    src="{{ $imgSrc }}"
+                  <x-frontend.image
+                    src="{{ $imgSrc }}" sizes="100vw"
                     class="w-full h-full object-cover object-center"
                     width="1536"
                     height="568"
                     alt="{{ $slideTitle }}"
                     loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
-                    {!! $index === 0 ? 'fetchpriority="high"' : '' !!}
+                    fetchpriority="{{ $index === 0 ? 'high' : 'low' }}"
                     decoding="async"
                   />
                 </a>
                 @else
-                <img
-                  src="{{ $imgSrc }}"
+                <x-frontend.image
+                  src="{{ $imgSrc }}" sizes="100vw"
                   class="w-full h-full object-cover object-center"
                   width="1536"
                   height="568"
                   alt="{{ $slideTitle }}"
                   loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
-                  {!! $index === 0 ? 'fetchpriority="high"' : '' !!}
+                  fetchpriority="{{ $index === 0 ? 'high' : 'low' }}"
                   decoding="async"
                 />
                 @endif
               </div>
               @empty
               <div class="swiper-slide">
-                <img
+                <x-frontend.image
                   src="{{ asset("assets/images/slide-1.png") }}"
                   class="w-full h-full object-cover object-center"
                   width="1024"
@@ -106,8 +106,8 @@
                 <div
                   class="absolute w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
                 ></div>
-                <img
-                  src="{{ $page?->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
+                <x-frontend.image
+                  sizes="(min-width: 1024px) 480px, 76vw" src="{{ $page?->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
                   class="relative bottom-0 lg:-bottom-6 max-w-[400px] w-full h-auto opacity-80 hover:opacity-100 drop-shadow-xl hover:scale-105 transition-all duration-500"
                   width="1024"
                   height="1024"
@@ -121,9 +121,9 @@
                   class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                 >
                   <span class="icon-list-icon">
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/asterisk.png") }}"
-                      class="size-5"
+                      sizes="24px" class="size-5"
                       width="24"
                       height="24"
                       alt="{{ $page?->metadata['about_badge'] ?? ($websiteSettings['about_badge'] ?? 'Về chúng tôi') }}"
@@ -264,9 +264,9 @@
           <div class="container px-3 mx-auto z-2 relative">
             <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
               <span class="icon-list-icon">
-                <img
+                <x-frontend.image
                   src="{{ asset("assets/images/asterisk.png") }}"
-                  class="size-5"
+                  sizes="24px" class="size-5"
                   width="24"
                   height="24"
                   alt="Dịch vụ"
@@ -316,7 +316,7 @@
                             @if(str_starts_with($category->icon, '<svg'))
                               {!! $category->icon !!}
                             @else
-                              <img src="{{ str_starts_with($category->icon, 'uploads/') ? asset('storage/' . $category->icon) : asset($category->icon) }}" class="size-8 sm:size-9 lg:size-10 object-contain" alt="{{ $category->name }}" />
+                              <x-frontend.image src="{{ str_starts_with($category->icon, 'uploads/') ? asset('storage/' . $category->icon) : asset($category->icon) }}" sizes="40px" width="40" height="40" class="size-8 sm:size-9 lg:size-10 object-contain" alt="{{ $category->name }}" />
                             @endif
                           @elseif($category->slug === 'phap-ly-moi-truong')
                             <!-- Scale / Legal Icon -->
@@ -442,9 +442,9 @@
                               $firstService = $category->services->first();
                               $thumbImg = $category->image ?: ($firstService?->thumbnail ?: 'assets/images/Huong-Dan-Thuc-Hien-Dang-Ky-Moi-Truong-1024x576.png');
                             @endphp
-                            <img
+                            <x-frontend.image
                               src="{{ str_starts_with($thumbImg, 'http') ? $thumbImg : (str_starts_with($thumbImg, 'uploads/') ? asset('storage/' . $thumbImg) : asset($thumbImg)) }}"
-                              class="block object-cover w-full h-full rounded-2xl aspect-16/9"
+                              sizes="(min-width: 1024px) 58vw, 100vw" class="block object-cover w-full h-full rounded-2xl aspect-16/9"
                               alt="{{ $category->name }}"
                               decoding="async"
                               loading="lazy"
@@ -515,9 +515,9 @@
             <div class="w-full text-center max-w-4xl mx-auto">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
-                    class="size-5"
+                    sizes="24px" class="size-5"
                     width="24"
                     height="24"
                     alt="Dự án"
@@ -674,9 +674,9 @@
                         aria-label="{{ $proj->title }}"
                         title="{{ $proj->title }}"
                       >
-                        <img
+                        <x-frontend.image
                           src="{{ str_starts_with($proj->thumbnail ?? '', 'http') ? $proj->thumbnail : (str_starts_with($proj->thumbnail ?? '', 'uploads/') ? asset('storage/' . $proj->thumbnail) : asset('assets/images/' . ($proj->thumbnail ?: 'BERICAP.jpg'))) }}"
-                          class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" class="block w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           width="1024"
                           height="683"
                           alt="{{ $proj->title }}"
@@ -813,9 +813,9 @@
                   class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4"
                 >
                   <span class="icon-list-icon">
-                    <img
+                    <x-frontend.image
                       src="{{ asset("assets/images/asterisk.png") }}"
-                      class="size-5"
+                      sizes="24px" class="size-5"
                       width="24"
                       height="24"
                       alt="Tin tức"
@@ -909,9 +909,9 @@
           <div class="container px-3 mx-auto">
             <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
               <span class="icon-list-icon">
-                <img
+                <x-frontend.image
                   src="{{ asset("assets/images/asterisk.png") }}"
-                  class="size-5"
+                  sizes="24px" class="size-5"
                   width="24"
                   height="24"
                   alt="Đánh giá"
@@ -949,9 +949,9 @@
                             </span>
                             @if($testimonial->avatar)
                               <span class="flex-none block">
-                                <img
+                                <x-frontend.image
                                   src="{{ str_starts_with($testimonial->avatar, 'http') ? $testimonial->avatar : (str_starts_with($testimonial->avatar, 'uploads/') ? asset('storage/' . $testimonial->avatar) : asset('assets/images/' . $testimonial->avatar)) }}"
-                                  class="pointer-events-none block w-auto h-10 object-contain"
+                                  sizes="160px" class="pointer-events-none block w-auto h-10 object-contain"
                                   alt="{{ $testimonial->client_company ?: $testimonial->client_name }}"
                                   loading="lazy"
                                 />
@@ -988,9 +988,9 @@
                               rel="noopener noreferrer nofollow"
                               title="Đánh giá trên {{ $testimonial->source }}"
                             >
-                              <img
+                              <x-frontend.image
                                 src="{{ asset('assets/images/google-reviews.png') }}"
-                                class="w-14 xl:w-16 pointer-events-none"
+                                sizes="64px" loading="lazy" class="w-14 xl:w-16 pointer-events-none"
                                 alt="{{ $testimonial->source }}"
                                 width="1000"
                                 height="414"
@@ -1028,9 +1028,9 @@
           <div class="container px-3 mx-auto">
             <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
               <span class="icon-list-icon">
-                <img
+                <x-frontend.image
                   src="{{ asset("assets/images/asterisk.png") }}"
-                  class="size-5"
+                  sizes="24px" class="size-5"
                   width="24"
                   height="24"
                   alt="Khách hàng &amp; Đối tác"
@@ -1055,9 +1055,9 @@
                     <div class="swiper-slide w-auto! h-auto! my-2 mr-4 md:mr-6">
                       @if($partner->link)
                         <a href="{{ $partner->link }}" target="_blank" rel="noopener noreferrer" class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white hover:scale-105 transition-transform duration-300" title="{{ $partner->name }}">
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
-                            class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
+                            sizes="170px" class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
                           />
@@ -1067,9 +1067,9 @@
                           class="u-flex-center h-full py-4 px-6 c-light-button glass-effect rounded-xl border border-white"
                           title="{{ $partner->name }}"
                         >
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($partner->logo, 'http') ? $partner->logo : (str_starts_with($partner->logo, 'uploads/') ? asset('storage/' . $partner->logo) : asset('assets/images/' . $partner->logo)) }}"
-                            class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
+                            sizes="170px" class="block h-[50px] md:h-[68px] w-auto max-w-[170px] object-contain"
                             alt="{{ $partner->name }}"
                             loading="lazy"
                           />
@@ -1085,9 +1085,9 @@
             <div class="mt-14 lg:mt-20">
               <div class="inline-flex items-center gap-2 lg:gap-3 mb-3 lg:mb-4">
                 <span class="icon-list-icon">
-                  <img
+                  <x-frontend.image
                     src="{{ asset("assets/images/asterisk.png") }}"
-                    class="size-5"
+                    sizes="24px" class="size-5"
                     width="24"
                     height="24"
                     alt="Báo chí"
@@ -1117,9 +1117,9 @@
                           rel="noopener noreferrer"
                           title="{{ $press->name }}"
                         >
-                          <img
+                          <x-frontend.image
                             src="{{ str_starts_with($press->logo, 'http') ? $press->logo : (str_starts_with($press->logo, 'uploads/') ? asset('storage/' . $press->logo) : asset('assets/images/' . $press->logo)) }}"
-                            class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
+                            sizes="170px" class="object-contain block h-[50px] md:h-[68px] w-auto max-w-[170px]"
                             alt="{{ $press->name }}"
                             loading="lazy"
                           />
