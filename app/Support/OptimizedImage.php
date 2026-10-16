@@ -62,10 +62,14 @@ class OptimizedImage
         if (! $image) {
             return ['src' => $source];
         }
-        if (empty($image['variants'])) {
+        $variants = array_filter($image['variants'] ?? [], function (string $path): bool {
+            $file = public_path($path);
+
+            return is_file($file) && is_readable($file);
+        });
+        if (empty($variants)) {
             return ['src' => $source, 'width' => $image['width'], 'height' => $image['height']];
         }
-        $variants = $image['variants'];
         ksort($variants, SORT_NUMERIC);
 
         return [

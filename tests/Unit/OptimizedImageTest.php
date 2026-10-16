@@ -4,12 +4,41 @@ namespace Tests\Unit;
 
 use App\Support\OptimizedImage;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class OptimizedImageTest extends TestCase
 {
+    private string $originalPublicPath;
+
+    private string $temporaryPublicPath;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->originalPublicPath = public_path();
+        $this->temporaryPublicPath = storage_path('framework/testing/optimized-image-'.bin2hex(random_bytes(8)));
+        File::ensureDirectoryExists($this->temporaryPublicPath);
+        $this->app->usePublicPath($this->temporaryPublicPath);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->app->usePublicPath($this->originalPublicPath);
+        File::deleteDirectory($this->temporaryPublicPath);
+        parent::tearDown();
+    }
+
+    private function createVariant(string $path): void
+    {
+        File::ensureDirectoryExists(dirname(public_path($path)));
+        File::put(public_path($path), 'image fixture');
+    }
+
     public function test_responsive_variants_are_sorted_and_keep_original_aspect_ratio(): void
     {
+        $this->createVariant('assets/images/optimized/banner-480.webp');
+        $this->createVariant('assets/images/optimized/banner-960.webp');
         $image = new OptimizedImage([
             'storage/uploads/banner.png' => [
                 'width' => 1536, 'height' => 568,
@@ -54,6 +83,7 @@ class OptimizedImageTest extends TestCase
 
     public function test_component_uses_correct_intrinsic_dimensions_instead_of_a_placeholder_square(): void
     {
+        $this->createVariant('assets/logo-480.webp');
         $this->app->instance(OptimizedImage::class, new OptimizedImage([
             'assets/logo.png' => ['width' => 536, 'height' => 522, 'variants' => [480 => 'assets/logo-480.webp']],
         ]));
@@ -65,5 +95,42 @@ class OptimizedImageTest extends TestCase
         $this->assertStringContainsString('480w', $html);
         $this->assertStringContainsString('src="'.asset('assets/logo-480.webp').'"', $html);
         $this->assertStringNotContainsString('1024', $html);
+    }
+
+    public function test_missing_optimized_files_fall_back_to_original_without_srcset(): void
+    {
+        $image = new OptimizedImage([
+            'storage/uploads/banner.png' => [
+                'width' => 1536, 'height' => 568,
+                'variants' => [480 => 'assets/images/optimized/missing-480.webp', 960 => 'assets/images/optimized/missing-960.webp'],
+            ],
+        ]);
+        $source = asset('storage/uploads/banner.png').'?v=123';
+
+        $this->assertSame(['src' => $source, 'width' => 1536, 'height' => 568], $image->attributes($source));
+        $this->app->instance(OptimizedImage::class, $image);
+        $html = Blade::render('<x-frontend.image :src="$source" alt="Banner" />', ['source' => $source]);
+        $this->assertStringContainsString('src="'.$source.'"', $html);
+        $this->assertStringNotContainsString('srcset=', $html);
+        $this->assertStringNotContainsString('missing-', $html);
+
+        $html = $image->html('<img src="'.$source.'" alt="Banner">');
+        $this->assertStringContainsString('src="'.$source.'"', $html);
+        $this->assertStringNotContainsString('missing-', $html);
+    }
+
+    public function test_only_existing_variants_are_used_when_deployment_is_incomplete(): void
+    {
+        $this->createVariant('assets/images/optimized/banner-480.webp');
+        $image = new OptimizedImage([
+            'storage/uploads/banner.png' => [
+                'width' => 1536, 'height' => 568,
+                'variants' => [480 => 'assets/images/optimized/banner-480.webp', 960 => 'assets/images/optimized/missing-960.webp'],
+            ],
+        ]);
+
+        $result = $image->attributes(asset('storage/uploads/banner.png'));
+        $this->assertSame(asset('assets/images/optimized/banner-480.webp'), $result['src']);
+        $this->assertSame(asset('assets/images/optimized/banner-480.webp').' 480w', $result['srcset']);
     }
 }
