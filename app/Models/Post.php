@@ -48,7 +48,20 @@ class Post extends Model
             return $this->pdf_file;
         }
 
-        return asset(str_starts_with($this->pdf_file, 'uploads/') ? 'storage/'.$this->pdf_file : $this->pdf_file);
+        return route('posts.pdf', $this->slug);
+    }
+
+    public function getPdfDownloadUrlAttribute(): ?string
+    {
+        if (blank($this->pdf_file)) {
+            return null;
+        }
+
+        if (str_starts_with($this->pdf_file, 'http://') || str_starts_with($this->pdf_file, 'https://')) {
+            return $this->pdf_file;
+        }
+
+        return route('posts.pdf', ['slug' => $this->slug, 'download' => 1]);
     }
 
     public function getPdfFileNameAttribute(): ?string

@@ -168,6 +168,7 @@ class PostResource extends Resource
                     ->components([
                         FileUpload::make('pdf_file')
                             ->label('Tập tin PDF')
+                            ->disk('public')
                             ->acceptedFileTypes(['application/pdf'])
                             ->directory('uploads/posts/documents')
                             ->maxSize(51200)

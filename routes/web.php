@@ -48,6 +48,7 @@ foreach (Service::DECLARATION_ROUTES as $slug => $routeName) {
     Route::get('/'.$slug, [ServiceController::class, 'show'])->defaults('slug', $slug)->name($routeName);
 }
 Route::get('/tin-tuc', [PostController::class, 'index'])->name('posts.index');
+Route::get('/tin-tuc/{slug}/tai-lieu.pdf', [PostController::class, 'pdf'])->name('posts.pdf');
 Route::get('/tin-tuc/{slug}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/du-an', [ProjectController::class, 'index'])->name('projects.index');
 Route::get('/du-an/{slug}', [ProjectController::class, 'show'])->name('projects.show');

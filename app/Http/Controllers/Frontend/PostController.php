@@ -9,9 +9,39 @@ use App\Models\PostCategory;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PostController extends Controller
 {
+    public function pdf(Request $request, string $slug): StreamedResponse
+    {
+        $post = Post::query()->published()->where('slug', $slug)->firstOrFail();
+        $path = preg_replace('#^/?storage/#', '', $post->pdf_file ?? '');
+
+        abort_unless(
+            str_starts_with($path, 'uploads/posts/documents/')
+            && ! preg_match('#(^|/)\.\.?(/|$)|[\\\\%]#', $path)
+            && strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'pdf',
+            404,
+        );
+
+        foreach (['public', 'local'] as $diskName) {
+            $disk = Storage::disk($diskName);
+
+            if ($disk->exists($path)) {
+                return $disk->response(
+                    $path,
+                    basename($path),
+                    ['Content-Type' => 'application/pdf', 'X-Content-Type-Options' => 'nosniff'],
+                    $request->boolean('download') ? 'attachment' : 'inline',
+                );
+            }
+        }
+
+        abort(404);
+    }
+
     public function index(Request $request): View
     {
         $currentCategorySlug = $request->query('category');
