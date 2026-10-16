@@ -107,7 +107,7 @@
                   class="absolute w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
                 ></div>
                 <x-frontend.image
-                  sizes="(min-width: 1024px) 480px, 76vw" src="{{ $page?->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
+                  sizes="(min-width: 1024px) 480px, 76vw" src="{{ $page?->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : \App\Support\SeoData::absoluteAsset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png') }}"
                   class="relative bottom-0 lg:-bottom-6 max-w-[400px] w-full h-auto opacity-80 hover:opacity-100 drop-shadow-xl hover:scale-105 transition-all duration-500"
                   width="1024"
                   height="1024"

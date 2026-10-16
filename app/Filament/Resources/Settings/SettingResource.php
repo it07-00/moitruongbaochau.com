@@ -6,15 +6,18 @@ use App\Filament\Resources\Settings\Pages\CreateSetting;
 use App\Filament\Resources\Settings\Pages\EditSetting;
 use App\Filament\Resources\Settings\Pages\ListSettings;
 use App\Models\Setting;
+use App\Support\SeoData;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -24,6 +27,14 @@ use UnitEnum;
 
 class SettingResource extends Resource
 {
+    public const IMAGE_SETTINGS = [
+        'logo' => 'Logo website',
+        'favicon' => 'Biểu tượng website (Favicon)',
+        'seo_default_image' => 'Ảnh chia sẻ mặc định (SEO)',
+        'about_image' => 'Ảnh giới thiệu doanh nghiệp',
+        'content_editor_logo' => 'Logo ban biên tập',
+    ];
+
     protected static ?string $model = Setting::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
@@ -53,6 +64,7 @@ class SettingResource extends Resource
                         TextInput::make('key')
                             ->label('Khóa cấu hình (Setting Key)')
                             ->required()
+                            ->live(onBlur: true)
                             ->maxLength(255)
                             ->unique(Setting::class, 'key', ignoreRecord: true),
                         Select::make('group')
@@ -69,10 +81,44 @@ class SettingResource extends Resource
                             ->required(),
                         Textarea::make('value')
                             ->label('Giá trị (Value)')
+                            ->visible(fn (Get $get): bool => ! isset(self::IMAGE_SETTINGS[$get('key') ?? '']))
                             ->rows(3)
+                            ->columnSpanFull(),
+                        FileUpload::make('image_value')
+                            ->label(fn (Get $get): string => self::IMAGE_SETTINGS[$get('key') ?? ''] ?? 'Hình ảnh')
+                            ->visible(fn (Get $get): bool => isset(self::IMAGE_SETTINGS[$get('key') ?? '']))
+                            ->image()
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/x-icon', 'image/vnd.microsoft.icon'])
+                            ->disk('public')
+                            ->visibility('public')
+                            ->directory('uploads/settings')
+                            ->maxSize(5120)
+                            ->fetchFileInformation(false)
+                            ->preventFilePathTampering(allowFilePathUsing: fn (string $file, ?Setting $record): bool => $record !== null && $file === $record->value)
+                            ->getUploadedFileUsing(fn (string $file): array => [
+                                'name' => basename($file),
+                                'size' => 0,
+                                'type' => null,
+                                'url' => SeoData::absoluteAsset($file),
+                            ])
+                            ->helperText('Chọn hoặc kéo thả ảnh vào đây. Tối đa 5 MB. Hệ thống tự lưu ảnh và cập nhật website.')
                             ->columnSpanFull(),
                     ])->columns(2),
             ]);
+    }
+
+    /** @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    public static function prepareFormData(array $data): array
+    {
+        if (isset(self::IMAGE_SETTINGS[$data['key']])) {
+            $data['value'] = $data['image_value'] ?? null;
+        }
+
+        unset($data['image_value']);
+
+        return $data;
     }
 
     public static function table(Table $table): Table

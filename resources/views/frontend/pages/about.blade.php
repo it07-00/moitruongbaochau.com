@@ -54,7 +54,7 @@
                 <div class="relative w-full max-w-lg">
                   <div class="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl -z-10"></div>
                   @php
-                    $aboutImg = $page->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : asset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png');
+                    $aboutImg = $page->thumbnail ? (str_starts_with($page->thumbnail, 'http') ? $page->thumbnail : (str_starts_with($page->thumbnail, 'uploads/') ? asset('storage/' . $page->thumbnail) : asset($page->thumbnail))) : \App\Support\SeoData::absoluteAsset($websiteSettings['about_image'] ?? 'assets/images/logo-leave-png-min.png');
                   @endphp
                   <x-frontend.image
                     src="{{ $aboutImg }}"
