@@ -192,9 +192,17 @@ class PageResource extends Resource
                     ])->columns(2),
 
                 Section::make('Hồ sơ năng lực')
-                    ->description('Đính kèm PDF để khách hàng xem và tải trên trang Hồ sơ năng lực riêng. Tối đa 100 MB.')
+                    ->description('Nhúng sách lật Heyzine và đính kèm PDF để khách hàng tải về. PDF tối đa 100 MB.')
                     ->visible(fn ($get) => $get('template') === 'capability-profile' || $get('slug') === 'ho-so-nang-luc')
                     ->components([
+                        TextInput::make('metadata.capability_flipbook_url')
+                            ->label('Đường dẫn sách lật Heyzine')
+                            ->placeholder('https://heyzine.com/flip-book/3997d6e66b.html')
+                            ->helperText('Dán link flipbook, không cần dán mã HTML. Sách lật được ưu tiên hiển thị trong khung đứng.')
+                            ->url()
+                            ->regex(Page::CAPABILITY_FLIPBOOK_URL_PATTERN)
+                            ->maxLength(255)
+                            ->columnSpanFull(),
                         FileUpload::make('metadata.capability_pdf')
                             ->label('Hồ sơ năng lực PDF')
                             ->disk('public')

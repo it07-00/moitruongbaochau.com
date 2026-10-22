@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
+    public const CAPABILITY_FLIPBOOK_URL_PATTERN = '#\Ahttps://heyzine\.com/flip-book/[a-zA-Z0-9]+\.html\z#';
+
     /** @use HasFactory<PageFactory> */
     use HasFactory;
 
@@ -35,6 +37,13 @@ class Page extends Model
             'metadata' => 'array',
             'published_at' => 'datetime',
         ];
+    }
+
+    public function getCapabilityFlipbookUrl(): ?string
+    {
+        $url = $this->metadata['capability_flipbook_url'] ?? null;
+
+        return is_string($url) && preg_match(self::CAPABILITY_FLIPBOOK_URL_PATTERN, $url) === 1 ? $url : null;
     }
 
     public function getPublicUrl(): string

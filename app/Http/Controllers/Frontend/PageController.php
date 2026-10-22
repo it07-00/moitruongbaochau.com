@@ -30,8 +30,9 @@ class PageController extends Controller
         $seo = SeoData::forContent($page, route('capability-profile'), 'WebPage');
         $path = $page->metadata['capability_pdf'] ?? '';
         $hasPdf = $this->isCapabilityPdfPath($path) && Storage::disk('public')->exists($path);
+        $flipbookUrl = $page->getCapabilityFlipbookUrl();
 
-        return view('frontend.pages.capability-profile', compact('page', 'seo', 'hasPdf'));
+        return view('frontend.pages.capability-profile', compact('page', 'seo', 'hasPdf', 'flipbookUrl'));
     }
 
     public function capabilityPdf(Request $request): StreamedResponse

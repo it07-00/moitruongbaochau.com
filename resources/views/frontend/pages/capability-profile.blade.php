@@ -18,13 +18,17 @@
                     {!! app(\App\Support\OptimizedImage::class)->html($page->content) !!}
                 </div>
             @endif
-            @if($hasPdf)
+            @if($flipbookUrl || $hasPdf)
                 <div class="about-capability-actions">
-                    <a href="{{ route('capability-profile.pdf') }}" target="_blank" rel="noopener noreferrer">Xem hồ sơ năng lực ↗</a>
-                    <a href="{{ route('capability-profile.pdf', ['download' => 1]) }}" download="ho-so-nang-luc-bao-chau.pdf">Tải PDF ↓</a>
+                    <a href="{{ $flipbookUrl ?: route('capability-profile.pdf') }}" target="_blank" rel="noopener noreferrer">Xem hồ sơ năng lực ↗</a>
+                    @if($hasPdf)
+                        <a href="{{ route('capability-profile.pdf', ['download' => 1]) }}" download="ho-so-nang-luc-bao-chau.pdf">Tải PDF ↓</a>
+                    @endif
                 </div>
-                <p class="mt-6 text-sm text-gray-600">Nếu thiết bị không hiển thị bản xem trước, hãy chọn Xem hồ sơ năng lực hoặc Tải PDF.</p>
-                <iframe class="capability-profile-frame" src="{{ route('capability-profile.pdf') }}" title="Hồ sơ năng lực Môi Trường Bảo Châu" loading="lazy"></iframe>
+                <p class="mt-6 text-sm text-gray-600">{{ $flipbookUrl ? 'Lật trang để xem hồ sơ năng lực. Bạn có thể mở sách trong tab mới bằng nút Xem hồ sơ năng lực.' : 'Nếu thiết bị không hiển thị bản xem trước, hãy chọn Xem hồ sơ năng lực hoặc Tải PDF.' }}</p>
+                <div class="capability-profile-viewer">
+                    <iframe class="capability-profile-frame" src="{{ $flipbookUrl ?: route('capability-profile.pdf') }}" title="Hồ sơ năng lực Môi Trường Bảo Châu" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+                </div>
             @else
                 <div class="about-capability-card">
                     <p>Hồ sơ năng lực đang được cập nhật. Vui lòng liên hệ để nhận bản mới nhất.</p>
@@ -40,6 +44,7 @@
 
 @push('styles')
 <style>
-    .capability-profile-frame { display: block; width: 100%; height: 75vh; min-height: 400px; margin-top: 24px; border: 1px solid #e2e9e4; border-radius: 16px; }
+    .capability-profile-viewer { position: relative; width: 100%; max-width: 720px; aspect-ratio: 210 / 297; min-height: 420px; margin: 24px auto 0; }
+    .capability-profile-frame { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 1px solid #e2e9e4; border-radius: 16px; }
 </style>
 @endpush
