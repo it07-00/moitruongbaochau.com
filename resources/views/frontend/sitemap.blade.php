@@ -9,7 +9,7 @@
     <url><loc>{{ route('contact.index') }}</loc></url>
     <url><loc>{{ route('ghg-service.index') }}</loc><lastmod>2026-10-10</lastmod></url>
     @foreach ($pages as $page)
-        <url><loc>{{ $page->canonical_url ?: route('pages.show', $page->slug) }}</loc><lastmod>{{ $page->updated_at->toAtomString() }}</lastmod></url>
+        <url><loc>{{ $page->canonical_url ?: $page->getPublicUrl() }}</loc><lastmod>{{ $page->updated_at->toAtomString() }}</lastmod></url>
     @endforeach
     @foreach ($services as $service)
         <url><loc>{{ $service->canonical_url ?: $service->getPublicUrl() }}</loc><lastmod>{{ $service->updated_at->toAtomString() }}</lastmod></url>

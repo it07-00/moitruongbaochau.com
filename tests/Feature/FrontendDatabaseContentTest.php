@@ -18,7 +18,7 @@ class FrontendDatabaseContentTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_about_page_shows_capability_pdf_when_configured(): void
+    public function test_about_page_links_to_the_separate_capability_profile_page(): void
     {
         $page = Page::factory()->create([
             'slug' => 'gioi-thieu', 'template' => 'about',
@@ -26,11 +26,11 @@ class FrontendDatabaseContentTest extends TestCase
             'metadata' => ['capability_pdf' => 'uploads/company-profile/profile.pdf'],
         ]);
         $this->get(route('about'))->assertOk()
-            ->assertSee('Hồ sơ năng lực Bảo Châu')
-            ->assertSee(asset('storage/uploads/company-profile/profile.pdf'))
-            ->assertSee('download="ho-so-nang-luc-bao-chau.pdf"', false);
+            ->assertSee(route('capability-profile'))
+            ->assertDontSee(asset('storage/uploads/company-profile/profile.pdf'))
+            ->assertDontSee('download="ho-so-nang-luc-bao-chau.pdf"', false);
         $page->update(['metadata' => []]);
-        $this->get(route('about'))->assertOk()->assertDontSee('Xem hồ sơ năng lực ↗');
+        $this->get(route('about'))->assertOk()->assertSee(route('capability-profile'));
     }
 
     public function test_service_detail_uses_database_metadata(): void

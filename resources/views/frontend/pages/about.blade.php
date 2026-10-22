@@ -36,19 +36,9 @@
                     </p>
                   @endif
                 </div>
-                @if(filled($page->metadata['capability_pdf'] ?? null))
-                  @php
-                    $capabilityPdfUrl = asset('storage/'.$page->metadata['capability_pdf']);
-                  @endphp
-                  <div class="about-capability-card">
-                    <h2>Hồ sơ năng lực Bảo Châu</h2>
-                    <p>Tìm hiểu về đội ngũ, lĩnh vực hoạt động và năng lực triển khai của chúng tôi.</p>
-                    <div class="about-capability-actions">
-                      <a href="{{ $capabilityPdfUrl }}" target="_blank" rel="noopener noreferrer">Xem hồ sơ năng lực ↗</a>
-                      <a href="{{ $capabilityPdfUrl }}" download="ho-so-nang-luc-bao-chau.pdf">Tải PDF ↓</a>
-                    </div>
-                  </div>
-                @endif
+                <div class="about-capability-actions">
+                  <a href="{{ route('capability-profile') }}">Xem hồ sơ năng lực ↗</a>
+                </div>
               </div>
               <div class="about-intro-image lg:col-span-6 order-1 lg:order-2 flex justify-center">
                 <div class="relative w-full max-w-lg">

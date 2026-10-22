@@ -42,6 +42,7 @@ class Page extends Model
         return match ($this->template) {
             'home' => route('home'),
             'about' => route('about'),
+            'capability-profile' => route('capability-profile'),
             'services' => route('services.index'),
             'projects' => route('projects.index'),
             'posts' => route('posts.index'),

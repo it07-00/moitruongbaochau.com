@@ -17,8 +17,8 @@ class SitemapController extends Controller
         $pages = Page::query()
             ->published()
             ->indexable()
-            ->where('template', 'default')
-            ->select(['slug', 'canonical_url', 'updated_at'])
+            ->whereIn('template', ['default', 'capability-profile'])
+            ->select(['slug', 'template', 'canonical_url', 'updated_at'])
             ->get();
         $services = Service::query()->published()->indexable()->select(['slug', 'canonical_url', 'updated_at'])->get();
         $posts = Post::query()->published()->indexable()->select(['slug', 'canonical_url', 'updated_at'])->get();

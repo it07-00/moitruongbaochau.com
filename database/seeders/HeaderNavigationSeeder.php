@@ -59,6 +59,11 @@ class HeaderNavigationSeeder extends Seeder
                 $roots[$systemItem['route_name']] = $item;
             }
 
+            $menu->items()->firstOrCreate(
+                ['route_name' => 'capability-profile'],
+                ['parent_id' => $roots['about']->id, 'label' => 'Hồ sơ năng lực', 'sort_order' => 1, 'is_active' => true],
+            );
+
             $services = $roots['services.index'];
             $servicesIndexUrl = route('services.index', absolute: false);
             $categories = ServiceCategory::query()->where('is_active', true)->orderBy('sort_order')

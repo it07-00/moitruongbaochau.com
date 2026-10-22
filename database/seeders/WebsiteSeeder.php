@@ -906,5 +906,11 @@ HTML;
                 'is_active' => true,
             ]);
         }
+
+        $about = $menu->items()->where('route_name', 'about')->whereNull('parent_id')->first();
+        $menu->items()->firstOrCreate(
+            ['route_name' => 'capability-profile'],
+            ['parent_id' => $about?->id, 'label' => 'Hồ sơ năng lực', 'sort_order' => 1, 'is_active' => true],
+        );
     }
 }

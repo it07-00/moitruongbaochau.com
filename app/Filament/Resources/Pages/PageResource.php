@@ -87,6 +87,7 @@ class PageResource extends Resource
                             ->options([
                                 'home' => '🏠 1. Trang Chủ (Home Page)',
                                 'about' => '🏢 2. Trang Giới thiệu (About Us)',
+                                'capability-profile' => '📑 Trang Hồ sơ năng lực',
                                 'services' => '🛠️ 3. Trang Dịch vụ (Services Index)',
                                 'projects' => '🏗️ 4. Trang Dự án (Projects Index)',
                                 'posts' => '📰 5. Trang Tin tức (News Index)',
@@ -191,15 +192,16 @@ class PageResource extends Resource
                     ])->columns(2),
 
                 Section::make('Hồ sơ năng lực')
-                    ->description('Đính kèm PDF để khách hàng xem và tải trên trang Giới thiệu.')
-                    ->visible(fn ($get) => $get('template') === 'about' || $get('slug') === 'gioi-thieu')
+                    ->description('Đính kèm PDF để khách hàng xem và tải trên trang Hồ sơ năng lực riêng. Tối đa 100 MB.')
+                    ->visible(fn ($get) => $get('template') === 'capability-profile' || $get('slug') === 'ho-so-nang-luc')
                     ->components([
                         FileUpload::make('metadata.capability_pdf')
                             ->label('Hồ sơ năng lực PDF')
                             ->disk('public')
                             ->directory('uploads/company-profile')
                             ->acceptedFileTypes(['application/pdf'])
-                            ->maxSize(51200)
+                            ->maxSize(102400)
+                            ->preventFilePathTampering()
                             ->openable()
                             ->downloadable()
                             ->columnSpanFull(),
@@ -395,6 +397,7 @@ class PageResource extends Resource
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'home' => 'Trang Chủ',
                         'about' => 'Trang Giới thiệu',
+                        'capability-profile' => 'Hồ sơ năng lực',
                         'services' => 'Trang Dịch vụ',
                         'projects' => 'Trang Dự án',
                         'posts' => 'Trang Tin tức',
@@ -416,6 +419,7 @@ class PageResource extends Resource
                     ->options([
                         'home' => 'Trang Chủ',
                         'about' => 'Trang Giới thiệu',
+                        'capability-profile' => 'Hồ sơ năng lực',
                         'services' => 'Trang Dịch vụ',
                         'projects' => 'Trang Dự án',
                         'posts' => 'Trang Tin tức',

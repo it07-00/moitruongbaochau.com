@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
+Route::get('/ho-so-nang-luc', [PageController::class, 'capabilityProfile'])->name('capability-profile');
+Route::get('/ho-so-nang-luc/tai-lieu.pdf', [PageController::class, 'capabilityPdf'])->name('capability-profile.pdf');
 Route::get('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'index'])->name('bvmt.index');
 Route::post('/form-bao-cao-cong-tac-bvmt-2026', [EnvironmentSurveyController::class, 'store'])->middleware('throttle:30,1')->name('bvmt.start');
 Route::prefix('/form-bao-cao-cong-tac-bvmt-2026')->name('bvmt.')->group(function (): void {
