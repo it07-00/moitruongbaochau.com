@@ -19,6 +19,62 @@ class CapabilityProfilePageTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    public function test_heyzine_flipbook_is_embedded_without_a_local_pdf(): void
+    {
+        $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
+        $page->update(['metadata' => ['capability_flipbook_url' => $url]]);
+
+        $this->get(route('capability-profile'))->assertOk()
+            ->assertSee('src="'.$url.'"', false)
+            ->assertSee('aspect-ratio: 210 / 297', false)
+            ->assertSee('allowfullscreen', false)
+            ->assertDontSee('Hồ sơ năng lực đang được cập nhật')
+            ->assertDontSee('Tải PDF ↓');
+
+        $path = 'uploads/company-profile/profile.pdf';
+        Storage::fake('public');
+        Storage::disk('public')->put($path, "%PDF-1.4\n%%EOF");
+        $page->update(['metadata' => ['capability_flipbook_url' => $url, 'capability_pdf' => $path]]);
+        $this->get(route('capability-profile'))->assertOk()
+            ->assertSee('src="'.$url.'"', false)
+            ->assertSee(route('capability-profile.pdf', ['download' => 1]), false);
+    }
+
+    public function test_invalid_flipbook_urls_are_not_embedded(): void
+    {
+        $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        foreach (['https://example.com/flip-book/3997d6e66b.html', 'javascript:alert(1)', 'https://heyzine.com.evil.example/flip-book/3997d6e66b.html', 'https://heyzine.com/flip-book/3997d6e66b.html?bad=1'] as $url) {
+            $page->update(['metadata' => ['capability_flipbook_url' => $url]]);
+            $this->assertNull($page->getCapabilityFlipbookUrl());
+            $this->get(route('capability-profile'))->assertOk()
+                ->assertDontSee('<iframe', false)
+                ->assertSee('Hồ sơ năng lực đang được cập nhật');
+        }
+    }
+
+    public function test_admin_can_save_reopen_and_clear_the_heyzine_link(): void
+    {
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
+
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->fillForm(['metadata.capability_flipbook_url' => $url])
+            ->call('save')->assertHasNoFormErrors();
+        $this->assertSame($url, $page->refresh()->getCapabilityFlipbookUrl());
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->assertFormSet(['metadata.capability_flipbook_url' => $url])
+            ->fillForm(['metadata.capability_flipbook_url' => 'https://example.com/flip-book/book.html'])
+            ->call('save')->assertHasFormErrors(['metadata.capability_flipbook_url']);
+        $this->assertSame($url, $page->refresh()->getCapabilityFlipbookUrl());
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->fillForm(['metadata.capability_flipbook_url' => null])
+            ->call('save')->assertHasNoFormErrors();
+        $this->assertNull($page->refresh()->getCapabilityFlipbookUrl());
+    }
+
     public function test_page_previews_and_streams_the_pdf_and_has_its_own_canonical(): void
     {
         Storage::fake('public');
