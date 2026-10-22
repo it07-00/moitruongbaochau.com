@@ -69,9 +69,12 @@ class CapabilityProfilePageTest extends TestCase
         $page->update(['metadata' => ['capability_flipbook_url' => $url]]);
 
         $this->get(route('capability-profile'))->assertOk()
-            ->assertSee('src="'.$url.'"', false)
-            ->assertSee('aspect-ratio: 210 / 297', false)
-            ->assertSee('allowfullscreen', false)
+            ->assertSee('class="heyzine-flipbook capability-profile-viewer"', false)
+            ->assertSee('href="'.$url.'"', false)
+            ->assertSee('height: 400px', false)
+            ->assertSee('https://heyzine.com/release/embed.min.js', false)
+            ->assertDontSee('aspect-ratio: 210 / 297', false)
+            ->assertDontSee('<iframe', false)
             ->assertDontSee('Hồ sơ năng lực đang được cập nhật')
             ->assertDontSee('Tải PDF ↓');
 
@@ -80,7 +83,7 @@ class CapabilityProfilePageTest extends TestCase
         Storage::disk('public')->put($path, "%PDF-1.4\n%%EOF");
         $page->update(['metadata' => ['capability_flipbook_url' => $url, 'capability_pdf' => $path]]);
         $this->get(route('capability-profile'))->assertOk()
-            ->assertSee('src="'.$url.'"', false)
+            ->assertSee('class="heyzine-flipbook capability-profile-viewer"', false)
             ->assertSee(route('capability-profile.pdf', ['download' => 1]), false);
     }
 
@@ -92,6 +95,7 @@ class CapabilityProfilePageTest extends TestCase
             $this->assertNull($page->getCapabilityFlipbookUrl());
             $this->get(route('capability-profile'))->assertOk()
                 ->assertDontSee('<iframe', false)
+                ->assertDontSee('https://heyzine.com/release/embed.min.js', false)
                 ->assertSee('Hồ sơ năng lực đang được cập nhật');
         }
     }
