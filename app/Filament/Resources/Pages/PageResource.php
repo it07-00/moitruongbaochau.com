@@ -209,7 +209,13 @@ class PageResource extends Resource
                             ->directory('uploads/company-profile')
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(102400)
-                            ->preventFilePathTampering()
+                            ->preventFilePathTampering(
+                                allowFilePathUsing: fn (string $file, ?Page $record): bool => $record !== null
+                                    && $file === data_get($record->getOriginal('metadata'), 'capability_pdf'),
+                            )
+                            ->validationMessages([
+                                'tampered' => 'Tệp PDF không thuộc trang này. Vui lòng chọn lại hoặc tải tệp mới.',
+                            ])
                             ->openable()
                             ->downloadable()
                             ->columnSpanFull(),

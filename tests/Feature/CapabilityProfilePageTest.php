@@ -19,6 +19,49 @@ class CapabilityProfilePageTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    public function test_admin_can_save_heyzine_link_while_retaining_an_existing_pdf(): void
+    {
+        Storage::fake('public');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        $path = 'uploads/company-profile/existing.pdf';
+        $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
+        Storage::disk('public')->put($path, "%PDF-1.4\nProfile\n%%EOF");
+        $page->update(['metadata' => ['capability_pdf' => $path]]);
+
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->assertFormSet(['metadata.capability_pdf' => $path])
+            ->fillForm(['metadata.capability_flipbook_url' => $url])
+            ->call('save')->assertHasNoFormErrors();
+
+        $this->assertSame($path, $page->refresh()->metadata['capability_pdf']);
+        $this->assertSame($url, $page->getCapabilityFlipbookUrl());
+        Storage::disk('public')->assertExists($path);
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->assertFormSet(['metadata.capability_pdf' => $path, 'metadata.capability_flipbook_url' => $url])
+            ->call('save')->assertHasNoFormErrors();
+    }
+
+    public function test_admin_cannot_replace_the_pdf_with_an_unrelated_stored_path(): void
+    {
+        Storage::fake('public');
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        $path = 'uploads/company-profile/original.pdf';
+        $otherPath = 'uploads/company-profile/other.pdf';
+        foreach ([$path, $otherPath] as $filePath) {
+            Storage::disk('public')->put($filePath, "%PDF-1.4\n%%EOF");
+        }
+        $page->update(['metadata' => ['capability_pdf' => $path]]);
+
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->fillForm(['metadata.capability_pdf' => [$otherPath]])
+            ->call('save')->assertHasFormErrors(['metadata.capability_pdf']);
+        $this->assertSame($path, $page->refresh()->metadata['capability_pdf']);
+    }
+
     public function test_heyzine_flipbook_is_embedded_without_a_local_pdf(): void
     {
         $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
@@ -153,11 +196,15 @@ class CapabilityProfilePageTest extends TestCase
         $path = $page->refresh()->metadata['capability_pdf'];
         Storage::disk('public')->assertExists($path);
         Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
-            ->assertFormSet(['metadata.capability_pdf' => $path]);
+            ->assertFormSet(['metadata.capability_pdf' => $path])
+            ->call('save')->assertHasNoFormErrors();
+        config(['livewire.temporary_file_upload.rules' => ['required', 'file', 'max:204800']]);
         Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->fillForm(['metadata.capability_pdf' => []])
             ->fillForm(['metadata.capability_pdf' => UploadedFile::fake()->create('large.pdf', 102401, 'application/pdf')])
             ->call('save')->assertHasFormErrors(['metadata.capability_pdf']);
         Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->fillForm(['metadata.capability_pdf' => []])
             ->fillForm(['metadata.capability_pdf' => UploadedFile::fake()->create('invalid.txt', 1, 'text/plain')])
             ->call('save')->assertHasFormErrors(['metadata.capability_pdf']);
     }
