@@ -40,9 +40,7 @@
             @endforelse
         </div>
 
-        <div class="mt-10">
-            {{ $services->links() }}
-        </div>
+        {{ $services->onEachSide(1)->links('frontend.services.pagination') }}
     </div>
 </section>
 

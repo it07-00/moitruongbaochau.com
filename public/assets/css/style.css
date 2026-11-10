@@ -1253,6 +1253,60 @@ nav#main-nav,
 
 
 
+.services-pagination :is(a, [aria-current="page"]) {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding-inline: 0.625rem;
+  border: 1px solid #dfe3df;
+  border-radius: 0.625rem;
+  background: #fff;
+  color: #17251d;
+  font-weight: 600;
+}
+
+.services-pagination a:hover {
+  border-color: #15803d;
+  color: #15803d;
+}
+
+.services-pagination [aria-current="page"] {
+  border-color: #15803d;
+  background: #15803d;
+  color: #fff;
+}
+
+.service-cta-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  border-radius: 2rem;
+}
+
+.service-cta-logo {
+  justify-self: center;
+  width: min(100%, 17.5rem);
+}
+
+.service-cta-logo img {
+  width: min(100%, 11rem);
+  height: auto;
+}
+
+@media (min-width: 1024px) {
+  .service-cta-card {
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    padding: clamp(2rem, 4vw, 3rem);
+  }
+
+  .service-cta-logo img {
+    width: min(100%, 13rem);
+  }
+}
+
 /* Keep the homepage introduction compact and readable on phones. */
 @media (max-width: 767px) {
   .home .section > .container,
