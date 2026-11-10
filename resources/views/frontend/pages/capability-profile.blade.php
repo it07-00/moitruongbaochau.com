@@ -33,7 +33,7 @@
 
                 @if ($hasPdf)
                     <div class="capability-profile-actions">
-                        <a href="{{ route('capability-profile.pdf') }}" target="_blank" rel="noopener noreferrer">Xem trực tuyến <span aria-hidden="true">↗</span></a>
+                        <a href="{{ route('capability-profile.pdf') }}" target="_blank" rel="noopener noreferrer" data-profile-reader-open>Xem trực tuyến <span aria-hidden="true">↗</span></a>
                         <a href="{{ route('capability-profile.pdf', ['download' => 1]) }}" download="ho-so-nang-luc-bao-chau.pdf">Tải bản PDF <span aria-hidden="true">↓</span></a>
                     </div>
                 @else
@@ -65,4 +65,29 @@
         </div>
     </div>
 </section>
+
+@if ($hasPdf)
+    <dialog class="capability-reader" id="capability-reader" aria-labelledby="capability-reader-title">
+        <header class="capability-reader-bar">
+            <h2 id="capability-reader-title">Hồ sơ năng lực Bảo Châu</h2>
+            <form method="dialog">
+                <button type="submit" autofocus>Đóng</button>
+            </form>
+        </header>
+        <div class="capability-reader-stage" data-profile-reader-stage>
+            <p role="status" data-profile-reader-status></p>
+            <div class="capability-reader-page" data-profile-reader-page aria-hidden="true"></div>
+        </div>
+        <footer class="capability-reader-bar capability-reader-controls">
+            <button type="button" data-profile-reader-previous disabled>‹ <span>Trang trước</span></button>
+            <output aria-live="polite" data-profile-reader-counter></output>
+            <button type="button" data-profile-reader-next disabled><span>Trang sau</span> ›</button>
+            <a href="{{ route('capability-profile.pdf') }}" target="_blank" rel="noopener noreferrer">Mở PDF ↗</a>
+        </footer>
+    </dialog>
+
+    @push('scripts')
+        <script type="module" src="{{ asset('assets/js/capability-profile-reader.js') }}?v={{ filemtime(public_path('assets/js/capability-profile-reader.js')) }}"></script>
+    @endpush
+@endif
 @endsection
