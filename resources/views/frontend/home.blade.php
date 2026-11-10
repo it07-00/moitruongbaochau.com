@@ -295,11 +295,11 @@
               </p>
             </div>
             <div
-              class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
+              class="service-tabs-layout flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12 lg:mt-8"
             >
               <div class="w-full lg:w-[25%] lg:max-w-xl">
                 <ul
-                  class="tabs flex flex-col gap-4 sm:gap-5 lg:gap-5 mt-6 lg:mt-8 [&_.is-active>a]:border-primary! [&_.is-active>a]:bg-white! [&_.is-active>a]:shadow-xl! [&_.is-active>a]:shadow-primary/10! [&_.is-active>a]:border-2! [&_.is-active_span.tab-text]:text-primary! [&_.is-active_svg]:text-primary!"
+                  class="tabs flex flex-col gap-4 sm:gap-5 lg:gap-5 mt-6 lg:mt-0 [&_.is-active>a]:border-primary! [&_.is-active>a]:bg-white! [&_.is-active>a]:shadow-xl! [&_.is-active>a]:shadow-primary/10! [&_.is-active>a]:border-2! [&_.is-active_span.tab-text]:text-primary! [&_.is-active_svg]:text-primary!"
                   data-fx-tabs=""
                   role="tablist"
                   aria-label="Nhóm dịch vụ môi trường"
@@ -430,17 +430,17 @@
                   @endforeach
                 </ul>
               </div>
-              <div class="w-full flex-1">
+              <div class="w-full flex-1 lg:grid">
                 <div
-                  class="tabs-content mt-6 lg:mt-8"
+                  class="tabs-content mt-6 lg:mt-0"
                   data-fx-tabs-content="services-extra-tabs-4bdc829f17"
                 >
                   @foreach($serviceCategories as $index => $category)
                     <div class="tabs-panel {{ $index === 0 ? 'is-active' : '' }}" id="cat-tab-{{ $category->id }}" role="tabpanel" aria-labelledby="service-tab-{{ $category->id }}" tabindex="0">
                       <div
-                        class="flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
+                        class="service-panel-layout flex flex-row items-start flex-wrap lg:flex-nowrap gap-8 lg:gap-10 xl:gap-12"
                       >
-                        <div class="w-full lg:w-7/12">
+                        <div class="service-panel-image w-full lg:w-7/12">
                           <div
                             class="thumb w-full overflow-hidden rounded-2xl shadow-xl shadow-black/10"
                           >
@@ -457,13 +457,13 @@
                             />
                           </div>
                         </div>
-                        <div class="w-full lg:w-5/12">
+                        <div class="service-panel-copy w-full lg:w-5/12">
                           <div
-                            class="mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
+                            class="service-panel-title mb-5 lg:mb-6 p-fs-clamp-[18,28] font-bold uppercase leading-[1.3]"
                           >
                             {{ $category->name }}
                           </div>
-                          <div class="leading-[1.7] p-fs-clamp-[15,17]">
+                          <div class="service-panel-description leading-[1.7] p-fs-clamp-[15,17]">
                             @if($category->description)
                               <p class="mb-3">{{ $category->description }}</p>
                             @else

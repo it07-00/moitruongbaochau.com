@@ -14,6 +14,12 @@
     height: auto;
 }
 
+@media (min-width: 1024px) {
+    .home-about-image > img {
+        width: 90%;
+    }
+}
+
 .webhd-shap {
     width: 100vw;
     height: min(60vw, 520px);
