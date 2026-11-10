@@ -33,3 +33,7 @@
 @media (prefers-reduced-motion: reduce) {
     .webhd-shap-bg img { animation: none; }
 }
+
+@media (max-width: 390px) {
+    .add-this.contact-link { gap: 6px; }
+}

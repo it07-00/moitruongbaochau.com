@@ -69,6 +69,9 @@ class FrontendDatabaseContentTest extends TestCase
             'key' => 'footer_sales_contacts',
             'value' => json_encode([
                 ['phone' => '0901 234 567', 'name' => 'Nhân sự database'],
+                ['phone' => '0915 219 148', 'name' => 'Nhật Quỳnh'],
+                ['phone' => '094 224 1148', 'name' => 'Thanh Thảo'],
+                ['phone' => '0917 283 148', 'name' => 'Tường Vy'],
             ], JSON_THROW_ON_ERROR),
             'type' => 'json',
             'group' => 'contact',
@@ -85,7 +88,13 @@ class FrontendDatabaseContentTest extends TestCase
             ->assertSee('Ban nội dung riêng từ database')
             ->assertSee('Tiểu sử biên tập viên lấy trực tiếp từ database.')
             ->assertSee('0901 234 567')
-            ->assertSee('Nhân sự database');
+            ->assertSee('Nhân sự database')
+            ->assertSee([
+                'class="zalo" href="https://zalo.me/0901234567"',
+                'class="zalo" href="https://zalo.me/0915219148"',
+                'class="zalo" href="https://zalo.me/0942241148"',
+                'class="zalo" href="https://zalo.me/0917283148"',
+            ], false);
     }
 
     public function test_tag_seeder_transliterates_vietnamese_and_preserves_view_count(): void

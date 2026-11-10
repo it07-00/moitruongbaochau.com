@@ -75,6 +75,9 @@ class AppServiceProvider extends ServiceProvider
                     ->get(['id', 'name', 'slug']),
             ]);
         });
+        View::composer(['components.frontend.footer', 'components.frontend.floating-contact'], function ($view): void {
+            $view->with('footerSalesContacts', app(SettingService::class)->json('footer_sales_contacts'));
+        });
         View::composer('components.frontend.footer', function ($view): void {
             $settingService = app(SettingService::class);
 
@@ -84,7 +87,6 @@ class AppServiceProvider extends ServiceProvider
                     ->orderBy('sort_order')
                     ->take(7)
                     ->get(['id', 'name', 'slug']),
-                'footerSalesContacts' => $settingService->json('footer_sales_contacts'),
                 'footerConsultingContacts' => $settingService->json('footer_consulting_contacts'),
             ]);
         });
