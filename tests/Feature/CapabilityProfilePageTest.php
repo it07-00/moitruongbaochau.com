@@ -19,7 +19,7 @@ class CapabilityProfilePageTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_admin_can_save_heyzine_link_while_retaining_an_existing_pdf(): void
+    public function test_admin_can_edit_profile_content_while_retaining_an_existing_pdf(): void
     {
         Storage::fake('public');
         Filament::setCurrentPanel(Filament::getPanel('admin'));
@@ -28,18 +28,18 @@ class CapabilityProfilePageTest extends TestCase
         $path = 'uploads/company-profile/existing.pdf';
         $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
         Storage::disk('public')->put($path, "%PDF-1.4\nProfile\n%%EOF");
-        $page->update(['metadata' => ['capability_pdf' => $path]]);
+        $page->update(['metadata' => ['capability_pdf' => $path, 'capability_flipbook_url' => $url]]);
 
         Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
             ->assertFormSet(['metadata.capability_pdf' => $path])
-            ->fillForm(['metadata.capability_flipbook_url' => $url])
+            ->fillForm(['title' => 'Hồ sơ năng lực Bảo Châu'])
             ->call('save')->assertHasNoFormErrors();
 
         $this->assertSame($path, $page->refresh()->metadata['capability_pdf']);
-        $this->assertSame($url, $page->getCapabilityFlipbookUrl());
+        $this->assertSame('Hồ sơ năng lực Bảo Châu', $page->title);
         Storage::disk('public')->assertExists($path);
         Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
-            ->assertFormSet(['metadata.capability_pdf' => $path, 'metadata.capability_flipbook_url' => $url])
+            ->assertFormSet(['metadata.capability_pdf' => $path])
             ->call('save')->assertHasNoFormErrors();
     }
 
@@ -62,28 +62,25 @@ class CapabilityProfilePageTest extends TestCase
         $this->assertSame($path, $page->refresh()->metadata['capability_pdf']);
     }
 
-    public function test_heyzine_flipbook_is_embedded_without_a_local_pdf(): void
+    public function test_legacy_heyzine_link_is_ignored_with_or_without_a_pdf(): void
     {
         $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
         $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
         $page->update(['metadata' => ['capability_flipbook_url' => $url]]);
 
         $this->get(route('capability-profile'))->assertOk()
-            ->assertSee('class="heyzine-flipbook capability-profile-viewer"', false)
-            ->assertSee('href="'.$url.'"', false)
-            ->assertSee('height: 400px', false)
-            ->assertSee('https://heyzine.com/release/embed.min.js', false)
-            ->assertDontSee('aspect-ratio: 210 / 297', false)
+            ->assertDontSee('heyzine.com', false)
             ->assertDontSee('<iframe', false)
-            ->assertDontSee('Hồ sơ năng lực đang được cập nhật')
-            ->assertDontSee('Tải PDF ↓');
+            ->assertSee('Hồ sơ năng lực đang được cập nhật')
+            ->assertDontSee('Tải bản PDF');
 
         $path = 'uploads/company-profile/profile.pdf';
         Storage::fake('public');
         Storage::disk('public')->put($path, "%PDF-1.4\n%%EOF");
         $page->update(['metadata' => ['capability_flipbook_url' => $url, 'capability_pdf' => $path]]);
         $this->get(route('capability-profile'))->assertOk()
-            ->assertSee('class="heyzine-flipbook capability-profile-viewer"', false)
+            ->assertDontSee('heyzine.com', false)
+            ->assertSee('Xem trực tuyến')
             ->assertSee(route('capability-profile.pdf', ['download' => 1]), false);
     }
 
@@ -92,34 +89,27 @@ class CapabilityProfilePageTest extends TestCase
         $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
         foreach (['https://example.com/flip-book/3997d6e66b.html', 'javascript:alert(1)', 'https://heyzine.com.evil.example/flip-book/3997d6e66b.html', 'https://heyzine.com/flip-book/3997d6e66b.html?bad=1'] as $url) {
             $page->update(['metadata' => ['capability_flipbook_url' => $url]]);
-            $this->assertNull($page->getCapabilityFlipbookUrl());
             $this->get(route('capability-profile'))->assertOk()
                 ->assertDontSee('<iframe', false)
-                ->assertDontSee('https://heyzine.com/release/embed.min.js', false)
+                ->assertDontSee($url, false)
                 ->assertSee('Hồ sơ năng lực đang được cập nhật');
         }
     }
 
-    public function test_admin_can_save_reopen_and_clear_the_heyzine_link(): void
+    public function test_pdf_endpoint_supports_byte_range_requests(): void
     {
-        Filament::setCurrentPanel(Filament::getPanel('admin'));
-        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        Storage::fake('public');
         $page = Page::query()->where('slug', 'ho-so-nang-luc')->firstOrFail();
-        $url = 'https://heyzine.com/flip-book/3997d6e66b.html';
+        $path = 'uploads/company-profile/profile.pdf';
+        $contents = "%PDF-1.4\nProfile\n%%EOF";
+        Storage::disk('public')->put($path, $contents);
+        $page->update(['metadata' => ['capability_pdf' => $path]]);
 
-        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
-            ->fillForm(['metadata.capability_flipbook_url' => $url])
-            ->call('save')->assertHasNoFormErrors();
-        $this->assertSame($url, $page->refresh()->getCapabilityFlipbookUrl());
-        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
-            ->assertFormSet(['metadata.capability_flipbook_url' => $url])
-            ->fillForm(['metadata.capability_flipbook_url' => 'https://example.com/flip-book/book.html'])
-            ->call('save')->assertHasFormErrors(['metadata.capability_flipbook_url']);
-        $this->assertSame($url, $page->refresh()->getCapabilityFlipbookUrl());
-        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
-            ->fillForm(['metadata.capability_flipbook_url' => null])
-            ->call('save')->assertHasNoFormErrors();
-        $this->assertNull($page->refresh()->getCapabilityFlipbookUrl());
+        $this->get(route('capability-profile.pdf'), ['Range' => 'bytes=0-7'])
+            ->assertStatus(206)
+            ->assertHeader('Accept-Ranges', 'bytes')
+            ->assertHeader('Content-Range', 'bytes 0-7/'.strlen($contents))
+            ->assertHeader('Content-Length', '8');
     }
 
     public function test_page_previews_and_streams_the_pdf_and_has_its_own_canonical(): void
@@ -132,16 +122,18 @@ class CapabilityProfilePageTest extends TestCase
         $page->update(['metadata' => ['capability_pdf' => $path]]);
 
         $this->get(route('capability-profile'))->assertOk()
-            ->assertSee('<iframe', false)
-            ->assertSee(route('capability-profile.pdf'))
+            ->assertDontSee('<iframe', false)
+            ->assertSee('href="'.route('capability-profile.pdf').'" target="_blank"', false)
+            ->assertSee('Tải bản PDF')
             ->assertSee('<link rel="canonical" href="'.route('capability-profile').'">', false);
-        $this->get(route('capability-profile.pdf'))->assertOk()
+        $preview = $this->get(route('capability-profile.pdf'))->assertOk()
             ->assertHeader('Content-Type', 'application/pdf')
             ->assertHeader('X-Content-Type-Options', 'nosniff')
-            ->assertHeader('Content-Disposition', 'inline; filename=ho-so-nang-luc-bao-chau.pdf')
-            ->assertStreamedContent($contents);
-        $this->get(route('capability-profile.pdf', ['download' => 1]))
-            ->assertDownload('ho-so-nang-luc-bao-chau.pdf')->assertStreamedContent($contents);
+            ->assertHeader('Content-Disposition', 'inline; filename=ho-so-nang-luc-bao-chau.pdf');
+        $download = $this->get(route('capability-profile.pdf', ['download' => 1]))
+            ->assertDownload('ho-so-nang-luc-bao-chau.pdf');
+        $this->assertSame($contents, $preview->baseResponse->getFile()->getContent());
+        $this->assertSame($contents, $download->baseResponse->getFile()->getContent());
         $this->assertSame(route('capability-profile'), $page->getPublicUrl());
         $this->get(route('pages.show', $page->slug))->assertRedirect(route('capability-profile'));
         $this->get(route('sitemap'))->assertSee(route('capability-profile'), false);

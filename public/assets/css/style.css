@@ -1340,6 +1340,88 @@ nav#main-nav,
 .about-capability-actions a:focus-visible { outline: 2px solid #800000; outline-offset: 3px; }
 @media (max-width: 639px) { .about-capability-actions { flex-direction: column; } }
 
+.capability-profile-section {
+  padding-block: clamp(2.5rem, 5vw, 5rem);
+  background: linear-gradient(135deg, #071524, #0b1f33);
+  color: #e2e8f0;
+}
+
+.capability-profile-layout,
+.capability-profile-highlights {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.capability-profile-layout {
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.capability-profile-label {
+  margin-bottom: 0.75rem;
+  color: #b8db71;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.capability-profile-section h2,
+.capability-profile-section h3 {
+  margin-bottom: 0.75rem;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.capability-profile-section h2 { font-size: clamp(1.625rem, 3vw, 2.5rem); }
+.capability-profile-section h3 { font-size: 1.125rem; }
+.capability-profile-section p { line-height: 1.65; }
+.capability-profile-content > * + * { margin-top: 0.75rem; }
+
+.capability-profile-highlights article {
+  padding: 1.25rem;
+  border: 1px solid #375169;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 6%);
+}
+
+.capability-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.capability-profile-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid #8fa3b7;
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.capability-profile-actions a:first-child {
+  border-color: #b8db71;
+  background: #b8db71;
+  color: #071524;
+}
+
+.capability-profile-actions a:hover { text-decoration: underline; }
+.capability-profile-actions a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (min-width: 640px) {
+  .capability-profile-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .capability-profile-layout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 @media (max-width: 767px) {
   .section-about { padding-top: 28px; padding-bottom: 32px; }
   .section-about > .container { padding-left: 20px; padding-right: 20px; }

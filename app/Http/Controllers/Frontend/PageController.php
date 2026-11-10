@@ -10,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PageController extends Controller
 {
@@ -29,23 +29,25 @@ class PageController extends Controller
         $page = Page::query()->published()->where('slug', 'ho-so-nang-luc')->firstOrFail();
         $seo = SeoData::forContent($page, route('capability-profile'), 'WebPage');
         $path = $page->metadata['capability_pdf'] ?? '';
-        $hasPdf = $this->isCapabilityPdfPath($path) && Storage::disk('public')->exists($path);
-        $flipbookUrl = $page->getCapabilityFlipbookUrl();
+        $hasPdf = $this->isCapabilityPdfPath($path) && Storage::disk('public')->fileExists($path);
 
-        return view('frontend.pages.capability-profile', compact('page', 'seo', 'hasPdf', 'flipbookUrl'));
+        return view('frontend.pages.capability-profile', compact('page', 'seo', 'hasPdf'));
     }
 
-    public function capabilityPdf(Request $request): StreamedResponse
+    public function capabilityPdf(Request $request): BinaryFileResponse
     {
         $page = Page::query()->published()->where('slug', 'ho-so-nang-luc')->firstOrFail();
         $path = $page->metadata['capability_pdf'] ?? '';
-        abort_unless($this->isCapabilityPdfPath($path) && Storage::disk('public')->exists($path), 404);
+        $disk = Storage::disk('public');
+        abort_unless($this->isCapabilityPdfPath($path) && $disk->fileExists($path), 404);
 
-        return Storage::disk('public')->response(
-            $path,
-            'ho-so-nang-luc-bao-chau.pdf',
-            ['Content-Type' => 'application/pdf', 'X-Content-Type-Options' => 'nosniff'],
+        return response()->file($disk->path($path), [
+            'Content-Type' => 'application/pdf',
+            'X-Content-Type-Options' => 'nosniff',
+            'Cache-Control' => 'no-cache',
+        ])->setPrivate()->setContentDisposition(
             $request->boolean('download') ? 'attachment' : 'inline',
+            'ho-so-nang-luc-bao-chau.pdf',
         );
     }
 
