@@ -2406,6 +2406,8 @@
       </div>
     </footer>
 
+    <x-frontend.floating-contact />
+
     <style>
       .form-control.is-invalid {
         border-color: #dc3545;
@@ -2716,11 +2718,23 @@
       document.addEventListener("DOMContentLoaded", function () {
         // Get the header element
         const header = document.querySelector(".header");
+        const backToTopBtn = document.querySelector("[data-fx-scroll-top]");
         let ticking = false; // For scroll performance
+
+        if (backToTopBtn) {
+          backToTopBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        }
 
         // Function to handle scroll events
         function handleScroll() {
           const currentScrollTop = window.scrollY;
+
+          if (backToTopBtn) {
+            backToTopBtn.setAttribute("data-show", currentScrollTop > 300 ? "true" : "false");
+          }
 
           // Add or remove sticky class based on scroll position
           if (currentScrollTop > 50) {

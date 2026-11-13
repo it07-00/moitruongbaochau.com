@@ -19,3 +19,94 @@ button, [role="tab"] { cursor: pointer; }
   html { scroll-behavior: auto !important; }
   [data-x-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
+
+/* Floating Contact Buttons & Back-to-Top */
+.add-this.contact-link {
+  z-index: 999;
+  backdrop-filter: blur(8px);
+  background-color: #fefefed9;
+  flex-flow: row;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+@media only screen and (width >= 64rem) {
+  .add-this.contact-link {
+    backdrop-filter: none;
+    background-color: transparent;
+    flex-flow: column;
+    align-items: center;
+    width: fit-content;
+    display: inline-flex;
+    bottom: 90px;
+    right: 12px;
+  }
+}
+@media (max-width: 390px) {
+  .add-this.contact-link { gap: 6px; }
+}
+.add-this.contact-link > li { display: block; }
+.add-this.contact-link > li > a {
+  aspect-ratio: 1;
+  border: 1px solid;
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+  padding: 12px;
+  display: block;
+}
+@media only screen and (width >= 64rem) {
+  .add-this.contact-link > li > a {
+    width: 48px;
+    height: 48px;
+  }
+}
+.add-this.contact-link > li > a > svg {
+  filter: brightness(0) invert();
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.add-this.contact-link > li > a > span { display: none; }
+.add-this.contact-link > li > a.contact-map {
+  background-color: #0c8e39;
+  border-color: #0c8e39;
+  box-shadow: 0 0 6px #0c8e3a33;
+}
+.add-this.contact-link > li > a.hotline {
+  background-color: #fe5242;
+  border-color: #fe5242;
+  box-shadow: 0 0 6px #fe524233;
+}
+.add-this.contact-link > li > a.zalo {
+  background-color: #0068ff;
+  border-color: #0068ff;
+  padding: 6px;
+  box-shadow: 0 0 6px #0066ff33;
+}
+.c-back-to-top {
+  z-index: 999;
+  color: #0c8e39;
+  background-color: #ffffff;
+  border: 2px solid #fe5242;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.c-back-to-top[data-show="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}

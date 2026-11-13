@@ -91,7 +91,7 @@
 
   function detectCtaPosition(el) {
     if (el.dataset.ctaPosition) return el.dataset.ctaPosition;
-    if (el.closest('.floating-contact, [aria-label="Kênh liên hệ nhanh"]')) return "floating";
+    if (el.closest('.floating-contact, .add-this, .contact-link, [aria-label="Kênh liên hệ nhanh"]')) return "floating";
     if (el.closest("header, #header, #masthead, #offCanvasMenu, #mobile-menu")) return "header";
     if (el.closest("#section-cta, .section-cta")) return "cta_section";
     if (el.closest("footer, #colophon")) return "footer";

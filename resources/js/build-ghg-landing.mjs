@@ -9,6 +9,7 @@ import { transform } from 'lightningcss';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const folder = resolve(root, 'resources/views/frontend/landing/ghg-service');
 const files = (await readdir(folder)).filter(name => name.endsWith('.blade.php')).map(name => resolve(folder, name));
+files.push(resolve(root, 'resources/views/components/frontend/floating-contact.blade.php'));
 const scriptFolder = resolve(root, 'public/landing/ghg-service/js');
 const scriptNames = ['consultation-form.js', 'bootstrap.bundle.min.js', 'scroll-reveal.js', 'partners-carousel.js'];
 files.push(...scriptNames.map(name => resolve(scriptFolder, name)));

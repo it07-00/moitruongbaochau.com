@@ -127,6 +127,10 @@ class CtaTrackingTest extends TestCase
         $this->get(route('ghg-service.index'))
             ->assertOk()
             ->assertSee('name="cta-track-url"', false)
-            ->assertSee('landing/ghg-service/js/facebook-pixel.js', false);
+            ->assertSee('landing/ghg-service/js/facebook-pixel.js', false)
+            ->assertSee('class="add-this contact-link"', false)
+            ->assertSee('data-cta-track="zalo"', false)
+            ->assertSee('data-cta-track="hotline"', false)
+            ->assertSee('data-cta-track="map"', false);
     }
 }
