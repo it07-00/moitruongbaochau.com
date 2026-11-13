@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Service;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -13,6 +14,14 @@ class ServiceController extends Controller
     public function index(): View
     {
         $page = Page::query()->where('slug', 'dich-vu')->orWhere('template', 'services')->first();
+
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:services',
+            pageTitle: $page?->title ?: 'Dịch vụ môi trường',
+            pageUrl: route('services.index', [], false),
+        );
 
         $services = Service::query()
             ->published()
@@ -40,7 +49,16 @@ class ServiceController extends Controller
     public function show(string $slug): View
     {
         $service = Service::query()->published()->with('category:id,name,slug')->where('slug', $slug)->firstOrFail();
-        $service->increment('view_count');
+
+        PageView::record(
+            viewable: $service,
+            pageType: 'service',
+            pageKey: 'service:'.$service->slug,
+            pageTitle: $service->name,
+            pageUrl: isset(Service::DECLARATION_ROUTES[$service->slug])
+                ? route(Service::DECLARATION_ROUTES[$service->slug], [], false)
+                : route('services.show', $service->slug, false),
+        );
 
         $relatedServices = Service::query()
             ->published()

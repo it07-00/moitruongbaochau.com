@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Partner;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -17,6 +18,14 @@ class PageController extends Controller
     public function about(): View
     {
         $page = Page::query()->published()->where('slug', 'gioi-thieu')->firstOrFail();
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:about',
+            pageTitle: $page->title,
+            pageUrl: route('about', [], false),
+        );
+
         $seo = SeoData::forContent($page, route('about'), 'AboutPage');
         $partners = Partner::query()->active()->where('type', 'partner')->orderBy('sort_order')->get();
         $presses = Partner::query()->active()->where('type', 'press')->orderBy('sort_order')->get();
@@ -27,6 +36,14 @@ class PageController extends Controller
     public function capabilityProfile(): View
     {
         $page = Page::query()->published()->where('slug', 'ho-so-nang-luc')->firstOrFail();
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:capability-profile',
+            pageTitle: $page->title,
+            pageUrl: route('capability-profile', [], false),
+        );
+
         $seo = SeoData::forContent($page, route('capability-profile'), 'WebPage');
         $path = $page->metadata['capability_pdf'] ?? '';
         $hasPdf = $this->isCapabilityPdfPath($path) && Storage::disk('public')->fileExists($path);
@@ -65,6 +82,15 @@ class PageController extends Controller
         if ($page->template === 'capability-profile') {
             return redirect()->route('capability-profile', status: 301);
         }
+
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:'.$page->slug,
+            pageTitle: $page->title,
+            pageUrl: route('pages.show', $page->slug, false),
+        );
+
         $seo = SeoData::forContent($page, route('pages.show', $page->slug), 'WebPage');
 
         return view('frontend.pages.show', compact('page', 'seo'));

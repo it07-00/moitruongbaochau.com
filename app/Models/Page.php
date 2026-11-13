@@ -19,6 +19,7 @@ class Page extends Model
 
     protected $fillable = [
         'title', 'slug', 'template', 'excerpt', 'content', 'thumbnail', 'metadata', 'status', 'published_at',
+        'view_count',
         'meta_title', 'meta_description', 'canonical_url', 'robots', 'og_title',
         'og_description', 'og_image', 'twitter_title', 'twitter_description', 'twitter_image',
     ];
@@ -27,6 +28,7 @@ class Page extends Model
         'status' => ContentStatus::Draft->value,
         'template' => 'default',
         'robots' => 'index,follow',
+        'view_count' => 0,
     ];
 
     protected function casts(): array
@@ -34,6 +36,7 @@ class Page extends Model
         return [
             'metadata' => 'array',
             'published_at' => 'datetime',
+            'view_count' => 'integer',
         ];
     }
 

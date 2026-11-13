@@ -195,6 +195,12 @@ class ProjectResource extends Resource
                 IconColumn::make('is_featured')
                     ->label('Tiêu biểu')
                     ->boolean(),
+                TextColumn::make('view_count')
+                    ->label('Lượt xem')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('completed_at')
                     ->label('Hoàn thành')
                     ->date('d/m/Y')

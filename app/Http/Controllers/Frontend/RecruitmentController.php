@@ -9,6 +9,7 @@ use App\Models\CtaClick;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,15 @@ class RecruitmentController extends Controller
     public function index(): View
     {
         $page = Page::query()->where('slug', 'tuyen-dung')->orWhere('template', 'recruitment')->first();
+
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:recruitment',
+            pageTitle: $page?->title ?: 'Tuyển dụng',
+            pageUrl: route('recruitment.index', [], false),
+        );
+
         $jobs = JobPosting::query()->published()->open()->latest('published_at')->paginate(12);
 
         $seoTitle = $page?->meta_title ?: 'Tuyển dụng Môi Trường Bảo Châu';
@@ -38,7 +48,14 @@ class RecruitmentController extends Controller
     public function show(string $slug): View
     {
         $job = JobPosting::query()->published()->open()->where('slug', $slug)->firstOrFail();
-        $job->increment('view_count');
+
+        PageView::record(
+            viewable: $job,
+            pageType: 'job_posting',
+            pageKey: 'job:'.$job->slug,
+            pageTitle: $job->title,
+            pageUrl: route('recruitment.show', $job->slug, false),
+        );
 
         $relatedJobs = JobPosting::query()->published()->open()->where('id', '!=', $job->id)->latest('published_at')->take(4)->get();
         $seo = SeoData::forContent($job, route('recruitment.show', $job->slug), 'JobPosting');

@@ -199,6 +199,12 @@ class JobPostingResource extends Resource
                 TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge(),
+                TextColumn::make('view_count')
+                    ->label('Lượt xem')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('expires_at')
                     ->label('Hạn nộp')
                     ->dateTime('d/m/Y')

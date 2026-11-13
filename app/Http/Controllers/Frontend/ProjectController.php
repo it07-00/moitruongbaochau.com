@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Project;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -42,6 +43,14 @@ class ProjectController extends Controller
 
         $page = Page::query()->where('slug', 'du-an')->orWhere('template', 'projects')->first();
 
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:projects',
+            pageTitle: $page?->title ?: 'Dự án tiêu biểu',
+            pageUrl: route('projects.index', [], false),
+        );
+
         $categoryTitle = $categoryFilter && isset($categories[$categoryFilter])
             ? 'Dự án '.$categories[$categoryFilter]
             : ($page?->meta_title ?: 'Dự án môi trường tiêu biểu');
@@ -63,7 +72,14 @@ class ProjectController extends Controller
     public function show(string $slug): View
     {
         $project = Project::query()->published()->where('slug', $slug)->firstOrFail();
-        $project->increment('view_count');
+
+        PageView::record(
+            viewable: $project,
+            pageType: 'project',
+            pageKey: 'project:'.$project->slug,
+            pageTitle: $project->title,
+            pageUrl: route('projects.show', $project->slug, false),
+        );
 
         $relatedProjects = Project::query()
             ->published()

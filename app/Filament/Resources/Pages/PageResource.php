@@ -110,6 +110,11 @@ class PageResource extends Resource
                         DateTimePicker::make('published_at')
                             ->label('Ngày xuất bản')
                             ->default(now()),
+                        TextInput::make('view_count')
+                            ->label('Lượt xem')
+                            ->numeric()
+                            ->minValue(0)
+                            ->default(0),
                         Textarea::make('excerpt')
                             ->label('Mô tả tóm tắt ngắn')
                             ->rows(3)
@@ -414,6 +419,12 @@ class PageResource extends Resource
                 TextColumn::make('status')
                     ->label('Trạng thái')
                     ->badge(),
+                TextColumn::make('view_count')
+                    ->label('Lượt xem')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('updated_at')
                     ->label('Cập nhật lần cuối')
                     ->dateTime('d/m/Y H:i')

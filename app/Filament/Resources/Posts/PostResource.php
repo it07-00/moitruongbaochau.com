@@ -214,6 +214,12 @@ class PostResource extends Resource
                 IconColumn::make('is_featured')
                     ->label('Nổi bật')
                     ->boolean(),
+                TextColumn::make('view_count')
+                    ->label('Lượt xem')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('published_at')
                     ->label('Ngày đăng')
                     ->dateTime('d/m/Y H:i')

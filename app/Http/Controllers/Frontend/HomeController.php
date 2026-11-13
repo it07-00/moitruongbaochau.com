@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Partner;
 use App\Models\Post;
 use App\Models\PostCategory;
@@ -74,6 +75,14 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
         $page = Page::query()->where('slug', 'trang-chu')->orWhere('template', 'home')->first();
+
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:home',
+            pageTitle: $page?->title ?: 'Trang chủ',
+            pageUrl: route('home', [], false),
+        );
 
         $seoTitle = $page?->meta_title ?: 'Công ty TNHH Dịch vụ và Kỹ thuật Môi trường Bảo Châu';
         $seoDescription = $page?->meta_description ?: 'Tư vấn môi trường, giấy phép môi trường, quan trắc, kiểm kê khí nhà kính và giải pháp xử lý môi trường cho doanh nghiệp.';

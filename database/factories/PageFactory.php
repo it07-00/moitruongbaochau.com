@@ -28,6 +28,7 @@ class PageFactory extends Factory
             'content' => '<p>'.fake()->paragraphs(3, true).'</p>',
             'status' => ContentStatus::Published,
             'published_at' => now(),
+            'view_count' => 0,
             'meta_title' => $title,
             'meta_description' => fake()->sentence(18),
         ];

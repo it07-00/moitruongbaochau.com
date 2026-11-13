@@ -6,6 +6,9 @@ use App\ContactStatus;
 use App\CtaType;
 use App\Models\Contact;
 use App\Models\CtaClick;
+use App\Models\JobPosting;
+use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
@@ -23,6 +26,20 @@ class StatsOverview extends StatsOverviewWidget
         $newGhgConsultations = Contact::ghgConsultations()->where('status', ContactStatus::New)->count();
         $totalCtaClicks = CtaClick::count();
         $hotlineAndZaloClicks = CtaClick::whereIn('type', [CtaType::Hotline, CtaType::Zalo])->count();
+
+        $totalContentViews = (int) Page::sum('view_count')
+            + (int) Service::sum('view_count')
+            + (int) Project::sum('view_count')
+            + (int) Post::sum('view_count')
+            + (int) JobPosting::sum('view_count');
+        $ghgLandingViews = PageView::where('page_key', 'landing:ghg-service')->count();
+        $totalViews = $totalContentViews + $ghgLandingViews;
+        $todayPageViews = PageView::whereDate('created_at', today())->count();
+        $trackedPageViews = PageView::count();
+        $conversionRate = $trackedPageViews > 0
+            ? round(($totalCtaClicks / $trackedPageViews) * 100, 1)
+            : 0.0;
+
         $totalServices = Service::count();
         $totalProjects = Project::count();
         $totalPosts = Post::count();
@@ -39,8 +56,14 @@ class StatsOverview extends StatsOverviewWidget
                 ->color($newGhgConsultations > 0 ? 'warning' : 'success')
                 ->url(route('filament.admin.resources.ghg-consultations.index')),
 
+            Stat::make('Tổng lượt xem trang', number_format($totalViews))
+                ->description("Hôm nay: {$todayPageViews} lượt • Landing KNK: {$ghgLandingViews} lượt")
+                ->descriptionIcon(Heroicon::OutlinedEye)
+                ->color('success')
+                ->url(route('filament.admin.resources.page-views.index')),
+
             Stat::make('Lượt tương tác CTA', $totalCtaClicks)
-                ->description("Hotline & Zalo: {$hotlineAndZaloClicks} lượt")
+                ->description("Hotline & Zalo: {$hotlineAndZaloClicks} lượt • Chuyển đổi: {$conversionRate}%")
                 ->descriptionIcon(Heroicon::OutlinedCursorArrowRays)
                 ->color('info')
                 ->url(route('filament.admin.resources.cta-clicks.index')),
@@ -50,14 +73,9 @@ class StatsOverview extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedBriefcase)
                 ->color('primary'),
 
-            Stat::make('Dự án đã thực hiện', $totalProjects)
-                ->description('Hồ sơ năng lực thực tế')
+            Stat::make('Dự án & Tin tức', $totalProjects + $totalPosts)
+                ->description("{$totalProjects} dự án • {$totalPosts} bài viết")
                 ->descriptionIcon(Heroicon::OutlinedClipboardDocumentCheck)
-                ->color('info'),
-
-            Stat::make('Tin tức & Kiến thức', $totalPosts)
-                ->description('Bài viết chia sẻ chuyên môn')
-                ->descriptionIcon(Heroicon::OutlinedDocumentText)
                 ->color('gray'),
         ];
     }

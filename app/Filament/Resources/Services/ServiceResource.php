@@ -194,6 +194,12 @@ class ServiceResource extends Resource
                 IconColumn::make('is_featured')
                     ->label('Nổi bật')
                     ->boolean(),
+                TextColumn::make('view_count')
+                    ->label('Lượt xem')
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('sort_order')
                     ->label('Thứ tự')
                     ->numeric()

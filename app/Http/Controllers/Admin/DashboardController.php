@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\CtaClick;
 use App\Models\JobPosting;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
@@ -25,6 +26,7 @@ class DashboardController extends Controller
             'jobs' => JobPosting::query()->count(),
             'new_contacts' => Contact::query()->where('status', ContactStatus::New)->count(),
             'cta_clicks' => CtaClick::query()->count(),
+            'page_views' => PageView::query()->count(),
         ];
 
         return view('admin.dashboard', compact('counts'));

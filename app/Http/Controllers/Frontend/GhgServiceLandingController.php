@@ -8,6 +8,7 @@ use App\Http\Requests\StoreGhgConsultationRequest;
 use App\Jobs\SyncGhgConsultationToSheet;
 use App\Models\Contact;
 use App\Models\CtaClick;
+use App\Models\PageView;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -17,6 +18,14 @@ class GhgServiceLandingController extends Controller
 {
     public function index(): View
     {
+        PageView::record(
+            viewable: null,
+            pageType: 'landing',
+            pageKey: 'landing:ghg-service',
+            pageTitle: 'Landing Page: Dịch vụ Kiểm kê Khí nhà kính',
+            pageUrl: route('ghg-service.index', [], false),
+        );
+
         return view('frontend.landing.ghg-service.index', [
             'recaptchaSiteKey' => config('ghg_landing.recaptcha_secret_key')
                 ? config('ghg_landing.recaptcha_site_key') : null,

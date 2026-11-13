@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageView;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Support\SeoData;
@@ -64,6 +65,14 @@ class PostController extends Controller
 
         $page = Page::query()->where('slug', 'tin-tuc')->orWhere('template', 'posts')->first();
 
+        PageView::record(
+            viewable: $page,
+            pageType: 'page',
+            pageKey: 'page:posts',
+            pageTitle: $page?->title ?: 'Tin tức & Kiến thức',
+            pageUrl: route('posts.index', [], false),
+        );
+
         $title = $currentCategory
             ? $currentCategory->name.' - Tin tức Môi Trường Bảo Châu'
             : ($page?->meta_title ?: 'Tin tức môi trường, pháp luật và ESG');
@@ -90,7 +99,13 @@ class PostController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $post->increment('view_count');
+        PageView::record(
+            viewable: $post,
+            pageType: 'post',
+            pageKey: 'post:'.$post->slug,
+            pageTitle: $post->title,
+            pageUrl: route('posts.show', $post->slug, false),
+        );
 
         $relatedPosts = Post::query()
             ->published()
