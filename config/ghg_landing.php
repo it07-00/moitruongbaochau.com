@@ -7,5 +7,6 @@ return [
     'sheets_webhook_token' => env('GHG_SHEETS_WEBHOOK_TOKEN'),
     'sheets_spreadsheet_id' => env('GHG_SHEETS_SPREADSHEET_ID', '1dQgYELFqBrDCY2Z-9V9hV6xOpirtQ6A4r8O3ugJ6pzI'),
     'sheets_tab_name' => env('GHG_SHEETS_TAB_NAME', 'Trang tính1'),
+    'daily_report_tab_name' => env('GHG_DAILY_REPORT_TAB_NAME', 'DAILY REPORT'),
     'recaptcha_min_score' => (float) env('GHG_RECAPTCHA_MIN_SCORE', 0.5),
 ];
