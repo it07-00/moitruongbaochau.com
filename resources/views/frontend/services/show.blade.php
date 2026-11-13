@@ -340,6 +340,8 @@
                 </div>
               @endif
 
+              <x-frontend.shared-resources :model="$service" type="service" />
+
               <!-- Author Box -->
               <section class="section section-author mt-10 pt-6">
                 <div class="flex flex-row gap-6 lg:gap-8 author-meta items-center">

@@ -2402,7 +2402,14 @@
         <!-- Bottom Section -->
         <div
           class="flex flex-col md:flex-row justify-between items-center text-sm lg:text-base text-white"
-        ></div>
+        >
+          <div class="w-full">
+            <x-frontend.shared-resources
+              :key="$websiteSettings['ghg_landing_resource_password'] ?? null"
+              :hint="$websiteSettings['ghg_landing_resource_password_hint'] ?? null"
+            />
+          </div>
+        </div>
       </div>
     </footer>
 

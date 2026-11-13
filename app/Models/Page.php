@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\ContentStatus;
+use App\Models\Concerns\HasProtectedResources;
 use App\Models\Concerns\HasPublicationStatus;
 use App\Models\Concerns\HasSeoAttributes;
 use Database\Factories\PageFactory;
@@ -14,6 +15,7 @@ class Page extends Model
     /** @use HasFactory<PageFactory> */
     use HasFactory;
 
+    use HasProtectedResources;
     use HasPublicationStatus;
     use HasSeoAttributes;
 

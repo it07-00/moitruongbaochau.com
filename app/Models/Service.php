@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\ContentStatus;
+use App\Models\Concerns\HasProtectedResources;
 use App\Models\Concerns\HasPublicationStatus;
 use App\Models\Concerns\HasSeoAttributes;
 use Database\Factories\ServiceFactory;
@@ -20,6 +21,7 @@ class Service extends Model
     /** @use HasFactory<ServiceFactory> */
     use HasFactory;
 
+    use HasProtectedResources;
     use HasPublicationStatus;
     use HasSeoAttributes;
 

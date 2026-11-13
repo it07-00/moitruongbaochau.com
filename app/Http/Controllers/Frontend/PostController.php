@@ -18,6 +18,7 @@ class PostController extends Controller
     public function pdf(Request $request, string $slug): StreamedResponse
     {
         $post = Post::query()->published()->where('slug', $slug)->firstOrFail();
+
         $path = preg_replace('#^/?storage/#', '', $post->pdf_file ?? '');
 
         abort_unless(

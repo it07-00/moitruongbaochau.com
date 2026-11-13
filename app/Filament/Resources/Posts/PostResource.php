@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Posts;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\ResourceSharingSection;
 use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Posts\Pages\CreatePost;
 use App\Filament\Resources\Posts\Pages\EditPost;
@@ -176,6 +177,8 @@ class PostResource extends Resource
                             ->downloadable()
                             ->columnSpanFull(),
                     ]),
+
+                ResourceSharingSection::make(),
 
                 SeoSection::make(),
             ]);

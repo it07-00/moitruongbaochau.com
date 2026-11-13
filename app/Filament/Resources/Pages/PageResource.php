@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Pages;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\ResourceSharingSection;
 use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Pages\Pages\CreatePage;
 use App\Filament\Resources\Pages\Pages\EditPage;
@@ -372,7 +373,10 @@ class PageResource extends Resource
                         TextInput::make('metadata.cta_phone')->label('Hotline CTA')->default('0915 549 148'),
                     ])->columns(2),
 
-                // 7. SEO META CHUYÊN SÂU TỪNG TRANG
+                // 7. TÀI NGUYÊN CHIA SẺ CUỐI TRANG
+                ResourceSharingSection::make(),
+
+                // 8. SEO META CHUYÊN SÂU TỪNG TRANG
                 SeoSection::make(),
             ]);
     }

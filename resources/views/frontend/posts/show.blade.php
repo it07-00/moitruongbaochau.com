@@ -138,6 +138,8 @@
                 </div>
               @endif
 
+              <x-frontend.shared-resources :model="$post" type="post" />
+
               <!-- Author Box -->
               <section class="section section-author mt-10 pt-6">
                 <div class="flex flex-row gap-6 lg:gap-8 author-meta items-center">

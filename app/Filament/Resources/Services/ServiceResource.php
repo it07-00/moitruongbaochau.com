@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Services;
 
 use App\ContentStatus;
+use App\Filament\Forms\Components\ResourceSharingSection;
 use App\Filament\Forms\Components\SeoSection;
 use App\Filament\Resources\Services\Pages\CreateService;
 use App\Filament\Resources\Services\Pages\EditService;
@@ -164,6 +165,8 @@ class ServiceResource extends Resource
                             ->step(1)
                             ->default(0),
                     ])->columns(2),
+
+                ResourceSharingSection::make(),
 
                 SeoSection::make(),
             ]);

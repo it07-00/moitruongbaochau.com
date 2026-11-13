@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\ContentStatus;
+use App\Models\Concerns\HasProtectedResources;
 use App\Models\Concerns\HasPublicationStatus;
 use App\Models\Concerns\HasSeoAttributes;
 use Database\Factories\PostFactory;
@@ -15,6 +16,7 @@ class Post extends Model
     /** @use HasFactory<PostFactory> */
     use HasFactory;
 
+    use HasProtectedResources;
     use HasPublicationStatus;
     use HasSeoAttributes;
 
