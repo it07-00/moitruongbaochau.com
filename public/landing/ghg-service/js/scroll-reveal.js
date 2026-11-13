@@ -2,7 +2,7 @@
   if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const elements = [...document.querySelectorAll('[data-x-aos]')]
-    .filter(element => !element.closest('#su-cap-thiet'));
+    .filter(element => !element.closest('#su-cap-thiet, .faq-item, [role="tabpanel"]'));
 
   const reveal = element => {
     element.classList.add('ghg-reveal-visible');
