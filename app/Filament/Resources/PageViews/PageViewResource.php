@@ -8,11 +8,14 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class PageViewResource extends Resource
@@ -104,6 +107,45 @@ class PageViewResource extends Resource
                     ->sortable(),
             ])
             ->filters([
+                SelectFilter::make('period')
+                    ->label('Kỳ thống kê (Ngày / Tuần / Tháng / Năm)')
+                    ->options([
+                        'today' => 'Hôm nay',
+                        'yesterday' => 'Hôm qua',
+                        'this_week' => 'Tuần này',
+                        'last_week' => 'Tuần trước',
+                        'this_month' => 'Tháng này',
+                        'last_month' => 'Tháng trước',
+                        'this_year' => 'Năm nay',
+                        'last_year' => 'Năm trước',
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        $value = $data['value'] ?? null;
+                        $now = now();
+
+                        return match ($value) {
+                            'today' => $query->whereDate('created_at', $now->toDateString()),
+                            'yesterday' => $query->whereDate('created_at', $now->copy()->subDay()->toDateString()),
+                            'this_week' => $query->whereBetween('created_at', [$now->copy()->startOfWeek(), $now->copy()->endOfWeek()]),
+                            'last_week' => $query->whereBetween('created_at', [$now->copy()->subWeek()->startOfWeek(), $now->copy()->subWeek()->endOfWeek()]),
+                            'this_month' => $query->whereBetween('created_at', [$now->copy()->startOfMonth(), $now->copy()->endOfMonth()]),
+                            'last_month' => $query->whereBetween('created_at', [$now->copy()->subMonthNoOverflow()->startOfMonth(), $now->copy()->subMonthNoOverflow()->endOfMonth()]),
+                            'this_year' => $query->whereBetween('created_at', [$now->copy()->startOfYear(), $now->copy()->endOfYear()]),
+                            'last_year' => $query->whereBetween('created_at', [$now->copy()->subYear()->startOfYear(), $now->copy()->subYear()->endOfYear()]),
+                            default => $query,
+                        };
+                    }),
+                Filter::make('date_range')
+                    ->label('Khoảng ngày tùy chọn')
+                    ->schema([
+                        DatePicker::make('from')->label('Từ ngày'),
+                        DatePicker::make('until')->label('Đến ngày'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(filled($data['from'] ?? null), fn (Builder $q): Builder => $q->whereDate('created_at', '>=', $data['from']))
+                            ->when(filled($data['until'] ?? null), fn (Builder $q): Builder => $q->whereDate('created_at', '<=', $data['until']));
+                    }),
                 SelectFilter::make('page_type')
                     ->label('Lọc theo loại trang')
                     ->options([

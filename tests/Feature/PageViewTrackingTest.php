@@ -7,6 +7,9 @@ use App\Filament\Resources\Pages\Pages\ListPages;
 use App\Filament\Resources\PageViews\Pages\ListPageViews;
 use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Filament\Resources\Services\Pages\ListServices;
+use App\Filament\Widgets\TrafficChartWidget;
+use App\Filament\Widgets\TrafficPeriodStatsWidget;
+use App\Models\CtaClick;
 use App\Models\Page;
 use App\Models\PageView;
 use App\Models\Post;
@@ -144,5 +147,52 @@ class PageViewTrackingTest extends TestCase
             ->assertSuccessful()
             ->assertCanSeeTableRecords([$post])
             ->assertTableColumnExists('view_count');
+    }
+
+    public function test_period_stats_chart_and_time_filters_for_day_week_month_year(): void
+    {
+        $admin = User::factory()->create(['is_admin' => true]);
+
+        $todayView = PageView::factory()->create([
+            'page_key' => 'landing:ghg-service',
+            'page_type' => 'landing',
+            'page_title' => 'View Hôm Nay',
+            'created_at' => now(),
+        ]);
+
+        $lastYearView = PageView::factory()->create([
+            'page_key' => 'page:home',
+            'page_type' => 'page',
+            'page_title' => 'View Năm Trước',
+            'created_at' => now()->subYear(),
+        ]);
+
+        CtaClick::factory()->create([
+            'created_at' => now(),
+        ]);
+
+        $this->actingAs($admin);
+        Filament::setCurrentPanel(Filament::getPanel('admin'));
+
+        Livewire::test(TrafficPeriodStatsWidget::class)
+            ->assertSuccessful()
+            ->assertSee('Hôm nay')
+            ->assertSee('Tuần này')
+            ->assertSee('Tháng này')
+            ->assertSee('Năm nay');
+
+        foreach (['day', 'week', 'month', 'year'] as $chartPeriod) {
+            Livewire::test(TrafficChartWidget::class)
+                ->set('filter', $chartPeriod)
+                ->assertSuccessful();
+        }
+
+        Livewire::test(ListPageViews::class)
+            ->filterTable('period', 'today')
+            ->assertCanSeeTableRecords([$todayView])
+            ->assertCanNotSeeTableRecords([$lastYearView])
+            ->filterTable('period', 'last_year')
+            ->assertCanSeeTableRecords([$lastYearView])
+            ->assertCanNotSeeTableRecords([$todayView]);
     }
 }
