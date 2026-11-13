@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\CtaTrackingController;
 use App\Http\Controllers\Frontend\EnvironmentSurveyController;
 use App\Http\Controllers\Frontend\GhgDeclarationController;
 use App\Http\Controllers\Frontend\GhgServiceLandingController;
@@ -60,6 +61,7 @@ Route::get('/tuyen-dung/{slug}', [RecruitmentController::class, 'show'])->name('
 Route::post('/tuyen-dung/{slug}/ung-tuyen', [RecruitmentController::class, 'apply'])->middleware('throttle:contact-form')->name('recruitment.apply');
 Route::get('/lien-he', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/lien-he', [ContactController::class, 'store'])->middleware('throttle:contact-form')->name('contact.store');
+Route::post('/cta-track', CtaTrackingController::class)->middleware('throttle:60,1')->name('cta.track');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/tim-kiem', SearchController::class)->name('search');

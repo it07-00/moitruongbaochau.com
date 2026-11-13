@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="cta-track-url" content="{{ route('cta.track', [], false) }}">
     <x-seo :seo="$seo ?? []" />
     <link rel="icon" href="{{ asset(str_starts_with($websiteSettings['favicon'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['favicon'] : ($websiteSettings['favicon'] ?? 'assets/images/cropped-chuan-192x192.png')) }}" sizes="192x192">
     <link rel="apple-touch-icon" href="{{ asset(str_starts_with($websiteSettings['favicon'] ?? '', 'uploads/') ? 'storage/'.$websiteSettings['favicon'] : ($websiteSettings['favicon'] ?? 'assets/images/cropped-chuan-192x192.png')) }}">
@@ -36,6 +37,7 @@
     </main>
     <x-frontend.footer />
     <x-frontend.floating-contact />
+    <script src="{{ asset('landing/ghg-service/js/facebook-pixel.js') }}?v={{ file_exists(public_path('landing/ghg-service/js/facebook-pixel.js')) ? filemtime(public_path('landing/ghg-service/js/facebook-pixel.js')) : time() }}" defer></script>
     <script src="{{ asset('assets/js/sweetalert2.all.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/swiper.min.js') }}" defer></script>
     <script src="{{ asset('assets/js/main.js') }}?v={{ file_exists(public_path('assets/js/main.js')) ? filemtime(public_path('assets/js/main.js')) : time() }}" defer></script>
@@ -46,6 +48,9 @@
     @if(session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            if (typeof window.bcTrackConversion === 'function') {
+                window.bcTrackConversion('Lead', { content_category: 'form_submit' });
+            }
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     icon: 'success',

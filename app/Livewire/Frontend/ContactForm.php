@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Frontend;
 
+use App\CtaType;
 use App\Models\Contact;
+use App\Models\CtaClick;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\RateLimiter;
 use Livewire\Component;
@@ -76,20 +78,36 @@ class ContactForm extends Component
 
         RateLimiter::hit($throttleKey, 120);
 
+        $topic = filled($this->topic) ? trim($this->topic) : 'Tư vấn môi trường';
+
         Contact::query()->create([
             'name' => trim($this->name),
             'email' => filled($this->email) ? trim($this->email) : null,
             'phone' => trim($this->phone),
-            'topic' => filled($this->topic) ? trim($this->topic) : 'Tư vấn môi trường',
+            'topic' => $topic,
             'message' => trim($this->message),
             'ip_address' => $ip,
             'user_agent' => request()->userAgent(),
             'status' => 'new',
         ]);
 
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: 'Form liên hệ: '.$topic,
+            targetUrl: route('contact.index', [], false),
+            pageUrl: request()->headers->get('referer') ?: route('contact.index', [], false),
+            position: 'contact_form',
+        );
+
         $this->reset(['name', 'email', 'phone', 'topic', 'message', 'website']);
         $this->isSuccess = true;
         $this->successMessage = 'Gửi yêu cầu tư vấn thành công! Chuyên viên Môi Trường Bảo Châu sẽ liên hệ lại với bạn trong thời gian sớm nhất.';
+
+        $this->dispatch('cta-conversion', [
+            'event' => 'Lead',
+            'category' => 'contact_form',
+            'label' => $topic,
+        ]);
 
         $this->dispatch('swal', [
             'icon' => 'success',

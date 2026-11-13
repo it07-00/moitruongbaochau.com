@@ -127,6 +127,17 @@ document.addEventListener('DOMContentLoaded', () => {
       status.className = 'mb-3 text-success';
       status.textContent = data.message;
       form.reset();
+      if (typeof window.bcTrackConversion === 'function') {
+        window.bcTrackConversion('Lead', {
+          content_category: 'ghg_consultation',
+          content_name: form.id,
+        });
+      } else if (typeof window.fbPixelTrack === 'function') {
+        window.fbPixelTrack('Lead', {
+          content_category: 'ghg_consultation',
+          content_name: form.id,
+        });
+      }
     } catch (error) {
       status.className = 'mb-3 text-danger';
       status.textContent = error.message || 'Kết nối bị gián đoạn. Vui lòng thử lại.';

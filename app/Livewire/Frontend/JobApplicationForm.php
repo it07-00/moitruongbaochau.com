@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Frontend;
 
+use App\CtaType;
+use App\Models\CtaClick;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
 use Illuminate\Contracts\View\View;
@@ -129,12 +131,26 @@ class JobApplicationForm extends Component
             'status' => 'new',
         ]);
 
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: 'Ứng tuyển: '.$positionTitle,
+            targetUrl: route('recruitment.index', [], false),
+            pageUrl: request()->headers->get('referer') ?: route('recruitment.index', [], false),
+            position: 'job_application_form',
+        );
+
         $this->reset(['fullname', 'contact_phone', 'contact_email', 'custom_position', 'message', 'cv_file', 'cvFileName']);
         if (! $this->preselectedJobId) {
             $this->job_posting_id = '';
         }
         $this->isSuccess = true;
         $this->successMessage = 'Hồ sơ của bạn đã được gửi thành công! Phòng Nhân sự Môi Trường Bảo Châu sẽ xem xét và phản hồi trong thời gian sớm nhất.';
+
+        $this->dispatch('cta-conversion', [
+            'event' => 'SubmitApplication',
+            'category' => 'job_application_form',
+            'label' => $positionTitle,
+        ]);
 
         $this->dispatch('swal', [
             'icon' => 'success',

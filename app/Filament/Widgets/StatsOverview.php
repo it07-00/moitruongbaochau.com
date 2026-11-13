@@ -3,7 +3,9 @@
 namespace App\Filament\Widgets;
 
 use App\ContactStatus;
+use App\CtaType;
 use App\Models\Contact;
+use App\Models\CtaClick;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Service;
@@ -19,6 +21,8 @@ class StatsOverview extends StatsOverviewWidget
     {
         $newContacts = Contact::generalContacts()->where('status', ContactStatus::New)->count();
         $newGhgConsultations = Contact::ghgConsultations()->where('status', ContactStatus::New)->count();
+        $totalCtaClicks = CtaClick::count();
+        $hotlineAndZaloClicks = CtaClick::whereIn('type', [CtaType::Hotline, CtaType::Zalo])->count();
         $totalServices = Service::count();
         $totalProjects = Project::count();
         $totalPosts = Post::count();
@@ -34,6 +38,12 @@ class StatsOverview extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedPhone)
                 ->color($newGhgConsultations > 0 ? 'warning' : 'success')
                 ->url(route('filament.admin.resources.ghg-consultations.index')),
+
+            Stat::make('Lượt tương tác CTA', $totalCtaClicks)
+                ->description("Hotline & Zalo: {$hotlineAndZaloClicks} lượt")
+                ->descriptionIcon(Heroicon::OutlinedCursorArrowRays)
+                ->color('info')
+                ->url(route('filament.admin.resources.cta-clicks.index')),
 
             Stat::make('Dịch vụ môi trường', $totalServices)
                 ->description('Đang cung cấp cho khách hàng')

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\CtaType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactRequest;
 use App\Models\Contact;
+use App\Models\CtaClick;
 use App\Models\Page;
 use App\Support\SeoData;
 use Illuminate\Contracts\View\View;
@@ -38,6 +40,15 @@ class ContactController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: 'Form liên hệ: '.($request->validated('topic') ?: 'Tư vấn chung'),
+            targetUrl: route('contact.store', [], false),
+            pageUrl: $request->headers->get('referer') ?: route('contact.index', [], false),
+            position: 'contact_form',
+            request: $request,
+        );
 
         return to_route('contact.index')->with('success', 'Cảm ơn bạn đã liên hệ. Bảo Châu sẽ phản hồi trong thời gian sớm nhất.');
     }

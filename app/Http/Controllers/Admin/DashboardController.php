@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\ContactStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\CtaClick;
 use App\Models\JobPosting;
 use App\Models\Page;
 use App\Models\Post;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             'projects' => Project::query()->count(),
             'jobs' => JobPosting::query()->count(),
             'new_contacts' => Contact::query()->where('status', ContactStatus::New)->count(),
+            'cta_clicks' => CtaClick::query()->count(),
         ];
 
         return view('admin.dashboard', compact('counts'));

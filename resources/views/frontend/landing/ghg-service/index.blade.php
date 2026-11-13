@@ -62,6 +62,10 @@
       name="csrf-token"
       content="{{ csrf_token() }}"
     />
+    <meta
+      name="cta-track-url"
+      content="{{ route('cta.track', [], false) }}"
+    />
 
     <title>Dịch vụ kiểm kê khí nhà kính 2026 | Môi Trường Bảo Châu</title>
     <meta name="description" content="Bảo Châu tư vấn kiểm kê khí nhà kính, lập báo cáo và rà soát nghĩa vụ theo quy định hiện hành năm 2026. Đăng ký tư vấn, nhận báo giá cho doanh nghiệp." />

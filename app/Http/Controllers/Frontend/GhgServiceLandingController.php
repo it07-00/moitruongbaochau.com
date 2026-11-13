@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\CtaType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGhgConsultationRequest;
 use App\Jobs\SyncGhgConsultationToSheet;
 use App\Models\Contact;
+use App\Models\CtaClick;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -54,6 +56,19 @@ class GhgServiceLandingController extends Controller
         ]);
 
         SyncGhgConsultationToSheet::dispatch($contact->id)->afterResponse();
+
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: $isCallback ? 'Yêu cầu gọi lại - Kiểm kê KNK' : 'Đăng ký tư vấn - Kiểm kê KNK',
+            targetUrl: route('ghg-service.store', [], false),
+            pageUrl: route('ghg-service.index', [], false),
+            position: $data['form_id'],
+            request: $request,
+            metadata: [
+                'consultation_type' => $data['consultation_type'],
+                'contact_id' => $contact->id,
+            ],
+        );
 
         $success = 'Đã gửi yêu cầu thành công! Chuyên viên Bảo Châu sẽ liên hệ tư vấn cho bạn trong thời gian sớm nhất.';
 

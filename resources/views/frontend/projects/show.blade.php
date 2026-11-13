@@ -533,11 +533,13 @@
                     Để lại thông tin, chuyên viên sẽ liên hệ tư vấn chi tiết.
                   </p>
 
-                  <form class="space-y-4">
+                  <form action="{{ route('contact.store') }}" method="POST" class="space-y-4">
+                    @csrf
+                    <input type="hidden" name="topic" value="Tư vấn dự án: {{ $project->title }}">
                     <div>
                       <input
                         required
-                        name="fullname"
+                        name="name"
                         class="font-normal w-full border border-gray-300 rounded-xl h-12 px-4 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Họ và tên *"
                         type="text"
@@ -546,7 +548,7 @@
                     <div>
                       <input
                         required
-                        name="contact_phone"
+                        name="phone"
                         class="font-normal w-full border border-gray-300 rounded-xl h-12 px-4 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Số điện thoại *"
                         type="tel"
@@ -554,7 +556,7 @@
                     </div>
                     <div>
                       <input
-                        name="contact_email"
+                        name="email"
                         class="font-normal w-full border border-gray-300 rounded-xl h-12 px-4 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
                         placeholder="Email"
                         type="email"
@@ -562,10 +564,12 @@
                     </div>
                     <div>
                       <textarea
+                        required
+                        minlength="10"
                         rows="3"
                         name="message"
                         class="font-normal w-full border border-gray-300 rounded-xl p-3.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
-                        placeholder="Yêu cầu cụ thể..."
+                        placeholder="Yêu cầu cụ thể (tối thiểu 10 ký tự)..."
                       ></textarea>
                     </div>
                     <button

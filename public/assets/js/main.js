@@ -944,12 +944,21 @@ window.showSwal = (options) => {
   }
 };
 
-// Livewire Event Listeners for Alert (SweetAlert2)
+// Livewire Event Listeners for Alert (SweetAlert2) & CTA Conversion
 document.addEventListener('livewire:init', () => {
   if (typeof Livewire !== 'undefined') {
     Livewire.on('swal', (data) => {
       const payload = Array.isArray(data) ? data[0] : data;
       window.showSwal(payload);
+    });
+    Livewire.on('cta-conversion', (data) => {
+      const payload = Array.isArray(data) ? data[0] : (data || {});
+      if (typeof window.bcTrackConversion === 'function') {
+        window.bcTrackConversion(payload.event || 'Lead', {
+          content_category: payload.category || 'form_submit',
+          content_name: payload.label || 'Form Submit',
+        });
+      }
     });
   }
 });

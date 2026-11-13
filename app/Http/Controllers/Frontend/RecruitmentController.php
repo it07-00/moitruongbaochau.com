@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\CtaType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJobApplicationRequest;
+use App\Models\CtaClick;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Models\Page;
@@ -63,6 +65,15 @@ class RecruitmentController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: 'Ứng tuyển: '.$job->title,
+            targetUrl: route('recruitment.apply', $job->slug, false),
+            pageUrl: route('recruitment.show', $job->slug, false),
+            position: 'job_application_form',
+            request: $request,
+        );
+
         return redirect()
             ->to(route('recruitment.show', $job->slug).'#form-ung-tuyen')
             ->with('success', 'Cảm ơn bạn đã nộp hồ sơ ứng tuyển vị trí '.$job->title.'! Bộ phận tuyển dụng Môi Trường Bảo Châu sẽ xem xét và phản hồi trong thời gian sớm nhất.');
@@ -95,6 +106,15 @@ class RecruitmentController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+
+        CtaClick::record(
+            type: CtaType::FormSubmit,
+            label: 'Ứng tuyển: '.$jobTitle,
+            targetUrl: route('recruitment.apply.general', [], false),
+            pageUrl: route('recruitment.index', [], false),
+            position: 'job_application_form',
+            request: $request,
+        );
 
         return redirect()
             ->to(route('recruitment.index').'#form-ung-tuyen')
