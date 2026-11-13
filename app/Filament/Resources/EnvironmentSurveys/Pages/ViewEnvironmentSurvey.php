@@ -5,6 +5,8 @@ namespace App\Filament\Resources\EnvironmentSurveys\Pages;
 use App\Filament\Resources\EnvironmentSurveys\EnvironmentSurveyResource;
 use App\Services\EnvironmentSurveyService;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -17,6 +19,7 @@ class ViewEnvironmentSurvey extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            EditAction::make(),
             Action::make('openSurvey')->label('Mở phiếu')->url(fn (): string => route('bvmt.admin.resume', ['survey' => $this->record]))->openUrlInNewTab(),
             Action::make('exportExcel')->label('Xuất Excel')->url(fn (): string => route('bvmt.admin.export', ['survey' => $this->record])),
             Action::make('downloadFiles')->label('Tải hồ sơ ZIP')->url(fn (): string => route('bvmt.admin.archive', ['survey' => $this->record]))->visible(fn (): bool => $this->record->files()->exists()),
@@ -27,6 +30,7 @@ class ViewEnvironmentSurvey extends ViewRecord
             Action::make('complete')->label('Hoàn tất hồ sơ')->color('success')->requiresConfirmation()
                 ->visible(fn (): bool => $this->record->status === 'submitted')
                 ->action(fn () => app(EnvironmentSurveyService::class)->changeStatus($this->record, 'completed')),
+            DeleteAction::make(),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Filament\Resources\EnvironmentSurveys\EnvironmentSurveyResource;
+use App\Filament\Resources\EnvironmentSurveys\Pages\EditEnvironmentSurvey;
 use App\Filament\Resources\EnvironmentSurveys\Pages\ListEnvironmentSurveys;
 use App\Filament\Resources\EnvironmentSurveys\Pages\ViewEnvironmentSurvey;
 use App\Models\EnvironmentSurvey;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Services\EnvironmentSurveyExport;
 use App\Services\EnvironmentSurveyService;
 use App\Support\EnvironmentSurveyDefinition as Definition;
+use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -266,6 +268,25 @@ class EnvironmentSurveyTest extends TestCase
         Livewire::test(ListEnvironmentSurveys::class)->callAction('createSurvey', data: ['company_name' => 'Khách mới', 'contact_email' => 'khach@example.com'])->assertHasNoActionErrors();
         $this->assertSame(2, EnvironmentSurvey::query()->count());
         $this->get(route('bvmt.admin.export', ['survey' => $survey]))->assertOk()->assertDownload('BVMT-2026-'.$survey->reference.'.xlsx');
+
+        Livewire::test(EditEnvironmentSurvey::class, ['record' => $survey->getRouteKey()])
+            ->fillForm([
+                'company_name' => 'Công ty khảo sát đã sửa',
+                'status' => 'completed',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('Công ty khảo sát đã sửa', $survey->refresh()->company_name);
+        $this->assertSame('Công ty khảo sát đã sửa', $survey->data['company_name']);
+        $this->assertSame('completed', $survey->status);
+
+        $newSurvey = EnvironmentSurvey::query()->where('company_name', 'Khách mới')->firstOrFail();
+        Livewire::test(EditEnvironmentSurvey::class, ['record' => $newSurvey->getRouteKey()])
+            ->callAction(DeleteAction::class)
+            ->assertHasNoActionErrors();
+
+        $this->assertDatabaseMissing('environment_surveys', ['id' => $newSurvey->id]);
     }
 
     public function test_excel_export_preserves_numeric_values_and_safe_text(): void

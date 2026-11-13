@@ -6,6 +6,7 @@ use Database\Factories\EnvironmentSurveyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EnvironmentSurvey extends Model
@@ -24,6 +25,20 @@ class EnvironmentSurvey extends Model
         static::creating(function (self $survey): void {
             $survey->reference ??= (string) Str::ulid();
             $survey->token ??= Str::random(64);
+        });
+
+        static::deleting(function (self $survey): void {
+            foreach ($survey->files as $file) {
+                if (filled($file->path)) {
+                    Storage::disk('local')->delete($file->path);
+                }
+            }
+
+            if (filled($survey->reference)) {
+                Storage::disk('local')->deleteDirectory('environment-surveys/'.$survey->reference);
+            }
+
+            $survey->files()->delete();
         });
     }
 

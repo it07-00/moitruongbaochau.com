@@ -3,10 +3,12 @@
 namespace Tests\Feature;
 
 use App\Filament\Resources\GhgDeclarations\GhgDeclarationResource;
+use App\Filament\Resources\GhgDeclarations\Pages\EditGhgDeclaration;
 use App\Filament\Resources\GhgDeclarations\Pages\ViewGhgDeclaration;
 use App\Models\GhgDeclaration;
 use App\Models\User;
 use App\Support\GhgSurveyDefinition;
+use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -314,10 +316,31 @@ class GhgDeclarationFormTest extends TestCase
         Filament::setCurrentPanel(Filament::getPanel('admin'));
         $this->actingAs(User::factory()->create(['is_admin' => false]));
         $this->assertFalse(GhgDeclarationResource::canViewAny());
+        $this->assertFalse(GhgDeclarationResource::canEdit($record));
+        $this->assertFalse(GhgDeclarationResource::canDelete($record));
         $this->get(GhgDeclarationResource::getUrl('view', ['record' => $record]))->assertForbidden();
         $this->actingAs(User::factory()->create(['is_admin' => true]));
         Livewire::test(ViewGhgDeclaration::class, ['record' => $record->id])->assertOk()->assertSee('Công ty Bảo Châu thử nghiệm')->assertSee('Nhiên liệu cố định')->assertSee('120');
-        $this->assertFalse(GhgDeclarationResource::canEdit($record));
+        $this->assertTrue(GhgDeclarationResource::canEdit($record));
+        $this->assertTrue(GhgDeclarationResource::canDelete($record));
+
+        Livewire::test(EditGhgDeclaration::class, ['record' => $record->getRouteKey()])
+            ->fillForm([
+                'company_name' => 'Công ty Bảo Châu đã sửa Admin',
+                'status' => 'submitted',
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('Công ty Bảo Châu đã sửa Admin', $record->refresh()->company_name);
+        $this->assertSame('Công ty Bảo Châu đã sửa Admin', $record->data[1]['company_name']);
+        $this->assertSame('submitted', $record->status);
+
+        Livewire::test(EditGhgDeclaration::class, ['record' => $record->getRouteKey()])
+            ->callAction(DeleteAction::class)
+            ->assertHasNoActionErrors();
+
+        $this->assertDatabaseMissing('ghg_declarations', ['id' => $record->id]);
     }
 
     private function saveGeneral(): void

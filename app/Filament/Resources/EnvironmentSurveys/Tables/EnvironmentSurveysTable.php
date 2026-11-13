@@ -5,6 +5,10 @@ namespace App\Filament\Resources\EnvironmentSurveys\Tables;
 use App\Models\EnvironmentSurvey;
 use App\Support\EnvironmentSurveyDefinition;
 use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -19,7 +23,7 @@ class EnvironmentSurveysTable
                 TextColumn::make('reference')->label('Mã phiếu')->searchable()->copyable(),
                 TextColumn::make('company_name')->label('Doanh nghiệp')->searchable()->sortable(),
                 TextColumn::make('contact_email')->label('Email liên hệ')->searchable(),
-                TextColumn::make('status')->label('Trạng thái')->badge()->formatStateUsing(fn (string $state): string => EnvironmentSurveyDefinition::statuses()[$state])->color(fn (string $state): string => match ($state) {
+                TextColumn::make('status')->label('Trạng thái')->badge()->formatStateUsing(fn (string $state): string => EnvironmentSurveyDefinition::statuses()[$state] ?? $state)->color(fn (string $state): string => match ($state) {
                     'submitted' => 'info', 'completed' => 'success', 'revision_required' => 'warning', default => 'gray'
                 }),
                 TextColumn::make('current_step')->label('Bước đang nhập'),
@@ -32,7 +36,14 @@ class EnvironmentSurveysTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                EditAction::make(),
                 Action::make('exportExcel')->label('Excel')->url(fn (EnvironmentSurvey $record): string => route('bvmt.admin.export', ['survey' => $record])),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ])
             ->defaultSort('updated_at', 'desc');
     }

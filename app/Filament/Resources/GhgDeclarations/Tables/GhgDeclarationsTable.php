@@ -5,6 +5,10 @@ namespace App\Filament\Resources\GhgDeclarations\Tables;
 use App\Models\GhgDeclaration;
 use App\Services\GhgDeclarationExcelExport;
 use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -29,8 +33,15 @@ class GhgDeclarationsTable
             ])
             ->recordActions([
                 ViewAction::make(),
+                EditAction::make(),
                 Action::make('exportExcel')->label('Xuất Excel')->icon('heroicon-o-arrow-down-tray')
                     ->action(fn (GhgDeclaration $record) => app(GhgDeclarationExcelExport::class)->downloadDeclaration($record)),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
             ])
             ->defaultSort('updated_at', 'desc');
     }
