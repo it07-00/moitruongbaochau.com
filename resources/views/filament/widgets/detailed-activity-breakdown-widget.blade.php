@@ -8,55 +8,225 @@
             Tổng hợp bài đăng mới, dịch vụ mới, dự án, tuyển dụng, liên hệ, hồ sơ khai báo và lưu lượng truy cập (cập nhật lúc {{ $this->getDateSummary() }}).
         </x-slot>
 
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm divide-y divide-gray-200 dark:divide-white/10">
+        <style>
+            .bc-stats-table-wrap {
+                overflow-x: auto;
+                margin: -0.25rem -0.5rem 0;
+                border-radius: 0.75rem;
+                border: 1px solid rgba(148, 163, 184, 0.2);
+            }
+
+            .bc-stats-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.875rem;
+                line-height: 1.35;
+            }
+
+            .bc-stats-table thead tr {
+                background-color: rgba(148, 163, 184, 0.1);
+                border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+            }
+
+            .bc-stats-table th {
+                padding: 0.75rem 1rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #64748b;
+                white-space: nowrap;
+            }
+
+            .dark .bc-stats-table th {
+                color: #94a3b8;
+            }
+
+            .bc-stats-table tbody tr {
+                border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+                transition: background-color 150ms ease;
+            }
+
+            .bc-stats-table tbody tr:last-child {
+                border-bottom: none;
+            }
+
+            .bc-stats-table tbody tr:hover {
+                background-color: rgba(16, 185, 129, 0.06);
+            }
+
+            .bc-stats-table td {
+                padding: 0.8rem 1rem;
+                vertical-align: middle;
+            }
+
+            .bc-stats-num {
+                text-align: right;
+                font-variant-numeric: tabular-nums;
+                white-space: nowrap;
+                color: #334155;
+            }
+
+            .dark .bc-stats-num {
+                color: #e2e8f0;
+            }
+
+            .bc-stats-num--muted {
+                color: #94a3b8;
+            }
+
+            .dark .bc-stats-num--muted {
+                color: #64748b;
+            }
+
+            .bc-stats-num--today {
+                font-weight: 700;
+                color: #059669;
+            }
+
+            .dark .bc-stats-num--today {
+                color: #34d399;
+            }
+
+            .bc-stats-num--total {
+                font-weight: 700;
+                color: #0f172a;
+            }
+
+            .dark .bc-stats-num--total {
+                color: #ffffff;
+            }
+
+            .bc-stats-link {
+                display: inline-block;
+                font-weight: 600;
+                color: #0f172a;
+                text-decoration: none;
+            }
+
+            .bc-stats-link:hover {
+                color: #059669;
+            }
+
+            .dark .bc-stats-link {
+                color: #f8fafc;
+            }
+
+            .dark .bc-stats-link:hover {
+                color: #34d399;
+            }
+
+            .bc-stats-group {
+                margin-top: 0.15rem;
+                font-size: 0.75rem;
+                color: #64748b;
+            }
+
+            .dark .bc-stats-group {
+                color: #94a3b8;
+            }
+
+            .bc-stats-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.25rem 0.625rem;
+                border-radius: 0.375rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                white-space: nowrap;
+                border: 1px solid transparent;
+            }
+
+            .bc-stats-badge--warning {
+                background-color: rgba(245, 158, 11, 0.12);
+                color: #b45309;
+                border-color: rgba(245, 158, 11, 0.3);
+            }
+
+            .dark .bc-stats-badge--warning {
+                color: #fbbf24;
+            }
+
+            .bc-stats-badge--success {
+                background-color: rgba(16, 185, 129, 0.12);
+                color: #047857;
+                border-color: rgba(16, 185, 129, 0.3);
+            }
+
+            .dark .bc-stats-badge--success {
+                color: #34d399;
+            }
+
+            .bc-stats-badge--info {
+                background-color: rgba(14, 165, 233, 0.12);
+                color: #0369a1;
+                border-color: rgba(14, 165, 233, 0.3);
+            }
+
+            .dark .bc-stats-badge--info {
+                color: #38bdf8;
+            }
+
+            .bc-stats-badge--gray {
+                background-color: rgba(148, 163, 184, 0.12);
+                color: #475569;
+                border-color: rgba(148, 163, 184, 0.28);
+            }
+
+            .dark .bc-stats-badge--gray {
+                color: #cbd5e1;
+            }
+        </style>
+
+        <div class="bc-stats-table-wrap">
+            <table class="bc-stats-table">
                 <thead>
-                    <tr class="bg-gray-50 dark:bg-white/5 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">
-                        <th class="px-4 py-3">Hạng mục</th>
-                        <th class="px-3 py-3 text-right">Hôm nay</th>
-                        <th class="px-3 py-3 text-right">Tuần này</th>
-                        <th class="px-3 py-3 text-right">Tháng này</th>
-                        <th class="px-3 py-3 text-right">Năm nay</th>
-                        <th class="px-3 py-3 text-right">Tổng cộng</th>
-                        <th class="px-4 py-3">Trạng thái / Chi tiết</th>
+                    <tr>
+                        <th style="text-align: left; min-width: 240px;">Hạng mục</th>
+                        <th style="text-align: right;">Hôm nay</th>
+                        <th style="text-align: right;">Tuần này</th>
+                        <th style="text-align: right;">Tháng này</th>
+                        <th style="text-align: right;">Năm nay</th>
+                        <th style="text-align: right;">Tổng cộng</th>
+                        <th style="text-align: left; min-width: 170px;">Trạng thái / Chi tiết</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-white/10">
+                <tbody>
                     @foreach ($this->getRows() as $row)
                         @php
-                            $badgeClasses = match ($row['highlight_tone']) {
-                                'warning' => 'bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:ring-amber-400/30',
-                                'success' => 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-400/10 dark:text-emerald-400 dark:ring-emerald-400/30',
-                                'info' => 'bg-sky-50 text-sky-700 ring-sky-600/20 dark:bg-sky-400/10 dark:text-sky-400 dark:ring-sky-400/30',
-                                default => 'bg-gray-50 text-gray-700 ring-gray-600/20 dark:bg-white/5 dark:text-gray-300 dark:ring-white/15',
+                            $badgeModifier = match ($row['highlight_tone']) {
+                                'warning' => 'bc-stats-badge--warning',
+                                'success' => 'bc-stats-badge--success',
+                                'info' => 'bc-stats-badge--info',
+                                default => 'bc-stats-badge--gray',
                             };
                         @endphp
-                        <tr class="hover:bg-gray-50/75 dark:hover:bg-white/5 transition-colors">
-                            <td class="px-4 py-3">
-                                <a href="{{ $row['url'] }}" class="font-medium text-gray-950 hover:text-emerald-600 dark:text-white dark:hover:text-emerald-400">
+                        <tr>
+                            <td>
+                                <a href="{{ $row['url'] }}" class="bc-stats-link">
                                     {{ $row['label'] }}
                                 </a>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                <div class="bc-stats-group">
                                     {{ $row['group'] }}
                                 </div>
                             </td>
-                            <td class="px-3 py-3 text-right font-medium tabular-nums {{ $row['today'] > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400' }}">
+                            <td class="bc-stats-num {{ $row['today'] > 0 ? 'bc-stats-num--today' : 'bc-stats-num--muted' }}">
                                 {{ number_format($row['today']) }}
                             </td>
-                            <td class="px-3 py-3 text-right tabular-nums text-gray-700 dark:text-gray-200">
+                            <td class="bc-stats-num">
                                 {{ number_format($row['week']) }}
                             </td>
-                            <td class="px-3 py-3 text-right tabular-nums text-gray-700 dark:text-gray-200">
+                            <td class="bc-stats-num">
                                 {{ number_format($row['month']) }}
                             </td>
-                            <td class="px-3 py-3 text-right tabular-nums text-gray-700 dark:text-gray-200">
+                            <td class="bc-stats-num">
                                 {{ number_format($row['year']) }}
                             </td>
-                            <td class="px-3 py-3 text-right font-semibold tabular-nums text-gray-950 dark:text-white">
+                            <td class="bc-stats-num bc-stats-num--total">
                                 {{ number_format($row['total']) }}
                             </td>
-                            <td class="px-4 py-3">
-                                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset {{ $badgeClasses }}">
+                            <td>
+                                <span class="bc-stats-badge {{ $badgeModifier }}">
                                     {{ $row['highlight_label'] }}
                                 </span>
                             </td>
