@@ -74,6 +74,10 @@ class DailyActivityReportSheetSync
         $ghgDeclarationsCreated = GhgDeclaration::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
         $ghgDeclarationsSubmitted = GhgDeclaration::query()->whereBetween('submitted_at', [$startOfDay, $endOfDay])->count();
         $jobApplications = JobApplication::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
+        $newPosts = Post::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
+        $newServices = Service::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
+        $newProjects = Project::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
+        $newJobPostings = JobPosting::query()->whereBetween('created_at', [$startOfDay, $endOfDay])->count();
 
         // 4. Cumulative totals
         $cumulativeViews = (int) Page::sum('view_count')
@@ -104,7 +108,7 @@ class DailyActivityReportSheetSync
                 "Tạo mới: {$bvmtSurveysCreated} | Đã nộp: {$bvmtSurveysSubmitted}",
                 "Tạo mới: {$ghgDeclarationsCreated} | Đã nộp: {$ghgDeclarationsSubmitted}",
                 (string) $jobApplications,
-                "Tổng xem: {$cumulativeViews} | Tổng CTA: {$cumulativeCta}",
+                "Tổng xem: {$cumulativeViews} | Tổng CTA: {$cumulativeCta} | Mới: {$newPosts} bài, {$newServices} DV, {$newProjects} DA, {$newJobPostings} tin TD",
             ],
         ];
     }

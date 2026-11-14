@@ -13,6 +13,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -38,6 +39,35 @@ class AdminDashboardStatsTest extends TestCase
         $response->assertSee('Liên hệ khách hàng');
         $response->assertSee('Tư vấn Khí nhà kính');
         $response->assertSee('Xuất Excel (.xlsx)');
+        $response->assertSee('Đồng bộ Google Sheet');
+    }
+
+    public function test_admin_can_sync_detailed_activity_stats_to_google_sheet_from_dashboard(): void
+    {
+        config([
+            'ghg_landing.sheets_webhook_url' => 'https://script.google.com/macros/s/test-deployment/exec',
+            'ghg_landing.sheets_webhook_token' => str_repeat('c', 48),
+            'ghg_landing.sheets_spreadsheet_id' => 'test-sheet-id',
+            'ghg_landing.daily_report_tab_name' => 'DAILY REPORT',
+        ]);
+
+        Http::preventStrayRequests();
+        Http::fake(fn ($request) => Http::response([
+            'ok' => true,
+            'request_id' => $request['request_id'],
+        ]));
+
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        $this->actingAs($admin);
+
+        Livewire::test(DetailedActivityBreakdownWidget::class)
+            ->call('syncToGoogleSheet')
+            ->assertNotified('Đã đồng bộ lên Google Sheets');
+
+        Http::assertSentCount(1);
     }
 
     public function test_admin_can_export_detailed_activity_stats_to_excel(): void

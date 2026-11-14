@@ -9,15 +9,27 @@
         </x-slot>
 
         <x-slot name="afterHeader">
-            <x-filament::button
-                color="success"
-                size="sm"
-                icon="heroicon-o-arrow-down-tray"
-                wire:click="exportExcel"
-                wire:loading.attr="disabled"
-            >
-                Xuất Excel (.xlsx)
-            </x-filament::button>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                <x-filament::button
+                    color="info"
+                    size="sm"
+                    icon="heroicon-o-arrow-path"
+                    wire:click="syncToGoogleSheet"
+                    wire:loading.attr="disabled"
+                >
+                    Đồng bộ Google Sheet
+                </x-filament::button>
+
+                <x-filament::button
+                    color="success"
+                    size="sm"
+                    icon="heroicon-o-arrow-down-tray"
+                    wire:click="exportExcel"
+                    wire:loading.attr="disabled"
+                >
+                    Xuất Excel (.xlsx)
+                </x-filament::button>
+            </div>
         </x-slot>
 
         <style>
