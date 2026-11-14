@@ -8,6 +8,18 @@
             Tổng hợp bài đăng mới, dịch vụ mới, dự án, tuyển dụng, liên hệ, hồ sơ khai báo và lưu lượng truy cập (cập nhật lúc {{ $this->getDateSummary() }}).
         </x-slot>
 
+        <x-slot name="afterHeader">
+            <x-filament::button
+                color="success"
+                size="sm"
+                icon="heroicon-o-arrow-down-tray"
+                wire:click="exportExcel"
+                wire:loading.attr="disabled"
+            >
+                Xuất Excel (.xlsx)
+            </x-filament::button>
+        </x-slot>
+
         <style>
             .bc-stats-table-wrap {
                 overflow-x: auto;

@@ -37,6 +37,25 @@ class AdminDashboardStatsTest extends TestCase
         $response->assertSee('Đơn tuyển dụng (Hồ sơ ứng viên)');
         $response->assertSee('Liên hệ khách hàng');
         $response->assertSee('Tư vấn Khí nhà kính');
+        $response->assertSee('Xuất Excel (.xlsx)');
+    }
+
+    public function test_admin_can_export_detailed_activity_stats_to_excel(): void
+    {
+        $admin = User::factory()->create([
+            'is_admin' => true,
+        ]);
+
+        Post::factory()->create([
+            'title' => 'Bài viết kiểm tra Excel',
+            'status' => ContentStatus::Published,
+        ]);
+
+        $this->actingAs($admin);
+
+        Livewire::test(DetailedActivityBreakdownWidget::class)
+            ->call('exportExcel')
+            ->assertFileDownloaded();
     }
 
     public function test_detailed_activity_breakdown_widget_counts_records_by_period(): void
