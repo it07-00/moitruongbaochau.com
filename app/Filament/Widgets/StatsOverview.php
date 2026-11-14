@@ -3,9 +3,11 @@
 namespace App\Filament\Widgets;
 
 use App\ContactStatus;
+use App\ContentStatus;
 use App\CtaType;
 use App\Models\Contact;
 use App\Models\CtaClick;
+use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Models\Page;
 use App\Models\PageView;
@@ -24,8 +26,30 @@ class StatsOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
+        $monthStart = now()->startOfMonth();
+
         $newContacts = Contact::generalContacts()->where('status', ContactStatus::New)->count();
+        $todayContacts = Contact::generalContacts()->whereDate('created_at', today())->count();
+        $totalContacts = Contact::generalContacts()->count();
+
         $newGhgConsultations = Contact::ghgConsultations()->where('status', ContactStatus::New)->count();
+        $todayGhgConsultations = Contact::ghgConsultations()->whereDate('created_at', today())->count();
+
+        $newApplications = JobApplication::where('status', 'new')->count();
+        $monthApplications = JobApplication::where('created_at', '>=', $monthStart)->count();
+        $totalApplications = JobApplication::count();
+
+        $openJobs = JobPosting::published()->open()->count();
+        $totalJobs = JobPosting::count();
+
+        $totalPosts = Post::count();
+        $monthPosts = Post::where('created_at', '>=', $monthStart)->count();
+        $publishedPosts = Post::where('status', ContentStatus::Published)->count();
+
+        $totalServices = Service::count();
+        $monthServices = Service::where('created_at', '>=', $monthStart)->count();
+        $totalProjects = Project::count();
+
         $totalCtaClicks = CtaClick::count();
         $hotlineAndZaloClicks = CtaClick::whereIn('type', [CtaType::Hotline, CtaType::Zalo])->count();
 
@@ -42,21 +66,42 @@ class StatsOverview extends StatsOverviewWidget
             ? round(($totalCtaClicks / $trackedPageViews) * 100, 1)
             : 0.0;
 
-        $totalServices = Service::count();
-        $totalProjects = Project::count();
-        $totalPosts = Post::count();
-
         return [
-            Stat::make('Yêu cầu liên hệ mới', $newContacts)
-                ->description($newContacts > 0 ? 'Khách hàng đang chờ phản hồi' : 'Tất cả liên hệ đã xử lý')
+            Stat::make('Liên hệ mới', $newContacts)
+                ->description("Hôm nay: {$todayContacts} • Tổng: {$totalContacts}")
                 ->descriptionIcon($newContacts > 0 ? Heroicon::OutlinedExclamationCircle : Heroicon::OutlinedCheckCircle)
-                ->color($newContacts > 0 ? 'warning' : 'success'),
+                ->color($newContacts > 0 ? 'warning' : 'success')
+                ->url(route('filament.admin.resources.contacts.index')),
 
             Stat::make('Tư vấn khí nhà kính mới', $newGhgConsultations)
-                ->description($newGhgConsultations > 0 ? 'Đăng ký tư vấn / Yêu cầu gọi lại' : 'Tất cả yêu cầu đã xử lý')
+                ->description("Hôm nay: {$todayGhgConsultations} • ".($newGhgConsultations > 0 ? 'Đang chờ xử lý' : 'Đã xử lý hết'))
                 ->descriptionIcon(Heroicon::OutlinedPhone)
                 ->color($newGhgConsultations > 0 ? 'warning' : 'success')
                 ->url(route('filament.admin.resources.ghg-consultations.index')),
+
+            Stat::make('Đơn tuyển dụng mới', $newApplications)
+                ->description("Tháng này: {$monthApplications} • Tổng CV: {$totalApplications}")
+                ->descriptionIcon(Heroicon::OutlinedDocumentText)
+                ->color($newApplications > 0 ? 'warning' : 'success')
+                ->url(route('filament.admin.resources.job-applications.index')),
+
+            Stat::make('Tin tuyển dụng đang mở', $openJobs)
+                ->description("Tổng tin tuyển dụng: {$totalJobs}")
+                ->descriptionIcon(Heroicon::OutlinedUserGroup)
+                ->color('info')
+                ->url(route('filament.admin.resources.job-postings.index')),
+
+            Stat::make('Bài viết / Tin tức', $totalPosts)
+                ->description("Tháng này +{$monthPosts} • Đã đăng: {$publishedPosts}")
+                ->descriptionIcon(Heroicon::OutlinedNewspaper)
+                ->color('primary')
+                ->url(route('filament.admin.resources.posts.index')),
+
+            Stat::make('Dịch vụ & Dự án', $totalServices + $totalProjects)
+                ->description("{$totalServices} dịch vụ (+{$monthServices} tháng này) • {$totalProjects} dự án")
+                ->descriptionIcon(Heroicon::OutlinedBriefcase)
+                ->color('primary')
+                ->url(route('filament.admin.resources.services.index')),
 
             Stat::make('Tổng lượt xem trang', number_format($totalViews))
                 ->description("Hôm nay: {$todayPageViews} lượt • Landing KNK: {$ghgLandingViews} lượt")
@@ -69,16 +114,6 @@ class StatsOverview extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedCursorArrowRays)
                 ->color('info')
                 ->url(route('filament.admin.resources.cta-clicks.index')),
-
-            Stat::make('Dịch vụ môi trường', $totalServices)
-                ->description('Đang cung cấp cho khách hàng')
-                ->descriptionIcon(Heroicon::OutlinedBriefcase)
-                ->color('primary'),
-
-            Stat::make('Dự án & Tin tức', $totalProjects + $totalPosts)
-                ->description("{$totalProjects} dự án • {$totalPosts} bài viết")
-                ->descriptionIcon(Heroicon::OutlinedClipboardDocumentCheck)
-                ->color('gray'),
         ];
     }
 }

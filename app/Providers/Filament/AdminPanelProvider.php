@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\DetailedActivityBreakdownWidget;
 use App\Filament\Widgets\StatsOverview;
 use App\Filament\Widgets\TrafficChartWidget;
 use App\Filament\Widgets\TrafficPeriodStatsWidget;
@@ -45,6 +46,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 StatsOverview::class,
                 TrafficPeriodStatsWidget::class,
+                DetailedActivityBreakdownWidget::class,
                 TrafficChartWidget::class,
                 AccountWidget::class,
             ])
